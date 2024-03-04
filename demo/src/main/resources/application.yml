@@ -1,9 +1,9 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://mysql.sqlpub.com:3306/cinema
-    username: cinema1895
-    password: 4DAH3AsbUFFcihud
+    url: jdbc:mysql://localhost:3306/cinema
+    username: root
+    password: admin
 
 mybatis:
   configuration:
