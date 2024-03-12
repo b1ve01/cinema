@@ -6,20 +6,17 @@ import java.security.NoSuchAlgorithmException;
 
 /**
  * MD5加密/验证工具类
- *
  */
 public class MD5Utils {
 
-    static final char hexDigits[] = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
-    static final char hexDigitsLower[] = { '0', '1', '2', '3', '4', '5', '6', '7','8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
+    static final char hexDigits[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+    static final char hexDigitsLower[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
 
     /**
-     *   对字符串 MD5 无盐值加密
+     * 对字符串 MD5 无盐值加密
      *
-     * @param plainText
-     * 		传入要加密的字符串
-     * @return
-     *  	MD5加密后生成32位(小写字母+数字)字符串
+     * @param plainText 传入要加密的字符串
+     * @return MD5加密后生成32位(小写字母 + 数字)字符串
      */
     public static String MD5Lower(String plainText) {
         try {
@@ -31,7 +28,7 @@ public class MD5Utils {
 
             // digest()最后确定返回md5 hash值，返回值为8位字符串。因为md5 hash值是16位的hex值，实际上就是8位的字符
             // BigInteger函数则将8位的字符串转换成16位hex值，用字符串来表示；得到字符串形式的hash值。1 固定值
-            return new BigInteger(1,  md.digest()).toString(16);
+            return new BigInteger(1, md.digest()).toString(16);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
             return null;
@@ -39,14 +36,11 @@ public class MD5Utils {
     }
 
 
-
     /**
-     *  对字符串 MD5 加密
+     * 对字符串 MD5 加密
      *
-     * @param plainText
-     * 		传入要加密的字符串
-     * @return
-     * 		MD5加密后生成32位(大写字母+数字)字符串
+     * @param plainText 传入要加密的字符串
+     * @return MD5加密后生成32位(大写字母 + 数字)字符串
      */
     public static String MD5Upper(String plainText) {
         try {
@@ -75,14 +69,11 @@ public class MD5Utils {
     }
 
     /**
-     *   对字符串 MD5 加盐值加密
+     * 对字符串 MD5 加盐值加密
      *
-     * @param plainText
-     * 		传入要加密的字符串
-     * @param saltValue
-     * 		传入要加的盐值
-     * @return
-     *  	MD5加密后生成32位(小写字母+数字)字符串
+     * @param plainText 传入要加密的字符串
+     * @param saltValue 传入要加的盐值
+     * @return MD5加密后生成32位(小写字母 + 数字)字符串
      */
     public static String MD5Lower(String plainText, String saltValue) {
         try {
@@ -95,7 +86,7 @@ public class MD5Utils {
 
             // digest()最后确定返回md5 hash值，返回值为8位字符串。因为md5 hash值是16位的hex值，实际上就是8位的字符
             // BigInteger函数则将8位的字符串转换成16位hex值，用字符串来表示；得到字符串形式的hash值。1 固定值
-            return new BigInteger(1,  md.digest()).toString(16);
+            return new BigInteger(1, md.digest()).toString(16);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
             return null;
@@ -103,14 +94,11 @@ public class MD5Utils {
     }
 
     /**
-     *   对字符串 MD5 加盐值加密
+     * 对字符串 MD5 加盐值加密
      *
-     * @param plainText
-     * 		传入要加密的字符串
-     * @param saltValue
-     * 		传入要加的盐值
-     * @return
-     *  	MD5加密后生成32位(大写字母+数字)字符串
+     * @param plainText 传入要加密的字符串
+     * @param saltValue 传入要加的盐值
+     * @return MD5加密后生成32位(大写字母 + 数字)字符串
      */
     public static String MD5Upper(String plainText, String saltValue) {
         try {
@@ -140,8 +128,8 @@ public class MD5Utils {
     }
 
     /**
-     *  MD5加密后生成32位(小写字母+数字)字符串
-     *    同 MD5Lower() 一样
+     * MD5加密后生成32位(小写字母+数字)字符串
+     * 同 MD5Lower() 一样
      */
     public final static String MD5(String plainText) {
         try {
@@ -165,12 +153,10 @@ public class MD5Utils {
     }
 
     /**
-     *  校验MD5码
+     * 校验MD5码
      *
-     * @param text
-     *      	要校验的字符串
-     * @param md5
-     *            md5值
+     * @param text 要校验的字符串
+     * @param md5  md5值
      * @return 校验结果
      */
     public static boolean valid(String text, String md5) {
@@ -180,6 +166,7 @@ public class MD5Utils {
 
     /**
      * 测试
+     *
      * @param args
      */
     public static void main(String[] args) {
@@ -192,7 +179,7 @@ public class MD5Utils {
         System.out.println(MD5Upper(plainText, saltValue));
         System.out.println(MD5(plainText));
         System.out.println("=====校验结果======");
-        System.out.println(valid(plainText,MD5(plainText)));
+        System.out.println(valid(plainText, MD5(plainText)));
 
     }
 }

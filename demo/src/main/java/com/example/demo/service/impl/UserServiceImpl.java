@@ -15,14 +15,14 @@ public class UserServiceImpl implements UserService {
 
     //查询用户表中最大的ID
     @Override
-    public Long getMaxUserId(){
+    public Long getMaxUserId() {
         return userMapper.getMaxUserId();
     }
 
     //通过电话号码查询用户
     @Override
-    public User findByPhone(String userPhone) {
-        return userMapper.findByPhone(userPhone);
+    public User findByEmail(String userEmail) {
+        return userMapper.findByEmail(userEmail);
     }
 
     //用户注册
@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
         String md5String = MD5Utils.MD5Upper(user.getUserPassword());
         user.setUserPassword(md5String);
         //添加
-        user.setUserId(getMaxUserId()+1);
+        user.setUserId(getMaxUserId() + 1);
         userMapper.add(user);
         System.out.println("添加成功");
     }

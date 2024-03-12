@@ -8,7 +8,7 @@ public interface UserService {
     Long getMaxUserId();
 
     //通过电话号码查询用户
-    User findByPhone(String userPhone);
+    User findByEmail(String userEmail);
 
     //用户注册
     void register(User user);

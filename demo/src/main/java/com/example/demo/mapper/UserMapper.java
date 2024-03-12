@@ -13,12 +13,11 @@ public interface UserMapper {
     Long getMaxUserId();
 
     //通过电话号码查询用户
-    @Select("select * from user where user_phone = #{userPhone}")
-    User findByPhone(String userPhone);
+    @Select("select * from user where user_email = #{userEmail}")
+    User findByEmail(String userEmail);
 
     //用户注册
-    @Insert("INSERT INTO user(user_id,user_phone,user_password)" +
-            " VALUES (#{userId},#{userPhone}, #{userPassword})")
+    @Insert("INSERT INTO user(user_id,user_email,user_password)" + " VALUES (#{userId},#{userEmail},#{userPassword})")
     void add(User user);
 
 }

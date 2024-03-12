@@ -15,18 +15,18 @@ public class Result<T> {
     private T data; //响应数据
 
     //快速返回操作成功的带数据的响应结果
-    public static <E> Result<E> success(E data){
-        return new Result<>(0,"操作成功",data);
+    public static <E> Result<E> success(E data) {
+        return new Result<>(0, "操作成功", data);
     }
 
     //快速返回操作成功的响应结果
-    public static Result success(){
-        return new Result<>(0,"操作成功",null);
+    public static Result success() {
+        return new Result<>(0, "操作成功", null);
     }
 
     //快速返回操作失败的响应结果
-    public static Result error(String message){
-        return new Result<>(1,message,null);
+    public static Result error(String message) {
+        return new Result<>(1, message, null);
     }
 
 }

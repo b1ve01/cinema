@@ -4,6 +4,17 @@ spring:
     url: jdbc:mysql://localhost:3306/cinema
     username: root
     password: admin
+  mail:
+    host: smtp.qq.com
+    username: 1203610735@qq.com
+    password: bazyflsssxnrbahb
+    default-encoding: UTF-8
+    port: 465
+    properties:
+      mail:
+        smtp:
+          ssl:
+            enable: true
 
 mybatis:
   configuration:
