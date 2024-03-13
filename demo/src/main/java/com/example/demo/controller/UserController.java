@@ -5,15 +5,13 @@ import com.example.demo.pojo.User;
 import com.example.demo.service.UserService;
 import com.example.demo.utils.JwtUtils;
 import com.example.demo.utils.MD5Utils;
+import com.example.demo.utils.ThreadLocalUtil;
 import jakarta.annotation.Resource;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.Instant;
 import java.util.HashMap;
@@ -109,19 +107,29 @@ public class UserController {
     //用户登录
     @PostMapping("/login")
     public Result<String> login(@RequestBody User user){
-        User u=userService.findByEmail(user.getUserEmail());
-        if(u==null){
+        User temp_u=userService.findByEmail(user.getUserEmail());
+        if(temp_u==null){
             return Result.error("用户不存在");
         }
         String md5String = MD5Utils.MD5Upper(user.getUserPassword());
-        if(u.getUserPassword().equals(md5String)){
+        if(temp_u.getUserPassword().equals(md5String)){
             Map<String,Object> claims = new HashMap<>();
-            claims.put("userId",u.getUserId());
-            claims.put("userEmail",u.getUserEmail());
+            claims.put("userId",temp_u.getUserId());
+            claims.put("userEmail",temp_u.getUserEmail());
             String token = JwtUtils.genToken(claims);
             return Result.success(token);
         }
         return Result.error("密码错误");
+    }
+
+    //查询用户信息
+    @GetMapping("/info")
+    public Result<User> info(){
+        //根据用户email查询用户
+        Map<String, Object> map = ThreadLocalUtil.get();
+        String userEmail = (String) map.get("userEmail");
+        User user = userService.findByEmail(userEmail);
+        return Result.success(user);
     }
 
 }
