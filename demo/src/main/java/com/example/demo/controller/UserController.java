@@ -117,7 +117,7 @@ public class UserController {
         if(u.getUserPassword().equals(md5String)){
             Map<String,Object> claims = new HashMap<>();
             claims.put("userId",u.getUserId());
-            claims.put("userPhone",u.getUserEmail());
+            claims.put("userEmail",u.getUserEmail());
             String token = JwtUtils.genToken(claims);
             return Result.success(token);
         }
