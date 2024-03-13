@@ -3,6 +3,8 @@ package com.example.demo.controller;
 import com.example.demo.pojo.Result;
 import com.example.demo.pojo.User;
 import com.example.demo.service.UserService;
+import com.example.demo.utils.JwtUtils;
+import com.example.demo.utils.MD5Utils;
 import jakarta.annotation.Resource;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.Instant;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -55,6 +58,25 @@ public class UserController {
         Codes.put(userEmail, new CodeInfo(code, Instant.now()));
     }
 
+    //发送邮箱验证码
+    @PostMapping("/sendEmail")
+    public Result<String> sendEmail(@RequestBody User user) {
+        String from = "1203610735@qq.com";
+        String subject = "验证 Cinema ID 邮箱地址";
+        String code = RandomStringUtils.randomNumeric(6);
+        saveCode(user.getUserEmail(), code); // 保存验证码及生成时间
+        String text = "您已选用此邮箱地址作为新的 Cinema ID 。要验证此邮箱地址的拥有权，请在邮箱验证页面输入以下验证码：\n\n" + code + "\n\n" + "验证码将会在两分钟后失效。";
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom(from);
+        message.setTo(user.getUserEmail());
+        message.setSubject(subject);
+        message.setText(text);
+        javaMailSender.send(message);
+        System.out.println(Codes.get(user.getUserEmail()).getCode());
+        System.out.println(Codes.get(user.getUserEmail()).getGenerationTime());
+        return Result.success(code);
+    }
+
     //用户注册
     @PostMapping("/register")
     public Result<User> register(@RequestBody User user, String code) {
@@ -84,23 +106,22 @@ public class UserController {
         }
     }
 
-    //发送邮箱验证码
-    @PostMapping("/sendEmail")
-    public Result<String> sendEmail(@RequestBody User user) {
-        String from = "1203610735@qq.com";
-        String subject = "验证 Cinema ID 邮箱地址";
-        String code = RandomStringUtils.randomNumeric(6);
-        saveCode(user.getUserEmail(), code); // 保存验证码及生成时间
-        String text = "您已选用此邮箱地址作为新的 Cinema ID 。要验证此邮箱地址的拥有权，请在邮箱验证页面输入以下验证码：\n\n" + code + "\n\n" + "验证码将会在两分钟后失效。";
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom(from);
-        message.setTo(user.getUserEmail());
-        message.setSubject(subject);
-        message.setText(text);
-        javaMailSender.send(message);
-        System.out.println(Codes.get(user.getUserEmail()).getCode());
-        System.out.println(Codes.get(user.getUserEmail()).getGenerationTime());
-        return Result.success(code);
+    //用户登录
+    @PostMapping("/login")
+    public Result<String> login(@RequestBody User user){
+        User u=userService.findByEmail(user.getUserEmail());
+        if(u==null){
+            return Result.error("用户不存在");
+        }
+        String md5String = MD5Utils.MD5Upper(user.getUserPassword());
+        if(u.getUserPassword().equals(md5String)){
+            Map<String,Object> claims = new HashMap<>();
+            claims.put("userId",u.getUserId());
+            claims.put("userPhone",u.getUserEmail());
+            String token = JwtUtils.genToken(claims);
+            return Result.success(token);
+        }
+        return Result.error("密码错误");
     }
 
 }
