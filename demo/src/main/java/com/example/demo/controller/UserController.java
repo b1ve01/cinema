@@ -79,14 +79,14 @@ public class UserController {
     @PostMapping("/register")
     public Result<User> register(@RequestBody User user, String code) {
         //查询用户
-        User temp_u = userService.findByEmail(user.getUserEmail());
-        if (temp_u == null) {
+        User temp_user = userService.findByEmail(user.getUserEmail());
+        if (temp_user == null) {
             CodeInfo codeInfo = Codes.get(user.getUserEmail());
             if (codeInfo != null && codeInfo.getCode().equals(code)) {
                 Instant currentTime = Instant.now();
                 Instant codeTime = codeInfo.getGenerationTime();
                 //验证码生成时的时间和现在时间的时间差
-                Long time = currentTime.getEpochSecond() - codeTime.getEpochSecond();
+                long time = currentTime.getEpochSecond() - codeTime.getEpochSecond();
                 System.out.println(time);
                 //验证码有效
                 if (time <= 120) {
@@ -107,15 +107,14 @@ public class UserController {
     //用户登录
     @PostMapping("/login")
     public Result<String> login(@RequestBody User user){
-        User temp_u=userService.findByEmail(user.getUserEmail());
-        if(temp_u==null){
+        User temp_user=userService.findByEmail(user.getUserEmail());
+        if(temp_user==null){
             return Result.error("用户不存在");
         }
         String md5String = MD5Utils.MD5Upper(user.getUserPassword());
-        if(temp_u.getUserPassword().equals(md5String)){
+        if(temp_user.getUserPassword().equals(md5String)){
             Map<String,Object> claims = new HashMap<>();
-            claims.put("userId",temp_u.getUserId());
-            claims.put("userEmail",temp_u.getUserEmail());
+            claims.put("userId",temp_user.getUserId());
             String token = JwtUtils.genToken(claims);
             return Result.success(token);
         }
@@ -125,11 +124,26 @@ public class UserController {
     //查询用户信息
     @GetMapping("/info")
     public Result<User> info(){
-        //根据用户email查询用户
+        //根据userId查询用户
         Map<String, Object> map = ThreadLocalUtil.get();
-        String userEmail = (String) map.get("userEmail");
-        User user = userService.findByEmail(userEmail);
+        Integer temp_userId = (Integer) map.get("userId");
+        long userId=temp_userId.longValue();
+        User user = userService.findById(userId);
         return Result.success(user);
+    }
+
+    //更新用户名字，电话和简介信息
+    @PutMapping("/update")
+    public Result<User> update(@RequestBody User user){
+        Map<String, Object> map = ThreadLocalUtil.get();
+        Integer temp_userId = (Integer) map.get("userId");
+        long userId=temp_userId.longValue();
+        User temp_user = userService.findById(userId);
+        temp_user.setUserName(user.getUserName());
+        temp_user.setUserPhone(user.getUserPhone());
+        temp_user.setUserProfile(user.getUserProfile());
+        userService.update(temp_user);
+        return Result.success(temp_user);
     }
 
 }

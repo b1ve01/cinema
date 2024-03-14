@@ -13,13 +13,19 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
 
+    //通过userId查询用户
+    @Override
+    public User findById(long userId) {
+        return userMapper.findById(userId);
+    }
+
     //查询用户表中最大的ID
     @Override
-    public Long getMaxUserId() {
+    public long getMaxUserId() {
         return userMapper.getMaxUserId();
     }
 
-    //通过电话号码查询用户
+    //通过userEmail查询用户
     @Override
     public User findByEmail(String userEmail) {
         return userMapper.findByEmail(userEmail);
@@ -35,6 +41,12 @@ public class UserServiceImpl implements UserService {
         user.setUserId(getMaxUserId() + 1);
         userMapper.add(user);
         System.out.println("添加成功");
+    }
+
+    //更新用户名字，电话和简介信息
+    @Override
+    public void update(User user) {
+        userMapper.update(user);
     }
 
 }
