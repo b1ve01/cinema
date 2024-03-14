@@ -43,10 +43,14 @@ public class UserServiceImpl implements UserService {
         System.out.println("添加成功");
     }
 
-    //更新用户名字，电话和简介信息
+    //更新userName，userPhone和userProfile
     @Override
     public void update(User user) {
         userMapper.update(user);
     }
+
+    //更新userUrl
+    @Override
+    public void updateUserUrl(User user){userMapper.updateUserUrl(user);}
 
 }

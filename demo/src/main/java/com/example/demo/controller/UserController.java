@@ -132,7 +132,7 @@ public class UserController {
         return Result.success(user);
     }
 
-    //更新用户名字，电话和简介信息
+    //更新userName，userPhone和userProfile
     @PutMapping("/update")
     public Result<User> update(@RequestBody User user){
         Map<String, Object> map = ThreadLocalUtil.get();
@@ -145,5 +145,18 @@ public class UserController {
         userService.update(temp_user);
         return Result.success(temp_user);
     }
+
+    //更新userUrl
+    @PatchMapping("/updateUserUrl")
+    public Result<User> updateUserUrl(@RequestBody User user){
+        Map<String, Object> map = ThreadLocalUtil.get();
+        Integer temp_userId = (Integer) map.get("userId");
+        long userId=temp_userId.longValue();
+        User temp_user = userService.findById(userId);
+        temp_user.setUserUrl(user.getUserUrl());
+        userService.updateUserUrl(temp_user);
+        return Result.success(temp_user);
+    }
+
 
 }

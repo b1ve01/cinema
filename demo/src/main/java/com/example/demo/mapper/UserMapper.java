@@ -25,8 +25,12 @@ public interface UserMapper {
     @Insert("INSERT INTO user(user_id,user_email,user_password)" + " VALUES (#{userId},#{userEmail},#{userPassword})")
     void add(User user);
 
-    //更新用户名字，电话和简介信息
+    //更新userName，userPhone和userProfile
     @Update("update user set user_name=#{userName},user_phone=#{userPhone},user_profile=#{userProfile} where user_id = #{userId}")
     void update(User user);
+
+    //更新userUrl
+    @Update("update user set user_url=#{userUrl} where user_id = #{userId}")
+    void updateUserUrl(User user);
 
 }

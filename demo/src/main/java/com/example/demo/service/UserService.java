@@ -16,7 +16,10 @@ public interface UserService {
     //用户注册
     void register(User user);
 
-    //更新用户名字，电话和简介信息
+    //更新userName，userPhone和userProfile
     void update(User user);
+
+    //更新userUrl
+    void updateUserUrl(User user);
 
 }
