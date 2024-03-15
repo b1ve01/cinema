@@ -54,15 +54,27 @@ public class UserServiceImpl implements UserService {
 
     //更新userUrl
     @Override
-    public void updateUserUrl(User user){userMapper.updateUserUrl(user);}
+    public void updateUrl(User user){userMapper.updateUrl(user);}
 
     //更新userPassword（记得原密码）
     @Override
-    public void updateUserPassword(String new_password){
+    public void updatePassword(String new_password){
         Map<String, Object> map = ThreadLocalUtil.get();
         Integer temp_userId = (Integer) map.get("userId");
         long userId=temp_userId.longValue();
-        userMapper.updateUserPassword(MD5Utils.MD5Upper(new_password),userId);
+        userMapper.updatePassword(MD5Utils.MD5Upper(new_password),userId);
     }
+
+    //更新userPasswordByUserEmail
+    @Override
+    public void updatePasswordByEmail(User user){
+        String md5String = MD5Utils.MD5Upper(user.getUserPassword());
+        user.setUserPassword(md5String);
+        userMapper.updatePasswordByEmail(user);
+    }
+
+    //更新userEmail
+    @Override
+    public void updateEmail(User user){userMapper.updateEmail(user);}
 
 }

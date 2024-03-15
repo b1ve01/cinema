@@ -31,10 +31,18 @@ public interface UserMapper {
 
     //更新userUrl
     @Update("update user set user_url=#{userUrl} where user_id = #{userId}")
-    void updateUserUrl(User user);
+    void updateUrl(User user);
 
     //更新userPassword（记得原密码）
     @Update("update user set user_password = #{new_password} where user_id = #{userId}")
-    void updateUserPassword(String new_password, long userId);
+    void updatePassword(String new_password, long userId);
+
+    //更新userPasswordByUserEmail
+    @Update("update user set user_password=#{userPassword} where user_id = #{userId}")
+    void updatePasswordByEmail(User user);
+
+    //更新userEmail
+    @Update("update user set user_email=#{userEmail} where user_id = #{userId}")
+    void updateEmail(User user);
 
 }

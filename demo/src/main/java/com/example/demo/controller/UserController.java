@@ -148,20 +148,20 @@ public class UserController {
     }
 
     //更新userUrl
-    @PatchMapping("/updateUserUrl")
-    public Result<User> updateUserUrl(@RequestBody User user){
+    @PatchMapping("/updateUrl")
+    public Result<User> updateUrl(@RequestBody User user){
         Map<String, Object> map = ThreadLocalUtil.get();
         Integer temp_userId = (Integer) map.get("userId");
         long userId=temp_userId.longValue();
         User temp_user = userService.findById(userId);
         temp_user.setUserUrl(user.getUserUrl());
-        userService.updateUserUrl(temp_user);
+        userService.updateUrl(temp_user);
         return Result.success(temp_user);
     }
 
     //更新userPassword（记得原密码）
-    @PatchMapping("/updateUserPassword")
-    public Result<User> updateUserPassword(@RequestBody Map<String,String> params){
+    @PatchMapping("/updatePassword")
+    public Result<User> updatePassword(@RequestBody Map<String,String> params){
         //更新用户密码
         //1.校验参数
         String old_password = params.get("old_password");
@@ -186,9 +186,74 @@ public class UserController {
         }
 
         //2.调用service完成密码更新
-        userService.updateUserPassword(new_password);
+        userService.updatePassword(new_password);
         return Result.success(temp_user);
     }
 
+    //更新userPasswordByUserEmail
+    @PatchMapping("/updatePasswordByEmail")
+    public Result<User> updatePasswordByEmail(@RequestBody User user,String code){
+        //查询用户
+        User temp_user = userService.findByEmail(user.getUserEmail());
+        String new_password=user.getUserPassword();
+        if (temp_user != null) {
+            CodeInfo codeInfo = Codes.get(user.getUserEmail());
+            if (codeInfo != null && codeInfo.getCode().equals(code)) {
+                Instant currentTime = Instant.now();
+                Instant codeTime = codeInfo.getGenerationTime();
+                //验证码生成时的时间和现在时间的时间差
+                long time = currentTime.getEpochSecond() - codeTime.getEpochSecond();
+                System.out.println(time);
+                //验证码有效
+                if (time <= 120) {
+                    //更新密码
+                    temp_user.setUserPassword(new_password);
+                    userService.updatePasswordByEmail(temp_user);
+                    return Result.success(temp_user);
+                } else {
+                    return Result.error("验证码已过期");
+                }
+            } else {
+                return Result.error("验证码无效");
+            }
+        } else {
+            return Result.error("用户不存在，请先注册");
+        }
+    }
+
+    //更新userEmail
+    @PatchMapping("/updateEmail")
+    public Result<User> updateEmail(@RequestBody User user,String code){
+        //查询用户
+        User temp_user = userService.findByEmail(user.getUserEmail());
+        String new_email=user.getUserEmail();
+        if (temp_user == null) {
+            CodeInfo codeInfo = Codes.get(user.getUserEmail());
+            if (codeInfo != null && codeInfo.getCode().equals(code)) {
+                Instant currentTime = Instant.now();
+                Instant codeTime = codeInfo.getGenerationTime();
+                //验证码生成时的时间和现在时间的时间差
+                long time = currentTime.getEpochSecond() - codeTime.getEpochSecond();
+                System.out.println(time);
+                //验证码有效
+                if (time <= 120) {
+                    //更新邮箱
+                    Map<String, Object> map = ThreadLocalUtil.get();
+                    Integer temp_userId = (Integer) map.get("userId");
+                    long userId=temp_userId.longValue();
+                    User temp_user_update_email = userService.findById(userId);
+                    temp_user_update_email.setUserEmail(new_email);
+                    userService.updateEmail(temp_user_update_email);
+                    return Result.success(temp_user_update_email);
+                } else {
+                    return Result.error("验证码已过期");
+                }
+            } else {
+                return Result.error("验证码无效");
+            }
+        } else {
+            return Result.error("用户已存在");
+        }
+    }
 
 }

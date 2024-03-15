@@ -20,9 +20,15 @@ public interface UserService {
     void update(User user);
 
     //更新userUrl
-    void updateUserUrl(User user);
+    void updateUrl(User user);
 
     //更新userPassword（记得原密码）
-    void updateUserPassword(String new_password);
+    void updatePassword(String new_password);
+
+    //更新userPasswordByUserEmail
+    void updatePasswordByEmail(User user);
+
+    //更新userEmail
+    void updateEmail(User user);
 
 }
