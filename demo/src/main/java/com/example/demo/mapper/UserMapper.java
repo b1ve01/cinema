@@ -33,4 +33,8 @@ public interface UserMapper {
     @Update("update user set user_url=#{userUrl} where user_id = #{userId}")
     void updateUserUrl(User user);
 
+    //更新userPassword（记得原密码）
+    @Update("update user set user_password = #{new_password} where user_id = #{userId}")
+    void updateUserPassword(String new_password, long userId);
+
 }

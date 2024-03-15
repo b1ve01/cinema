@@ -11,6 +11,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Instant;
@@ -155,6 +156,37 @@ public class UserController {
         User temp_user = userService.findById(userId);
         temp_user.setUserUrl(user.getUserUrl());
         userService.updateUserUrl(temp_user);
+        return Result.success(temp_user);
+    }
+
+    //更新userPassword（记得原密码）
+    @PatchMapping("/updateUserPassword")
+    public Result<User> updateUserPassword(@RequestBody Map<String,String> params){
+        //更新用户密码
+        //1.校验参数
+        String old_password = params.get("old_password");
+        String new_password = params.get("new_password");
+        String re_password = params.get("re_password");
+
+        if (!StringUtils.hasLength(old_password) || !StringUtils.hasLength(new_password)|| !StringUtils.hasLength(re_password)){
+            return Result.error("缺少必要的参数");
+        }
+
+        Map<String, Object> map = ThreadLocalUtil.get();
+        Integer temp_userId = (Integer) map.get("userId");
+        long userId=temp_userId.longValue();
+        User temp_user = userService.findById(userId);
+
+        if (!temp_user.getUserPassword().equals(MD5Utils.MD5Upper(old_password))){
+            return Result.error("原密码错误");
+        }
+
+        if (!new_password.equals(re_password)){
+            return Result.error("两次输入的新密码不一致");
+        }
+
+        //2.调用service完成密码更新
+        userService.updateUserPassword(new_password);
         return Result.success(temp_user);
     }
 

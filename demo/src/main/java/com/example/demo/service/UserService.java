@@ -22,4 +22,7 @@ public interface UserService {
     //更新userUrl
     void updateUserUrl(User user);
 
+    //更新userPassword（记得原密码）
+    void updateUserPassword(String new_password);
+
 }

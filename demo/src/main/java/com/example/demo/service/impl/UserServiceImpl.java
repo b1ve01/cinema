@@ -4,8 +4,11 @@ import com.example.demo.mapper.UserMapper;
 import com.example.demo.pojo.User;
 import com.example.demo.service.UserService;
 import com.example.demo.utils.MD5Utils;
+import com.example.demo.utils.ThreadLocalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -52,5 +55,14 @@ public class UserServiceImpl implements UserService {
     //更新userUrl
     @Override
     public void updateUserUrl(User user){userMapper.updateUserUrl(user);}
+
+    //更新userPassword（记得原密码）
+    @Override
+    public void updateUserPassword(String new_password){
+        Map<String, Object> map = ThreadLocalUtil.get();
+        Integer temp_userId = (Integer) map.get("userId");
+        long userId=temp_userId.longValue();
+        userMapper.updateUserPassword(MD5Utils.MD5Upper(new_password),userId);
+    }
 
 }
