@@ -3,12 +3,14 @@ package com.example.demo.controller;
 import com.example.demo.pojo.Result;
 import com.example.demo.pojo.User;
 import com.example.demo.service.UserService;
-import com.example.demo.utils.JwtUtils;
-import com.example.demo.utils.MD5Utils;
+import com.example.demo.utils.JwtUtil;
+import com.example.demo.utils.MD5Util;
 import com.example.demo.utils.ThreadLocalUtil;
 import jakarta.annotation.Resource;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.util.StringUtils;
@@ -18,6 +20,7 @@ import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
 
 
 @RestController
@@ -26,6 +29,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
 
     @Resource
     private JavaMailSender javaMailSender;
@@ -112,11 +118,14 @@ public class UserController {
         if(temp_user==null){
             return Result.error("用户不存在");
         }
-        String md5String = MD5Utils.MD5Upper(user.getUserPassword());
+        String md5String = MD5Util.MD5Upper(user.getUserPassword());
         if(temp_user.getUserPassword().equals(md5String)){
             Map<String,Object> claims = new HashMap<>();
             claims.put("userId",temp_user.getUserId());
-            String token = JwtUtils.genToken(claims);
+            String token = JwtUtil.genToken(claims);
+            //把token存储到redis中
+            ValueOperations<String, String> operations = stringRedisTemplate.opsForValue();
+            operations.set(token,token,60, TimeUnit.HOURS);
             return Result.success(token);
         }
         return Result.error("密码错误");
@@ -161,7 +170,7 @@ public class UserController {
 
     //更新userPassword（记得原密码）
     @PatchMapping("/updatePassword")
-    public Result<User> updatePassword(@RequestBody Map<String,String> params){
+    public Result<User> updatePassword(@RequestBody Map<String,String> params,@RequestHeader("Authorization") String token){
         //更新用户密码
         //1.校验参数
         String old_password = params.get("old_password");
@@ -177,7 +186,7 @@ public class UserController {
         long userId=temp_userId.longValue();
         User temp_user = userService.findById(userId);
 
-        if (!temp_user.getUserPassword().equals(MD5Utils.MD5Upper(old_password))){
+        if (!temp_user.getUserPassword().equals(MD5Util.MD5Upper(old_password))){
             return Result.error("原密码错误");
         }
 
@@ -187,12 +196,15 @@ public class UserController {
 
         //2.调用service完成密码更新
         userService.updatePassword(new_password);
+        //删除redis中对应的token
+        ValueOperations<String, String> operations = stringRedisTemplate.opsForValue();
+        operations.getOperations().delete(token);
         return Result.success(temp_user);
     }
 
     //更新userPasswordByUserEmail
     @PatchMapping("/updatePasswordByEmail")
-    public Result<User> updatePasswordByEmail(@RequestBody User user,String code){
+    public Result<User> updatePasswordByEmail(@RequestBody User user,String code,@RequestHeader("Authorization") String token){
         //查询用户
         User temp_user = userService.findByEmail(user.getUserEmail());
         String new_password=user.getUserPassword();
@@ -209,6 +221,9 @@ public class UserController {
                     //更新密码
                     temp_user.setUserPassword(new_password);
                     userService.updatePasswordByEmail(temp_user);
+                    //删除redis中对应的token
+                    ValueOperations<String, String> operations = stringRedisTemplate.opsForValue();
+                    operations.getOperations().delete(token);
                     return Result.success(temp_user);
                 } else {
                     return Result.error("验证码已过期");

@@ -3,7 +3,7 @@ package com.example.demo.service.impl;
 import com.example.demo.mapper.UserMapper;
 import com.example.demo.pojo.User;
 import com.example.demo.service.UserService;
-import com.example.demo.utils.MD5Utils;
+import com.example.demo.utils.MD5Util;
 import com.example.demo.utils.ThreadLocalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void register(User user) {
         //加密密码
-        String md5String = MD5Utils.MD5Upper(user.getUserPassword());
+        String md5String = MD5Util.MD5Upper(user.getUserPassword());
         user.setUserPassword(md5String);
         //添加
         user.setUserId(getMaxUserId() + 1);
@@ -62,13 +62,13 @@ public class UserServiceImpl implements UserService {
         Map<String, Object> map = ThreadLocalUtil.get();
         Integer temp_userId = (Integer) map.get("userId");
         long userId=temp_userId.longValue();
-        userMapper.updatePassword(MD5Utils.MD5Upper(new_password),userId);
+        userMapper.updatePassword(MD5Util.MD5Upper(new_password),userId);
     }
 
     //更新userPasswordByUserEmail
     @Override
     public void updatePasswordByEmail(User user){
-        String md5String = MD5Utils.MD5Upper(user.getUserPassword());
+        String md5String = MD5Util.MD5Upper(user.getUserPassword());
         user.setUserPassword(md5String);
         userMapper.updatePasswordByEmail(user);
     }
