@@ -2353,7 +2353,7 @@
   border-color: #e9e9eb;
 }
 page {
-  background-color: #f5f5f5;
+  background-color: #010101;
 }
 .example-info {
   font-size: 14px;

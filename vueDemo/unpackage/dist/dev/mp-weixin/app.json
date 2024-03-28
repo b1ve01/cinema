@@ -1,23 +1,36 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/user/login"
+    "pages/user/login",
+    "pages/cinema",
+    "pages/user/register"
   ],
   "window": {
     "navigationBarTextStyle": "white",
-    "navigationBarTitleText": "uni-app",
-    "navigationBarBackgroundColor": "#010101",
-    "backgroundColor": "#F8F8F8"
+    "navigationBarBackgroundColor": "#010101"
   },
   "tabBar": {
+    "backgroundColor": "#010101",
+    "color": "#999999",
+    "selectedColor": "#ffffff",
     "list": [
       {
         "pagePath": "pages/index/index",
-        "text": "首页"
+        "text": "首页",
+        "iconPath": "static/ClarityHomeLine.png",
+        "selectedIconPath": "static/ClarityHomeSolid.png"
       },
       {
-        "pagePath": "pages/user/login",
-        "text": "我的"
+        "pagePath": "pages/cinema",
+        "text": "电影",
+        "iconPath": "static/PhFilmStrip.png",
+        "selectedIconPath": "static/PhFilmStripFill.png"
+      },
+      {
+        "pagePath": "pages/user/register",
+        "text": "我的",
+        "iconPath": "static/OcticonPerson16.png",
+        "selectedIconPath": "static/OcticonPersonFill16.png"
       }
     ]
   },
