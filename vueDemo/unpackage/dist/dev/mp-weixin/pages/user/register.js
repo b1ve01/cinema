@@ -1,5 +1,62 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
+const _sfc_main = {
+  data() {
+    return {
+      // 校验表单数据
+      valiFormData: {
+        userEmail: "",
+        userPassword: "",
+        code: ""
+      },
+      // 校验规则
+      rules: {
+        userEmail: {
+          rules: [{
+            required: true,
+            errorMessage: "邮箱不能为空"
+          }]
+        },
+        userPassword: {
+          rules: [{
+            required: true,
+            errorMessage: "密码不能为空"
+          }]
+        },
+        code: {
+          rules: [{
+            required: true,
+            errorMessage: "验证码不能为空"
+          }]
+        }
+      }
+    };
+  },
+  methods: {
+    //submit函数
+    submit(ref) {
+      let user = {
+        "userEmail": this.valiFormData.userEmail,
+        "userPassword": this.valiFormData.userPassword,
+        "code": this.valiFormData.code
+      };
+      console.log(user);
+      common_vendor.index.request({
+        url: "http://localhost:8080/user/register",
+        method: "POST",
+        dataType: "json",
+        data: user,
+        success(res) {
+          console.log("成功", res.data);
+        },
+        fail: (res) => {
+          console.log(res.errMsg);
+          console.log("调用接口失败");
+        }
+      });
+    }
+  }
+};
 if (!Array) {
   const _easycom_uni_easyinput2 = common_vendor.resolveComponent("uni-easyinput");
   const _easycom_uni_forms_item2 = common_vendor.resolveComponent("uni-forms-item");
@@ -14,80 +71,50 @@ const _easycom_uni_section = () => "../../uni_modules/uni-section/components/uni
 if (!Math) {
   (_easycom_uni_easyinput + _easycom_uni_forms_item + _easycom_uni_forms + _easycom_uni_section)();
 }
-const _sfc_main = {
-  __name: "register",
-  setup(__props) {
-    common_vendor.ref("Hello");
-    common_vendor.onReady(() => {
-      console.log("hello");
-    });
-    const valiFormData = common_vendor.ref({
-      userEmail: "",
-      userPassword: "",
-      code: ""
-    });
-    const rules = {
-      userEmail: [{
-        required: true,
-        message: "请输入邮箱",
-        trigger: "blur"
-      }],
-      userPassword: [{
-        required: true,
-        message: "请输入密码",
-        trigger: "blur"
-      }]
-    };
-    const valiForm = common_vendor.ref(null);
-    const submit = async (ref) => {
-      try {
-        const res = await valiForm.value.validate();
-        console.log("success", res);
-        common_vendor.index.showToast({
-          title: `校验通过`
-        });
-      } catch (err) {
-        console.log("err", err);
-      }
-    };
-    return (_ctx, _cache) => {
-      return {
-        a: common_vendor.o(($event) => valiFormData.value.userEmail = $event),
-        b: common_vendor.p({
-          placeholder: "请输入邮箱",
-          modelValue: valiFormData.value.userEmail
-        }),
-        c: common_vendor.p({
-          label: "邮箱",
-          required: true,
-          name: "userEmail"
-        }),
-        d: common_vendor.o(($event) => valiFormData.value.userPassword = $event),
-        e: common_vendor.p({
-          placeholder: "请输入密码",
-          modelValue: valiFormData.value.userPassword
-        }),
-        f: common_vendor.p({
-          label: "密码",
-          required: true,
-          name: "userPassword"
-        }),
-        g: common_vendor.sr(valiForm, "27a91450-1,27a91450-0", {
-          "k": "valiForm"
-        }),
-        h: common_vendor.p({
-          rules,
-          modelValue: valiFormData.value,
-          ["label-position"]: "top"
-        }),
-        i: common_vendor.o(($event) => submit()),
-        j: common_vendor.p({
-          title: "表单校验",
-          type: "line"
-        })
-      };
-    };
-  }
-};
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "E:/Senior_2/cinema/vueDemo/pages/user/register.vue"]]);
+function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
+  return {
+    a: common_vendor.o(($event) => $data.valiFormData.userEmail = $event),
+    b: common_vendor.p({
+      placeholder: "请输入邮箱",
+      modelValue: $data.valiFormData.userEmail
+    }),
+    c: common_vendor.p({
+      label: "邮箱",
+      required: true,
+      name: "userEmail"
+    }),
+    d: common_vendor.o(($event) => $data.valiFormData.userPassword = $event),
+    e: common_vendor.p({
+      placeholder: "请输入密码",
+      modelValue: $data.valiFormData.userPassword
+    }),
+    f: common_vendor.p({
+      label: "密码",
+      required: true,
+      name: "userPassword"
+    }),
+    g: common_vendor.o(($event) => $data.valiFormData.code = $event),
+    h: common_vendor.p({
+      placeholder: "请输入验证码",
+      modelValue: $data.valiFormData.code
+    }),
+    i: common_vendor.p({
+      label: "验证码",
+      required: true,
+      name: "code"
+    }),
+    j: common_vendor.sr("valiForm", "27a91450-1,27a91450-0"),
+    k: common_vendor.p({
+      rules: $data.rules,
+      modelValue: $data.valiFormData,
+      ["label-position"]: "top"
+    }),
+    l: common_vendor.o(($event) => $options.submit("valiForm")),
+    m: common_vendor.p({
+      title: "表单校验",
+      type: "line"
+    })
+  };
+}
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/Senior_2/cinema/vueDemo/pages/user/register.vue"]]);
 wx.createPage(MiniProgramPage);

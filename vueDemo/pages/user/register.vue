@@ -14,90 +14,78 @@
 						<uni-easyinput v-model="valiFormData.code" placeholder="请输入验证码" />
 					</uni-forms-item>
 				</uni-forms>
-				<button type="primary" @click="register">提交</button>
+				<button type="primary" @click="submit('valiForm')">提交</button>
 			</view>
 		</uni-section>
 	</view>
 </template>
 
-<script setup>
-	import {
-		ref
-	} from 'vue'
-	import {
-		onReady
-	} from '@dcloudio/uni-app'
-
-	const title = ref('Hello')
-
-	onReady(() => {
-		console.log('hello')
-	})
-
-	//定义数据模型
-	const valiFormData = ref({
-		userEmail: '',
-		userPassword: '',
-		code: ''
-	})
-
-	//定义表单校验规则
-	const rules = {
-		userEmail: {
-			rules: [{
-				required: true,
-				errorMessage: '邮箱不能为空'
-			}]
-		},
-		userPassword: {
-			rules: [{
-				required: true,
-				errorMessage: '密码不能为空'
-			}]
-		}
-	}
-
-	// 创建表单引用
-	const valiForm = ref(null)
-
-	// 提交函数
-	const submit = (ref) => {
-		valiForm.value.validate().then(res => {
-
-			console.log('success', res);
-			uni.showToast({
-				title: `校验通过`
-			});
-		}).catch(err => {
-			console.log('err', err);
-		});
-	}
-
-
-
-	//调用后台接口,完成注册
-	import {
-		userRegisterService
-	} from '@/api/user.js'
-	const register = async () => {
-		try {
-			//valiFormData是一个响应式对象,如果要获取值,需要.value
-			let result = await userRegisterService(valiFormData.value).then(response => {
-					console.log('请求成功:', response);
-				})
-				.catch(error => {
-					console.error('请求失败:', error);
-				});;
-			if (result.code === 0) {
-				//成功了
-				alert(result.msg ? result.msg : '注册成功');
-			} else {
-				//失败了
-				alert('注册失败')
+<script>
+	export default {
+		data() {
+			return {
+				// 校验表单数据
+				valiFormData: {
+					userEmail: '',
+					userPassword: '',
+				},
+				// 校验规则
+				rules: {
+					userEmail: {
+						rules: [{
+							required: true,
+							errorMessage: '邮箱不能为空'
+						}]
+					},
+					userPassword: {
+						rules: [{
+							required: true,
+							errorMessage: '密码不能为空'
+						}]
+					},
+					code: {
+						rules: [{
+							required: true,
+							errorMessage: '验证码不能为空'
+						}]
+					}
+				}
 			}
-		} catch (error) {
-			console.error('注册接口调用失败:', error);
-			alert('注册接口调用失败，请稍后重试');
+		},
+
+		methods: {
+
+			//submit函数
+			submit(ref) {
+				this.$refs[ref].validate().then(res => {
+					let user = {
+						"userEmail": this.valiFormData.userEmail,
+						"userPassword": this.valiFormData.userPassword,
+						"code": this.valiFormData.code
+					};
+					console.log('user', user);
+
+					uni.request({
+						url: '/api/user/register',
+						method: 'POST',
+						dataType: 'json',
+						data: user,
+						success(res) {
+							console.log('调用成功',res);
+						},
+						fail: (res) => { //如果访问接口失败就会进入fail
+							console.log(res.errMsg)
+							console.log("调用接口失败")
+						}
+					})
+					console.log('success', res);
+					uni.showToast({
+						title: `校验通过`
+					})
+				}).catch(err => {
+					console.log('err', err);
+				})
+			},
 		}
 	}
 </script>

@@ -3547,43 +3547,43 @@ function injectHook(type, hook, target = currentInstance, prepend = false) {
     warn(`${apiName} is called when there is no active component instance to be associated with. Lifecycle injection APIs can only be used during execution of setup().`);
   }
 }
-const createHook$1 = (lifecycle) => (hook, target = currentInstance) => (
+const createHook = (lifecycle) => (hook, target = currentInstance) => (
   // post-create lifecycle registrations are noops during SSR (except for serverPrefetch)
   (!isInSSRComponentSetup || lifecycle === "sp") && injectHook(lifecycle, (...args) => hook(...args), target)
 );
-const onBeforeMount = createHook$1(
+const onBeforeMount = createHook(
   "bm"
   /* LifecycleHooks.BEFORE_MOUNT */
 );
-const onMounted = createHook$1(
+const onMounted = createHook(
   "m"
   /* LifecycleHooks.MOUNTED */
 );
-const onBeforeUpdate = createHook$1(
+const onBeforeUpdate = createHook(
   "bu"
   /* LifecycleHooks.BEFORE_UPDATE */
 );
-const onUpdated = createHook$1(
+const onUpdated = createHook(
   "u"
   /* LifecycleHooks.UPDATED */
 );
-const onBeforeUnmount = createHook$1(
+const onBeforeUnmount = createHook(
   "bum"
   /* LifecycleHooks.BEFORE_UNMOUNT */
 );
-const onUnmounted = createHook$1(
+const onUnmounted = createHook(
   "um"
   /* LifecycleHooks.UNMOUNTED */
 );
-const onServerPrefetch = createHook$1(
+const onServerPrefetch = createHook(
   "sp"
   /* LifecycleHooks.SERVER_PREFETCH */
 );
-const onRenderTriggered = createHook$1(
+const onRenderTriggered = createHook(
   "rtg"
   /* LifecycleHooks.RENDER_TRIGGERED */
 );
-const onRenderTracked = createHook$1(
+const onRenderTracked = createHook(
   "rtc"
   /* LifecycleHooks.RENDER_TRACKED */
 );
@@ -6817,19 +6817,13 @@ const createSubpackageApp = initCreateSubpackageApp();
   wx.createPluginApp = global.createPluginApp = createPluginApp;
   wx.createSubpackageApp = global.createSubpackageApp = createSubpackageApp;
 }
-const createHook = (lifecycle) => (hook, target = getCurrentInstance()) => {
-  !isInSSRComponentSetup && injectHook(lifecycle, hook, target);
-};
-const onReady = /* @__PURE__ */ createHook(ON_READY);
 exports._export_sfc = _export_sfc;
 exports.createSSRApp = createSSRApp;
 exports.e = e;
 exports.index = index;
 exports.n = n;
 exports.o = o;
-exports.onReady = onReady;
 exports.p = p;
-exports.ref = ref;
 exports.resolveComponent = resolveComponent;
 exports.s = s;
 exports.sr = sr;
