@@ -1,22 +1,21 @@
 <template>
 	<view class="login">
-		<uni-section title="表单校验" type="line">
-			<view class="example">
-				<!-- 基础表单校验 -->
-				<uni-forms ref="valiForm" :rules="rules" :modelValue="valiFormData" label-position="top">
-					<uni-forms-item label="邮箱" required name="userEmail">
-						<uni-easyinput v-model="valiFormData.userEmail" placeholder="请输入邮箱" />
-					</uni-forms-item>
-					<uni-forms-item label="密码" required name="userPassword">
-						<uni-easyinput v-model="valiFormData.userPassword" placeholder="请输入密码" />
-					</uni-forms-item>
-					<uni-forms-item label="验证码" required name="code">
-						<uni-easyinput v-model="valiFormData.code" placeholder="请输入验证码" />
-					</uni-forms-item>
-				</uni-forms>
-				<button type="primary" @click="submit('valiForm')">提交</button>
-			</view>
-		</uni-section>
+		<view class="example">
+			<!-- 基础表单校验 -->
+			<uni-forms ref="valiForm" :rules="rules" :modelValue="valiFormData" label-position="top">
+				<uni-forms-item label="邮箱" required name="userEmail">
+					<uni-easyinput v-model="valiFormData.userEmail" placeholder="请输入邮箱" />
+				</uni-forms-item>
+				<uni-forms-item label="密码" required name="userPassword">
+					<uni-easyinput v-model="valiFormData.userPassword" placeholder="请输入密码" />
+				</uni-forms-item>
+				<uni-forms-item label="验证码" required name="code">
+					<uni-easyinput v-model="valiFormData.code" placeholder="请输入验证码" />
+				</uni-forms-item>
+			</uni-forms>
+			<button type="primary" @click="submit('valiForm')">提交</button>
+		</view>
+
 	</view>
 </template>
 
@@ -28,6 +27,7 @@
 				valiFormData: {
 					userEmail: '',
 					userPassword: '',
+					code: '',
 				},
 				// 校验规则
 				rules: {
@@ -35,6 +35,9 @@
 						rules: [{
 							required: true,
 							errorMessage: '邮箱不能为空'
+						}, {
+							format: 'email',
+							errorMessage: '请正确填写邮箱'
 						}]
 					},
 					userPassword: {
@@ -60,18 +63,18 @@
 				this.$refs[ref].validate().then(res => {
 					let user = {
 						"userEmail": this.valiFormData.userEmail,
-						"userPassword": this.valiFormData.userPassword,
-						"code": this.valiFormData.code
+						"userPassword": this.valiFormData.userPassword
 					};
+
 					console.log('user', user);
 
 					uni.request({
-						url: '/api/user/register',
+						url: '/api/user/register?code=' + this.valiFormData.code,
 						method: 'POST',
 						dataType: 'json',
 						data: user,
 						success(res) {
-							console.log('调用成功',res);
+							console.log('调用成功', res.data);
 						},
 						fail: (res) => { //如果访问接口失败就会进入fail
 							console.log(res.errMsg)
@@ -92,5 +95,12 @@
 
 
 <style lang="scss" scoped>
-
+	::v-deep.uni-forms-item {
+		&__label {
+			color: #ffffff ;
+		}
+		.is-required{
+			color:#ffffff;
+		}
+	}
 </style>
