@@ -13,7 +13,7 @@
 					<uni-easyinput v-model="valiFormData.code" placeholder="请输入验证码" />
 				</uni-forms-item>
 			</uni-forms>
-			<button type="primary" @click="submit('valiForm')">提交</button>
+			<button type="primary" @click="submit('valiForm')">注册</button>
 		</view>
 
 	</view>
@@ -61,19 +61,18 @@
 			//submit函数
 			submit(ref) {
 				this.$refs[ref].validate().then(res => {
+					
 					let user = {
 						"userEmail": this.valiFormData.userEmail,
 						"userPassword": this.valiFormData.userPassword
 					};
-
-					console.log('user', user);
 
 					uni.request({
 						url: '/api/user/register?code=' + this.valiFormData.code,
 						method: 'POST',
 						dataType: 'json',
 						data: user,
-						success(res) {
+						success:(res)=> {
 							console.log('调用成功', res.data);
 						},
 						fail: (res) => { //如果访问接口失败就会进入fail
@@ -82,9 +81,9 @@
 						}
 					})
 					console.log('success', res);
-					uni.showToast({
+/* 					uni.showToast({
 						title: `校验通过`
-					})
+					}) */
 				}).catch(err => {
 					console.log('err', err);
 				})

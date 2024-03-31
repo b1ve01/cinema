@@ -113,7 +113,7 @@ public class UserController {
 
     //用户登录
     @PostMapping("/login")
-    public Result<String> login(@RequestBody User user){
+    public Result<User> login(@RequestBody User user){
         User temp_user=userService.findByEmail(user.getUserEmail());
         if(temp_user==null){
             return Result.error("用户不存在");
@@ -126,7 +126,7 @@ public class UserController {
             //把token存储到redis中
             ValueOperations<String, String> operations = stringRedisTemplate.opsForValue();
             operations.set(token,token,60, TimeUnit.HOURS);
-            return Result.success(token);
+            return Result.success(temp_user);
         }
         return Result.error("密码错误");
     }
