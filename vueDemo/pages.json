@@ -25,6 +25,27 @@
 		{
 			"navigationBarTitleText" : "电影"
 		}
+	},
+	{
+		"path" : "pages/user/updateName",
+		"style" : 
+		{
+			"navigationBarTitleText" : "修改名字"
+		}
+	},
+	{
+		"path" : "pages/user/updatePhone",
+		"style" : 
+		{
+			"navigationBarTitleText" : "修改电话"
+		}
+	},
+	{
+		"path" : "pages/user/updateProfile",
+		"style" : 
+		{
+			"navigationBarTitleText" : "修改简介"
+		}
 	}],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",

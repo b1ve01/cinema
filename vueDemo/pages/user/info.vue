@@ -1,25 +1,4 @@
 <template>
-	<!-- 	<view>
-		<text>userId:{{userId}}</text>
-	</view>
-	<view>
-		<text>userName:{{userData.userName}}</text>
-	</view>
-	<view>
-		<text>userEmail:{{userData.userEmail}}</text>
-	</view>
-	<view>
-		<text>userPassword:{{userData.userPassword}}</text>
-	</view>
-	<view>
-		<text>userPhone:{{userData.userPhone}}</text>
-	</view>
-	<view>
-		<text>userUrl:{{userData.userUrl}}</text>
-	</view>
-	<view>
-		<text>userProfile:{{userData.userProfile}}</text>
-	</view> -->
 	<view class="info">
 
 
@@ -30,6 +9,22 @@
 			<uni-file-picker v-if=!this.userData.userUrl limit="1" :del-icon="false" disable-preview
 				:imageStyles="imageStyles" file-mediatype="image" v-model="img_default"
 				@select="update_url"></uni-file-picker>
+		</view>
+
+		<view class="name">
+			<text v-if="this.userData.userName" class="name">
+				{{this.userData.userName}}
+			</text>
+		</view>
+
+
+		<view class="info_box">
+			<uni-list-item :show-extra-icon="true" showArrow :extra-icon="nameIcon" title="名字" clickable
+				@click="to_updateName()" />
+			<uni-list-item :show-extra-icon="true" showArrow :extra-icon="phoneIcon" title="电话" clickable
+				@click="to_updatePhone()" />
+			<uni-list-item :show-extra-icon="true" showArrow :extra-icon="profileIcon" title="简介" clickable
+				@click="to_updateProfile()" />
 		</view>
 
 
@@ -75,16 +70,28 @@
 				img_default: {
 					url: 'https://cinema-bucket.oss-cn-beijing.aliyuncs.com/default.png'
 				},
-
+				nameIcon: {
+					color: '#f9da49',
+					size: '60rpx',
+					type: 'person'
+				},
+				phoneIcon: {
+					color: '#f9da49',
+					size: '60rpx',
+					type: 'phone'
+				},
+				profileIcon: {
+					color: '#f9da49',
+					size: '60rpx',
+					type: 'compose'
+				},
 			}
 		},
 
 		onLoad: function(option) {
 
 			this.userId = uni.getStorageSync("userId");
-			console.log('id在这', this.userId);
 			this.token = uni.getStorageSync("token");
-			console.log('token在这', this.token);
 
 			let user = {
 				"userId": this.userId
@@ -135,7 +142,7 @@
 						let user = {
 							"userUrl": responseData.data
 						};
-						if(responseData.code== 0){
+						if (responseData.code == 0) {
 							uni.request({
 								url: '/api/user/updateUrl',
 								method: 'PATCH',
@@ -144,13 +151,11 @@
 								header: {
 									'Authorization': this.token
 								},
-								success:(res)=>{
+								success: (res) => {
 									console.log(res.data);
-									this.userData.userUrl = res.data.data.userUrl;
-									this.img.url =res.data.data.userUrl;
 									uni.reLaunch({
 										url: '/pages/user/login',
-										success:()=>{
+										success: () => {
 											uni.navigateTo({
 												url: '/pages/user/info',
 											})
@@ -161,8 +166,22 @@
 						}
 					}
 				})
-			}
-
+			},
+			to_updateName() {
+				uni.navigateTo({
+					url: '/pages/user/updateName',
+				});
+			},
+			to_updatePhone() {
+				uni.navigateTo({
+					url: '/pages/user/updatePhone',
+				});
+			},
+			to_updateProfile() {
+				uni.navigateTo({
+					url: '/pages/user/updateProfile',
+				});
+			},
 		}
 	}
 </script>
@@ -175,10 +194,17 @@
 	.info {
 		display: flex;
 		flex-direction: column;
-		align-items: center;
 		justify-content: space-around;
-		height: 100%;
+		height: 80%;
 	}
 
-	.image_box {}
+	.image_box {
+		align-self: center;
+	}
+
+	.name {
+		color: #f9da49;
+		align-self: center;
+		font-size: 50rpx;
+	}
 </style>
