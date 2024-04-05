@@ -105,7 +105,7 @@ const _sfc_main = {
     },
     primaryColor: {
       type: String,
-      default: "#2979ff"
+      default: "#f9da49;"
     },
     styles: {
       type: Object,
@@ -413,7 +413,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     N: $props.type === "textarea" ? 1 : "",
     O: common_vendor.o($options.onEyes),
     P: common_vendor.p({
-      type: $data.showPassword ? "eye-slash-filled" : "eye-filled",
+      type: $data.showPassword ? "eye-filled" : "eye-slash-filled",
       size: 22,
       color: $data.focusShow ? $props.primaryColor : "#c0c4cc"
     })

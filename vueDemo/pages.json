@@ -13,24 +13,17 @@
 		}
 	},
 	{
-		"path" : "pages/cinema",
-		"style" : 
-		{
-			"navigationBarTitleText" : "电影"
-		}
-	},
-	{
-		"path" : "pages/user/register",
+		"path" : "pages/user/info",
 		"style" : 
 		{
 			"navigationBarTitleText" : "我的"
 		}
 	},
 	{
-		"path" : "pages/user/info",
+		"path" : "pages/cinema",
 		"style" : 
 		{
-			"navigationBarTitleText" : ""
+			"navigationBarTitleText" : "电影"
 		}
 	}],
 	"globalStyle": {

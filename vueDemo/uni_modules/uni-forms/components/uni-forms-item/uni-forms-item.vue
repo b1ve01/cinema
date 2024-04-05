@@ -475,7 +475,7 @@
 			align-items: center;
 			text-align: left;
 			font-size: 14px;
-			color: #606266;
+			color: #ffffff;
 			height: 36px;
 			padding: 0 12px 0 0;
 			/* #ifndef APP-NVUE */

@@ -50,7 +50,7 @@
 					v-if="isVal"
 					class="content-clear-icon"
 					:class="{ 'is-textarea-icon': type === 'textarea' }"
-					:type="showPassword ? 'eye-slash-filled' : 'eye-filled'"
+					:type="showPassword ? 'eye-filled' : 'eye-slash-filled'"
 					:size="22"
 					:color="focusShow ? primaryColor : '#c0c4cc'"
 					@click="onEyes"
@@ -225,7 +225,7 @@ export default {
 		},
 		primaryColor: {
 			type: String,
-			default: '#2979ff'
+			default: '#f9da49;'
 		},
 		styles: {
 			type: Object,

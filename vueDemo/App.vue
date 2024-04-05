@@ -21,6 +21,7 @@
 	// 设置整个项目的背景色
 	page {
 		background-color: #010101;
+		height: 100%;
 	}
 
 	/* #endif */

@@ -29,4 +29,8 @@ public class Result<T> {
         return new Result<>(1, message, null);
     }
 
+    public static <E> Result<E> error(String message,E data) {
+        return new Result<>(1, message, data);
+    }
+
 }

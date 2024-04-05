@@ -2,7 +2,7 @@
 	<!-- #ifdef APP-NVUE -->
 	<cell :keep-scroll-position="keepScrollPosition">
 		<!-- #endif -->
-		<view :class="{ 'uni-list-item--disabled': disabled }" :style="{'background-color':customStyle.backgroundColor}"
+		<view :class="{ 'uni-list-item--disabled': disabled }" :style="{'background-color':'#010101'}"
 			:hover-class="(!clickable && !link) || disabled || showSwitch ? '' : 'uni-list-item--hover'"
 			class="uni-list-item" @click="onClick">
 			<view v-if="!isFirstChild" class="border--left" :class="{ 'uni-list--border': border }"></view>
@@ -37,7 +37,7 @@
 					</view>
 				</slot>
 			</view>
-			<uni-icons v-if="showArrow || link" :size="16" class="uni-icon-wrapper" color="#bbb" type="arrowright" />
+			<uni-icons v-if="showArrow || link" :size="16" class="uni-icon-wrapper" color="#999999" type="arrowright" />
 		</view>
 		<!-- #ifdef APP-NVUE -->
 	</cell>
@@ -352,10 +352,11 @@
 	}
 
 	.uni-list-item--hover {
-		background-color: $uni-bg-color-hover !important;
+		background-color: #010101 !important;
 	}
 
 	.uni-list-item__container {
+		background-color: #010101;
 		position: relative;
 		/* #ifndef APP-NVUE */
 		display: flex;
@@ -381,7 +382,7 @@
 		right: 0;
 		left: 0;
 		/* #ifdef APP-NVUE */
-		border-top-color: $uni-border-color;
+		border-top-color: #010101;
 		border-top-style: solid;
 		border-top-width: 0.5px;
 		/* #endif */
@@ -397,7 +398,7 @@
 		content: '';
 		-webkit-transform: scaleY(0.5);
 		transform: scaleY(0.5);
-		background-color: $uni-border-color;
+		background-color: #010101;
 	}
 
 	/* #endif */
@@ -420,7 +421,7 @@
 
 	.uni-list-item__content-title {
 		font-size: $uni-font-size-base;
-		color: #3b4144;
+		color: #ffffff;
 		overflow: hidden;
 	}
 

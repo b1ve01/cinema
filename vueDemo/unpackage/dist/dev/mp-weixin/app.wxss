@@ -2354,6 +2354,7 @@
 }
 page {
   background-color: #010101;
+  height: 100%;
 }
 .example-info {
   font-size: 14px;

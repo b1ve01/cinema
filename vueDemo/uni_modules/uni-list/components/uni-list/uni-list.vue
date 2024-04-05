@@ -104,7 +104,7 @@
 		height: 1px;
 		-webkit-transform: scaleY(0.5);
 		transform: scaleY(0.5);
-		background-color: $uni-border-color;
+		background-color: #010101;
 		z-index: 1;
 	}
 
@@ -116,7 +116,7 @@
 		height: 1px;
 		-webkit-transform: scaleY(0.5);
 		transform: scaleY(0.5);
-		background-color: $uni-border-color;
+		background-color: #010101;
 	}
 
 	/* #endif */

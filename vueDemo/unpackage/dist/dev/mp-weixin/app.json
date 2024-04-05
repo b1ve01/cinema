@@ -2,8 +2,8 @@
   "pages": [
     "pages/index/index",
     "pages/user/login",
-    "pages/cinema",
-    "pages/user/register"
+    "pages/user/info",
+    "pages/cinema"
   ],
   "window": {
     "navigationBarTextStyle": "white",
@@ -27,7 +27,7 @@
         "selectedIconPath": "static/PhFilmStripFill.png"
       },
       {
-        "pagePath": "pages/user/register",
+        "pagePath": "pages/user/login",
         "text": "我的",
         "iconPath": "static/OcticonPerson16.png",
         "selectedIconPath": "static/OcticonPersonFill16.png"

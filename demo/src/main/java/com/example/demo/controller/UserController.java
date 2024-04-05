@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
@@ -65,21 +66,70 @@ public class UserController {
 
     //发送邮箱验证码
     @PostMapping("/sendEmail")
-    public Result<String> sendEmail(@RequestBody User user) {
-        String from = "1203610735@qq.com";
-        String subject = "验证 Cinema ID 邮箱地址";
-        String code = RandomStringUtils.randomNumeric(6);
-        saveCode(user.getUserEmail(), code); // 保存验证码及生成时间
-        String text = "您已选用此邮箱地址作为新的 Cinema ID 。要验证此邮箱地址的拥有权，请在邮箱验证页面输入以下验证码：\n\n" + code + "\n\n" + "验证码将会在两分钟后失效。";
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom(from);
-        message.setTo(user.getUserEmail());
-        message.setSubject(subject);
-        message.setText(text);
-        javaMailSender.send(message);
-        System.out.println(Codes.get(user.getUserEmail()).getCode());
-        System.out.println(Codes.get(user.getUserEmail()).getGenerationTime());
-        return Result.success(code);
+    public  Result<Map<String, String>> sendEmail(@RequestBody User user) {
+        //查询用户
+        User temp_user = userService.findByEmail(user.getUserEmail());
+        CodeInfo codeInfo = Codes.get(user.getUserEmail());
+
+        if (temp_user == null){
+            if(codeInfo==null){
+                String from = "1203610735@qq.com";
+                String subject = "验证 Cinema ID 邮箱地址";
+                String code = RandomStringUtils.randomNumeric(6);
+                saveCode(user.getUserEmail(), code); // 保存验证码及生成时间
+                String text = "您已选用此邮箱地址作为新的 Cinema ID 。要验证此邮箱地址的拥有权，请在邮箱验证页面输入以下验证码：\n\n" + code + "\n\n" + "验证码将会在两分钟后失效。";
+                SimpleMailMessage message = new SimpleMailMessage();
+                message.setFrom(from);
+                message.setTo(user.getUserEmail());
+                message.setSubject(subject);
+                message.setText(text);
+                javaMailSender.send(message);
+                System.out.println(Codes.get(user.getUserEmail()).getCode());
+                String time_now=Codes.get(user.getUserEmail()).getGenerationTime().toString();
+
+                Map<String, String> res = new HashMap<>();
+                res.put("code", Codes.get(user.getUserEmail()).getCode());
+                res.put("time", time_now);
+
+                return Result.success(res);
+            }
+            else{
+                Instant currentTime = Instant.now();
+                Instant codeTime = codeInfo.getGenerationTime();
+                //验证码生成时的时间和现在时间的时间差
+                long time = currentTime.getEpochSecond() - codeTime.getEpochSecond();
+                if(time > 120){
+                    String from = "1203610735@qq.com";
+                    String subject = "验证 Cinema ID 邮箱地址";
+                    String code = RandomStringUtils.randomNumeric(6);
+                    saveCode(user.getUserEmail(), code); // 保存验证码及生成时间
+                    String text = "您已选用此邮箱地址作为新的 Cinema ID 。要验证此邮箱地址的拥有权，请在邮箱验证页面输入以下验证码：\n\n" + code + "\n\n" + "验证码将会在两分钟后失效。";
+                    SimpleMailMessage message = new SimpleMailMessage();
+                    message.setFrom(from);
+                    message.setTo(user.getUserEmail());
+                    message.setSubject(subject);
+                    message.setText(text);
+                    javaMailSender.send(message);
+                    System.out.println(Codes.get(user.getUserEmail()).getCode());
+                    String time_now=Codes.get(user.getUserEmail()).getGenerationTime().toString();
+
+                    Map<String, String> res = new HashMap<>();
+                    res.put("code", Codes.get(user.getUserEmail()).getCode());
+                    res.put("time", time_now);
+                    res.put("time_gap",String.valueOf(time));
+
+                    return Result.success(res);
+                }
+                else{
+                    Map<String, String> res = new HashMap<>();
+                    res.put("time_gap",String.valueOf(time));
+                    return Result.error("不能重复获取，请"+(120-time)+"s后再尝试",res);
+                }
+            }
+        }
+        else {
+            return Result.error("用户已存在");
+        }
     }
 
     //用户注册
@@ -94,7 +144,6 @@ public class UserController {
                 Instant codeTime = codeInfo.getGenerationTime();
                 //验证码生成时的时间和现在时间的时间差
                 long time = currentTime.getEpochSecond() - codeTime.getEpochSecond();
-                System.out.println(time);
                 //验证码有效
                 if (time <= 120) {
                     //注册
@@ -113,7 +162,7 @@ public class UserController {
 
     //用户登录
     @PostMapping("/login")
-    public Result<User> login(@RequestBody User user){
+    public Result<Map<String, Object>> login(@RequestBody User user){
         User temp_user=userService.findByEmail(user.getUserEmail());
         if(temp_user==null){
             return Result.error("用户不存在");
@@ -126,7 +175,12 @@ public class UserController {
             //把token存储到redis中
             ValueOperations<String, String> operations = stringRedisTemplate.opsForValue();
             operations.set(token,token,60, TimeUnit.HOURS);
-            return Result.success(temp_user);
+
+            Map<String, Object> res = new HashMap<>();
+            res.put("user", temp_user);
+            res.put("token", token);
+
+            return Result.success(res);
         }
         return Result.error("密码错误");
     }
