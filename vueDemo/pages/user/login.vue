@@ -206,6 +206,8 @@
 			let user = {
 				"userId": this.userId
 			};
+			
+			console.log('here',user);
 
 			uni.request({
 				url: '/api/user/info',

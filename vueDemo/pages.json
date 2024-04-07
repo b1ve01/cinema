@@ -2,28 +2,28 @@
 	"pages": [{
 		"path": "pages/index/index",
 		"style": {
-			"navigationBarTitleText": "首页"
+			"navigationBarTitleText": ""
 		}
 	},
 	{
 		"path" : "pages/user/login",
 		"style" : 
 		{
-			"navigationBarTitleText" : "我的"
+			"navigationBarTitleText" : ""
 		}
 	},
 	{
 		"path" : "pages/user/info",
 		"style" : 
 		{
-			"navigationBarTitleText" : "我的"
+			"navigationBarTitleText" : "个人信息"
 		}
 	},
 	{
-		"path" : "pages/cinema",
+		"path" : "pages/movieCinema/cinema",
 		"style" : 
 		{
-			"navigationBarTitleText" : "电影"
+			"navigationBarTitleText" : ""
 		}
 	},
 	{
@@ -46,6 +46,13 @@
 		{
 			"navigationBarTitleText" : "修改简介"
 		}
+	},
+	{
+		"path" : "pages/movieCinema/movieInfo",
+		"style" : 
+		{
+			"navigationBarTitleText" : "电影信息"
+		}
 	}],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",
@@ -63,7 +70,7 @@
 				"selectedIconPath": "static/ClarityHomeSolid.png"
 			},
 			{
-				"pagePath": "pages/cinema",
+				"pagePath": "pages/movieCinema/cinema",
 				"text": "电影",
 				"iconPath": "static/PhFilmStrip.png",
 				"selectedIconPath": "static/PhFilmStripFill.png"

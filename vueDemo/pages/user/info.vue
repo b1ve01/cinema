@@ -3,10 +3,10 @@
 
 
 		<view class="image_box">
-			<uni-file-picker v-if=this.userData.userUrl limit="1" :del-icon="false" disable-preview
+			<uni-file-picker v-if="this.userData.userUrl" limit="1" :del-icon="false" disable-preview
 				:imageStyles="imageStyles" file-mediatype="image" v-model="img" @select="update_url"></uni-file-picker>
 
-			<uni-file-picker v-if=!this.userData.userUrl limit="1" :del-icon="false" disable-preview
+			<uni-file-picker v-if="!this.userData.userUrl" limit="1" :del-icon="false" disable-preview
 				:imageStyles="imageStyles" file-mediatype="image" v-model="img_default"
 				@select="update_url"></uni-file-picker>
 		</view>
@@ -27,18 +27,7 @@
 				@click="to_updateProfile()" />
 		</view>
 
-
-
-
-
 	</view>
-
-
-
-
-
-
-
 
 </template>
 
@@ -187,9 +176,6 @@
 </script>
 
 <style lang="scss" scoped>
-	text {
-		color: #ffffff;
-	}
 
 	.info {
 		display: flex;

@@ -1,5 +1,6 @@
 package com.example.demo.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -13,12 +14,11 @@ public class Movie {
 
     private String movieNameEn;
 
-    private String movieType;
-
     private String movieDirector;
 
     private String movieDescription;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime movieReleaseDate;
 
     private String movieDuration;

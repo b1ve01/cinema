@@ -32,6 +32,7 @@
 	}
 
 	.logo {
+		border-radius:10%;
 		height: 200rpx;
 		width: 200rpx;
 		margin-top: 200rpx;
