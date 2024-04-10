@@ -21,7 +21,7 @@ public interface MovieMapper {
     @Select("select * from movieGenres join genres on movieGenres.genre_id=genres.genre_id where movie_id = #{movieId} ")
     List<MovieGenres> infoTypeByMovie(long movieId);
 
-    @Select("select * from movie where movie_state = #{movieState} ")
+    @Select("select * from movie where movie_state = #{movieState} order by movie_release_date ASC ")
     List<Movie> infoMovieByState(String movieState);
 
 }

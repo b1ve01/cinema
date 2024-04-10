@@ -18,7 +18,7 @@ public class Movie {
 
     private String movieDescription;
 
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy/MM/dd")
     private LocalDateTime movieReleaseDate;
 
     private String movieDuration;

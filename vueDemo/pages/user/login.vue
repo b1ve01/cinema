@@ -198,7 +198,7 @@
 			}
 		},
 
-		onLoad: function(option) {
+		onShow: function(option) {
 			this.userId = uni.getStorageSync("userId");
 			this.token = uni.getStorageSync("token");
 			this.isLogin = uni.getStorageSync("isLogin");
@@ -477,9 +477,32 @@
 			dialogClose() {
 			},
 			to_info() {
-				uni.navigateTo({
-					url: '/pages/user/info',
-				});
+				
+				this.userId = uni.getStorageSync("userId");
+				this.token = uni.getStorageSync("token");
+				
+				let user = {
+					"userId": this.userId
+				};
+				
+				uni.request({
+					url: '/api/user/info',
+					method: 'GET',
+					dataType: 'json',
+					data: user,
+					header: {
+						'Authorization': this.token
+					},
+				
+					success: (res) => {
+						console.log('调用成功', res.data.data);
+						uni.setStorageSync('userName', res.data.data.userName);
+						uni.setStorageSync('userUrl', res.data.data.userUrl);
+						uni.navigateTo({
+							url: '/pages/user/info',
+						});
+					},
+				})
 			},
 		}
 	}

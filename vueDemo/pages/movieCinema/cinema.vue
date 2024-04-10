@@ -16,9 +16,10 @@
 			</view>
 		</view>
 
-		<view v-if="!isCinema" v-show="current === 0" class="movie_info" v-for="(item,index) in this.movieData.data" :key="index">
+		<view v-if="!isCinema" v-show="current === 0" class="movie_info" v-for="(item,index) in this.movieData.data"
+			:key="index">
 			<uni-list>
-				<uni-list-item :title="this.movieData.data[index].movieNameCn" ellipsis="2" :note=" this.movieData.data[index].movieNameEn + 
+				<uni-list-item :title="this.movieData.data[index].movieNameCn" ellipsis="1" :note=" this.movieData.data[index].movieNameEn + 
 			'\n导演：' + this.movieData.data[index].movieDirector +
 			'\n上映日期：' + this.movieData.data[index].movieReleaseDate + 
 			'\n时长：' + this.movieData.data[index].movieDuration + ' min' " :thumb=this.movieData.data[index].movieUrl
@@ -30,10 +31,11 @@
 				</uni-list-item>
 			</uni-list>
 		</view>
-		
-		<view v-if="!isCinema" v-show="current === 1" class="movie_info" v-for="(item,index) in this.movieData_not.data" :key="index">
+
+		<view v-if="!isCinema" v-show="current === 1" class="movie_info" v-for="(item,index) in this.movieData_not.data"
+			:key="index">
 			<uni-list>
-				<uni-list-item :title="this.movieData_not.data[index].movieNameCn" ellipsis="2" :note=" this.movieData_not.data[index].movieNameEn + 
+				<uni-list-item :title="this.movieData_not.data[index].movieNameCn" ellipsis="1" :note=" this.movieData_not.data[index].movieNameEn + 
 			'\n导演：' + this.movieData_not.data[index].movieDirector +
 			'\n上映日期：' + this.movieData_not.data[index].movieReleaseDate + 
 			'\n时长：' + this.movieData_not.data[index].movieDuration + ' min' " :thumb=this.movieData_not.data[index].movieUrl
@@ -41,14 +43,14 @@
 					<template v-slot:footer>
 						<button class="buy_button" hover-class="is_buy_hover" size="mini">购票</button>
 					</template>
-		
+
 				</uni-list-item>
 			</uni-list>
 		</view>
-		
-		
-		
-		
+
+
+
+
 
 	</view>
 </template>
@@ -60,29 +62,32 @@
 			return {
 				isCinema: false,
 				movieData: [],
-				movieData_not:[],
+				movieData_not: [],
 				items: ['正在上映', '待映'],
+				movieType: '',
 				current: 0,
 			}
 		},
 
-		onLoad: function(option) {
+		onShow: function(option) {
 
 			uni.request({
-				url: '/api/movie/infoMovieByState?movieState='+1,
+				url: '/api/movie/infoMovieByState?movieState=' + 1,
 				method: 'GET',
 				dataType: 'json',
 
 				success: (res) => {
 					this.movieData = res.data;
+					this.movieData.data.reverse();
+					console.log('电影页面', this.movieData.data);
 				}
 			});
-			
+
 			uni.request({
-				url: '/api/movie/infoMovieByState?movieState='+0,
+				url: '/api/movie/infoMovieByState?movieState=' + 0,
 				method: 'GET',
 				dataType: 'json',
-			
+
 				success: (res) => {
 					this.movieData_not = res.data;
 				}
@@ -92,8 +97,40 @@
 
 		methods: {
 			to_movie_info(ref) {
-				uni.navigateTo({
-					url: '/pages/movieCinema/movieInfo?movieId=' + ref,
+
+				let movie = {
+					"movieId": ref
+				};
+
+				uni.request({
+					url: '/api/movie/infoMovieById',
+					method: 'GET',
+					dataType: 'json',
+					data: movie,
+
+					success: (res) => {
+						this.movieType='';
+						console.log('调用成功', res.data.data.movie);
+						uni.setStorageSync('movieNameCn', res.data.data.movie.movieNameCn);
+						uni.setStorageSync('movieNameEn', res.data.data.movie.movieNameEn);
+						uni.setStorageSync('movieDirector', res.data.data.movie.movieDirector);
+						uni.setStorageSync('movieReleaseDate', res.data.data.movie.movieReleaseDate);
+						uni.setStorageSync('movieDuration', res.data.data.movie.movieDuration);
+						uni.setStorageSync('movieUrl', res.data.data.movie.movieUrl);
+						uni.setStorageSync('movieDescription', res.data.data.movie.movieDescription);
+						uni.setStorageSync('movieCountry', res.data.data.movie.movieCountry);
+
+						for (let i = 0; i < res.data.data.type.length;i++) {
+							this.movieType=this.movieType+' '+res.data.data.type[i].genreName;
+						}
+
+						console.log('总类型', this.movieType);
+						uni.setStorageSync('movieType', this.movieType);
+
+						uni.navigateTo({
+							url: '/pages/movieCinema/movieInfo?movieId=' + ref,
+						});
+					}
 				});
 			},
 
@@ -139,7 +176,9 @@
 		overflow: hidden;
 	}
 
-	::v-deep.uni-list--border-bottom {
+	::v-deep.uni-list--border-top {
+		left: 5%;
+		width: 90%;
 		background-color: #f9da49;
 	}
 
@@ -164,7 +203,7 @@
 	}
 
 	.movie_or_cinema {
-		padding: 2%;
+		padding-left: 2%;
 	}
 
 	.movie_text_true {
@@ -186,10 +225,9 @@
 		color: #f9da49;
 		font-size: 100rpx;
 	}
-	
-	.segmented-control{
+
+	.segmented-control {
 		width: 50%;
-		height: 200rpx;
+		height: 100rpx;
 	}
-	
 </style>

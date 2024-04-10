@@ -161,7 +161,7 @@
 
 		.uni-card__header {
 			display: flex;
-			border-bottom: 1px $uni-border-color solid;
+			border-bottom: 1px #f9da49 solid;
 			flex-direction: row;
 			align-items: center;
 			padding: $uni-card-spacing;
@@ -202,7 +202,7 @@
 
 				.uni-card__header-content-title {
 					font-size: $uni-card-title;
-					color: $uni-cart-title-color;
+					color: #999999;
 					// line-height: 22px;
 				}
 
@@ -237,6 +237,7 @@
 
 	.uni-card--border {
 		border: 1px solid $uni-border-color;
+		border-color: #000000;
 	}
 
 	.uni-card--shadow {

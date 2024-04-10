@@ -81,6 +81,10 @@
 
 			this.userId = uni.getStorageSync("userId");
 			this.token = uni.getStorageSync("token");
+			this.userName = uni.getStorageSync("userName");
+			this.userUrl = uni.getStorageSync("userUrl");
+			this.userData.userName=this.userName;
+			this.userData.userUrl=this.userUrl;
 
 			let user = {
 				"userId": this.userId
@@ -112,6 +116,11 @@
 				}
 			})
 
+		},
+		
+		onBackPress:function(option){
+			uni.removeStorageSync("userName");
+			uni.removeStorageSync("userUrl");
 		},
 
 		methods: {

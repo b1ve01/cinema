@@ -51,7 +51,22 @@
 		"path" : "pages/movieCinema/movieInfo",
 		"style" : 
 		{
-			"navigationBarTitleText" : "电影信息"
+			"navigationBarTitleText" : "电影"
+		}
+	},
+	{
+		"path" : "pages/test",
+		"style" : 
+		{
+			"navigationBarTitleText" : "测试",
+			"navigationStyle":"custom"
+		}
+	},
+	{
+		"path" : "pages/movieCinema/detailInfo",
+		"style" : 
+		{
+			"navigationBarTitleText" : "详细信息"
 		}
 	}],
 	"globalStyle": {
