@@ -48,7 +48,16 @@
 			</uni-list>
 		</view>
 
-
+		<view v-if="isCinema" class="cinema_info" v-for="(item,index) in this.cinemaData"
+			:key="index">
+			<uni-list>
+				<uni-list-item :title="this.cinemaData[index].cinemaName" ellipsis="1" 
+				:note=" this.cinemaData[index].cinemaAddress"
+				clickable @click="to_cinema_info(this.cinemaData[index].cinemaId)">
+				</uni-list-item>
+			</uni-list>
+		</view>
+		
 
 
 
@@ -66,6 +75,7 @@
 				items: ['正在上映', '待映'],
 				movieType: '',
 				current: 0,
+				cinemaData: [],
 			}
 		},
 
@@ -93,6 +103,17 @@
 				}
 			});
 
+			uni.request({
+				url: '/api/cinema/infoAllCinema',
+				method: 'GET',
+				dataType: 'json',
+				success: (res) => {
+					console.log(res.data);
+					this.cinemaData = res.data.data;
+					console.log('电影院列表', this.cinemaData);
+				}
+			})
+
 		},
 
 		methods: {
@@ -109,7 +130,7 @@
 					data: movie,
 
 					success: (res) => {
-						this.movieType='';
+						this.movieType = '';
 						console.log('调用成功', res.data.data.movie);
 						uni.setStorageSync('movieNameCn', res.data.data.movie.movieNameCn);
 						uni.setStorageSync('movieNameEn', res.data.data.movie.movieNameEn);
@@ -120,8 +141,8 @@
 						uni.setStorageSync('movieDescription', res.data.data.movie.movieDescription);
 						uni.setStorageSync('movieCountry', res.data.data.movie.movieCountry);
 
-						for (let i = 0; i < res.data.data.type.length;i++) {
-							this.movieType=this.movieType+' '+res.data.data.type[i].genreName;
+						for (let i = 0; i < res.data.data.type.length; i++) {
+							this.movieType = this.movieType + ' ' + res.data.data.type[i].genreName;
 						}
 
 						console.log('总类型', this.movieType);
@@ -156,10 +177,36 @@
 		flex-direction: column;
 		justify-content: flex-start;
 	}
+	
+	.cinema_info{
+		color: #ffffff;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+		::v-deep.uni-list-item__content-title {
+			font-size: 50rpx;
+			color: #f9da49;
+			overflow: hidden;
+		};
+		::v-deep.uni-list--border-top {
+			background-color: #000000;
+		};
+		::v-deep.uni-list--border-bottom {
+			width: 96%;
+			left: 2%;
+			background-color: #f9da49;
+		};
+		::v-deep.uni-list-item__content-note {
+			margin-top: 20rpx;
+			color: #999999;
+			font-size: 30rpx;
+			overflow: hidden;
+		}
+	}
 
 	::v-deep.uni-list--lg {
-		height: 200rpx;
-		width: 133rpx;
+		height: 225rpx;
+		width: 150rpx;
 		border-radius: 20rpx;
 	}
 
@@ -177,8 +224,8 @@
 	}
 
 	::v-deep.uni-list--border-top {
-		left: 5%;
-		width: 90%;
+		left: 4%;
+		width: 92%;
 		background-color: #f9da49;
 	}
 
@@ -208,22 +255,22 @@
 
 	.movie_text_true {
 		color: #f9da49;
-		font-size: 100rpx;
+		font-size: 80rpx;
 	}
 
 	.cinema_text_false {
-		font-size: 50rpx;
+		font-size: 40rpx;
 		color: #999999;
 	}
 
 	.movie_text_false {
-		font-size: 50rpx;
+		font-size: 40rpx;
 		color: #999999;
 	}
 
 	.cinema_text_true {
 		color: #f9da49;
-		font-size: 100rpx;
+		font-size: 80rpx;
 	}
 
 	.segmented-control {

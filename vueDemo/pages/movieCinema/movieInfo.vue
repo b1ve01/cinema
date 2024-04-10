@@ -1,6 +1,6 @@
 <template>
 	<view class="movieInfo">
-
+		
 		<uni-list-item v-if="movieData" :title="movieData.movie.movieNameCn" showArrow ellipsis="1" :note=" movieData.movie.movieNameEn + 
 		'\n导演：' + movieData.movie.movieDirector +
 		'\n上映日期：' + movieData.movie.movieReleaseDate + 
@@ -11,7 +11,9 @@
 		<uni-card title="简介">
 			<text>{{this.movieData.movie.movieDescription}}</text>
 		</uni-card>
-
+		
+		
+		<button class="true_button_bottom">bottom</button>
 		<button class="true_button" hover-class="is_hover">电影场次</button>
 
 
@@ -100,7 +102,7 @@
 			console.log(res.keys);
 			console.log(res.currentSize);
 			console.log(res.limitSize);
-			console.log('type',uni.getStorageSync("movieType"));
+			console.log('type', uni.getStorageSync("movieType"));
 		},
 
 		methods: {
@@ -117,6 +119,12 @@
 <style lang="scss" scoped>
 	text {
 		color: #999999;
+	}
+	
+	.movieInfo{
+		display: flex;
+		flex-direction: column;
+		gap:80rpx;
 	}
 
 	::v-deep.uni-list--lg {
@@ -150,13 +158,17 @@
 
 	.uni-card {
 		background-color: #000000;
+		bottom: 100rpx;
 	}
 
 	.true_button {
 		width: 90%;
+		left: 5%;
 		color: #010101;
 		border-color: #010101;
 		background-color: #f9da49;
+		position: fixed;
+		bottom: 2%;
 	}
 
 	.is_hover {
@@ -164,4 +176,14 @@
 		border-color: #010101;
 		background-color: #d8bc3f;
 	}
+	
+	.true_button_bottom{
+		width: 100%;
+		color: #010101;
+		border-color: #010101;
+		background-color: #000000;
+		position: fixed;
+		bottom: 0;
+	}
+	
 </style>
