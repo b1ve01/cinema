@@ -17,4 +17,7 @@ public interface HouseMapper {
     @Insert("INSERT INTO house(house_id,house_name,house_seats,cinema_id)" + " VALUES (#{houseId},#{houseName},#{houseSeats},#{cinemaId})")
     void create(House house);
 
+    @Select("select * from house where house_id = #{houseId}")
+    House infoById(long houseId);
+
 }

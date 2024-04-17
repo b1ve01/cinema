@@ -4,8 +4,7 @@
 		<view class="cinemaDetail">
 			<uni-list>
 				<uni-list-item :title="this.scheduleInfo.cinemaName" ellipsis="2"
-					:note=" this.scheduleInfo.cinemaAddress" clickable
-					@click="to_map(this.scheduleInfo,this.cinemaLocation)">
+					:note=" this.scheduleInfo.cinemaAddress" clickable @click="to_map(this.scheduleInfo)">
 					<template v-slot:footer>
 						<uni-icons class="mapIcon" type="location-filled" size="30" color="#f9da49"></uni-icons>
 					</template>
@@ -64,14 +63,14 @@
 			<view class="cinemaList" v-show="dateCurrent === this.dateItems[index]"
 				v-for="(item,listIndex) in this.scheduleDataByDate[index]" :key="listIndex">
 				<uni-list>
-					<uni-list-item
-						:title="this.scheduleDataByDate[index][listIndex].scheduleDescription" 
-						ellipsis="2"
-						:note=" this.scheduleDataByDate[index][listIndex].scheduleFinal.getHours()+' : '+this.scheduleDataByDate[index][listIndex].scheduleFinal.getMinutes()"
-						clickable @click="to_buy(this.scheduleDataByDate[index][listIndex].cinemaId)"
-						>
+					<uni-list-item :title="this.scheduleDataByDate[index][listIndex].scheduleDescription" ellipsis="2"
+						:note=" this.scheduleDataByDate[index][listIndex].houseName" clickable
+						@click="to_selection_seat(this.scheduleDataByDate[index][listIndex].scheduleId,this.scheduleDataByDate[index][listIndex].scheduleTime)">
 						<template v-slot:footer>
-							<button class="buy_button" hover-class="is_buy_hover" size="mini">购票</button>
+							<view class="rightInfo">
+								<text class="price">￥{{this.scheduleDataByDate[index][listIndex].schedulePrice}}</text>
+								<button class="buy_button" hover-class="is_buy_hover" size="mini">购票</button>
+							</view>
 						</template>
 						<template v-slot:header>
 							<view class="scheduleWhichTime">
@@ -113,6 +112,7 @@
 					scheduleTime: "",
 					scheduleDate: "",
 					scheduleFinal: "",
+					houseName: ""
 				}],
 				scheduleInfo: {
 					movieNameCn: "",
@@ -149,11 +149,10 @@
 			console.log('cinemaId', this.cinemaId);
 
 			let currentDate = new Date();
+			currentDate.setMinutes(currentDate.getMinutes() + 15);
+			console.log('currentDate', currentDate);
 			// 星期数组
 			let weekDays = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
-
-			// 获取星期
-			let weekDay = currentDate.getDay();
 
 			let schedule = {
 				"movieId": this.movieId,
@@ -224,7 +223,7 @@
 							scheduleRemain: "",
 							scheduleState: "",
 							scheduleTime: "",
-							scheduleFinal: "",
+							scheduleFinal: ""
 						}];
 						for (let j = 0; j < this.scheduleData.length; j++) {
 							if (this.dateItems[i] == this.scheduleData[j].scheduleDate) {
@@ -276,13 +275,46 @@
 										.cinemaX;
 									this.scheduleInfo.cinemaY = res.data.data
 										.cinemaY;
-									console.log('场次信息', this.scheduleData);
-									console.log('周几有场次', this.dateItems);
-									console.log('选项卡日期', this.items);
-									console.log('根据日期分类场次', this
-										.scheduleDataByDate);
-									console.log('电影和电影院信息', this.scheduleInfo);
-									this.allRequest = 1;
+
+									let requests = [];
+									for (let i = 0; i < this.scheduleDataByDate
+										.length; i++) {
+										for (let j = 0; j < this
+											.scheduleDataByDate[i].length; j++) {
+											let house = {
+												"houseId": this
+													.scheduleDataByDate[i][j]
+													.houseId
+											};
+											let request = new Promise((resolve,
+												reject) => {
+												uni.request({
+													url: '/api/house/infoById',
+													method: 'GET',
+													dataType: 'json',
+													data: house,
+													success: (
+														res) => {
+															this.scheduleDataByDate[
+																	i
+																	]
+																[j]
+																.houseName =
+																res
+																.data
+																.data
+																.houseName;
+															resolve
+																();
+														}
+												})
+											})
+											requests.push(request);
+										}
+									}
+									Promise.all(requests).then(() => {
+										this.allRequest = 1;
+									})
 								}
 							})
 						}
@@ -309,6 +341,36 @@
 					console.log('dateCurrent', this.dateCurrent);
 				}
 			},
+			to_map(res) {
+				uni.setStorageSync('cinemaX', res.cinemaX);
+				uni.setStorageSync('cinemaY', res.cinemaY);
+				uni.navigateTo({
+					url: '/pages/map/map',
+					animationType: 'pop-in',
+					animationDuration: 200
+				});
+			},
+			to_selection_seat(id, time) {
+				let clickTime = new Date();
+				clickTime.setMinutes(clickTime.getMinutes() + 15);
+				if (clickTime < time) {
+					/* uni.navigateTo({
+						url: '/pages/map/map',
+						animationType: 'pop-in',
+						animationDuration: 200
+					}); */
+				} else {
+					uni.showToast({
+						title: '该场次已停售，请前往前台购票',
+						icon: 'error',
+						mask: 'true',
+					})
+				}
+
+
+				console.log("to_selection_seat", time);
+				console.log("to_selection_seat", clickTime < time);
+			}
 		}
 	}
 </script>
@@ -407,7 +469,7 @@
 	.date4 {
 		margin-left: 10rpx;
 		margin-right: 10rpx;
-		margin-bottom: 40rpx;
+		margin-bottom: 5rpx;
 		width: 130%;
 		height: 100rpx;
 	}
@@ -415,7 +477,7 @@
 	.date5 {
 		margin-left: 10rpx;
 		margin-right: 10rpx;
-		margin-bottom: 40rpx;
+		margin-bottom: 5rpx;
 		width: 160%;
 		height: 100rpx;
 	}
@@ -423,7 +485,7 @@
 	.date6 {
 		margin-left: 10rpx;
 		margin-right: 10rpx;
-		margin-bottom: 40rpx;
+		margin-bottom: 5rpx;
 		width: 190%;
 		height: 100rpx;
 	}
@@ -431,7 +493,7 @@
 	.date7 {
 		margin-left: 10rpx;
 		margin-right: 10rpx;
-		margin-bottom: 40rpx;
+		margin-bottom: 5rpx;
 		width: 220%;
 		height: 100rpx;
 	}
@@ -440,7 +502,6 @@
 		color: #ffffff;
 		display: flex;
 		flex-direction: column;
-		justify-content: flex-start;
 
 
 
@@ -471,6 +532,12 @@
 			flex-direction: column;
 			width: 30%;
 		}
+		
+		.rightInfo{
+			display: flex;
+			flex-direction: row;
+			gap:40rpx;
+		}
 
 		.scheduleTime {
 			align-self: center;
@@ -479,8 +546,8 @@
 			color: #f9da49;
 			overflow: hidden;
 		}
-		
-		.finalTime{
+
+		.finalTime {
 			align-self: center;
 		}
 
@@ -492,14 +559,20 @@
 			overflow: hidden;
 			width: 90%;
 		}
-		
-		.finalTimeText{
+
+		.finalTimeText {
 			font-size: 25rpx;
 			color: #999999;
 		}
-		
+
+		.price {
+			color: #f9da49;
+			align-self: center;
+			gap: 10rpx;
+		}
+
 		.buy_button {
-			right:2%;
+			right: 2%;
 			align-self: center;
 			height: auto;
 			width: auto;
@@ -508,7 +581,7 @@
 			border-color: #010101;
 			background-color: #f9da49;
 		}
-		
+
 		.is_buy_hover {
 			align-self: center;
 			height: auto;
@@ -518,5 +591,9 @@
 			border-color: #010101;
 			background-color: #d8bc3f;
 		}
+	}
+
+	::v-deep.uni-scroll-view::-webkit-scrollbar {
+		display: none;
 	}
 </style>

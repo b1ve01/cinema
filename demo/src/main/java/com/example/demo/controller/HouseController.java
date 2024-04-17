@@ -8,10 +8,7 @@ import com.example.demo.service.HouseService;
 import com.example.demo.utils.ThreadLocalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -33,6 +30,12 @@ public class HouseController {
         house.setCinemaId(cinemaId);
         houseService.create(house);
         return Result.success(house);
+    }
+
+    @GetMapping("/infoById")
+    public Result<House> infoById(long houseId){
+        House temp_house=houseService.infoById(houseId);
+        return Result.success(temp_house);
     }
 
 }

@@ -447,4 +447,8 @@
 		}
 	}
 	
+	::v-deep.uni-scroll-view::-webkit-scrollbar{
+		display: none;
+	}
+	
 </style>

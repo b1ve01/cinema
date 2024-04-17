@@ -10,4 +10,6 @@ public interface HouseService {
 
     void create(House house);
 
+    House infoById(long houseId);
+
 }

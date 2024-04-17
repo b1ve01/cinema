@@ -24,4 +24,7 @@ public class HouseServiceImpl implements HouseService {
         houseMapper.create(house);
     }
 
+    @Override
+    public House infoById(long houseId){return houseMapper.infoById(houseId);}
+
 }
