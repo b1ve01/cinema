@@ -1,6 +1,6 @@
 <template>
 	<view class="movieInfo">
-		
+
 		<uni-list-item v-if="movieData" :title="movieData.movie.movieNameCn" showArrow ellipsis="1" :note=" movieData.movie.movieNameEn + 
 		'\n导演：' + movieData.movie.movieDirector +
 		'\n上映日期：' + movieData.movie.movieReleaseDate + 
@@ -11,10 +11,10 @@
 		<uni-card title="简介">
 			<text>{{this.movieData.movie.movieDescription}}</text>
 		</uni-card>
-		
-		
+
+
 		<button class="true_button_bottom">bottom</button>
-		<button class="true_button" hover-class="is_hover">电影场次</button>
+		<button class="true_button" hover-class="is_hover" @click="scheduleBymovie()">电影场次</button>
 
 
 	</view>
@@ -88,6 +88,7 @@
 
 		onBackPress: function(option) {
 			console.log('退出');
+			uni.removeStorageSync("movieId");
 			uni.removeStorageSync("movieNameCn");
 			uni.removeStorageSync("movieNameEn");
 			uni.removeStorageSync("movieDirector");
@@ -108,7 +109,17 @@
 		methods: {
 			to_movie_detail() {
 				uni.navigateTo({
-					url: '/pages/movieCinema/detailInfo'
+					url: '/pages/movieCinema/detailInfo',
+					animationType: 'pop-in',
+					animationDuration: 200
+				});
+			},
+
+			scheduleBymovie() {
+				uni.navigateTo({
+					url: '/pages/schedule/byMovie',
+					animationType: 'pop-in',
+					animationDuration: 200
 				});
 			}
 		},
@@ -120,11 +131,11 @@
 	text {
 		color: #999999;
 	}
-	
-	.movieInfo{
+
+	.movieInfo {
 		display: flex;
 		flex-direction: column;
-		gap:80rpx;
+		gap: 80rpx;
 	}
 
 	::v-deep.uni-list--lg {
@@ -176,8 +187,8 @@
 		border-color: #010101;
 		background-color: #d8bc3f;
 	}
-	
-	.true_button_bottom{
+
+	.true_button_bottom {
 		width: 100%;
 		color: #010101;
 		border-color: #010101;
@@ -185,5 +196,4 @@
 		position: fixed;
 		bottom: 0;
 	}
-	
 </style>

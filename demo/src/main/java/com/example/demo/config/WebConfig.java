@@ -21,7 +21,10 @@ public class WebConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/movie/infoMovieByState/**")
                 .excludePathPatterns("/cinema/register")
                 .excludePathPatterns("/cinema/login")
-                .excludePathPatterns("/cinema/infoAllCinema");
+                .excludePathPatterns("/cinema/infoAllCinema")
+                .excludePathPatterns("/cinema/infoById")
+                .excludePathPatterns("/schedule/infoByMovie/**")
+                .excludePathPatterns("/schedule/infoByMovieAndCinema/**");
         ;
     }
 }

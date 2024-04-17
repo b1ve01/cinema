@@ -31,4 +31,7 @@ public interface CinemaMapper {
     @Select("select * from cinema ")
     List<Cinema> infoAllCinema();
 
+    @Select("select * from cinema where cinema_id = #{cinemaId}")
+    Cinema infoById(long cinemaId);
+
 }

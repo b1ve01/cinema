@@ -83,8 +83,8 @@
 			this.token = uni.getStorageSync("token");
 			this.userName = uni.getStorageSync("userName");
 			this.userUrl = uni.getStorageSync("userUrl");
-			this.userData.userName=this.userName;
-			this.userData.userUrl=this.userUrl;
+			this.userData.userName = this.userName;
+			this.userData.userUrl = this.userUrl;
 
 			let user = {
 				"userId": this.userId
@@ -117,8 +117,8 @@
 			})
 
 		},
-		
-		onBackPress:function(option){
+
+		onBackPress: function(option) {
 			uni.removeStorageSync("userName");
 			uni.removeStorageSync("userUrl");
 		},
@@ -168,16 +168,22 @@
 			to_updateName() {
 				uni.navigateTo({
 					url: '/pages/user/updateName',
+					animationType: 'pop-in',
+					animationDuration: 200
 				});
 			},
 			to_updatePhone() {
 				uni.navigateTo({
 					url: '/pages/user/updatePhone',
+					animationType: 'pop-in',
+					animationDuration: 200
 				});
 			},
 			to_updateProfile() {
 				uni.navigateTo({
 					url: '/pages/user/updateProfile',
+					animationType: 'pop-in',
+					animationDuration: 200
 				});
 			},
 		}
@@ -185,7 +191,6 @@
 </script>
 
 <style lang="scss" scoped>
-
 	.info {
 		display: flex;
 		flex-direction: column;

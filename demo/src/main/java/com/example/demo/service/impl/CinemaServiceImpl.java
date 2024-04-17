@@ -51,4 +51,7 @@ public class CinemaServiceImpl implements CinemaService {
     @Override
     public List<Cinema> infoAllCinema(){return cinemaMapper.infoAllCinema();}
 
+    @Override
+    public Cinema infoById(long cinemaId){return cinemaMapper.infoById(cinemaId);}
+
 }

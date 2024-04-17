@@ -48,16 +48,22 @@
 			</uni-list>
 		</view>
 
-		<view v-if="isCinema" class="cinema_info" v-for="(item,index) in this.cinemaData"
-			:key="index">
+		<view v-if="isCinema" class="cinema_info" v-for="(item,index) in this.cinemaAfter" :key="index">
 			<uni-list>
-				<uni-list-item :title="this.cinemaData[index].cinemaName" ellipsis="1" 
-				:note=" this.cinemaData[index].cinemaAddress"
-				clickable @click="to_cinema_info(this.cinemaData[index].cinemaId)">
+				<uni-list-item v-if="this.cinemaAfter[index].cinemaDistance<=0.1"
+					:title="this.cinemaAfter[index].cinemaName" ellipsis="2"
+					:note=" this.cinemaAfter[index].cinemaAddress" clickable
+					@click="to_cinema_info(this.cinemaAfter[index].cinemaId)" right-text="< 0.1 km">
+				</uni-list-item>
+				<uni-list-item v-if="this.cinemaAfter[index].cinemaDistance>0.1"
+					:title="this.cinemaAfter[index].cinemaName" ellipsis="2"
+					:note=" this.cinemaAfter[index].cinemaAddress" clickable
+					@click="to_cinema_info(this.cinemaAfter[index].cinemaId)"
+					:right-text="this.cinemaAfter[index].cinemaDistance+' km'">
 				</uni-list-item>
 			</uni-list>
 		</view>
-		
+
 
 
 
@@ -76,6 +82,21 @@
 				movieType: '',
 				current: 0,
 				cinemaData: [],
+				cinemaAfter: [{
+					cinemaAddress: "",
+					cinemaId: "",
+					cinemaName: "",
+					cinemaPassword: "",
+					cinemaPhone: "",
+					cinemaX: "",
+					cinemaY: "",
+					cinemaDistance: ""
+				}],
+				cinemaLocation: {
+					longitude: '',
+					latitude: '',
+				},
+
 			}
 		},
 
@@ -103,14 +124,35 @@
 				}
 			});
 
-			uni.request({
-				url: '/api/cinema/infoAllCinema',
-				method: 'GET',
-				dataType: 'json',
+			uni.getLocation({
 				success: (res) => {
-					console.log(res.data);
-					this.cinemaData = res.data.data;
-					console.log('电影院列表', this.cinemaData);
+					console.log("当前位置的经度：", res.longitude);
+					console.log("当前位置的纬度：", res.latitude);
+					this.cinemaLocation.longitude = res.longitude;
+					this.cinemaLocation.latitude = res.latitude;
+					console.log('标记', this.cinemaLocation);
+
+					uni.request({
+						url: '/api/cinema/infoAllCinema',
+						method: 'GET',
+						dataType: 'json',
+						success: (res) => {
+							console.log(res.data);
+							this.cinemaData = res.data.data;
+							console.log('电影院列表', this.cinemaData);
+							for (let i = 0; i < this.cinemaData.length; i++) {
+								let distance = this.getDistance(this.cinemaLocation, this
+									.cinemaData[i].cinemaX, this.cinemaData[i].cinemaY);
+
+								this.cinemaAfter[i] = this.cinemaData[i];
+								this.cinemaAfter[i].cinemaDistance = distance;
+							}
+							// 根据cinemaDistance对cinemaAfter进行排序
+							this.cinemaAfter.sort((a, b) => a.cinemaDistance - b
+								.cinemaDistance);
+							console.log('cinemaAfter sorted', this.cinemaAfter);
+						}
+					})
 				}
 			})
 
@@ -132,6 +174,7 @@
 					success: (res) => {
 						this.movieType = '';
 						console.log('调用成功', res.data.data.movie);
+						uni.setStorageSync('movieId', res.data.data.movie.movieId);
 						uni.setStorageSync('movieNameCn', res.data.data.movie.movieNameCn);
 						uni.setStorageSync('movieNameEn', res.data.data.movie.movieNameEn);
 						uni.setStorageSync('movieDirector', res.data.data.movie.movieDirector);
@@ -150,6 +193,8 @@
 
 						uni.navigateTo({
 							url: '/pages/movieCinema/movieInfo?movieId=' + ref,
+							animationType: 'pop-in',
+							animationDuration: 200
 						});
 					}
 				});
@@ -159,7 +204,18 @@
 				if (this.current != e.currentIndex) {
 					this.current = e.currentIndex;
 				}
-			}
+			},
+
+			getDistance(cinemaLocation, c_x, c_y) {
+				const earthRadius = 6378137; // 地球半径，单位：米
+				const radLat1 = cinemaLocation.latitude * Math.PI / 180;
+				const radLat2 = c_y * Math.PI / 180;
+				const a = radLat1 - radLat2;
+				const b = cinemaLocation.longitude * Math.PI / 180 - c_x * Math.PI / 180;
+				const s = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a / 2), 2) + Math.cos(radLat1) * Math.cos(radLat2) *
+					Math.pow(Math.sin(b / 2), 2)));
+				return (s * earthRadius / 1000).toFixed(1);
+			},
 		}
 
 	}
@@ -177,30 +233,41 @@
 		flex-direction: column;
 		justify-content: flex-start;
 	}
-	
-	.cinema_info{
+
+	.cinema_info {
 		color: #ffffff;
 		display: flex;
 		flex-direction: column;
 		justify-content: flex-start;
+
 		::v-deep.uni-list-item__content-title {
-			font-size: 50rpx;
+			font-size: 40rpx;
 			color: #f9da49;
 			overflow: hidden;
-		};
+		}
+
+		;
+
 		::v-deep.uni-list--border-top {
 			background-color: #000000;
-		};
+		}
+
+		;
+
 		::v-deep.uni-list--border-bottom {
 			width: 96%;
 			left: 2%;
 			background-color: #f9da49;
-		};
+		}
+
+		;
+
 		::v-deep.uni-list-item__content-note {
 			margin-top: 20rpx;
 			color: #999999;
 			font-size: 30rpx;
 			overflow: hidden;
+			width: 90%;
 		}
 	}
 

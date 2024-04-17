@@ -22,4 +22,6 @@ public interface CinemaService {
 
     List<Cinema> infoAllCinema();
 
+    Cinema infoById(long cinemaId);
+
 }

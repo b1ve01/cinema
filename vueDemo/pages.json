@@ -68,6 +68,20 @@
 		{
 			"navigationBarTitleText" : "详细信息"
 		}
+	},
+	{
+		"path" : "pages/schedule/byMovie",
+		"style" : 
+		{
+			"navigationBarTitleText" : ""
+		}
+	},
+	{
+		"path" : "pages/schedule/byMovieAndCinema",
+		"style" : 
+		{
+			"navigationBarTitleText" : ""
+		}
 	}],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",

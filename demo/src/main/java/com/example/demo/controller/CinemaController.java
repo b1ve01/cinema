@@ -88,4 +88,11 @@ public class CinemaController {
         return Result.success(res);
     }
 
+    //根据CinemaId查询电影院信息
+    @GetMapping("/infoById")
+    public Result<Cinema> infoById(long cinemaId){
+        Cinema temp_cinema=cinemaService.infoById(cinemaId);
+        return Result.success(temp_cinema);
+    }
+
 }
