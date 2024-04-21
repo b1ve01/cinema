@@ -19,8 +19,14 @@ public interface ScheduleMapper {
     @Insert("INSERT INTO schedule(schedule_id,movie_id,cinema_id,house_id,schedule_time,schedule_price,schedule_remain,schedule_state,schedule_description)" + " VALUES (#{scheduleId},#{movieId},#{cinemaId},#{houseId},#{scheduleTime},#{schedulePrice},#{scheduleRemain},#{scheduleState},#{scheduleDescription})")
     void create(Schedule schedule);
 
+    @Select("select * from schedule where schedule_id = #{scheduleId}")
+    Schedule infoById(long scheduleId);
+
     @Select("select * from schedule where movie_id = #{movieId} and schedule_state=1 order by schedule_time ASC ")
     List<Schedule> infoByMovie(long movieId);
+
+    @Select("select * from schedule where cinema_id = #{cinemaId} and schedule_state=1 order by schedule_time ASC ")
+    List<Schedule> infoByCinema(long cinemaId);
 
     @Select("select * from schedule where movie_id = #{movieId} and cinema_id = #{cinemaId} and schedule_state=1 order by schedule_time ASC ")
     List<Schedule> infoByMovieAndCinema(long movieId,long cinemaId);

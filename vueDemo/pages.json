@@ -89,6 +89,41 @@
 		{
 			"navigationBarTitleText" : "地图"
 		}
+	},
+	{
+		"path" : "pages/seat",
+		"style" : 
+		{
+			"navigationBarTitleText" : ""
+		}
+	},
+	{
+		"path" : "pages/schedule/selectSeat",
+		"style" : 
+		{
+			"navigationBarTitleText" : "选择座位"
+		}
+	},
+	{
+		"path" : "pages/orders/showOrders",
+		"style" : 
+		{
+			"navigationBarTitleText" : "购票记录"
+		}
+	},
+	{
+		"path" : "pages/schedule/byCinema",
+		"style" : 
+		{
+			"navigationBarTitleText" : ""
+		}
+	},
+	{
+		"path" : "pages/schedule/byCinemaAndMovie",
+		"style" : 
+		{
+			"navigationBarTitleText" : ""
+		}
 	}],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",

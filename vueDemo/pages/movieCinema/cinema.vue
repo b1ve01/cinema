@@ -199,6 +199,15 @@
 					}
 				});
 			},
+			
+			to_cinema_info(ref){
+				uni.setStorageSync('cinemaId', ref);
+				uni.navigateTo({
+					url: '/pages/schedule/byCinema',
+					animationType: 'pop-in',
+					animationDuration: 200
+				});
+			},
 
 			onClickItem(e) {
 				if (this.current != e.currentIndex) {

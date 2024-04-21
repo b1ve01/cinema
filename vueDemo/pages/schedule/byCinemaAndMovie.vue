@@ -325,7 +325,9 @@
 
 		onBackPress: function(option) {
 			console.log('退出场次页面');
-			uni.removeStorageSync("cinemaId");
+			uni.removeStorageSync("movieId");
+			uni.removeStorageSync("movieDuration");
+			uni.removeStorageSync("movieType");
 		},
 
 		methods: {

@@ -178,15 +178,15 @@
 			}
 
 			.uni-card__header-avatar {
-				width: 40px;
-				height: 40px;
+				height: 225rpx;
+				width: 150rpx;
 				overflow: hidden;
 				border-radius: 5px;
 				margin-right: $uni-card-spacing;
 				.uni-card__header-avatar-image {
 					flex: 1;
-					width: 40px;
-					height: 40px;
+					width: 100%;
+					height: 100%;
 				}
 			}
 
@@ -195,6 +195,7 @@
 				display: flex;
 				/* #endif */
 				flex-direction: column;
+				align-self: flex-start;
 				justify-content: center;
 				flex: 1;
 				// height: 40px;

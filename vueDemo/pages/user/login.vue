@@ -88,7 +88,8 @@
 					clickable @click="to_info()" />
 			</view>
 			<view class="isLogin_2">
-				<uni-list-item :show-extra-icon="true" showArrow :extra-icon="orderIcon" title="购票记录" />
+				<uni-list-item :show-extra-icon="true" showArrow :extra-icon="orderIcon" title="购票记录" 
+				clickable @click="to_orders()"/>
 				<uni-list-item :show-extra-icon="true" showArrow :extra-icon="setIcon" title="设定" />
 			</view>
 			<view class="isLogin_3">
@@ -500,9 +501,18 @@
 						uni.setStorageSync('userUrl', res.data.data.userUrl);
 						uni.navigateTo({
 							url: '/pages/user/info',
+							animationType: 'pop-in',
+							animationDuration: 200
 						});
 					},
 				})
+			},
+			to_orders(){
+				uni.navigateTo({
+					url: '/pages/orders/showOrders',
+					animationType: 'pop-in',
+					animationDuration: 200
+				});
 			},
 		}
 	}

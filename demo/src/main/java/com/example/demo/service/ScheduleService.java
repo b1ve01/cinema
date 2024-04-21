@@ -13,7 +13,11 @@ public interface ScheduleService {
 
     void create(Schedule schedule);
 
+    Schedule infoById(long scheduleId);
+
     List<Schedule> infoByMovie(long movieId);
+
+    List<Schedule> infoByCinema(long cinemaId);
 
     List<Schedule> infoByMovieAndCinema(long movieId,long cinemaId);
 

@@ -104,6 +104,7 @@
 		onShow: function(option) {
 
 			let currentDate = new Date();
+			currentDate.setMinutes(currentDate.getMinutes() + 15);
 			// 星期数组
 			let weekDays = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
 

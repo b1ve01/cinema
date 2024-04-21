@@ -34,9 +34,21 @@ public class ScheduleController {
         return Result.success(schedule);
     }
 
+    @GetMapping("/infoById")
+    public Result<Schedule> infoById(long scheduleId){
+        Schedule temp_schedule=scheduleService.infoById(scheduleId);
+        return Result.success(temp_schedule);
+    }
+
     @GetMapping("/infoByMovie")
     public Result<List<Schedule>> infoByMovie(long movieId){
         List<Schedule> res=scheduleService.infoByMovie(movieId);
+        return Result.success(res);
+    }
+
+    @GetMapping("/infoByCinema")
+    public Result<List<Schedule>> infoByCinema(long cinemaId){
+        List<Schedule> res=scheduleService.infoByCinema(cinemaId);
         return Result.success(res);
     }
 
