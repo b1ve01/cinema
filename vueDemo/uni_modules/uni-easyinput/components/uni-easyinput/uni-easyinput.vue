@@ -50,7 +50,7 @@
 					v-if="isVal"
 					class="content-clear-icon"
 					:class="{ 'is-textarea-icon': type === 'textarea' }"
-					:type="showPassword ? 'eye-filled' : 'eye-slash-filled'"
+					:type="showPassword ? 'eye-slash-filled' : 'eye-filled'"
 					:size="22"
 					:color="focusShow ? primaryColor : '#c0c4cc'"
 					@click="onEyes"
@@ -654,4 +654,10 @@ $uni-border-1: #dcdfe6 !default;
 		font-size: 12px;
 	}
 }
+
+/*去除ie edge的密码框默认出现的小眼睛*/  
+.uni-easyinput__content-input ::-ms-reveal {  
+    display: none;  
+}
+
 </style>

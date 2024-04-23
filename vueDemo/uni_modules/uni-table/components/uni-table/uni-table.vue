@@ -313,7 +313,6 @@ $border-color: #ebeef5;
 .uni-table {
 	position: relative;
 	width: 100%;
-	border-radius: 5px;
 	// box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.1);
 	background-color: #fff;
 	/* #ifndef APP-NVUE */
@@ -339,6 +338,7 @@ $border-color: #ebeef5;
 .table--border {
 	border: 1px $border-color solid;
 	border-right: none;
+	border-left: none;
 }
 
 .border-none {

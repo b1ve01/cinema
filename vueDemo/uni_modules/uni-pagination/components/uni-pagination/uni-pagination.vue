@@ -426,16 +426,16 @@
 	}
 
 	.tag--active:hover {
-		color: $uni-primary;
+		color: #eee;
 	}
 
 	.page--active {
-		color: #fff;
-		background-color: $uni-primary;
+		color: #000000;
+		background-color: #f9da49;
 	}
 
 	.page--active:hover {
-		color: #fff;
+		color: #000000;
 	}
 
 	/* #ifndef APP-NVUE */

@@ -28,7 +28,7 @@ public interface CinemaMapper {
     @Insert("INSERT INTO cinema(cinema_id,cinema_phone,cinema_password)" + " VALUES (#{cinemaId},#{cinemaPhone},#{cinemaPassword})")
     void add(Cinema cinema);
 
-    @Select("select * from cinema ")
+    @Select("select * from cinema where cinema_id>0 ")
     List<Cinema> infoAllCinema();
 
     @Select("select * from cinema where cinema_id = #{cinemaId}")

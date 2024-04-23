@@ -1,8 +1,10 @@
 {
-	"pages": [{
-		"path": "pages/index/index",
-		"style": {
-			"navigationBarTitleText": ""
+	"pages": [
+	{
+		"path" : "pages/movieCinema/cinema",
+		"style" : 
+		{
+			"navigationBarTitleText" : ""
 		}
 	},
 	{
@@ -17,13 +19,6 @@
 		"style" : 
 		{
 			"navigationBarTitleText" : "个人信息"
-		}
-	},
-	{
-		"path" : "pages/movieCinema/cinema",
-		"style" : 
-		{
-			"navigationBarTitleText" : ""
 		}
 	},
 	{
@@ -124,6 +119,21 @@
 		{
 			"navigationBarTitleText" : ""
 		}
+	},
+	{
+		"path" : "pages/web/login",
+		"style" : 
+		{
+			"navigationBarTitleText" : "",
+			"navigationStyle":"custom"
+		}
+	},
+	{
+		"path" : "pages/web/movie/movieUpdate",
+		"style" : 
+		{
+			"navigationBarTitleText" : "查看电影信息"
+		}
 	}],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",
@@ -134,12 +144,6 @@
 		"color": "#999999",
 		"selectedColor": "#ffffff",
 		"list": [
-			{
-				"pagePath": "pages/index/index",
-				"text": "首页",
-				"iconPath": "static/ClarityHomeLine.png",
-				"selectedIconPath": "static/ClarityHomeSolid.png"
-			},
 			{
 				"pagePath": "pages/movieCinema/cinema",
 				"text": "电影",
