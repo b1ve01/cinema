@@ -10,8 +10,8 @@
 			<text class="cinemaName">{{this.cinemaData.cinemaName}}</text>
 			<text class="cinemaAddress">地址：{{this.cinemaData.cinemaAddress}}</text>
 			<text class="cinemaPhone">电话：{{this.cinemaData.cinemaPhone}}</text>
-			<text class="cinemaX">经度：{{this.cinemaData.cinemaX}}</text>
-			<text class="cinemaY">纬度：{{this.cinemaData.cinemaY}}</text>
+			<text class="cinemaX">位置经度：{{this.cinemaData.cinemaX}}</text>
+			<text class="cinemaY">位置纬度：{{this.cinemaData.cinemaY}}</text>
 		</view>
 
 

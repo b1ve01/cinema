@@ -155,6 +155,20 @@
 		{
 			"navigationBarTitleText" : "新增影院信息"
 		}
+	},
+	{
+		"path" : "pages/web/house/houseUpdate",
+		"style" : 
+		{
+			"navigationBarTitleText" : "修改放映厅信息"
+		}
+	},
+	{
+		"path" : "pages/web/house/houseCreate",
+		"style" : 
+		{
+			"navigationBarTitleText" : "新增放映厅信息"
+		}
 	}],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",

@@ -3,9 +3,9 @@ package com.example.demo.mapper;
 import com.example.demo.pojo.Cinema;
 import com.example.demo.pojo.House;
 import com.example.demo.pojo.User;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
+
+import java.util.List;
 
 @Mapper
 public interface HouseMapper {
@@ -19,5 +19,14 @@ public interface HouseMapper {
 
     @Select("select * from house where house_id = #{houseId}")
     House infoById(long houseId);
+
+    @Select("select * from house where cinema_id = #{cinemaId}")
+    List<House> infoByCinemaId(long cinemaId);
+
+    @Delete("delete from house where house_id = #{houseId} ")
+    void deleteByHouseId(long houseId);
+
+    @Update("update house set house_name=#{houseName},house_seats=#{houseSeats} where house_id = #{houseId}")
+    void update(House house);
 
 }

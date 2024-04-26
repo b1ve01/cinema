@@ -63,11 +63,15 @@
 					@click="to_schedule()"/>	
 				<view class="border_line"></view>
 				
+				<uni-list-item :show-extra-icon="true" :extra-icon="logoutIcon" title="登出" clickable
+					@click="to_logout()" />
+					<view class="border_line"></view>
+				
 				</uni-list>
 			</view>	
-			
 		</view>
-		<view class="isLogin_true" v-if="this.webState==0">
+		
+		<view class="isLogin_true" v-if="this.webState==0 && this.cinemaInfoFlag==1">
 			<view class="isLogin_1">
 				<uni-list>
 				<uni-list-item :show-extra-icon="true" :extra-icon="infoIcon" :title="this.cinemaData.cinemaName+'\n'+this.cinemaData.cinemaAddress+'\n电话：'+this.cinemaData.cinemaPhone"
@@ -86,14 +90,40 @@
 				<view class="border_line"></view>
 				</uni-list>
 			</view>
-			<view class="isLogin_3">
-				<uni-list>
-				<uni-list-item :show-extra-icon="true" :extra-icon="logoutIcon" title="登出" clickable
-					@click="to_logout()" />
-					<view class="border_line"></view>
-					</uni-list>
-			</view>
+			
 		</view>
+		
+		<view class="house_info_cinema" v-if="this.webState==2 && this.houseRequestFlag==1">
+			<uni-table class="house_info_admin_table" ref="table_house" :loading="loadingHouse" border stripe  emptyText="暂无更多数据"
+				@selection-change="selectionChangeHouse">
+				<uni-tr>
+					<uni-th width="100" align="center">序号</uni-th>
+					<uni-th width="200" align="center">放映厅名称</uni-th>
+					<uni-th width="150" align="center">座位量</uni-th>
+					<uni-th width="50" align="center">设置</uni-th>
+				</uni-tr>
+				<uni-tr v-for="(item, index) in houseDataListPages[pageCurrentHouse-1]" :key="index">
+					<uni-td align="center">{{ (pageCurrentHouse-1)*13+(index+1) }}</uni-td>
+					<uni-td align="center">{{ item.houseName }}</uni-td>
+					<uni-td align="center">
+						{{ item.houseSeats }}
+					</uni-td>
+					<uni-td>
+						<view class="uni-group">
+							<button class="house_info_admin_button1" size="mini" type="primary" @click="house_update(houseDataListPages[pageCurrentHouse-1][index].houseId)">修改</button>
+							<button class="house_info_admin_button2" size="mini" type="warn" @click="house_delete(houseDataListPages[pageCurrentHouse-1][index].houseId)" >删除</button>
+						</view>
+					</uni-td>
+				</uni-tr>
+			</uni-table>
+				<view class="house_info_admin_box"><uni-pagination class="house_pages" show-icon :page-size="pageSizeHouse" :current="pageCurrentHouse"
+					:total="houseTotal" @change="changeHouse" />
+					<button class="create_house" size="mini" @click="house_create()">新增放映厅</button>
+			</view>
+		</view>	
+		
+		
+		
 	</view>
 	
 	<!--admin账号-->
@@ -140,7 +170,7 @@
 					<uni-th width="200" align="center">设置</uni-th>
 				</uni-tr>
 				<uni-tr v-for="(item, index) in movieDataAdminListPages[pageCurrent-1]" :key="index">
-					<uni-td align="center">{{ item.movieId }}</uni-td>
+					<uni-td align="center">{{ (pageCurrent-1)*13+(index+1) }}</uni-td>
 					<uni-td align="center">{{ item.movieNameCn }}</uni-td>
 					<uni-td align="center">
 						{{ item.movieNameEn }}
@@ -172,7 +202,7 @@
 					<uni-th width="150" align="center">设置</uni-th>
 				</uni-tr>
 				<uni-tr v-for="(item, index) in cinemaDataAdminListPages[pageCurrentCinema-1]" :key="index">
-					<uni-td align="center">{{ item.cinemaId }}</uni-td>
+					<uni-td align="center">{{ (pageCurrentCinema-1)*13+(index+1) }}</uni-td>
 					<uni-td align="center">{{ item.cinemaName }}</uni-td>
 					<uni-td align="center">
 						{{ item.cinemaPhone }}
@@ -207,7 +237,6 @@
 	</view>
 	
 	<view>
-		<!-- 删除电影示例 -->
 		<uni-popup ref="movieDeleteDialog" type="dialog">
 			<uni-popup-dialog :type="error" cancelText="关闭" confirmText="确定" content="是否确定删除该电影信息" @confirm="movieDeleteConfirm"
 				@close="dialogClose"></uni-popup-dialog>
@@ -215,9 +244,15 @@
 	</view>
 	
 	<view>
-		<!-- 删除电影示例 -->
 		<uni-popup ref="cinemaDeleteDialog" type="dialog">
 			<uni-popup-dialog :type="error" cancelText="关闭" confirmText="确定" content="是否确定删除该电影院信息" @confirm="cinemaDeleteConfirm"
+				@close="dialogClose"></uni-popup-dialog>
+		</uni-popup>
+	</view>
+	
+	<view>
+		<uni-popup ref="houseDeleteDialog" type="dialog">
+			<uni-popup-dialog :type="error" cancelText="关闭" confirmText="确定" content="是否确定删除该放映厅信息" @confirm="houseDeleteConfirm"
 				@close="dialogClose"></uni-popup-dialog>
 		</uni-popup>
 	</view>
@@ -230,12 +265,19 @@
 	export default {
 		data() {
 			return {
+				cinemaInfoFlag:0,
+				
 				isRegister: false,
 				isLogin: false,
+				
 				movieSystemMovieId:0,
 				movieRequestFlag:0,
+				
 				cinemaSystemCinemaId:0,
 				cinemaRequestFlag:0,
+				
+				houseSystemHouseId:0,
+				houseRequestFlag:0,
 
 				// 校验表单数据
 				loginData: {
@@ -337,17 +379,23 @@
 				cinemaDataAdminList:[],
 				cinemaDataAdminListPages:[],
 				
+				houseDataList:[],
+				houseDataListPages:[],
+				
 				pageSize: 13,
-				// 当前页
 				pageCurrent: 1,
 				loading: false,
 				total:0,
 				
 				pageSizeCinema: 13,
-				// 当前页
 				pageCurrentCinema: 1,
 				loadingCinema: false,
 				cinemaTotal:0,
+				
+				pageSizeHouse:13,
+				pageCurrentHouse:1,
+				loadingHouse:false,
+				houseTotal:0,
 				
 			}
 		},
@@ -377,7 +425,38 @@
 					this.cinemaData.cinemaAddress = res.data.data.cinemaAddress;
 					this.cinemaData.cinemaX = res.data.data.cinemaX;
 					this.cinemaData.cinemaY = res.data.data.cinemaY;
+					this.cinemaInfoFlag=1;
 				},
+			})
+			
+			uni.request({
+				url: '/api/house/infoByCinemaId',
+				method: 'GET',
+				dataType: 'json',
+				data: cinema,
+				header: {
+					'Authorization': this.token
+				},
+				success:(res)=>{
+					this.houseDataList=res.data.data;
+					
+					let temp_arr=[];
+					for(let i=0;i<this.houseDataList.length;i++){
+						temp_arr.push(this.houseDataList[i]);
+						if(temp_arr.length == 13){
+							this.houseDataListPages.push(temp_arr);
+							temp_arr=[];
+						}
+						if(i == this.houseDataList.length-1){
+							this.houseDataListPages.push(temp_arr);
+							temp_arr=[];
+						}
+					}
+					console.log('house',this.houseDataList)
+					console.log('this.houseDataListPages',this.houseDataListPages)
+					this.houseTotal=this.houseDataList.length;
+					this.houseRequestFlag=1;
+				}
 			})
 			
 			uni.request({
@@ -548,6 +627,29 @@
 				})
 			},
 			
+			houseDeleteConfirm(){
+				console.log('houseId',this.houseSystemHouseId);
+				
+				uni.request({
+					url: '/api/house/deleteByHouseId?houseId='+this.houseSystemHouseId,
+					method: 'DELETE',
+					dataType: 'json',
+					header: {
+						'Authorization': this.token
+					},
+					success:(res)=>{
+						uni.showToast({
+							title: '删除成功',
+							icon: 'true',
+							mask: 'true',
+						})
+						uni.reLaunch({
+							url: '/pages/web/login'
+						})
+					}
+				})
+			},
+			
 			
 			dialogClose() {
 			},
@@ -598,6 +700,16 @@
 				this.pageCurrentCinema=e.current
 			},
 			
+			selectionChangeHouse(e) {
+				console.log(e.detail.index)
+				this.selectedIndexsHouse = e.detail.index
+			},
+			changeHouse(e) {
+				this.$refs.table_house.clearSelection()
+				this.selectedIndexsHouse.length = 0
+				this.pageCurrentHouse=e.current
+			},
+			
 			
 			
 			
@@ -616,6 +728,13 @@
 					animationDuration: 200
 				});
 			},
+			house_update(houseId){
+				uni.navigateTo({
+					url: '/pages/web/house/houseUpdate?houseId='+houseId,
+					animationType: 'pop-in',
+					animationDuration: 200
+				});
+			},
 			
 			movie_delete(movieId){
 				this.$refs.movieDeleteDialog.open();
@@ -627,6 +746,12 @@
 				this.$refs.cinemaDeleteDialog.open();
 				this.cinemaSystemCinemaId=cinemaId;
 				console.log('cinemaSystemCinemaId',this.cinemaSystemCinemaId);
+			},
+			
+			house_delete(houseId){
+				this.$refs.houseDeleteDialog.open();
+				this.houseSystemHouseId=houseId;
+				console.log('houseSystemHouseId',this.houseSystemHouseId);
 			},
 			
 			movie_create(){
@@ -642,7 +767,14 @@
 					animationType: 'pop-in',
 					animationDuration: 200
 				});
-			}
+			},
+			house_create(){
+				uni.navigateTo({
+					url: '/pages/web/house/houseCreate',
+					animationType: 'pop-in',
+					animationDuration: 200
+				});
+			},
 			
 
 		}
@@ -778,11 +910,23 @@
 		width: 80%;
 	}
 	
+	.house_info_cinema{
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		height: 100%;
+		width: 80%;
+	}
+	
 	.movie_info_admin_table{
 		width: 100%;
 	}
 	
 	.cinema_info_admin_table{
+		width: 100%;
+	}
+	
+	.house_info_admin_table{
 		width: 100%;
 	}
 	
@@ -793,6 +937,12 @@
 	}
 	
 	.cinema_info_admin_button1{
+		background-color: #f9da49;
+		border:none;
+		color: #000000;
+	}
+	
+	.house_info_admin_button1{
 		background-color: #f9da49;
 		border:none;
 		color: #000000;
@@ -810,6 +960,12 @@
 		color: #ffffff;
 	}
 	
+	.house_info_admin_button2{
+		background-color: #6a6a6a;
+		border:none;
+		color: #ffffff;
+	}
+	
 	.movie_info_admin_box{
 		width: 100%;
 		display: flex;
@@ -817,6 +973,12 @@
 	}
 	
 	.cinema_info_admin_box{
+		width: 100%;
+		display: flex;
+		flex-direction: row;
+	}
+	
+	.house_info_admin_box{
 		width: 100%;
 		display: flex;
 		flex-direction: row;
@@ -832,6 +994,11 @@
 		flex:1
 	}
 	
+	.house_pages{
+		padding-left: 20%;
+		flex:1
+	}
+	
 	.create_movie{
 		width:200px;
 		border-radius: 0%;
@@ -842,6 +1009,14 @@
 	
 	.create_cinema{
 		width:185px;
+		border-radius: 0%;
+		background-color: #f9da49;
+		border:none;
+		color: #000000;
+	}
+	
+	.create_house{
+		width:200px;
 		border-radius: 0%;
 		background-color: #f9da49;
 		border:none;

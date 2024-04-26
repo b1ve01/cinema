@@ -19,11 +19,11 @@
 		</uni-forms-item>
 		
 		<uni-forms-item>
-		<text>影院经度：</text><uni-easyinput v-model="cinemaData.cinemaX" placeholder="请输入影院经度" />
+		<text>影院位置经度：</text><uni-easyinput v-model="cinemaData.cinemaX" placeholder="请输入影院位置经度" />
 		</uni-forms-item>
 		
 		<uni-forms-item>
-		<text>影院纬度：</text><uni-easyinput v-model="cinemaData.cinemaY" placeholder="请输入影院纬度" />
+		<text>影院位置纬度：</text><uni-easyinput v-model="cinemaData.cinemaY" placeholder="请输入影院位置纬度" />
 		</uni-forms-item>
 		
 		<button v-if="this.cinemaData.cinemaName!=''
