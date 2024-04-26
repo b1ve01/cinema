@@ -15,6 +15,21 @@ public class MovieServiceImpl implements MovieService {
     @Autowired
     private MovieMapper movieMapper;
 
+    //查询表中最大的ID
+    @Override
+    public long getMaxMovieId() {return movieMapper.getMaxMovieId();}
+
+    @Override
+    public void createType(long movieId,long genreId) {
+        movieMapper.createType(movieId,genreId);
+    }
+
+    @Override
+    public void create(Movie movie) {
+        movie.setMovieId(getMaxMovieId() + 1);
+        movieMapper.create(movie);
+    }
+
     @Override
     public List<Movie> info(){return movieMapper.info();}
 
@@ -26,5 +41,8 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public List<Movie> infoMovieByState(String movieState){return movieMapper.infoMovieByState(movieState);}
+
+    @Override
+    public void deleteByMovieId(long movieId){movieMapper.deleteByMovieId(movieId);movieMapper.deleteTypeByMovieId(movieId);}
 
 }

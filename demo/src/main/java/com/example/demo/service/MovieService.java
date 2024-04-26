@@ -1,13 +1,17 @@
 package com.example.demo.service;
 
-import com.example.demo.pojo.Genres;
-import com.example.demo.pojo.Movie;
-import com.example.demo.pojo.MovieGenres;
-import com.example.demo.pojo.Result;
+import com.example.demo.pojo.*;
 
 import java.util.List;
 
 public interface MovieService {
+
+    long getMaxMovieId();
+
+    void create(Movie movie);
+
+    void createType(long movieId,long genreId);
+
     List<Movie> info();
 
     Movie infoMovieById(long movieId);
@@ -15,5 +19,7 @@ public interface MovieService {
     List<MovieGenres> infoTypeByMovie(long movieId);
 
     List<Movie> infoMovieByState(String movieState);
+
+    void deleteByMovieId(long movieId);
 
 }

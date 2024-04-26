@@ -24,4 +24,6 @@ public interface CinemaService {
 
     Cinema infoById(long cinemaId);
 
+    void deleteByCinemaId(long cinemaId);
+
 }

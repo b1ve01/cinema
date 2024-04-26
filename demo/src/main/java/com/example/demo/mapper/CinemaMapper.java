@@ -3,6 +3,7 @@ package com.example.demo.mapper;
 import com.example.demo.pojo.Cinema;
 import com.example.demo.pojo.Movie;
 import com.example.demo.pojo.User;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -25,7 +26,7 @@ public interface CinemaMapper {
     Cinema findByPhone(String cinemaPhone);
 
     //用户注册
-    @Insert("INSERT INTO cinema(cinema_id,cinema_phone,cinema_password)" + " VALUES (#{cinemaId},#{cinemaPhone},#{cinemaPassword})")
+    @Insert("INSERT INTO cinema(cinema_id,cinema_name,cinema_phone,cinema_password,cinema_address,cinema_x,cinema_y)" + " VALUES (#{cinemaId},#{cinemaName},#{cinemaPhone},#{cinemaPassword},#{cinemaAddress},#{cinemaX},#{cinemaY})")
     void add(Cinema cinema);
 
     @Select("select * from cinema where cinema_id>0 ")
@@ -33,5 +34,8 @@ public interface CinemaMapper {
 
     @Select("select * from cinema where cinema_id = #{cinemaId}")
     Cinema infoById(long cinemaId);
+
+    @Delete("delete from cinema where cinema_id = #{cinemaId} ")
+    void deleteByCinemaId(long cinemaId);
 
 }

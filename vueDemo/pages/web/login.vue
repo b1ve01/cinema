@@ -128,20 +128,24 @@
 			</view>	
 		</view>
 		
-		<view class="movie_info_admin" v-if="this.webState==0">
+		<view class="movie_info_admin" v-if="this.webState==0 && this.movieRequestFlag==1">
 			<uni-table class="movie_info_admin_table" ref="table" :loading="loading" border stripe  emptyText="暂无更多数据"
 				@selection-change="selectionChange">
 				<uni-tr>
+					<uni-th width="50" align="center">序号</uni-th>
 					<uni-th width="150" align="center">电影中文名</uni-th>
 					<uni-th width="150" align="center">电影外文名</uni-th>
+					<uni-th width="150" align="center">时长（min）</uni-th>
 					<uni-th align="center">上映日期</uni-th>
-					<uni-th width="204" align="center">设置</uni-th>
+					<uni-th width="200" align="center">设置</uni-th>
 				</uni-tr>
 				<uni-tr v-for="(item, index) in movieDataAdminListPages[pageCurrent-1]" :key="index">
-					<uni-td>{{ item.movieNameCn }}</uni-td>
-					<uni-td>
-						<view class="name">{{ item.movieNameEn }}</view>
+					<uni-td align="center">{{ item.movieId }}</uni-td>
+					<uni-td align="center">{{ item.movieNameCn }}</uni-td>
+					<uni-td align="center">
+						{{ item.movieNameEn }}
 					</uni-td>
+					<uni-td align="center">{{ item.movieDuration }}</uni-td>
 					<uni-td align="center">{{ item.movieReleaseDate }}</uni-td>
 					<uni-td>
 						<view class="uni-group">
@@ -153,7 +157,38 @@
 			</uni-table>
 				<view class="movie_info_admin_box"><uni-pagination class="movie_pages" show-icon :page-size="pageSize" :current="pageCurrent"
 					:total="total" @change="change" />
-					<button class="create_movie" size="mini" >新增电影</button>
+					<button class="create_movie" size="mini" @click="movie_create()">新增电影</button>
+			</view>
+		</view>
+		
+		<view class="cinema_info_admin" v-if="this.webState==2 && this.cinemaRequestFlag==1">
+			<uni-table class="cinema_info_admin_table" ref="table_cinema" :loading="loadingCinema" border stripe  emptyText="暂无更多数据"
+				@selection-change="selectionChangeCinema">
+				<uni-tr>
+					<uni-th width="50" align="center">序号</uni-th>
+					<uni-th width="180" align="center">影院名称</uni-th>
+					<uni-th width="50" align="center">电话</uni-th>
+					<uni-th width="300" align="center">影院地址</uni-th>
+					<uni-th width="150" align="center">设置</uni-th>
+				</uni-tr>
+				<uni-tr v-for="(item, index) in cinemaDataAdminListPages[pageCurrentCinema-1]" :key="index">
+					<uni-td align="center">{{ item.cinemaId }}</uni-td>
+					<uni-td align="center">{{ item.cinemaName }}</uni-td>
+					<uni-td align="center">
+						{{ item.cinemaPhone }}
+					</uni-td>
+					<uni-td align="center">{{ item.cinemaAddress }}</uni-td>
+					<uni-td>
+						<view class="uni-group">
+							<button class="cinema_info_admin_button1" size="mini" type="primary" @click="cinema_update(cinemaDataAdminListPages[pageCurrentCinema-1][index].cinemaId)">查看</button>
+							<button class="cinema_info_admin_button2" size="mini" type="warn" @click="cinema_delete(cinemaDataAdminListPages[pageCurrentCinema-1][index].cinemaId)" >删除</button>
+						</view>
+					</uni-td>
+				</uni-tr>
+			</uni-table>
+				<view class="cinema_info_admin_box"><uni-pagination class="cinema_pages" show-icon :page-size="pageSizeCinema" :current="pageCurrentCinema"
+					:total="cinemaTotal" @change="changeCinema" />
+					<button class="create_cinema" size="mini" @click="cinema_create()">新增影院</button>
 			</view>
 		</view>
 		
@@ -170,6 +205,24 @@
 				@close="dialogClose"></uni-popup-dialog>
 		</uni-popup>
 	</view>
+	
+	<view>
+		<!-- 删除电影示例 -->
+		<uni-popup ref="movieDeleteDialog" type="dialog">
+			<uni-popup-dialog :type="error" cancelText="关闭" confirmText="确定" content="是否确定删除该电影信息" @confirm="movieDeleteConfirm"
+				@close="dialogClose"></uni-popup-dialog>
+		</uni-popup>
+	</view>
+	
+	<view>
+		<!-- 删除电影示例 -->
+		<uni-popup ref="cinemaDeleteDialog" type="dialog">
+			<uni-popup-dialog :type="error" cancelText="关闭" confirmText="确定" content="是否确定删除该电影院信息" @confirm="cinemaDeleteConfirm"
+				@close="dialogClose"></uni-popup-dialog>
+		</uni-popup>
+	</view>
+	
+	
 
 </template>
 
@@ -179,6 +232,10 @@
 			return {
 				isRegister: false,
 				isLogin: false,
+				movieSystemMovieId:0,
+				movieRequestFlag:0,
+				cinemaSystemCinemaId:0,
+				cinemaRequestFlag:0,
 
 				// 校验表单数据
 				loginData: {
@@ -276,11 +333,21 @@
 				webState:0,
 				movieDataAdminList:[],
 				movieDataAdminListPages:[],
+				
+				cinemaDataAdminList:[],
+				cinemaDataAdminListPages:[],
+				
 				pageSize: 13,
 				// 当前页
 				pageCurrent: 1,
 				loading: false,
 				total:0,
+				
+				pageSizeCinema: 13,
+				// 当前页
+				pageCurrentCinema: 1,
+				loadingCinema: false,
+				cinemaTotal:0,
 				
 			}
 		},
@@ -321,48 +388,51 @@
 				success:(res)=>{
 					this.movieDataAdminList=res.data.data;
 					
-					let requests = [];
+					let temp_arr=[];
 					for(let i=0;i<this.movieDataAdminList.length;i++){
-						let movie = {
-							"movieId": this.movieDataAdminList[i].movieId
-						};
-						this.movieDataAdminList[i].movieType="";
-						let request = new Promise((resolve, reject) => {
-							uni.request({
-								url: '/api/movie/infoMovieById',
-								method: 'GET',
-								dataType: 'json',
-								data: movie,
-								success:(res)=>{
-									for(let j=0;j<res.data.data.type.length;j++){
-										this.movieDataAdminList[i].movieType=this.movieDataAdminList[i].movieType+res.data.data.type[j].genreName+' ';
-									}
-									resolve();
-								}
-							})
-						})
-						requests.push(request);
-					}
-					Promise.all(requests).then(()=>{
-						let temp_arr=[];
-						for(let i=0;i<this.movieDataAdminList.length;i++){
-							temp_arr.push(this.movieDataAdminList[i]);
-							if(temp_arr.length == 13){
-								this.movieDataAdminListPages.push(temp_arr);
-								temp_arr=[];
-							}
-							if(i == this.movieDataAdminList.length-1){
-								this.movieDataAdminListPages.push(temp_arr);
-								temp_arr=[];
-							}
+						temp_arr.push(this.movieDataAdminList[i]);
+						if(temp_arr.length == 13){
+							this.movieDataAdminListPages.push(temp_arr);
+							temp_arr=[];
 						}
-						
-						console.log('movie',this.movieDataAdminList)
-						console.log('this.movieDataAdminListPages',this.movieDataAdminListPages)
-						this.total=this.movieDataAdminList.length;
-					})
+						if(i == this.movieDataAdminList.length-1){
+							this.movieDataAdminListPages.push(temp_arr);
+							temp_arr=[];
+						}
+					}
+					console.log('movie',this.movieDataAdminList)
+					console.log('this.movieDataAdminListPages',this.movieDataAdminListPages)
+					this.total=this.movieDataAdminList.length;
+					this.movieRequestFlag=1;
 				}
 			})
+			
+			uni.request({
+				url: '/api/cinema/infoAllCinema',
+				method: 'GET',
+				dataType: 'json',
+				success:(res)=>{
+					this.cinemaDataAdminList=res.data.data;
+					let temp_arr=[];
+					for(let i=0;i<this.cinemaDataAdminList.length;i++){
+						temp_arr.push(this.cinemaDataAdminList[i]);
+						if(temp_arr.length == 13){
+							this.cinemaDataAdminListPages.push(temp_arr);
+							temp_arr=[];
+						}
+						if(i == this.cinemaDataAdminList.length-1){
+							this.cinemaDataAdminListPages.push(temp_arr);
+							temp_arr=[];
+						}
+					}
+					console.log('cinema',this.cinemaDataAdminList)
+					console.log('this.cinemaDataAdminListPages',this.cinemaDataAdminListPages)
+					this.cinemaTotal=this.cinemaDataAdminList.length;
+					this.cinemaRequestFlag=1;
+				}
+			})
+			
+			
 		},
 
 		methods: {
@@ -433,6 +503,52 @@
 					url: '/pages/web/login',
 				})
 			},
+			movieDeleteConfirm(){
+				console.log('movieId',this.movieSystemMovieId);
+				
+				uni.request({
+					url: '/api/movie/deleteByMovieId?movieId='+this.movieSystemMovieId,
+					method: 'DELETE',
+					dataType: 'json',
+					header: {
+						'Authorization': this.token
+					},
+					success:(res)=>{
+						uni.showToast({
+							title: '删除成功',
+							icon: 'true',
+							mask: 'true',
+						})
+						uni.reLaunch({
+							url: '/pages/web/login'
+						})
+					}
+				})
+			},
+			cinemaDeleteConfirm(){
+				console.log('cinemaId',this.cinemaSystemCinemaId);
+				
+				uni.request({
+					url: '/api/cinema/deleteByCinemaId?cinemaId='+this.cinemaSystemCinemaId,
+					method: 'DELETE',
+					dataType: 'json',
+					header: {
+						'Authorization': this.token
+					},
+					success:(res)=>{
+						uni.showToast({
+							title: '删除成功',
+							icon: 'true',
+							mask: 'true',
+						})
+						uni.reLaunch({
+							url: '/pages/web/login'
+						})
+					}
+				})
+			},
+			
+			
 			dialogClose() {
 			},
 			
@@ -472,6 +588,20 @@
 				this.pageCurrent=e.current
 			},
 			
+			selectionChangeCinema(e) {
+				console.log(e.detail.index)
+				this.selectedIndexsCinema = e.detail.index
+			},
+			changeCinema(e) {
+				this.$refs.table_cinema.clearSelection()
+				this.selectedIndexsCinema.length = 0
+				this.pageCurrentCinema=e.current
+			},
+			
+			
+			
+			
+			
 			movie_update(movieId){
 				uni.navigateTo({
 					url: '/pages/web/movie/movieUpdate?movieId='+movieId,
@@ -479,10 +609,41 @@
 					animationDuration: 200
 				});
 			},
+			cinema_update(cinemaId){
+				uni.navigateTo({
+					url: '/pages/web/cinema/cinemaUpdate?cinemaId='+cinemaId,
+					animationType: 'pop-in',
+					animationDuration: 200
+				});
+			},
 			
 			movie_delete(movieId){
-				console.log(movieId);
+				this.$refs.movieDeleteDialog.open();
+				this.movieSystemMovieId=movieId;
+				console.log('movieSystemMovieId',this.movieSystemMovieId);
 			},
+			
+			cinema_delete(cinemaId){
+				this.$refs.cinemaDeleteDialog.open();
+				this.cinemaSystemCinemaId=cinemaId;
+				console.log('cinemaSystemCinemaId',this.cinemaSystemCinemaId);
+			},
+			
+			movie_create(){
+				uni.navigateTo({
+					url: '/pages/web/movie/movieCreate',
+					animationType: 'pop-in',
+					animationDuration: 200
+				});
+			},
+			cinema_create(){
+				uni.navigateTo({
+					url: '/pages/web/cinema/cinemaCreate',
+					animationType: 'pop-in',
+					animationDuration: 200
+				});
+			}
+			
 
 		}
 	}
@@ -609,11 +770,29 @@
 		width: 80%;
 	}
 	
+	.cinema_info_admin{
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		height: 100%;
+		width: 80%;
+	}
+	
 	.movie_info_admin_table{
 		width: 100%;
 	}
 	
+	.cinema_info_admin_table{
+		width: 100%;
+	}
+	
 	.movie_info_admin_button1{
+		background-color: #f9da49;
+		border:none;
+		color: #000000;
+	}
+	
+	.cinema_info_admin_button1{
 		background-color: #f9da49;
 		border:none;
 		color: #000000;
@@ -625,7 +804,19 @@
 		color: #ffffff;
 	}
 	
+	.cinema_info_admin_button2{
+		background-color: #6a6a6a;
+		border:none;
+		color: #ffffff;
+	}
+	
 	.movie_info_admin_box{
+		width: 100%;
+		display: flex;
+		flex-direction: row;
+	}
+	
+	.cinema_info_admin_box{
 		width: 100%;
 		display: flex;
 		flex-direction: row;
@@ -636,8 +827,21 @@
 		flex:1
 	}
 	
+	.cinema_pages{
+		padding-left: 20%;
+		flex:1
+	}
+	
 	.create_movie{
-		width:21%;
+		width:200px;
+		border-radius: 0%;
+		background-color: #f9da49;
+		border:none;
+		color: #000000;
+	}
+	
+	.create_cinema{
+		width:185px;
 		border-radius: 0%;
 		background-color: #f9da49;
 		border:none;

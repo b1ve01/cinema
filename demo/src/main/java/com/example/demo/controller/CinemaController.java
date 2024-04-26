@@ -40,7 +40,7 @@ public class CinemaController {
             cinemaService.register(cinema);
             return Result.success(cinema);
         }else {
-            return Result.error("用户已存在");
+            return Result.error("用户已存在,请修改电话");
         }
 
     }
@@ -93,6 +93,13 @@ public class CinemaController {
     public Result<Cinema> infoById(long cinemaId){
         Cinema temp_cinema=cinemaService.infoById(cinemaId);
         return Result.success(temp_cinema);
+    }
+
+    //删除电影院
+    @DeleteMapping("/deleteByCinemaId")
+    public Result<Cinema> deleteByCinemaId(long cinemaId){
+        cinemaService.deleteByCinemaId(cinemaId);
+        return Result.success();
     }
 
 }

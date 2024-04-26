@@ -134,6 +134,27 @@
 		{
 			"navigationBarTitleText" : "查看电影信息"
 		}
+	},
+	{
+		"path" : "pages/web/movie/movieCreate",
+		"style" : 
+		{
+			"navigationBarTitleText" : "新增电影信息"
+		}
+	},
+	{
+		"path" : "pages/web/cinema/cinemaUpdate",
+		"style" : 
+		{
+			"navigationBarTitleText" : "查看影院信息"
+		}
+	},
+	{
+		"path" : "pages/web/cinema/cinemaCreate",
+		"style" : 
+		{
+			"navigationBarTitleText" : "新增影院信息"
+		}
 	}],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",

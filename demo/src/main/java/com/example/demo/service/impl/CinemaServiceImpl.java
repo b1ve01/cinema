@@ -54,4 +54,7 @@ public class CinemaServiceImpl implements CinemaService {
     @Override
     public Cinema infoById(long cinemaId){return cinemaMapper.infoById(cinemaId);}
 
+    @Override
+    public void deleteByCinemaId(long cinemaId){cinemaMapper.deleteByCinemaId(cinemaId);}
+
 }
