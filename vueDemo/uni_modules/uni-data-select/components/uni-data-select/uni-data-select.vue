@@ -70,7 +70,7 @@
 			},
 			placeholder: {
 				type: String,
-				default: '请选择'
+				default: '请选择放映厅'
 			},
 			emptyTips: {
 				type: String,
@@ -325,6 +325,8 @@
 		width: 100%;
 		flex: 1;
 		box-sizing: border-box;
+		background-color:#fff;
+		border-radius: 5%;
 	}
 
 	.uni-stat-box {

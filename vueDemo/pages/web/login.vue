@@ -122,7 +122,38 @@
 			</view>
 		</view>	
 		
-		
+		<view class="schedule_info_cinema" v-if="this.webState==3 && this.scheduleRequestFlag==1">
+			<uni-table class="schedule_info_admin_table" ref="table_schedule" :loading="loadingSchedule" border stripe  emptyText="暂无更多数据"
+				@selection-change="selectionChangeSchedule">
+				<uni-tr>
+					<uni-th width="10" align="center">序号</uni-th>
+					<uni-th width="100" align="center">电影</uni-th>
+					<uni-th width="100" align="center">放映厅</uni-th>
+					<uni-th width="200" align="center">时间</uni-th>
+					<uni-th width="100" align="center">设置</uni-th>
+				</uni-tr>
+				<uni-tr v-for="(item, index) in scheduleDataListPages[pageCurrentSchedule-1]" :key="index">
+					<uni-td align="center">{{ (pageCurrentSchedule-1)*13+(index+1) }}</uni-td>
+					<uni-td align="center">{{ item.movieNameCn }}</uni-td>
+					<uni-td align="center">
+						{{ item.houseName }}
+					</uni-td>
+					<uni-td align="center">
+						{{ item.scheduleTime }}
+					</uni-td>
+					<uni-td>
+						<view class="uni-group">
+							<button class="schedule_info_admin_button1" size="mini" type="primary" @click="schedule_update(scheduleDataListPages[pageCurrentSchedule-1][index].scheduleId)">查看</button>
+							<button class="schedule_info_admin_button2" size="mini" type="warn" @click="schedule_delete(scheduleDataListPages[pageCurrentSchedule-1][index].scheduleId)" >删除</button>
+						</view>
+					</uni-td>
+				</uni-tr>
+			</uni-table>
+				<view class="schedule_info_admin_box"><uni-pagination class="schedule_pages" show-icon :page-size="pageSizeSchedule" :current="pageCurrentSchedule"
+					:total="scheduleTotal" @change="changeSchedule" />
+					<button class="create_schedule" size="mini" @click="schedule_create()">新增场次</button>
+			</view>
+		</view>	
 		
 	</view>
 	
@@ -257,6 +288,12 @@
 		</uni-popup>
 	</view>
 	
+	<view>
+		<uni-popup ref="scheduleDeleteDialog" type="dialog">
+			<uni-popup-dialog :type="error" cancelText="关闭" confirmText="确定" content="是否确定删除该场次信息" @confirm="scheduleDeleteConfirm"
+				@close="dialogClose"></uni-popup-dialog>
+		</uni-popup>
+	</view>
 	
 
 </template>
@@ -278,6 +315,9 @@
 				
 				houseSystemHouseId:0,
 				houseRequestFlag:0,
+				
+				scheduleSystemScheduleId:0,
+				scheduleRequestFlag:0,
 
 				// 校验表单数据
 				loginData: {
@@ -382,6 +422,9 @@
 				houseDataList:[],
 				houseDataListPages:[],
 				
+				scheduleDataList:[],
+				scheduleDataListPages:[],
+				
 				pageSize: 13,
 				pageCurrent: 1,
 				loading: false,
@@ -396,6 +439,11 @@
 				pageCurrentHouse:1,
 				loadingHouse:false,
 				houseTotal:0,
+				
+				pageSizeSchedule:13,
+				pageCurrentSchedule:1,
+				loadingSchedule:false,
+				scheduleTotal:0,
 				
 			}
 		},
@@ -510,6 +558,88 @@
 					this.cinemaRequestFlag=1;
 				}
 			})
+			
+			let currentDate = new Date();
+			console.log('currentDate', currentDate);
+			uni.request({
+				url: '/api/schedule/infoByCinema',
+				method: 'GET',
+				dataType: 'json',
+				data: cinema,
+				header: {
+					'Authorization': this.token
+				},
+				success:(res)=>{
+					for(let i=0;i<res.data.data.length;i++){
+						if (currentDate < new Date(res.data.data[i].scheduleTime)) {
+							this.scheduleDataList.push(res.data.data[i]);
+						}
+					}
+					
+					let requests = [];
+					for(let i=0;i<this.scheduleDataList.length;i++){
+						let house = {
+							"houseId": this.scheduleDataList[i].houseId
+						};
+						
+						let request = new Promise((resolve,reject) => {
+							uni.request({
+								url: '/api/house/infoById',
+								method: 'GET',
+								dataType: 'json',
+								data: house,
+								success:(res)=>{
+									this.scheduleDataList[i].houseName=res.data.data.houseName
+									this.scheduleDataList[i].houseSeats=res.data.data.houseSeats
+									resolve();
+								}
+							})
+						})
+						requests.push(request);
+					}
+					
+					for(let i=0;i<this.scheduleDataList.length;i++){
+						let movie = {
+							"movieId": this.scheduleDataList[i].movieId
+						};
+						
+						let request = new Promise((resolve,reject) => {
+							uni.request({
+								url: '/api/movie/infoMovieById',
+								method: 'GET',
+								dataType: 'json',
+								data: movie,
+								success:(res)=>{
+									this.scheduleDataList[i].movieNameCn=res.data.data.movie.movieNameCn
+									resolve();
+								}
+							})
+						})
+						requests.push(request);
+					}
+					
+					Promise.all(requests).then(() => {
+						let temp_arr=[];
+						for(let i=0;i<this.scheduleDataList.length;i++){
+							temp_arr.push(this.scheduleDataList[i]);
+							if(temp_arr.length == 13){
+								this.scheduleDataListPages.push(temp_arr);
+								temp_arr=[];
+							}
+							if(i == this.scheduleDataList.length-1){
+								this.scheduleDataListPages.push(temp_arr);
+								temp_arr=[];
+							}
+						}
+						console.log('schedule',this.scheduleDataList)
+						console.log('this.scheduleDataListPages',this.scheduleDataListPages)
+						this.scheduleTotal=this.scheduleDataList.length;
+						this.scheduleRequestFlag=1;
+					})
+				}
+			})
+			
+			
 			
 			
 		},
@@ -650,6 +780,29 @@
 				})
 			},
 			
+			scheduleDeleteConfirm(){
+				console.log('scheduleId',this.scheduleSystemScheduleId);
+				
+				uni.request({
+					url: '/api/schedule/deleteByScheduleId?scheduleId='+this.scheduleSystemScheduleId,
+					method: 'DELETE',
+					dataType: 'json',
+					header: {
+						'Authorization': this.token
+					},
+					success:(res)=>{
+						uni.showToast({
+							title: '删除成功',
+							icon: 'true',
+							mask: 'true',
+						})
+						uni.reLaunch({
+							url: '/pages/web/login'
+						})
+					}
+				})
+			},
+			
 			
 			dialogClose() {
 			},
@@ -710,6 +863,16 @@
 				this.pageCurrentHouse=e.current
 			},
 			
+			selectionChangeSchedule(e) {
+				console.log(e.detail.index)
+				this.selectedIndexsSchedule = e.detail.index
+			},
+			changeSchedule(e) {
+				this.$refs.table_schedule.clearSelection()
+				this.selectedIndexsSchedule.length = 0
+				this.pageCurrentSchedule=e.current
+			},
+			
 			
 			
 			
@@ -735,6 +898,13 @@
 					animationDuration: 200
 				});
 			},
+			schedule_update(scheduleId){
+				uni.navigateTo({
+					url: '/pages/web/schedule/scheduleUpdate?scheduleId='+scheduleId,
+					animationType: 'pop-in',
+					animationDuration: 200
+				});
+			},
 			
 			movie_delete(movieId){
 				this.$refs.movieDeleteDialog.open();
@@ -752,6 +922,11 @@
 				this.$refs.houseDeleteDialog.open();
 				this.houseSystemHouseId=houseId;
 				console.log('houseSystemHouseId',this.houseSystemHouseId);
+			},
+			schedule_delete(scheduleId){
+				this.$refs.scheduleDeleteDialog.open();
+				this.scheduleSystemScheduleId=scheduleId;
+				console.log('scheduleSystemScheduleId',this.scheduleSystemScheduleId);
 			},
 			
 			movie_create(){
@@ -771,6 +946,13 @@
 			house_create(){
 				uni.navigateTo({
 					url: '/pages/web/house/houseCreate',
+					animationType: 'pop-in',
+					animationDuration: 200
+				});
+			},
+			schedule_create(){
+				uni.navigateTo({
+					url: '/pages/web/schedule/scheduleCreate',
 					animationType: 'pop-in',
 					animationDuration: 200
 				});
@@ -918,6 +1100,14 @@
 		width: 80%;
 	}
 	
+	.schedule_info_cinema{
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		height: 100%;
+		width: 80%;
+	}
+	
 	.movie_info_admin_table{
 		width: 100%;
 	}
@@ -927,6 +1117,10 @@
 	}
 	
 	.house_info_admin_table{
+		width: 100%;
+	}
+	
+	.schedule_info_admin_table{
 		width: 100%;
 	}
 	
@@ -943,6 +1137,12 @@
 	}
 	
 	.house_info_admin_button1{
+		background-color: #f9da49;
+		border:none;
+		color: #000000;
+	}
+	
+	.schedule_info_admin_button1{
 		background-color: #f9da49;
 		border:none;
 		color: #000000;
@@ -966,6 +1166,12 @@
 		color: #ffffff;
 	}
 	
+	.schedule_info_admin_button2{
+		background-color: #6a6a6a;
+		border:none;
+		color: #ffffff;
+	}
+	
 	.movie_info_admin_box{
 		width: 100%;
 		display: flex;
@@ -984,6 +1190,12 @@
 		flex-direction: row;
 	}
 	
+	.schedule_info_admin_box{
+		width: 100%;
+		display: flex;
+		flex-direction: row;
+	}
+	
 	.movie_pages{
 		padding-left: 20%;
 		flex:1
@@ -995,6 +1207,11 @@
 	}
 	
 	.house_pages{
+		padding-left: 20%;
+		flex:1
+	}
+	
+	.schedule_pages{
 		padding-left: 20%;
 		flex:1
 	}
@@ -1017,6 +1234,14 @@
 	
 	.create_house{
 		width:200px;
+		border-radius: 0%;
+		background-color: #f9da49;
+		border:none;
+		color: #000000;
+	}
+	
+	.create_schedule{
+		width:210px;
 		border-radius: 0%;
 		background-color: #f9da49;
 		border:none;

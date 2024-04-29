@@ -3,6 +3,7 @@ package com.example.demo.mapper;
 import com.example.demo.pojo.House;
 import com.example.demo.pojo.Movie;
 import com.example.demo.pojo.Schedule;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -30,5 +31,8 @@ public interface ScheduleMapper {
 
     @Select("select * from schedule where movie_id = #{movieId} and cinema_id = #{cinemaId} and schedule_state=1 order by schedule_time ASC ")
     List<Schedule> infoByMovieAndCinema(long movieId,long cinemaId);
+
+    @Delete("delete from schedule where schedule_id = #{scheduleId} ")
+    void deleteByScheduleId(long scheduleId);
 
 }

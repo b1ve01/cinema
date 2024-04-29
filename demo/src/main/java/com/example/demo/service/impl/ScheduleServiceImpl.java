@@ -40,4 +40,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public List<Schedule> infoByMovieAndCinema(long movieId,long cinemaId){return scheduleMapper.infoByMovieAndCinema(movieId,cinemaId);}
 
+    @Override
+    public void deleteByScheduleId(long scheduleId){scheduleMapper.deleteByScheduleId(scheduleId);}
+
 }

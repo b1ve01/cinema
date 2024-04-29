@@ -169,6 +169,20 @@
 		{
 			"navigationBarTitleText" : "新增放映厅信息"
 		}
+	},
+	{
+		"path" : "pages/web/schedule/scheduleUpdate",
+		"style" : 
+		{
+			"navigationBarTitleText" : "查看场次信息"
+		}
+	},
+	{
+		"path" : "pages/web/schedule/scheduleCreate",
+		"style" : 
+		{
+			"navigationBarTitleText" : "新增场次信息"
+		}
 	}],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",

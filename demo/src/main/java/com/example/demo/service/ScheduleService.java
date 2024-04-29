@@ -21,4 +21,6 @@ public interface ScheduleService {
 
     List<Schedule> infoByMovieAndCinema(long movieId,long cinemaId);
 
+    void deleteByScheduleId(long scheduleId);
+
 }
