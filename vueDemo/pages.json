@@ -183,6 +183,27 @@
 		{
 			"navigationBarTitleText" : "新增场次信息"
 		}
+	},
+	{
+		"path" : "pages/web/movie/movieUUpdate",
+		"style" : 
+		{
+			"navigationBarTitleText" : "修改电影信息"
+		}
+	},
+	{
+		"path" : "pages/web/cinema/cinemaUUpdate",
+		"style" : 
+		{
+			"navigationBarTitleText" : "修改影院信息"
+		}
+	},
+	{
+		"path" : "pages/web/schedule/scheduleUUpdate",
+		"style" : 
+		{
+			"navigationBarTitleText" : "修改场次信息"
+		}
 	}],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",

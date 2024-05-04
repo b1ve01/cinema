@@ -71,4 +71,20 @@ public class ScheduleController {
         return Result.success();
     }
 
+    @PutMapping("/update")
+    public Result<Schedule> update(@RequestBody Schedule schedule,String scheduleTime){
+        System.out.println(scheduleTime);
+        Map<String, Object> map = ThreadLocalUtil.get();
+        Integer temp_cinemaId = (Integer) map.get("cinemaId");
+        long cinemaId=temp_cinemaId.longValue();
+        schedule.setCinemaId(cinemaId);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
+        LocalDateTime dateTime = LocalDateTime.parse(scheduleTime, formatter);
+
+        schedule.setScheduleTime(dateTime);
+        scheduleService.update(schedule);
+        return Result.success(schedule);
+    }
+
 }

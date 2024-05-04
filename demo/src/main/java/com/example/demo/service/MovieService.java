@@ -22,4 +22,6 @@ public interface MovieService {
 
     void deleteByMovieId(long movieId);
 
+    void update(Movie movie);
+
 }

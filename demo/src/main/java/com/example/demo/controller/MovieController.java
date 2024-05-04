@@ -31,6 +31,7 @@ public class MovieController {
 
     @PostMapping("/create")
     public Result<Movie> create(@RequestBody Movie movie,String movieReleaseDate,long[] movieType){
+        System.out.println(movieReleaseDate);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate date = LocalDate.parse(movieReleaseDate, formatter);
         LocalDateTime dateTime = date.atStartOfDay();
@@ -84,6 +85,23 @@ public class MovieController {
     public Result<Movie> deleteByMovieId(long movieId){
         movieService.deleteByMovieId(movieId);
         return Result.success();
+    }
+
+    @PutMapping("/update")
+    public Result<Movie> update(@RequestBody Movie movie,String movieReleaseDate,long[] movieType){
+        System.out.println(movieReleaseDate);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        LocalDate date = LocalDate.parse(movieReleaseDate, formatter);
+        LocalDateTime dateTime = date.atStartOfDay();
+        movie.setMovieReleaseDate(dateTime);
+        movieService.update(movie);
+
+        long[] temp_arr=movieType;
+        for(int i=0;i<temp_arr.length;i++){
+            movieService.createType(movie.getMovieId(),temp_arr[i]);
+        }
+
+        return Result.success(movie);
     }
 
 }

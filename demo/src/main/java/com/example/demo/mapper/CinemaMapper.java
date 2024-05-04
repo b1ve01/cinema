@@ -1,12 +1,10 @@
 package com.example.demo.mapper;
 
 import com.example.demo.pojo.Cinema;
+import com.example.demo.pojo.House;
 import com.example.demo.pojo.Movie;
 import com.example.demo.pojo.User;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -37,5 +35,8 @@ public interface CinemaMapper {
 
     @Delete("delete from cinema where cinema_id = #{cinemaId} ")
     void deleteByCinemaId(long cinemaId);
+
+    @Update("update cinema set cinema_name=#{cinemaName},cinema_phone=#{cinemaPhone},cinema_password=#{cinemaPassword},cinema_address=#{cinemaAddress},cinema_x=#{cinemaX},cinema_y=#{cinemaY} where cinema_id = #{cinemaId}")
+    void update(Cinema cinema);
 
 }

@@ -1,10 +1,7 @@
 package com.example.demo.controller;
 
 
-import com.example.demo.pojo.Cinema;
-import com.example.demo.pojo.Movie;
-import com.example.demo.pojo.Result;
-import com.example.demo.pojo.User;
+import com.example.demo.pojo.*;
 import com.example.demo.service.CinemaService;
 import com.example.demo.service.UserService;
 import com.example.demo.utils.JwtUtil;
@@ -100,6 +97,12 @@ public class CinemaController {
     public Result<Cinema> deleteByCinemaId(long cinemaId){
         cinemaService.deleteByCinemaId(cinemaId);
         return Result.success();
+    }
+
+    @PutMapping("/update")
+    public Result<Cinema> update(@RequestBody Cinema cinema){
+        cinemaService.update(cinema);
+        return Result.success(cinema);
     }
 
 }

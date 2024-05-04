@@ -43,4 +43,9 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public void deleteByScheduleId(long scheduleId){scheduleMapper.deleteByScheduleId(scheduleId);}
 
+    @Override
+    public void update(Schedule schedule) {
+        scheduleMapper.update(schedule);
+    }
+
 }

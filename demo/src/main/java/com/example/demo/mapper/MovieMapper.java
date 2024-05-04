@@ -1,10 +1,7 @@
 package com.example.demo.mapper;
 
 import com.example.demo.pojo.*;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -37,5 +34,8 @@ public interface MovieMapper {
 
     @Delete("delete from moviegenres where movie_id = #{movieId} ")
     void deleteTypeByMovieId(long movieId);
+
+    @Update("update movie set movie_name_cn=#{movieNameCn},movie_name_en=#{movieNameEn},movie_director=#{movieDirector},movie_description=#{movieDescription},movie_release_date=#{movieReleaseDate},movie_duration=#{movieDuration},movie_country=#{movieCountry},movie_url=#{movieUrl},movie_state=#{movieState} where movie_id = #{movieId}")
+    void update(Movie movie);
 
 }

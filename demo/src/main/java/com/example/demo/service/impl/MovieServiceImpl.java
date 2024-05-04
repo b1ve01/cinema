@@ -45,4 +45,10 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public void deleteByMovieId(long movieId){movieMapper.deleteByMovieId(movieId);movieMapper.deleteTypeByMovieId(movieId);}
 
+    @Override
+    public void update(Movie movie) {
+        movieMapper.update(movie);
+        movieMapper.deleteTypeByMovieId(movie.getMovieId());
+    }
+
 }

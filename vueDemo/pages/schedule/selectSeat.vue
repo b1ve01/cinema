@@ -305,6 +305,8 @@
 				this.selectCnt--;
 				this.seatData[x][y].seatState = 0;
 				this.selectList = this.selectList.filter(item => item !== res);
+				let temp_price = parseFloat(this.selectPrice) - parseFloat(this.scheduleData.schedulePrice);
+				this.selectPrice = temp_price.toFixed(1);
 			},
 			
 			scheduleBymovie(){

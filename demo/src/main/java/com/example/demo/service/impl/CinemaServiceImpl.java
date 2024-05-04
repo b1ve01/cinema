@@ -3,6 +3,7 @@ package com.example.demo.service.impl;
 import com.example.demo.mapper.CinemaMapper;
 import com.example.demo.mapper.UserMapper;
 import com.example.demo.pojo.Cinema;
+import com.example.demo.pojo.House;
 import com.example.demo.pojo.Movie;
 import com.example.demo.pojo.User;
 import com.example.demo.service.CinemaService;
@@ -56,5 +57,12 @@ public class CinemaServiceImpl implements CinemaService {
 
     @Override
     public void deleteByCinemaId(long cinemaId){cinemaMapper.deleteByCinemaId(cinemaId);}
+
+    @Override
+    public void update(Cinema cinema) {
+        String md5String = MD5Util.MD5Upper(cinema.getCinemaPassword());
+        cinema.setCinemaPassword(md5String);
+        cinemaMapper.update(cinema);
+    }
 
 }

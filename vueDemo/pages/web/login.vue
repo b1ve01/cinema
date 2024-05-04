@@ -81,10 +81,7 @@
 			<view class="isLogin_2">
 				<uni-list >
 				<view class="border_line"></view>
-				<uni-list-item :show-extra-icon="true"  :extra-icon="orderIcon" title="影院订单" 
-				clickable @click="to_orders()"/>
 				
-				<view class="border_line"></view>
 				
 				<uni-list-item :show-extra-icon="true"  :extra-icon="setIcon" title="设定" />
 				<view class="border_line"></view>
@@ -144,6 +141,7 @@
 					<uni-td>
 						<view class="uni-group">
 							<button class="schedule_info_admin_button1" size="mini" type="primary" @click="schedule_update(scheduleDataListPages[pageCurrentSchedule-1][index].scheduleId)">查看</button>
+							<button class="schedule_info_admin_button1" size="mini" type="primary" @click="scheduleUpdate(scheduleDataListPages[pageCurrentSchedule-1][index].scheduleId)">修改</button>
 							<button class="schedule_info_admin_button2" size="mini" type="warn" @click="schedule_delete(scheduleDataListPages[pageCurrentSchedule-1][index].scheduleId)" >删除</button>
 						</view>
 					</uni-td>
@@ -198,7 +196,7 @@
 					<uni-th width="150" align="center">电影外文名</uni-th>
 					<uni-th width="150" align="center">时长（min）</uni-th>
 					<uni-th align="center">上映日期</uni-th>
-					<uni-th width="200" align="center">设置</uni-th>
+					<uni-th width="250" align="center">设置</uni-th>
 				</uni-tr>
 				<uni-tr v-for="(item, index) in movieDataAdminListPages[pageCurrent-1]" :key="index">
 					<uni-td align="center">{{ (pageCurrent-1)*13+(index+1) }}</uni-td>
@@ -211,6 +209,7 @@
 					<uni-td>
 						<view class="uni-group">
 							<button class="movie_info_admin_button1" size="mini" type="primary" @click="movie_update(movieDataAdminListPages[pageCurrent-1][index].movieId)">查看</button>
+							<button class="movie_info_admin_button1" size="mini" type="primary" @click="movieUpdate(movieDataAdminListPages[pageCurrent-1][index].movieId)">修改</button>
 							<button class="movie_info_admin_button2" size="mini" type="warn" @click="movie_delete(movieDataAdminListPages[pageCurrent-1][index].movieId)" >删除</button>
 						</view>
 					</uni-td>
@@ -227,10 +226,10 @@
 				@selection-change="selectionChangeCinema">
 				<uni-tr>
 					<uni-th width="50" align="center">序号</uni-th>
-					<uni-th width="180" align="center">影院名称</uni-th>
+					<uni-th width="200" align="center">影院名称</uni-th>
 					<uni-th width="50" align="center">电话</uni-th>
-					<uni-th width="300" align="center">影院地址</uni-th>
-					<uni-th width="150" align="center">设置</uni-th>
+					<uni-th width="350" align="center">影院地址</uni-th>
+					<uni-th width="200" align="center">设置</uni-th>
 				</uni-tr>
 				<uni-tr v-for="(item, index) in cinemaDataAdminListPages[pageCurrentCinema-1]" :key="index">
 					<uni-td align="center">{{ (pageCurrentCinema-1)*13+(index+1) }}</uni-td>
@@ -242,6 +241,7 @@
 					<uni-td>
 						<view class="uni-group">
 							<button class="cinema_info_admin_button1" size="mini" type="primary" @click="cinema_update(cinemaDataAdminListPages[pageCurrentCinema-1][index].cinemaId)">查看</button>
+							<button class="cinema_info_admin_button1" size="mini" type="primary" @click="cinemaUpdate(cinemaDataAdminListPages[pageCurrentCinema-1][index].cinemaId)">修改</button>
 							<button class="cinema_info_admin_button2" size="mini" type="warn" @click="cinema_delete(cinemaDataAdminListPages[pageCurrentCinema-1][index].cinemaId)" >删除</button>
 						</view>
 					</uni-td>
@@ -884,9 +884,23 @@
 					animationDuration: 200
 				});
 			},
+			movieUpdate(movieId){
+				uni.navigateTo({
+					url: '/pages/web/movie/movieUUpdate?movieId='+movieId,
+					animationType: 'pop-in',
+					animationDuration: 200
+				});
+			},
 			cinema_update(cinemaId){
 				uni.navigateTo({
 					url: '/pages/web/cinema/cinemaUpdate?cinemaId='+cinemaId,
+					animationType: 'pop-in',
+					animationDuration: 200
+				});
+			},
+			cinemaUpdate(cinemaId){
+				uni.navigateTo({
+					url: '/pages/web/cinema/cinemaUUpdate?cinemaId='+cinemaId,
 					animationType: 'pop-in',
 					animationDuration: 200
 				});
@@ -901,6 +915,13 @@
 			schedule_update(scheduleId){
 				uni.navigateTo({
 					url: '/pages/web/schedule/scheduleUpdate?scheduleId='+scheduleId,
+					animationType: 'pop-in',
+					animationDuration: 200
+				});
+			},
+			scheduleUpdate(scheduleId){
+				uni.navigateTo({
+					url: '/pages/web/schedule/scheduleUUpdate?scheduleId='+scheduleId,
 					animationType: 'pop-in',
 					animationDuration: 200
 				});
@@ -1217,7 +1238,7 @@
 	}
 	
 	.create_movie{
-		width:200px;
+		width:250px;
 		border-radius: 0%;
 		background-color: #f9da49;
 		border:none;
@@ -1225,7 +1246,7 @@
 	}
 	
 	.create_cinema{
-		width:185px;
+		width:215px;
 		border-radius: 0%;
 		background-color: #f9da49;
 		border:none;
@@ -1241,7 +1262,7 @@
 	}
 	
 	.create_schedule{
-		width:210px;
+		width:250px;
 		border-radius: 0%;
 		background-color: #f9da49;
 		border:none;

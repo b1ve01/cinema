@@ -3,10 +3,7 @@ package com.example.demo.mapper;
 import com.example.demo.pojo.House;
 import com.example.demo.pojo.Movie;
 import com.example.demo.pojo.Schedule;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -35,4 +32,6 @@ public interface ScheduleMapper {
     @Delete("delete from schedule where schedule_id = #{scheduleId} ")
     void deleteByScheduleId(long scheduleId);
 
+    @Update("update schedule set movie_id=#{movieId},cinema_id=#{cinemaId},house_id=#{houseId},schedule_time=#{scheduleTime},schedule_price=#{schedulePrice},schedule_remain=#{scheduleRemain},schedule_state=#{scheduleState},schedule_description=#{scheduleDescription} where schedule_id = #{scheduleId}")
+    void update(Schedule schedule);
 }

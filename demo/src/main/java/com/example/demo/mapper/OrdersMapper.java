@@ -21,7 +21,7 @@ public interface OrdersMapper {
     @Select("select * from orders where schedule_id = #{scheduleId} and orders_state=1 order by orders_time ASC ")
     List<Orders> infoByScheduleId(long scheduleId);
 
-    @Select("select * from orders where user_id = #{userId} order by orders_time ASC ")
+    @Select("select * from orders where user_id = #{userId} order by orders_time DESC ")
     List<Orders> infoByUserId(long userId);
 
 }
