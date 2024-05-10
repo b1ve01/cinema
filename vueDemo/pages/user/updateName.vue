@@ -45,9 +45,14 @@
 			let user = {
 				"userId": this.userId
 			};
+			
+			let baseURL = '/api';
+			// #ifdef APP-PLUS
+			baseURL = "http://cinema.nat100.top"
+			// #endif
 
 			uni.request({
-				url: '/api/user/info',
+				url: baseURL+'/user/info',
 				method: 'GET',
 				dataType: 'json',
 				data: user,
@@ -83,8 +88,14 @@
 					"userPhone": this.userData.userPhone,
 					"userProfile": this.userData.userProfile,
 				};
+				
+				let baseURL = '/api';
+				// #ifdef APP-PLUS
+				baseURL = "http://cinema.nat100.top"
+				// #endif
+				
 				uni.request({
-					url: '/api/user/update',
+					url: baseURL+'/user/update',
 					method: 'PUT',
 					dataType: 'json',
 					data: update_name,

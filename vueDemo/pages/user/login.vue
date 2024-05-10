@@ -208,9 +208,14 @@
 			};
 			
 			console.log('here',user);
+			
+			let baseURL = '/api';
+			// #ifdef APP-PLUS
+			baseURL = "http://cinema.nat100.top"
+			// #endif
 
 			uni.request({
-				url: '/api/user/info',
+				url: baseURL+'/user/info',
 				method: 'GET',
 				dataType: 'json',
 				data: user,
@@ -279,9 +284,14 @@
 						"userEmail": this.loginData.userEmail,
 						"userPassword": this.loginData.userPassword
 					};
+					
+					let baseURL = '/api';
+					// #ifdef APP-PLUS
+					baseURL = "http://cinema.nat100.top"
+					// #endif
 
 					uni.request({
-						url: '/api/user/login',
+						url: baseURL+'/user/login',
 						method: 'POST',
 						dataType: 'json',
 						data: user,
@@ -328,9 +338,14 @@
 						"userPassword": this.registerData.userPassword,
 						"userCode": this.registerData.userCode,
 					};
+					
+					let baseURL = '/api';
+					// #ifdef APP-PLUS
+					baseURL = "http://cinema.nat100.top"
+					// #endif
 
 					uni.request({
-						url: '/api/user/register?code=' + this.registerData.userCode,
+						url: baseURL+'/user/register?code=' + this.registerData.userCode,
 						method: 'POST',
 						dataType: 'json',
 						data: user_register,
@@ -339,8 +354,14 @@
 							console.log(user_register);
 							console.log(res.data);
 							if (res.data.code == 0) {
+								
+								let baseURL = '/api';
+								// #ifdef APP-PLUS
+								baseURL = "http://cinema.nat100.top"
+								// #endif
+								
 								uni.request({
-									url: '/api/user/login',
+									url: baseURL+'/user/login',
 									method: 'POST',
 									dataType: 'json',
 									data: user_register,
@@ -393,9 +414,14 @@
 						"userEmail": this.registerData.userEmail,
 						"userPassword": this.registerData.userPassword
 					};
+					
+					let baseURL = '/api';
+					// #ifdef APP-PLUS
+					baseURL = "http://cinema.nat100.top"
+					// #endif
 
 					uni.request({
-						url: '/api/user/sendEmail',
+						url: baseURL+'/user/sendEmail',
 						method: 'POST',
 						dataType: 'json',
 						data: user,
@@ -485,8 +511,13 @@
 					"userId": this.userId
 				};
 				
+				let baseURL = '/api';
+				// #ifdef APP-PLUS
+				baseURL = "http://cinema.nat100.top"
+				// #endif
+				
 				uni.request({
-					url: '/api/user/info',
+					url: baseURL+'/user/info',
 					method: 'GET',
 					dataType: 'json',
 					data: user,

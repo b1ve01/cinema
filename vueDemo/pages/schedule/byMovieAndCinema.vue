@@ -159,8 +159,13 @@
 				"cinemaId": this.cinemaId
 			};
 
+			let baseURL = '/api';
+			// #ifdef APP-PLUS
+			baseURL = "http://cinema.nat100.top"
+			// #endif
+
 			uni.request({
-				url: '/api/schedule/infoByMovieAndCinema',
+				url: baseURL+'/schedule/infoByMovieAndCinema',
 				method: 'GET',
 				dataType: 'json',
 				data: schedule,
@@ -250,9 +255,14 @@
 							}
 						}
 					}
+					
+					let baseURL = '/api';
+					// #ifdef APP-PLUS
+					baseURL = "http://cinema.nat100.top"
+					// #endif
 
 					uni.request({
-						url: '/api/movie/infoMovieById',
+						url: baseURL+'/movie/infoMovieById',
 						method: 'GET',
 						dataType: 'json',
 						data: schedule,
@@ -260,9 +270,14 @@
 							this.scheduleInfo.movieNameCn = res.data.data.movie.movieNameCn;
 							this.scheduleInfo.movieNameEn = res.data.data.movie.movieNameEn;
 							this.scheduleInfo.movieUrl = res.data.data.movie.movieUrl;
+							
+							let baseURL = '/api';
+							// #ifdef APP-PLUS
+							baseURL = "http://cinema.nat100.top"
+							// #endif
 
 							uni.request({
-								url: '/api/cinema/infoById',
+								url: baseURL+'/cinema/infoById',
 								method: 'GET',
 								dataType: 'json',
 								data: schedule,
@@ -288,8 +303,14 @@
 											};
 											let request = new Promise((resolve,
 												reject) => {
+													
+												let baseURL = '/api';
+												// #ifdef APP-PLUS
+												baseURL = "http://cinema.nat100.top"
+												// #endif	
+													
 												uni.request({
-													url: '/api/house/infoById',
+													url: baseURL+'/house/infoById',
 													method: 'GET',
 													dataType: 'json',
 													data: house,

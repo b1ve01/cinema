@@ -101,9 +101,14 @@
 		},
 
 		onShow: function(option) {
+			
+			let baseURL = '/api';
+			// #ifdef APP-PLUS
+			baseURL = "http://cinema.nat100.top"
+			// #endif
 
 			uni.request({
-				url: '/api/movie/infoMovieByState?movieState=' + 1,
+				url: baseURL+'/movie/infoMovieByState?movieState=' + 1,
 				method: 'GET',
 				dataType: 'json',
 
@@ -115,7 +120,7 @@
 			});
 
 			uni.request({
-				url: '/api/movie/infoMovieByState?movieState=' + 0,
+				url: baseURL+'/movie/infoMovieByState?movieState=' + 0,
 				method: 'GET',
 				dataType: 'json',
 
@@ -131,9 +136,14 @@
 					this.cinemaLocation.longitude = res.longitude;
 					this.cinemaLocation.latitude = res.latitude;
 					console.log('标记', this.cinemaLocation);
+					
+					let baseURL = '/api';
+					// #ifdef APP-PLUS
+					baseURL = "http://cinema.nat100.top"
+					// #endif
 
 					uni.request({
-						url: '/api/cinema/infoAllCinema',
+						url: baseURL+'/cinema/infoAllCinema',
 						method: 'GET',
 						dataType: 'json',
 						success: (res) => {
@@ -164,9 +174,14 @@
 				let movie = {
 					"movieId": ref
 				};
+				
+				let baseURL = '/api';
+				// #ifdef APP-PLUS
+				baseURL = "http://cinema.nat100.top"
+				// #endif
 
 				uni.request({
-					url: '/api/movie/infoMovieById',
+					url: baseURL+'/movie/infoMovieById',
 					method: 'GET',
 					dataType: 'json',
 					data: movie,

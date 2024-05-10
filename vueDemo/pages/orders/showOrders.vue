@@ -30,9 +30,14 @@
 			let orders = {
 				"userId": this.userId,
 			};
+			
+			let baseURL = '/api';
+			// #ifdef APP-PLUS
+			baseURL = "http://cinema.nat100.top"
+			// #endif
 
 			uni.request({
-				url: '/api/orders/infoByUserId',
+				url: baseURL+'/orders/infoByUserId',
 				method: 'GET',
 				dataType: 'json',
 				data: orders,
@@ -50,8 +55,13 @@
 							"scheduleId": this.ordersData[i].scheduleId,
 						};
 						
+						let baseURL = '/api';
+						// #ifdef APP-PLUS
+						baseURL = "http://cinema.nat100.top"
+						// #endif
+						
 						uni.request({
-							url: '/api/schedule/infoById',
+							url: baseURL+'/schedule/infoById',
 							method: 'GET',
 							dataType: 'json',
 							data: schedule,
@@ -68,8 +78,13 @@
 									"houseId": this.ordersData[i].houseId,
 								};
 								
+								let baseURL = '/api';
+								// #ifdef APP-PLUS
+								baseURL = "http://cinema.nat100.top"
+								// #endif
+								
 								uni.request({
-									url: '/api/movie/infoMovieById',
+									url: baseURL+'/movie/infoMovieById',
 									method: 'GET',
 									dataType: 'json',
 									data: idObject,
@@ -77,8 +92,13 @@
 										this.ordersData[i].movieNameCn=res.data.data.movie.movieNameCn;
 										this.ordersData[i].movieUrl=res.data.data.movie.movieUrl;
 										
+										let baseURL = '/api';
+										// #ifdef APP-PLUS
+										baseURL = "http://cinema.nat100.top"
+										// #endif
+										
 										uni.request({
-											url: '/api/cinema/infoById',
+											url: baseURL+'/cinema/infoById',
 											method: 'GET',
 											dataType: 'json',
 											data: idObject,
@@ -86,8 +106,13 @@
 												this.ordersData[i].cinemaName=res.data.data.cinemaName
 												this.ordersData[i].cinemaPhone=res.data.data.cinemaPhone
 												
+												let baseURL = '/api';
+												// #ifdef APP-PLUS
+												baseURL = "http://cinema.nat100.top"
+												// #endif
+												
 												uni.request({
-													url: '/api/house/infoById',
+													url: baseURL+'/house/infoById',
 													method: 'GET',
 													dataType: 'json',
 													data: idObject,

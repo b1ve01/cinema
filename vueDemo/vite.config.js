@@ -3,6 +3,7 @@ import uni from '@dcloudio/vite-plugin-uni';
 
 export default defineConfig({
   plugins: [uni()],
+  // #ifdef H5
   server: {
     proxy:{
       '/api':{//获取路径中包含了/api的请求
@@ -11,5 +12,6 @@ export default defineConfig({
           rewrite:(path)=>path.replace(/^\/api/,'')///api替换为''
       }
     }
-  }
+  },
+// #endif
 });

@@ -72,9 +72,14 @@
 			let movie = {
 				"movieId": option.movieId
 			};
+			
+			let baseURL = '/api';
+			// #ifdef APP-PLUS
+			baseURL = "http://cinema.nat100.top"
+			// #endif
 
 			uni.request({
-				url: '/api/movie/infoMovieById',
+				url: baseURL+'/movie/infoMovieById',
 				method: 'GET',
 				dataType: 'json',
 				data: movie,

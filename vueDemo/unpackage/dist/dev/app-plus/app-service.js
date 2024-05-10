@@ -1971,18 +1971,20 @@ if (uni.restoreGlobal) {
       };
     },
     onShow: function(option) {
+      let baseURL = "/api";
+      baseURL = "http://cinema.nat100.top";
       uni.request({
-        url: "/api/movie/infoMovieByState?movieState=1",
+        url: baseURL + "/movie/infoMovieByState?movieState=1",
         method: "GET",
         dataType: "json",
         success: (res) => {
           this.movieData = res.data;
           this.movieData.data.reverse();
-          formatAppLog("log", "at pages/movieCinema/cinema.vue:113", "电影页面", this.movieData.data);
+          formatAppLog("log", "at pages/movieCinema/cinema.vue:118", "电影页面", this.movieData.data);
         }
       });
       uni.request({
-        url: "/api/movie/infoMovieByState?movieState=0",
+        url: baseURL + "/movie/infoMovieByState?movieState=0",
         method: "GET",
         dataType: "json",
         success: (res) => {
@@ -1991,26 +1993,28 @@ if (uni.restoreGlobal) {
       });
       uni.getLocation({
         success: (res) => {
-          formatAppLog("log", "at pages/movieCinema/cinema.vue:129", "当前位置的经度：", res.longitude);
-          formatAppLog("log", "at pages/movieCinema/cinema.vue:130", "当前位置的纬度：", res.latitude);
+          formatAppLog("log", "at pages/movieCinema/cinema.vue:134", "当前位置的经度：", res.longitude);
+          formatAppLog("log", "at pages/movieCinema/cinema.vue:135", "当前位置的纬度：", res.latitude);
           this.cinemaLocation.longitude = res.longitude;
           this.cinemaLocation.latitude = res.latitude;
-          formatAppLog("log", "at pages/movieCinema/cinema.vue:133", "标记", this.cinemaLocation);
+          formatAppLog("log", "at pages/movieCinema/cinema.vue:138", "标记", this.cinemaLocation);
+          let baseURL2 = "/api";
+          baseURL2 = "http://cinema.nat100.top";
           uni.request({
-            url: "/api/cinema/infoAllCinema",
+            url: baseURL2 + "/cinema/infoAllCinema",
             method: "GET",
             dataType: "json",
             success: (res2) => {
-              formatAppLog("log", "at pages/movieCinema/cinema.vue:140", res2.data);
+              formatAppLog("log", "at pages/movieCinema/cinema.vue:150", res2.data);
               this.cinemaData = res2.data.data;
-              formatAppLog("log", "at pages/movieCinema/cinema.vue:142", "电影院列表", this.cinemaData);
+              formatAppLog("log", "at pages/movieCinema/cinema.vue:152", "电影院列表", this.cinemaData);
               for (let i2 = 0; i2 < this.cinemaData.length; i2++) {
                 let distance = this.getDistance(this.cinemaLocation, this.cinemaData[i2].cinemaX, this.cinemaData[i2].cinemaY);
                 this.cinemaAfter[i2] = this.cinemaData[i2];
                 this.cinemaAfter[i2].cinemaDistance = distance;
               }
               this.cinemaAfter.sort((a2, b2) => a2.cinemaDistance - b2.cinemaDistance);
-              formatAppLog("log", "at pages/movieCinema/cinema.vue:153", "cinemaAfter sorted", this.cinemaAfter);
+              formatAppLog("log", "at pages/movieCinema/cinema.vue:163", "cinemaAfter sorted", this.cinemaAfter);
             }
           });
         }
@@ -2021,14 +2025,16 @@ if (uni.restoreGlobal) {
         let movie = {
           "movieId": ref
         };
+        let baseURL = "/api";
+        baseURL = "http://cinema.nat100.top";
         uni.request({
-          url: "/api/movie/infoMovieById",
+          url: baseURL + "/movie/infoMovieById",
           method: "GET",
           dataType: "json",
           data: movie,
           success: (res) => {
             this.movieType = "";
-            formatAppLog("log", "at pages/movieCinema/cinema.vue:176", "调用成功", res.data.data.movie);
+            formatAppLog("log", "at pages/movieCinema/cinema.vue:191", "调用成功", res.data.data.movie);
             uni.setStorageSync("movieId", res.data.data.movie.movieId);
             uni.setStorageSync("movieNameCn", res.data.data.movie.movieNameCn);
             uni.setStorageSync("movieNameEn", res.data.data.movie.movieNameEn);
@@ -2041,7 +2047,7 @@ if (uni.restoreGlobal) {
             for (let i2 = 0; i2 < res.data.data.type.length; i2++) {
               this.movieType = this.movieType + " " + res.data.data.type[i2].genreName;
             }
-            formatAppLog("log", "at pages/movieCinema/cinema.vue:191", "总类型", this.movieType);
+            formatAppLog("log", "at pages/movieCinema/cinema.vue:206", "总类型", this.movieType);
             uni.setStorageSync("movieType", this.movieType);
             uni.navigateTo({
               url: "/pages/movieCinema/movieInfo?movieId=" + ref,
@@ -5368,8 +5374,10 @@ if (uni.restoreGlobal) {
         "userId": this.userId
       };
       formatAppLog("log", "at pages/user/login.vue:210", "here", user);
+      let baseURL = "/api";
+      baseURL = "http://cinema.nat100.top";
       uni.request({
-        url: "/api/user/info",
+        url: baseURL + "/user/info",
         method: "GET",
         dataType: "json",
         data: user,
@@ -5377,7 +5385,7 @@ if (uni.restoreGlobal) {
           "Authorization": this.token
         },
         success: (res) => {
-          formatAppLog("log", "at pages/user/login.vue:221", "调用成功", res.data.data);
+          formatAppLog("log", "at pages/user/login.vue:226", "调用成功", res.data.data);
           this.userData.userId = res.data.data.userId;
           this.userData.userName = res.data.data.userName;
           this.userData.userEmail = res.data.data.userEmail;
@@ -5434,14 +5442,16 @@ if (uni.restoreGlobal) {
             "userEmail": this.loginData.userEmail,
             "userPassword": this.loginData.userPassword
           };
+          let baseURL = "/api";
+          baseURL = "http://cinema.nat100.top";
           uni.request({
-            url: "/api/user/login",
+            url: baseURL + "/user/login",
             method: "POST",
             dataType: "json",
             data: user,
             success: (res2) => {
               if (res2.data.code == 0) {
-                formatAppLog("log", "at pages/user/login.vue:290", "调用成功", res2.data.data);
+                formatAppLog("log", "at pages/user/login.vue:300", "调用成功", res2.data.data);
                 uni.setStorageSync("userId", res2.data.data.user.userId);
                 uni.setStorageSync("token", res2.data.data.token);
                 uni.setStorageSync("isLogin", true);
@@ -5458,8 +5468,8 @@ if (uni.restoreGlobal) {
               }
             },
             fail: (res2) => {
-              formatAppLog("log", "at pages/user/login.vue:309", res2.errMsg);
-              formatAppLog("log", "at pages/user/login.vue:310", "调用接口失败");
+              formatAppLog("log", "at pages/user/login.vue:319", res2.errMsg);
+              formatAppLog("log", "at pages/user/login.vue:320", "调用接口失败");
             }
           });
         }).catch((err) => {
@@ -5468,7 +5478,7 @@ if (uni.restoreGlobal) {
             icon: "error",
             mask: "true"
           });
-          formatAppLog("log", "at pages/user/login.vue:319", "err", err);
+          formatAppLog("log", "at pages/user/login.vue:329", "err", err);
         });
       },
       submit_register(ref) {
@@ -5478,23 +5488,27 @@ if (uni.restoreGlobal) {
             "userPassword": this.registerData.userPassword,
             "userCode": this.registerData.userCode
           };
+          let baseURL = "/api";
+          baseURL = "http://cinema.nat100.top";
           uni.request({
-            url: "/api/user/register?code=" + this.registerData.userCode,
+            url: baseURL + "/user/register?code=" + this.registerData.userCode,
             method: "POST",
             dataType: "json",
             data: user_register,
             success: (res2) => {
-              formatAppLog("log", "at pages/user/login.vue:339", user_register);
-              formatAppLog("log", "at pages/user/login.vue:340", res2.data);
+              formatAppLog("log", "at pages/user/login.vue:354", user_register);
+              formatAppLog("log", "at pages/user/login.vue:355", res2.data);
               if (res2.data.code == 0) {
+                let baseURL2 = "/api";
+                baseURL2 = "http://cinema.nat100.top";
                 uni.request({
-                  url: "/api/user/login",
+                  url: baseURL2 + "/user/login",
                   method: "POST",
                   dataType: "json",
                   data: user_register,
                   success: (res3) => {
                     if (res3.data.code == 0) {
-                      formatAppLog("log", "at pages/user/login.vue:349", "调用成功", res3.data.data);
+                      formatAppLog("log", "at pages/user/login.vue:370", "调用成功", res3.data.data);
                       uni.setStorageSync("userId", res3.data.data.user.userId);
                       uni.setStorageSync("token", res3.data.data.token);
                       uni.setStorageSync("isLogin", true);
@@ -5506,7 +5520,7 @@ if (uni.restoreGlobal) {
                 });
               }
               if (res2.data.code == 1) {
-                formatAppLog("log", "at pages/user/login.vue:365", res2.data);
+                formatAppLog("log", "at pages/user/login.vue:386", res2.data);
                 uni.showToast({
                   title: res2.data.message,
                   icon: "error",
@@ -5521,7 +5535,7 @@ if (uni.restoreGlobal) {
             icon: "error",
             mask: "true"
           });
-          formatAppLog("log", "at pages/user/login.vue:380", "err", err);
+          formatAppLog("log", "at pages/user/login.vue:401", "err", err);
         });
       },
       sendEmail() {
@@ -5532,8 +5546,10 @@ if (uni.restoreGlobal) {
             "userEmail": this.registerData.userEmail,
             "userPassword": this.registerData.userPassword
           };
+          let baseURL = "/api";
+          baseURL = "http://cinema.nat100.top";
           uni.request({
-            url: "/api/user/sendEmail",
+            url: baseURL + "/user/sendEmail",
             method: "POST",
             dataType: "json",
             data: user,
@@ -5616,8 +5632,10 @@ if (uni.restoreGlobal) {
         let user = {
           "userId": this.userId
         };
+        let baseURL = "/api";
+        baseURL = "http://cinema.nat100.top";
         uni.request({
-          url: "/api/user/info",
+          url: baseURL + "/user/info",
           method: "GET",
           dataType: "json",
           data: user,
@@ -5625,7 +5643,7 @@ if (uni.restoreGlobal) {
             "Authorization": this.token
           },
           success: (res) => {
-            formatAppLog("log", "at pages/user/login.vue:498", "调用成功", res.data.data);
+            formatAppLog("log", "at pages/user/login.vue:529", "调用成功", res.data.data);
             uni.setStorageSync("userName", res.data.data.userName);
             uni.setStorageSync("userUrl", res.data.data.userUrl);
             uni.navigateTo({
@@ -10153,8 +10171,10 @@ ${i3}
       let user = {
         "userId": this.userId
       };
+      let baseURL = "/api";
+      baseURL = "http://cinema.nat100.top";
       uni.request({
-        url: "/api/user/info",
+        url: baseURL + "/user/info",
         method: "GET",
         dataType: "json",
         data: user,
@@ -10162,7 +10182,7 @@ ${i3}
           "Authorization": this.token
         },
         success: (res) => {
-          formatAppLog("log", "at pages/user/info.vue:103", "调用成功", res.data.data);
+          formatAppLog("log", "at pages/user/info.vue:108", "调用成功", res.data.data);
           this.userData.userId = res.data.data.userId;
           this.userData.userName = res.data.data.userName;
           this.userData.userEmail = res.data.data.userEmail;
@@ -10173,8 +10193,8 @@ ${i3}
           this.img.url = res.data.data.userUrl;
         },
         fail: (res) => {
-          formatAppLog("log", "at pages/user/info.vue:114", res.errMsg);
-          formatAppLog("log", "at pages/user/info.vue:115", "调用接口失败");
+          formatAppLog("log", "at pages/user/info.vue:119", res.errMsg);
+          formatAppLog("log", "at pages/user/info.vue:120", "调用接口失败");
         }
       });
     },
@@ -10184,9 +10204,11 @@ ${i3}
     },
     methods: {
       update_url(res) {
-        formatAppLog("log", "at pages/user/info.vue:128", "上传成功", res);
+        formatAppLog("log", "at pages/user/info.vue:133", "上传成功", res);
+        let baseURL = "/api";
+        baseURL = "http://cinema.nat100.top";
         uni.uploadFile({
-          url: "/api/upload",
+          url: baseURL + "/upload",
           method: "POST",
           filePath: res.tempFilePaths[0],
           name: "file",
@@ -10200,8 +10222,10 @@ ${i3}
               "userUrl": responseData.data
             };
             if (responseData.code == 0) {
+              let baseURL2 = "/api";
+              baseURL2 = "http://cinema.nat100.top";
               uni.request({
-                url: "/api/user/updateUrl",
+                url: baseURL2 + "/user/updateUrl",
                 method: "PATCH",
                 dataType: "json",
                 data: user,
@@ -10209,7 +10233,7 @@ ${i3}
                   "Authorization": this.token
                 },
                 success: (res3) => {
-                  formatAppLog("log", "at pages/user/info.vue:153", res3.data);
+                  formatAppLog("log", "at pages/user/info.vue:170", res3.data);
                   uni.reLaunch({
                     url: "/pages/user/login",
                     success: () => {
@@ -10339,8 +10363,10 @@ ${i3}
       let user = {
         "userId": this.userId
       };
+      let baseURL = "/api";
+      baseURL = "http://cinema.nat100.top";
       uni.request({
-        url: "/api/user/info",
+        url: baseURL + "/user/info",
         method: "GET",
         dataType: "json",
         data: user,
@@ -10348,7 +10374,7 @@ ${i3}
           "Authorization": this.token
         },
         success: (res) => {
-          formatAppLog("log", "at pages/user/updateName.vue:59", "调用成功", res.data.data);
+          formatAppLog("log", "at pages/user/updateName.vue:64", "调用成功", res.data.data);
           this.userData.userId = res.data.data.userId;
           this.userData.userName = res.data.data.userName;
           this.userData.userEmail = res.data.data.userEmail;
@@ -10358,8 +10384,8 @@ ${i3}
           this.userData.userProfile = res.data.data.userProfile;
         },
         fail: (res) => {
-          formatAppLog("log", "at pages/user/updateName.vue:69", res.errMsg);
-          formatAppLog("log", "at pages/user/updateName.vue:70", "调用接口失败");
+          formatAppLog("log", "at pages/user/updateName.vue:74", res.errMsg);
+          formatAppLog("log", "at pages/user/updateName.vue:75", "调用接口失败");
         }
       });
     },
@@ -10373,8 +10399,10 @@ ${i3}
           "userPhone": this.userData.userPhone,
           "userProfile": this.userData.userProfile
         };
+        let baseURL = "/api";
+        baseURL = "http://cinema.nat100.top";
         uni.request({
-          url: "/api/user/update",
+          url: baseURL + "/user/update",
           method: "PUT",
           dataType: "json",
           data: update_name,
@@ -10499,8 +10527,10 @@ ${i3}
       let user = {
         "userId": this.userId
       };
+      let baseURL = "/api";
+      baseURL = "http://cinema.nat100.top";
       uni.request({
-        url: "/api/user/info",
+        url: baseURL + "/user/info",
         method: "GET",
         dataType: "json",
         data: user,
@@ -10508,7 +10538,7 @@ ${i3}
           "Authorization": this.token
         },
         success: (res) => {
-          formatAppLog("log", "at pages/user/updatePhone.vue:59", "调用成功", res.data.data);
+          formatAppLog("log", "at pages/user/updatePhone.vue:64", "调用成功", res.data.data);
           this.userData.userId = res.data.data.userId;
           this.userData.userName = res.data.data.userName;
           this.userData.userEmail = res.data.data.userEmail;
@@ -10518,8 +10548,8 @@ ${i3}
           this.userData.userProfile = res.data.data.userProfile;
         },
         fail: (res) => {
-          formatAppLog("log", "at pages/user/updatePhone.vue:69", res.errMsg);
-          formatAppLog("log", "at pages/user/updatePhone.vue:70", "调用接口失败");
+          formatAppLog("log", "at pages/user/updatePhone.vue:74", res.errMsg);
+          formatAppLog("log", "at pages/user/updatePhone.vue:75", "调用接口失败");
         }
       });
     },
@@ -10533,8 +10563,10 @@ ${i3}
           "userPhone": this.userFormData.userPhone,
           "userProfile": this.userData.userProfile
         };
+        let baseURL = "/api";
+        baseURL = "http://cinema.nat100.top";
         uni.request({
-          url: "/api/user/update",
+          url: baseURL + "/user/update",
           method: "PUT",
           dataType: "json",
           data: update_name,
@@ -10659,8 +10691,10 @@ ${i3}
       let user = {
         "userId": this.userId
       };
+      let baseURL = "/api";
+      baseURL = "http://cinema.nat100.top";
       uni.request({
-        url: "/api/user/info",
+        url: baseURL + "/user/info",
         method: "GET",
         dataType: "json",
         data: user,
@@ -10668,7 +10702,7 @@ ${i3}
           "Authorization": this.token
         },
         success: (res) => {
-          formatAppLog("log", "at pages/user/updateProfile.vue:59", "调用成功", res.data.data);
+          formatAppLog("log", "at pages/user/updateProfile.vue:64", "调用成功", res.data.data);
           this.userData.userId = res.data.data.userId;
           this.userData.userName = res.data.data.userName;
           this.userData.userEmail = res.data.data.userEmail;
@@ -10678,8 +10712,8 @@ ${i3}
           this.userData.userProfile = res.data.data.userProfile;
         },
         fail: (res) => {
-          formatAppLog("log", "at pages/user/updateProfile.vue:69", res.errMsg);
-          formatAppLog("log", "at pages/user/updateProfile.vue:70", "调用接口失败");
+          formatAppLog("log", "at pages/user/updateProfile.vue:74", res.errMsg);
+          formatAppLog("log", "at pages/user/updateProfile.vue:75", "调用接口失败");
         }
       });
     },
@@ -10693,8 +10727,10 @@ ${i3}
           "userPhone": this.userData.userPhone,
           "userProfile": this.userFormData.userProfile
         };
+        let baseURL = "/api";
+        baseURL = "http://cinema.nat100.top";
         uni.request({
-          url: "/api/user/update",
+          url: baseURL + "/user/update",
           method: "PUT",
           dataType: "json",
           data: update_name,
@@ -11006,19 +11042,21 @@ ${i3}
       let movie = {
         "movieId": option.movieId
       };
+      let baseURL = "/api";
+      baseURL = "http://cinema.nat100.top";
       uni.request({
-        url: "/api/movie/infoMovieById",
+        url: baseURL + "/movie/infoMovieById",
         method: "GET",
         dataType: "json",
         data: movie,
         success: (res) => {
           this.movieData = res.data.data;
-          formatAppLog("log", "at pages/movieCinema/movieInfo.vue:84", "movieData", res.data.data);
+          formatAppLog("log", "at pages/movieCinema/movieInfo.vue:89", "movieData", res.data.data);
         }
       });
     },
     onBackPress: function(option) {
-      formatAppLog("log", "at pages/movieCinema/movieInfo.vue:90", "退出");
+      formatAppLog("log", "at pages/movieCinema/movieInfo.vue:95", "退出");
       uni.removeStorageSync("movieId");
       uni.removeStorageSync("movieNameCn");
       uni.removeStorageSync("movieNameEn");
@@ -11030,10 +11068,10 @@ ${i3}
       uni.removeStorageSync("movieCountry");
       uni.removeStorageSync("movieType");
       const res = uni.getStorageInfoSync();
-      formatAppLog("log", "at pages/movieCinema/movieInfo.vue:103", res.keys);
-      formatAppLog("log", "at pages/movieCinema/movieInfo.vue:104", res.currentSize);
-      formatAppLog("log", "at pages/movieCinema/movieInfo.vue:105", res.limitSize);
-      formatAppLog("log", "at pages/movieCinema/movieInfo.vue:106", "type", uni.getStorageSync("movieType"));
+      formatAppLog("log", "at pages/movieCinema/movieInfo.vue:108", res.keys);
+      formatAppLog("log", "at pages/movieCinema/movieInfo.vue:109", res.currentSize);
+      formatAppLog("log", "at pages/movieCinema/movieInfo.vue:110", res.limitSize);
+      formatAppLog("log", "at pages/movieCinema/movieInfo.vue:111", "type", uni.getStorageSync("movieType"));
     },
     methods: {
       to_movie_detail() {
@@ -11233,8 +11271,10 @@ ${i3}
       let schedule = {
         "movieId": this.movieId
       };
+      let baseURL = "/api";
+      baseURL = "http://cinema.nat100.top";
       uni.request({
-        url: "/api/schedule/infoByMovie",
+        url: baseURL + "/schedule/infoByMovie",
         method: "GET",
         dataType: "json",
         data: schedule,
@@ -11260,7 +11300,7 @@ ${i3}
           }
           this.dateCurrent = this.dateItems[0];
           let currentDateString = currentDate.getFullYear() + "/" + (currentDate.getMonth() + 1) + "/" + currentDate.getDate();
-          formatAppLog("log", "at pages/schedule/byMovie.vue:163", "currentDateString", currentDateString);
+          formatAppLog("log", "at pages/schedule/byMovie.vue:168", "currentDateString", currentDateString);
           for (let i2 = 0; i2 < this.dateItems.length; i2++) {
             if (this.dateItems[i2] == currentDateString) {
               this.items.push("今天 " + this.dateItems[i2].split("/")[1] + "月" + this.dateItems[i2].split("/")[2] + "日");
@@ -11316,11 +11356,11 @@ ${i3}
           }
           uni.getLocation({
             success: (res2) => {
-              formatAppLog("log", "at pages/schedule/byMovie.vue:228", "当前位置的经度：", res2.longitude);
-              formatAppLog("log", "at pages/schedule/byMovie.vue:229", "当前位置的纬度：", res2.latitude);
+              formatAppLog("log", "at pages/schedule/byMovie.vue:233", "当前位置的经度：", res2.longitude);
+              formatAppLog("log", "at pages/schedule/byMovie.vue:234", "当前位置的纬度：", res2.latitude);
               this.cinemaLocation.longitude = res2.longitude;
               this.cinemaLocation.latitude = res2.latitude;
-              formatAppLog("log", "at pages/schedule/byMovie.vue:232", "标记", this.cinemaLocation);
+              formatAppLog("log", "at pages/schedule/byMovie.vue:237", "标记", this.cinemaLocation);
               let requests = [];
               for (let i2 = 0; i2 < this.scheduleDataByDate.length; i2++) {
                 for (let j2 = 0; j2 < this.scheduleDataByDate[i2].length; j2++) {
@@ -11328,8 +11368,10 @@ ${i3}
                     "cinemaId": this.scheduleDataByDate[i2][j2].cinemaId
                   };
                   let request = new Promise((resolve, reject) => {
+                    let baseURL2 = "/api";
+                    baseURL2 = "http://cinema.nat100.top";
                     uni.request({
-                      url: "/api/cinema/infoById",
+                      url: baseURL2 + "/cinema/infoById",
                       method: "GET",
                       dataType: "json",
                       data: schedule_cinema,
@@ -11345,9 +11387,9 @@ ${i3}
                   requests.push(request);
                 }
               }
-              formatAppLog("log", "at pages/schedule/byMovie.vue:281", "请求", requests);
+              formatAppLog("log", "at pages/schedule/byMovie.vue:292", "请求", requests);
               Promise.all(requests).then(() => {
-                formatAppLog("log", "at pages/schedule/byMovie.vue:283", "等待成功");
+                formatAppLog("log", "at pages/schedule/byMovie.vue:294", "等待成功");
                 for (let i2 = 0; i2 < this.scheduleDataByDate.length; i2++) {
                   for (let j2 = 0; j2 < this.scheduleDataByDate[i2].length; j2++) {
                     let distance = this.getDistance(this.cinemaLocation, this.scheduleDataByDate[i2][j2].cinemaX, this.scheduleDataByDate[i2][j2].cinemaY);
@@ -11360,10 +11402,10 @@ ${i3}
                   }
                 }
                 this.cinemaListFlag = 1;
-                formatAppLog("log", "at pages/schedule/byMovie.vue:299", "Items", this.items);
-                formatAppLog("log", "at pages/schedule/byMovie.vue:300", "dateItems", this.dateItems);
-                formatAppLog("log", "at pages/schedule/byMovie.vue:301", "scheduleData", this.scheduleData);
-                formatAppLog("log", "at pages/schedule/byMovie.vue:302", "scheduleDataByDate", this.scheduleDataByDate);
+                formatAppLog("log", "at pages/schedule/byMovie.vue:310", "Items", this.items);
+                formatAppLog("log", "at pages/schedule/byMovie.vue:311", "dateItems", this.dateItems);
+                formatAppLog("log", "at pages/schedule/byMovie.vue:312", "scheduleData", this.scheduleData);
+                formatAppLog("log", "at pages/schedule/byMovie.vue:313", "scheduleDataByDate", this.scheduleDataByDate);
                 this.scheduleFlag = 1;
               });
             }
@@ -11380,14 +11422,14 @@ ${i3}
       this.dateCurrent = "";
       this.cinemaLocation = {};
       this.scheduleDataByDate = [];
-      formatAppLog("log", "at pages/schedule/byMovie.vue:322", "页面隐藏");
+      formatAppLog("log", "at pages/schedule/byMovie.vue:333", "页面隐藏");
     },
     methods: {
       onClickItem(e2) {
         if (this.current != e2.currentIndex) {
           this.current = e2.currentIndex;
           this.dateCurrent = this.dateItems[this.current];
-          formatAppLog("log", "at pages/schedule/byMovie.vue:331", "dateCurrent", this.dateCurrent);
+          formatAppLog("log", "at pages/schedule/byMovie.vue:342", "dateCurrent", this.dateCurrent);
         }
       },
       getWeekDay(year, month, day) {
@@ -11922,8 +11964,10 @@ ${i3}
         "movieId": this.movieId,
         "cinemaId": this.cinemaId
       };
+      let baseURL = "/api";
+      baseURL = "http://cinema.nat100.top";
       uni.request({
-        url: "/api/schedule/infoByMovieAndCinema",
+        url: baseURL + "/schedule/infoByMovieAndCinema",
         method: "GET",
         dataType: "json",
         data: schedule,
@@ -11949,7 +11993,7 @@ ${i3}
           }
           this.dateCurrent = this.dateItems[0];
           let currentDateString = currentDate.getFullYear() + "/" + (currentDate.getMonth() + 1) + "/" + currentDate.getDate();
-          formatAppLog("log", "at pages/schedule/byMovieAndCinema.vue:200", "currentDateString", currentDateString);
+          formatAppLog("log", "at pages/schedule/byMovieAndCinema.vue:205", "currentDateString", currentDateString);
           for (let i2 = 0; i2 < this.dateItems.length; i2++) {
             if (this.dateItems[i2] == currentDateString) {
               this.items.push("今天 " + this.dateItems[i2].split("/")[1] + "月" + this.dateItems[i2].split("/")[2] + "日");
@@ -11992,8 +12036,10 @@ ${i3}
               }
             }
           }
+          let baseURL2 = "/api";
+          baseURL2 = "http://cinema.nat100.top";
           uni.request({
-            url: "/api/movie/infoMovieById",
+            url: baseURL2 + "/movie/infoMovieById",
             method: "GET",
             dataType: "json",
             data: schedule,
@@ -12001,8 +12047,10 @@ ${i3}
               this.scheduleInfo.movieNameCn = res2.data.data.movie.movieNameCn;
               this.scheduleInfo.movieNameEn = res2.data.data.movie.movieNameEn;
               this.scheduleInfo.movieUrl = res2.data.data.movie.movieUrl;
+              let baseURL3 = "/api";
+              baseURL3 = "http://cinema.nat100.top";
               uni.request({
-                url: "/api/cinema/infoById",
+                url: baseURL3 + "/cinema/infoById",
                 method: "GET",
                 dataType: "json",
                 data: schedule,
@@ -12018,8 +12066,10 @@ ${i3}
                         "houseId": this.scheduleDataByDate[i2][j2].houseId
                       };
                       let request = new Promise((resolve, reject) => {
+                        let baseURL4 = "/api";
+                        baseURL4 = "http://cinema.nat100.top";
                         uni.request({
-                          url: "/api/house/infoById",
+                          url: baseURL4 + "/house/infoById",
                           method: "GET",
                           dataType: "json",
                           data: house,
@@ -12043,7 +12093,7 @@ ${i3}
       });
     },
     onBackPress: function(option) {
-      formatAppLog("log", "at pages/schedule/byMovieAndCinema.vue:327", "退出场次页面");
+      formatAppLog("log", "at pages/schedule/byMovieAndCinema.vue:348", "退出场次页面");
       uni.removeStorageSync("cinemaId");
     },
     methods: {
@@ -12056,7 +12106,7 @@ ${i3}
         if (this.current != e2.currentIndex) {
           this.current = e2.currentIndex;
           this.dateCurrent = this.dateItems[this.current];
-          formatAppLog("log", "at pages/schedule/byMovieAndCinema.vue:341", "dateCurrent", this.dateCurrent);
+          formatAppLog("log", "at pages/schedule/byMovieAndCinema.vue:362", "dateCurrent", this.dateCurrent);
         }
       },
       to_map(res) {
@@ -12345,6 +12395,7 @@ ${i3}
   const _sfc_main$u = {
     data() {
       return {
+        locationFlag: 0,
         cinemaLocation: {
           longitude: "",
           latitude: ""
@@ -12364,20 +12415,21 @@ ${i3}
       };
     },
     onLoad: function(option) {
-      this.cinemaX = uni.getStorageSync("cinemaX");
-      this.cinemaY = uni.getStorageSync("cinemaY");
+      this.cinemaX = Number(uni.getStorageSync("cinemaX"));
+      this.cinemaY = Number(uni.getStorageSync("cinemaY"));
       this.cinemaLocation.longitude = this.cinemaX;
       this.cinemaLocation.latitude = this.cinemaY;
       this.covers[0].longitude = this.cinemaX;
       this.covers[0].latitude = this.cinemaY;
-      formatAppLog("log", "at pages/map/map.vue:42", "cinemaLocation", this.cinemaLocation);
+      formatAppLog("log", "at pages/map/map.vue:43", "cinemaLocation", this.cinemaLocation);
       uni.getLocation({
         success: (res) => {
-          formatAppLog("log", "at pages/map/map.vue:45", "当前位置的经度：", res.longitude);
-          formatAppLog("log", "at pages/map/map.vue:46", "当前位置的纬度：", res.latitude);
+          formatAppLog("log", "at pages/map/map.vue:46", "当前位置的经度：", res.longitude);
+          formatAppLog("log", "at pages/map/map.vue:47", "当前位置的纬度：", res.latitude);
           this.covers[1].longitude = res.longitude;
           this.covers[1].latitude = res.latitude;
-          formatAppLog("log", "at pages/map/map.vue:49", "标记", this.covers);
+          formatAppLog("log", "at pages/map/map.vue:50", "标记", this.covers);
+          this.locationFlag = 1;
         }
       });
     },
@@ -12388,7 +12440,7 @@ ${i3}
     methods: {}
   };
   function _sfc_render$t(_ctx, _cache, $props, $setup, $data, $options) {
-    return vue.openBlock(), vue.createElementBlock("view", null, [
+    return this.locationFlag == 1 ? (vue.openBlock(), vue.createElementBlock("view", { key: 0 }, [
       vue.createElementVNode("view", { class: "page-body" }, [
         vue.createElementVNode("view", { class: "page-section page-section-gap" }, [
           vue.createElementVNode("map", {
@@ -12400,7 +12452,7 @@ ${i3}
           }, null, 8, ["latitude", "longitude", "markers"])
         ])
       ])
-    ]);
+    ])) : vue.createCommentVNode("v-if", true);
   }
   const PagesMapMap = /* @__PURE__ */ _export_sfc(_sfc_main$u, [["render", _sfc_render$t], ["__scopeId", "data-v-e06b858f"], ["__file", "E:/Senior_2/cinema/vueDemo/pages/map/map.vue"]]);
   const _sfc_main$t = {
@@ -12429,29 +12481,37 @@ ${i3}
         "movieId": this.movieId,
         "houseId": this.houseId
       };
+      let baseURL = "/api";
+      baseURL = "http://cinema.nat100.top";
       uni.request({
-        url: "/api/schedule/infoById",
+        url: baseURL + "/schedule/infoById",
         method: "GET",
         dataType: "json",
         data: schedule,
         success: (res) => {
           this.scheduleData = res.data.data;
+          let baseURL2 = "/api";
+          baseURL2 = "http://cinema.nat100.top";
           uni.request({
-            url: "/api/cinema/infoById",
+            url: baseURL2 + "/cinema/infoById",
             method: "GET",
             dataType: "json",
             data: schedule,
             success: (res2) => {
               this.scheduleData.cinemaName = res2.data.data.cinemaName;
+              let baseURL3 = "/api";
+              baseURL3 = "http://cinema.nat100.top";
               uni.request({
-                url: "/api/movie/infoMovieById",
+                url: baseURL3 + "/movie/infoMovieById",
                 method: "GET",
                 dataType: "json",
                 data: schedule,
                 success: (res3) => {
                   this.scheduleData.movieNameCn = res3.data.data.movie.movieNameCn;
+                  let baseURL4 = "/api";
+                  baseURL4 = "http://cinema.nat100.top";
                   uni.request({
-                    url: "/api/house/infoById",
+                    url: baseURL4 + "/house/infoById",
                     method: "GET",
                     dataType: "json",
                     data: schedule,
@@ -12491,14 +12551,16 @@ ${i3}
                           }
                         }
                       }
+                      let baseURL5 = "/api";
+                      baseURL5 = "http://cinema.nat100.top";
                       uni.request({
-                        url: "/api/orders/infoByScheduleId",
+                        url: baseURL5 + "/orders/infoByScheduleId",
                         method: "GET",
                         dataType: "json",
                         data: schedule,
                         success: (res5) => {
                           this.ordersData = res5.data.data;
-                          formatAppLog("log", "at pages/schedule/selectSeat.vue:207", "this.ordersData", this.ordersData);
+                          formatAppLog("log", "at pages/schedule/selectSeat.vue:232", "this.ordersData", this.ordersData);
                           for (let i2 = 0; i2 < this.ordersData.length; i2++) {
                             let boughtCnt = this.ordersData[i2].ordersSeat.split(" ").length;
                             for (let j2 = 0; j2 < boughtCnt; j2++) {
@@ -12513,20 +12575,20 @@ ${i3}
                       });
                       formatAppLog(
                         "log",
-                        "at pages/schedule/selectSeat.vue:222",
+                        "at pages/schedule/selectSeat.vue:247",
                         "this.houseRow",
                         this.houseRow
                       );
                       formatAppLog(
                         "log",
-                        "at pages/schedule/selectSeat.vue:225",
+                        "at pages/schedule/selectSeat.vue:250",
                         "this.houseColumn",
                         this.houseColumn
                       );
-                      formatAppLog("log", "at pages/schedule/selectSeat.vue:228", "info", this.scheduleData);
+                      formatAppLog("log", "at pages/schedule/selectSeat.vue:253", "info", this.scheduleData);
                       formatAppLog(
                         "log",
-                        "at pages/schedule/selectSeat.vue:230",
+                        "at pages/schedule/selectSeat.vue:255",
                         "seatData",
                         this.seatData
                       );
@@ -12540,15 +12602,15 @@ ${i3}
       });
     },
     onBackPress: function(option) {
-      formatAppLog("log", "at pages/schedule/selectSeat.vue:245", "退出场次页面");
+      formatAppLog("log", "at pages/schedule/selectSeat.vue:270", "退出场次页面");
       uni.removeStorageSync("scheduleId");
       uni.removeStorageSync("houseId");
     },
     methods: {
       selectSeat(x, y2) {
-        formatAppLog("log", "at pages/schedule/selectSeat.vue:252", x + 1, "排", y2 + 1, "座");
-        formatAppLog("log", "at pages/schedule/selectSeat.vue:253", "数量", x * this.houseColumn + (y2 + 1));
-        formatAppLog("log", "at pages/schedule/selectSeat.vue:254", "座位状态", this.seatData[x][y2].seatState);
+        formatAppLog("log", "at pages/schedule/selectSeat.vue:277", x + 1, "排", y2 + 1, "座");
+        formatAppLog("log", "at pages/schedule/selectSeat.vue:278", "数量", x * this.houseColumn + (y2 + 1));
+        formatAppLog("log", "at pages/schedule/selectSeat.vue:279", "座位状态", this.seatData[x][y2].seatState);
         if (this.seatData[x][y2].seatState == 2) {
           return;
         } else {
@@ -12557,7 +12619,7 @@ ${i3}
             this.selectCnt++;
             let tmep_info = x + 1 + "排" + (y2 + 1) + "座";
             this.selectList.push(tmep_info);
-            formatAppLog("log", "at pages/schedule/selectSeat.vue:263", "this.selectList", this.selectList);
+            formatAppLog("log", "at pages/schedule/selectSeat.vue:288", "this.selectList", this.selectList);
             let temp_price = parseFloat(this.selectPrice) + parseFloat(this.scheduleData.schedulePrice);
             this.selectPrice = temp_price.toFixed(1);
           } else if (this.seatData[x][y2].seatState == 1) {
@@ -12565,7 +12627,7 @@ ${i3}
             this.selectCnt--;
             let tmep_info = x + 1 + "排" + (y2 + 1) + "座";
             this.selectList = this.selectList.filter((item) => item !== tmep_info);
-            formatAppLog("log", "at pages/schedule/selectSeat.vue:272", "this.selectList", this.selectList);
+            formatAppLog("log", "at pages/schedule/selectSeat.vue:297", "this.selectList", this.selectList);
             let temp_price = parseFloat(this.selectPrice) - parseFloat(this.scheduleData.schedulePrice);
             this.selectPrice = temp_price.toFixed(1);
           } else {
@@ -12576,7 +12638,7 @@ ${i3}
             });
           }
         }
-        formatAppLog("log", "at pages/schedule/selectSeat.vue:283", "已选座位数量", this.selectCnt);
+        formatAppLog("log", "at pages/schedule/selectSeat.vue:308", "已选座位数量", this.selectCnt);
       },
       popSeatList(res) {
         let temp_x = res[0];
@@ -12593,15 +12655,15 @@ ${i3}
         this.token = uni.getStorageSync("token");
         if (this.token) {
           this.$refs.buyDialog.open();
-          formatAppLog("log", "at pages/schedule/selectSeat.vue:302", "yes");
+          formatAppLog("log", "at pages/schedule/selectSeat.vue:327", "yes");
         } else {
           this.$refs.alertDialog.open();
-          formatAppLog("log", "at pages/schedule/selectSeat.vue:306", "no");
+          formatAppLog("log", "at pages/schedule/selectSeat.vue:331", "no");
         }
-        formatAppLog("log", "at pages/schedule/selectSeat.vue:308", "seatList", this.selectList);
+        formatAppLog("log", "at pages/schedule/selectSeat.vue:333", "seatList", this.selectList);
       },
       buyConfirm() {
-        formatAppLog("log", "at pages/schedule/selectSeat.vue:312", this.selectList);
+        formatAppLog("log", "at pages/schedule/selectSeat.vue:337", this.selectList);
         let selectListStr = "";
         for (let i2 = 0; i2 < this.seatData.length; i2++) {
           for (let j2 = 0; j2 < this.seatData[i2].length; j2++) {
@@ -12611,14 +12673,16 @@ ${i3}
           }
         }
         selectListStr = selectListStr.slice(0, -1);
-        formatAppLog("log", "at pages/schedule/selectSeat.vue:322", "selectListStr", selectListStr);
+        formatAppLog("log", "at pages/schedule/selectSeat.vue:347", "selectListStr", selectListStr);
         let schedule = {
           "scheduleId": this.scheduleId,
           "ordersSeat": selectListStr
         };
-        formatAppLog("log", "at pages/schedule/selectSeat.vue:327", "schedule", schedule);
+        formatAppLog("log", "at pages/schedule/selectSeat.vue:352", "schedule", schedule);
+        let baseURL = "/api";
+        baseURL = "http://cinema.nat100.top";
         uni.request({
-          url: "/api/orders/infoSeatFlag",
+          url: baseURL + "/orders/infoSeatFlag",
           method: "GET",
           dataType: "json",
           data: schedule,
@@ -12626,7 +12690,7 @@ ${i3}
             "Authorization": this.token
           },
           success: (res) => {
-            formatAppLog("log", "at pages/schedule/selectSeat.vue:337", "res", res.data.data);
+            formatAppLog("log", "at pages/schedule/selectSeat.vue:368", "res", res.data.data);
             if (res.data.data == false) {
               this.userId = uni.getStorageSync("userId");
               this.token = uni.getStorageSync("token");
@@ -12634,7 +12698,7 @@ ${i3}
               for (let i2 = 0; i2 < this.selectCnt; i2++) {
                 price_sum = parseFloat(price_sum) + parseFloat(this.scheduleData.schedulePrice);
               }
-              formatAppLog("log", "at pages/schedule/selectSeat.vue:345", "选座", selectListStr);
+              formatAppLog("log", "at pages/schedule/selectSeat.vue:376", "选座", selectListStr);
               let pay = {
                 "userId": this.userId,
                 "scheduleId": this.scheduleId,
@@ -12642,8 +12706,10 @@ ${i3}
                 "ordersState": 1,
                 "ordersPrice": price_sum
               };
+              let baseURL2 = "/api";
+              baseURL2 = "http://cinema.nat100.top";
               uni.request({
-                url: "/api/orders/create",
+                url: baseURL2 + "/orders/create",
                 method: "POST",
                 dataType: "json",
                 data: pay,
@@ -12651,7 +12717,7 @@ ${i3}
                   "Authorization": this.token
                 },
                 success: (res2) => {
-                  formatAppLog("log", "at pages/schedule/selectSeat.vue:362", "订单", res2.data);
+                  formatAppLog("log", "at pages/schedule/selectSeat.vue:399", "订单", res2.data);
                   uni.showToast({
                     title: "购票成功",
                     icon: "true",
@@ -12949,8 +13015,10 @@ ${i3}
       let orders = {
         "userId": this.userId
       };
+      let baseURL = "/api";
+      baseURL = "http://cinema.nat100.top";
       uni.request({
-        url: "/api/orders/infoByUserId",
+        url: baseURL + "/orders/infoByUserId",
         method: "GET",
         dataType: "json",
         data: orders,
@@ -12959,13 +13027,15 @@ ${i3}
         },
         success: (res) => {
           this.ordersData = res.data.data;
-          formatAppLog("log", "at pages/orders/showOrders.vue:45", "orders", this.ordersData.length);
+          formatAppLog("log", "at pages/orders/showOrders.vue:50", "orders", this.ordersData.length);
           for (let i2 = 0; i2 < this.ordersData.length; i2++) {
             let schedule = {
               "scheduleId": this.ordersData[i2].scheduleId
             };
+            let baseURL2 = "/api";
+            baseURL2 = "http://cinema.nat100.top";
             uni.request({
-              url: "/api/schedule/infoById",
+              url: baseURL2 + "/schedule/infoById",
               method: "GET",
               dataType: "json",
               data: schedule,
@@ -12980,24 +13050,30 @@ ${i3}
                   "movieId": this.ordersData[i2].movieId,
                   "houseId": this.ordersData[i2].houseId
                 };
+                let baseURL3 = "/api";
+                baseURL3 = "http://cinema.nat100.top";
                 uni.request({
-                  url: "/api/movie/infoMovieById",
+                  url: baseURL3 + "/movie/infoMovieById",
                   method: "GET",
                   dataType: "json",
                   data: idObject,
                   success: (res3) => {
                     this.ordersData[i2].movieNameCn = res3.data.data.movie.movieNameCn;
                     this.ordersData[i2].movieUrl = res3.data.data.movie.movieUrl;
+                    let baseURL4 = "/api";
+                    baseURL4 = "http://cinema.nat100.top";
                     uni.request({
-                      url: "/api/cinema/infoById",
+                      url: baseURL4 + "/cinema/infoById",
                       method: "GET",
                       dataType: "json",
                       data: idObject,
                       success: (res4) => {
                         this.ordersData[i2].cinemaName = res4.data.data.cinemaName;
                         this.ordersData[i2].cinemaPhone = res4.data.data.cinemaPhone;
+                        let baseURL5 = "/api";
+                        baseURL5 = "http://cinema.nat100.top";
                         uni.request({
-                          url: "/api/house/infoById",
+                          url: baseURL5 + "/house/infoById",
                           method: "GET",
                           dataType: "json",
                           data: idObject,
@@ -13010,7 +13086,7 @@ ${i3}
                             if (i2 == this.ordersData.length - 1) {
                               this.requestFlag = 1;
                             }
-                            formatAppLog("log", "at pages/orders/showOrders.vue:103", "yes");
+                            formatAppLog("log", "at pages/orders/showOrders.vue:128", "yes");
                           }
                         });
                       }
@@ -13020,7 +13096,7 @@ ${i3}
               }
             });
           }
-          formatAppLog("log", "at pages/orders/showOrders.vue:116", "card", this.ordersData);
+          formatAppLog("log", "at pages/orders/showOrders.vue:141", "card", this.ordersData);
           this.notFlag = 1;
         }
       });
@@ -13099,8 +13175,10 @@ ${i3}
       let schedule = {
         "cinemaId": this.cinemaId
       };
+      let baseURL = "/api";
+      baseURL = "http://cinema.nat100.top";
       uni.request({
-        url: "/api/schedule/infoByCinema",
+        url: baseURL + "/schedule/infoByCinema",
         method: "GET",
         dataType: "json",
         data: schedule,
@@ -13121,7 +13199,7 @@ ${i3}
           }
           this.dateCurrent = this.dateItems[0];
           let currentDateString = currentDate.getFullYear() + "/" + (currentDate.getMonth() + 1) + "/" + currentDate.getDate();
-          formatAppLog("log", "at pages/schedule/byCinema.vue:122", "currentDateString", currentDateString);
+          formatAppLog("log", "at pages/schedule/byCinema.vue:128", "currentDateString", currentDateString);
           for (let i2 = 0; i2 < this.dateItems.length; i2++) {
             if (this.dateItems[i2] == currentDateString) {
               this.items.push("今天 " + this.dateItems[i2].split("/")[1] + "月" + this.dateItems[i2].split("/")[2] + "日");
@@ -13184,8 +13262,10 @@ ${i3}
                 "movieId": this.scheduleDataByDate[i2][j2].movieId
               };
               let request = new Promise((resolve, reject) => {
+                let baseURL2 = "/api";
+                baseURL2 = "http://cinema.nat100.top";
                 uni.request({
-                  url: "/api/movie/infoMovieById",
+                  url: baseURL2 + "/movie/infoMovieById",
                   method: "GET",
                   dataType: "json",
                   data: schedule_movie,
@@ -13209,10 +13289,10 @@ ${i3}
           }
           Promise.all(requests).then(() => {
             this.movieListFlag = 1;
-            formatAppLog("log", "at pages/schedule/byCinema.vue:222", "this.scheduleData", this.scheduleData);
-            formatAppLog("log", "at pages/schedule/byCinema.vue:223", "this.dateItems", this.dateItems);
-            formatAppLog("log", "at pages/schedule/byCinema.vue:224", "this.items", this.items);
-            formatAppLog("log", "at pages/schedule/byCinema.vue:225", "this.scheduleDataByDate", this.scheduleDataByDate);
+            formatAppLog("log", "at pages/schedule/byCinema.vue:234", "this.scheduleData", this.scheduleData);
+            formatAppLog("log", "at pages/schedule/byCinema.vue:235", "this.dateItems", this.dateItems);
+            formatAppLog("log", "at pages/schedule/byCinema.vue:236", "this.items", this.items);
+            formatAppLog("log", "at pages/schedule/byCinema.vue:237", "this.scheduleDataByDate", this.scheduleDataByDate);
           });
         }
       });
@@ -13225,7 +13305,7 @@ ${i3}
       this.current = 0;
       this.dateCurrent = "";
       this.scheduleDataByDate = [];
-      formatAppLog("log", "at pages/schedule/byCinema.vue:240", "页面隐藏");
+      formatAppLog("log", "at pages/schedule/byCinema.vue:252", "页面隐藏");
     },
     onBackPress: function(option) {
       uni.removeStorageSync("cinemaId");
@@ -13240,7 +13320,7 @@ ${i3}
         if (this.current != e2.currentIndex) {
           this.current = e2.currentIndex;
           this.dateCurrent = this.dateItems[this.current];
-          formatAppLog("log", "at pages/schedule/byCinema.vue:258", "dateCurrent", this.dateCurrent);
+          formatAppLog("log", "at pages/schedule/byCinema.vue:270", "dateCurrent", this.dateCurrent);
         }
       },
       to_buy(index, listIndex) {
@@ -13487,8 +13567,10 @@ ${i3}
         "movieId": this.movieId,
         "cinemaId": this.cinemaId
       };
+      let baseURL = "/api";
+      baseURL = "http://cinema.nat100.top";
       uni.request({
-        url: "/api/schedule/infoByMovieAndCinema",
+        url: baseURL + "/schedule/infoByMovieAndCinema",
         method: "GET",
         dataType: "json",
         data: schedule,
@@ -13514,7 +13596,7 @@ ${i3}
           }
           this.dateCurrent = this.dateItems[0];
           let currentDateString = currentDate.getFullYear() + "/" + (currentDate.getMonth() + 1) + "/" + currentDate.getDate();
-          formatAppLog("log", "at pages/schedule/byCinemaAndMovie.vue:200", "currentDateString", currentDateString);
+          formatAppLog("log", "at pages/schedule/byCinemaAndMovie.vue:205", "currentDateString", currentDateString);
           for (let i2 = 0; i2 < this.dateItems.length; i2++) {
             if (this.dateItems[i2] == currentDateString) {
               this.items.push("今天 " + this.dateItems[i2].split("/")[1] + "月" + this.dateItems[i2].split("/")[2] + "日");
@@ -13557,8 +13639,10 @@ ${i3}
               }
             }
           }
+          let baseURL2 = "/api";
+          baseURL2 = "http://cinema.nat100.top";
           uni.request({
-            url: "/api/movie/infoMovieById",
+            url: baseURL2 + "/movie/infoMovieById",
             method: "GET",
             dataType: "json",
             data: schedule,
@@ -13566,8 +13650,10 @@ ${i3}
               this.scheduleInfo.movieNameCn = res2.data.data.movie.movieNameCn;
               this.scheduleInfo.movieNameEn = res2.data.data.movie.movieNameEn;
               this.scheduleInfo.movieUrl = res2.data.data.movie.movieUrl;
+              let baseURL3 = "/api";
+              baseURL3 = "http://cinema.nat100.top";
               uni.request({
-                url: "/api/cinema/infoById",
+                url: baseURL3 + "/cinema/infoById",
                 method: "GET",
                 dataType: "json",
                 data: schedule,
@@ -13583,8 +13669,10 @@ ${i3}
                         "houseId": this.scheduleDataByDate[i2][j2].houseId
                       };
                       let request = new Promise((resolve, reject) => {
+                        let baseURL4 = "/api";
+                        baseURL4 = "http://cinema.nat100.top";
                         uni.request({
-                          url: "/api/house/infoById",
+                          url: baseURL4 + "/house/infoById",
                           method: "GET",
                           dataType: "json",
                           data: house,
@@ -13608,7 +13696,7 @@ ${i3}
       });
     },
     onBackPress: function(option) {
-      formatAppLog("log", "at pages/schedule/byCinemaAndMovie.vue:327", "退出场次页面");
+      formatAppLog("log", "at pages/schedule/byCinemaAndMovie.vue:348", "退出场次页面");
       uni.removeStorageSync("movieId");
       uni.removeStorageSync("movieDuration");
       uni.removeStorageSync("movieType");
@@ -13623,7 +13711,7 @@ ${i3}
         if (this.current != e2.currentIndex) {
           this.current = e2.currentIndex;
           this.dateCurrent = this.dateItems[this.current];
-          formatAppLog("log", "at pages/schedule/byCinemaAndMovie.vue:343", "dateCurrent", this.dateCurrent);
+          formatAppLog("log", "at pages/schedule/byCinemaAndMovie.vue:364", "dateCurrent", this.dateCurrent);
         }
       },
       to_map(res) {

@@ -101,35 +101,55 @@
 				"movieId": this.movieId,
 				"houseId": this.houseId,
 			};
+			
+			let baseURL = '/api';
+			// #ifdef APP-PLUS
+			baseURL = "http://cinema.nat100.top"
+			// #endif
 
 			uni.request({
-				url: '/api/schedule/infoById',
+				url: baseURL+'/schedule/infoById',
 				method: 'GET',
 				dataType: 'json',
 				data: schedule,
 				success: (res) => {
 					this.scheduleData = res.data.data;
+					
+					let baseURL = '/api';
+					// #ifdef APP-PLUS
+					baseURL = "http://cinema.nat100.top"
+					// #endif
 
 					uni.request({
-						url: '/api/cinema/infoById',
+						url: baseURL+'/cinema/infoById',
 						method: 'GET',
 						dataType: 'json',
 						data: schedule,
 
 						success: (res) => {
 							this.scheduleData.cinemaName = res.data.data.cinemaName;
+							
+							let baseURL = '/api';
+							// #ifdef APP-PLUS
+							baseURL = "http://cinema.nat100.top"
+							// #endif
 
 							uni.request({
-								url: '/api/movie/infoMovieById',
+								url: baseURL+'/movie/infoMovieById',
 								method: 'GET',
 								dataType: 'json',
 								data: schedule,
 								success: (res) => {
 									this.scheduleData.movieNameCn = res.data.data
 										.movie.movieNameCn;
+										
+									let baseURL = '/api';
+									// #ifdef APP-PLUS
+									baseURL = "http://cinema.nat100.top"
+									// #endif
 
 									uni.request({
-										url: '/api/house/infoById',
+										url: baseURL+'/house/infoById',
 										method: 'GET',
 										dataType: 'json',
 										data: schedule,
@@ -195,9 +215,14 @@
 													}
 												}
 											}
+											
+											let baseURL = '/api';
+											// #ifdef APP-PLUS
+											baseURL = "http://cinema.nat100.top"
+											// #endif
 
 											uni.request({
-												url: '/api/orders/infoByScheduleId',
+												url: baseURL+'/orders/infoByScheduleId',
 												method: 'GET',
 												dataType: 'json',
 												data: schedule,
@@ -325,8 +350,14 @@
 					"ordersSeat": selectListStr
 				};
 				console.log('schedule',schedule);
+				
+				let baseURL = '/api';
+				// #ifdef APP-PLUS
+				baseURL = "http://cinema.nat100.top"
+				// #endif
+				
 				uni.request({
-					url: '/api/orders/infoSeatFlag',
+					url: baseURL+'/orders/infoSeatFlag',
 					method: 'GET',
 					dataType: 'json',
 					data: schedule,
@@ -350,8 +381,14 @@
 								"ordersState": 1,
 								"ordersPrice": price_sum,
 							};
+							
+							let baseURL = '/api';
+							// #ifdef APP-PLUS
+							baseURL = "http://cinema.nat100.top"
+							// #endif
+							
 							uni.request({
-								url: '/api/orders/create',
+								url: baseURL+'/orders/create',
 								method: 'POST',
 								dataType: 'json',
 								data: pay,

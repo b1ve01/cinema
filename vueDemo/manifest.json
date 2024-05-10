@@ -16,7 +16,9 @@
             "autoclose" : true,
             "delay" : 0
         },
-        "modules" : {},
+        "modules" : {
+            "Maps" : {}
+        },
         /* 模块配置 */
         "distribute" : {
             /* 应用发布信息 */
@@ -49,9 +51,9 @@
                 "ad" : {},
                 "maps" : {
                     "amap" : {
-                        "name" : "",
-                        "appkey_ios" : "9d2e39c1f84a347928e5fe6b8fe5ff0e",
-                        "appkey_android" : "9d2e39c1f84a347928e5fe6b8fe5ff0e"
+                        "name" : "amap7MVYBFt9",
+                        "appkey_ios" : "c6755f2869ad6821b8d6c2c562a0aa6a",
+                        "appkey_android" : "c6755f2869ad6821b8d6c2c562a0aa6a"
                     }
                 },
                 "geolocation" : {
@@ -59,10 +61,10 @@
                         "__platform__" : [ "ios", "android" ]
                     },
                     "amap" : {
-                        "name" : "amap_18373577160BdQZYRFLS",
-                        "__platform__" : [ "ios", "android" ],
-                        "appkey_ios" : "9d2e39c1f84a347928e5fe6b8fe5ff0e",
-                        "appkey_android" : "9d2e39c1f84a347928e5fe6b8fe5ff0e"
+                        "name" : "amap7MVYBFt9",
+                        "__platform__" : [ "android" ],
+                        "appkey_ios" : "",
+                        "appkey_android" : "c6755f2869ad6821b8d6c2c562a0aa6a"
                     }
                 }
             },
@@ -115,8 +117,10 @@
     "h5" : {
         "sdkConfigs" : {
             "maps" : {
-                "qqmap" : {
-                    "key" : "VHFBZ-N7JW5-B5BID-ILCNM-BURB3-Q2BDR"
+                "amap" : {
+                    "key" : "d47b58326e9d7e11b2c882b235504ed1",
+                    "securityJsCode" : "",
+                    "serviceHost" : ""
                 }
             }
         }

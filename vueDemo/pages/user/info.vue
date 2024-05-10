@@ -89,9 +89,14 @@
 			let user = {
 				"userId": this.userId
 			};
+			
+			let baseURL = '/api';
+			// #ifdef APP-PLUS
+			baseURL = "http://cinema.nat100.top"
+			// #endif
 
 			uni.request({
-				url: '/api/user/info',
+				url: baseURL+'/user/info',
 				method: 'GET',
 				dataType: 'json',
 				data: user,
@@ -126,8 +131,14 @@
 		methods: {
 			update_url(res) {
 				console.log('上传成功', res);
+				
+				let baseURL = '/api';
+				// #ifdef APP-PLUS
+				baseURL = "http://cinema.nat100.top"
+				// #endif
+				
 				uni.uploadFile({
-					url: '/api/upload',
+					url: baseURL+'/upload',
 					method: 'POST',
 					filePath: res.tempFilePaths[0],
 					name: 'file',
@@ -141,8 +152,14 @@
 							"userUrl": responseData.data
 						};
 						if (responseData.code == 0) {
+							
+							let baseURL = '/api';
+							// #ifdef APP-PLUS
+							baseURL = "http://cinema.nat100.top"
+							// #endif
+							
 							uni.request({
-								url: '/api/user/updateUrl',
+								url: baseURL+'/user/updateUrl',
 								method: 'PATCH',
 								dataType: 'json',
 								data: user,

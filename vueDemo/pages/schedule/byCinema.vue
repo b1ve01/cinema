@@ -86,8 +86,14 @@
 			let schedule = {
 				"cinemaId": this.cinemaId
 			};
+			
+			let baseURL = '/api';
+			// #ifdef APP-PLUS
+			baseURL = "http://cinema.nat100.top"
+			// #endif
+			
 			uni.request({
-				url: '/api/schedule/infoByCinema',
+				url: baseURL+'/schedule/infoByCinema',
 				method: 'GET',
 				dataType: 'json',
 				data: schedule,
@@ -192,8 +198,14 @@
 							};
 							
 							let request = new Promise((resolve, reject) => {
+								
+								let baseURL = '/api';
+								// #ifdef APP-PLUS
+								baseURL = "http://cinema.nat100.top"
+								// #endif
+								
 								uni.request({
-									url: '/api/movie/infoMovieById',
+									url: baseURL+'/movie/infoMovieById',
 									method: 'GET',
 									dataType: 'json',
 									data: schedule_movie,
