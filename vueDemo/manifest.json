@@ -39,14 +39,32 @@
                     "<uses-feature android:name=\"android.hardware.camera\"/>",
                     "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"
                 ],
-                "abiFilters" : [ "arm64-v8a", "x86" ]
+                "abiFilters" : [ "armeabi-v7a", "arm64-v8a", "x86" ]
             },
             "ios" : {
                 "dSYMs" : false
             },
             /* ios打包配置 */
             "sdkConfigs" : {
-                "ad" : {}
+                "ad" : {},
+                "maps" : {
+                    "amap" : {
+                        "name" : "",
+                        "appkey_ios" : "9d2e39c1f84a347928e5fe6b8fe5ff0e",
+                        "appkey_android" : "9d2e39c1f84a347928e5fe6b8fe5ff0e"
+                    }
+                },
+                "geolocation" : {
+                    "system" : {
+                        "__platform__" : [ "ios", "android" ]
+                    },
+                    "amap" : {
+                        "name" : "amap_18373577160BdQZYRFLS",
+                        "__platform__" : [ "ios", "android" ],
+                        "appkey_ios" : "9d2e39c1f84a347928e5fe6b8fe5ff0e",
+                        "appkey_android" : "9d2e39c1f84a347928e5fe6b8fe5ff0e"
+                    }
+                }
             },
             "icons" : {
                 "android" : {

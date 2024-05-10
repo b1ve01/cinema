@@ -1,0 +1,56 @@
+/* 水平间距 */
+/* 水平间距 */
+uni-text[data-v-899157ad] {
+  color: #fff;
+}
+.cinemaUpdate[data-v-899157ad] {
+  display: flex;
+  flex-direction: row;
+  align-items: space-around;
+  position: absolute;
+  top: 5%;
+  left: 10%;
+  height: 90%;
+  width: 80%;
+  border: 3px solid #f9da49;
+  border-top-left-radius: 0.625rem;
+  border-top-right-radius: 0.625rem;
+  border-bottom-left-radius: 0.625rem;
+  border-bottom-right-radius: 0.625rem;
+  overflow: hidden;
+}
+.cinemaMap[data-v-899157ad] {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 35%;
+  border-right: 3px solid #f9da49;
+}
+.cinema_map[data-v-899157ad] {
+  height: 100vh;
+}
+.cinemaINFO[data-v-899157ad] {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 60%;
+  padding-left: 5%;
+  padding-top: 2%;
+  height: 90%;
+}
+.cinemaName[data-v-899157ad] {
+  color: #f9da49;
+  font-size: 3.125rem;
+}
+.cinemaAddress[data-v-899157ad] {
+  font-size: 1.5625rem;
+}
+.cinemaPhone[data-v-899157ad] {
+  font-size: 1.5625rem;
+}
+.cinemaX[data-v-899157ad] {
+  font-size: 1.5625rem;
+}
+.cinemaY[data-v-899157ad] {
+  font-size: 1.5625rem;
+}

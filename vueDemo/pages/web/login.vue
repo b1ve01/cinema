@@ -81,10 +81,9 @@
 			<view class="isLogin_2">
 				<uni-list >
 				<view class="border_line"></view>
-				
-				
-				<uni-list-item :show-extra-icon="true"  :extra-icon="setIcon" title="设定" />
-				<view class="border_line"></view>
+				<map class="cinema_map" style="width: 100%;" :latitude="this.cinemaData.cinemaY" :longitude="this.cinemaData.cinemaX"
+					:markers="covers">
+				</map>
 				</uni-list>
 			</view>
 			
@@ -96,14 +95,18 @@
 				<uni-tr>
 					<uni-th width="100" align="center">序号</uni-th>
 					<uni-th width="200" align="center">放映厅名称</uni-th>
-					<uni-th width="150" align="center">座位量</uni-th>
+					<uni-th width="100" align="center">行数</uni-th>
+					<uni-th width="100" align="center">列数</uni-th>
 					<uni-th width="50" align="center">设置</uni-th>
 				</uni-tr>
 				<uni-tr v-for="(item, index) in houseDataListPages[pageCurrentHouse-1]" :key="index">
 					<uni-td align="center">{{ (pageCurrentHouse-1)*13+(index+1) }}</uni-td>
 					<uni-td align="center">{{ item.houseName }}</uni-td>
 					<uni-td align="center">
-						{{ item.houseSeats }}
+						{{ item.houseX }}
+					</uni-td>
+					<uni-td align="center">
+						{{ item.houseY }}
 					</uni-td>
 					<uni-td>
 						<view class="uni-group">
@@ -445,6 +448,11 @@
 				loadingSchedule:false,
 				scheduleTotal:0,
 				
+				covers: [{
+					latitude: '',
+					longitude: '',
+					iconPath: '/static/Location.png'
+				}]
 			}
 		},
 
@@ -473,6 +481,8 @@
 					this.cinemaData.cinemaAddress = res.data.data.cinemaAddress;
 					this.cinemaData.cinemaX = res.data.data.cinemaX;
 					this.cinemaData.cinemaY = res.data.data.cinemaY;
+					this.covers[0].longitude=this.cinemaData.cinemaX;
+					this.covers[0].latitude=this.cinemaData.cinemaY;
 					this.cinemaInfoFlag=1;
 				},
 			})
@@ -1254,7 +1264,7 @@
 	}
 	
 	.create_house{
-		width:200px;
+		width:187px;
 		border-radius: 0%;
 		background-color: #f9da49;
 		border:none;
@@ -1343,6 +1353,10 @@
 	.uni-group {
 		display: flex;
 		align-items: center;
+	}
+	
+	.cinema_map{
+		height: 100vh;
 	}
 	
 </style>

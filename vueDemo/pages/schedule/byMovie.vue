@@ -296,14 +296,15 @@
 									}
 								}
 								this.cinemaListFlag=1;
+								console.log('Items', this.items);
+								console.log('dateItems', this.dateItems);
+								console.log('scheduleData', this.scheduleData);
+								console.log('scheduleDataByDate', this.scheduleDataByDate);
+								this.scheduleFlag = 1;
 							})
 						}
 					})
-					console.log('Items', this.items);
-					console.log('dateItems', this.dateItems);
-					console.log('scheduleData', this.scheduleData);
-					console.log('scheduleDataByDate', this.scheduleDataByDate);
-					this.scheduleFlag = 1;
+					
 				}
 			});
 		},

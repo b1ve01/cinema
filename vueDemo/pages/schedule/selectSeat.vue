@@ -141,24 +141,10 @@
 												.houseSeats = res.data
 												.data.houseSeats;
 
-											this.houseRow = Math.ceil(
-												Math.sqrt(this
-													.scheduleData
-													.houseSeats));
-											this.houseColumn =
-												Math.ceil(Math.sqrt(
-													this
-													.scheduleData
-													.houseSeats));
-											let sum = this.houseRow +
-												this.houseColumn;
-
-											this.houseRow = Math.ceil((
-													(sum) / 25) *
-												9)
-											this.houseColumn = Math
-												.ceil(((sum) / 25) *
-													16)
+											this.houseRow = parseInt(res.data
+												.data.houseX);
+											this.houseColumn =parseInt(res.data
+												.data.houseY);
 
 											for (let i = 1; i < (this
 													.houseRow + 1

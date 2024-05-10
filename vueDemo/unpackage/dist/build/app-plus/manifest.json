@@ -92,6 +92,7 @@
           "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"
         ],
         "abiFilters": [
+          "armeabi-v7a",
           "arm64-v8a",
           "x86"
         ]
@@ -146,12 +147,6 @@
       "height": "50px",
       "backgroundColor": "#010101",
       "list": [
-        {
-          "pagePath": "pages/index/index",
-          "text": "首页",
-          "iconPath": "/static/ClarityHomeLine.png",
-          "selectedIconPath": "/static/ClarityHomeSolid.png"
-        },
         {
           "pagePath": "pages/movieCinema/cinema",
           "text": "电影",

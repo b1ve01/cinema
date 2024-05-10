@@ -86,11 +86,10 @@
 			<view class="isLogin_1">
 				<uni-list-item :show-extra-icon="true" showArrow :extra-icon="infoIcon" :title="this.userData.userName"
 					clickable @click="to_info()" />
-			</view>
-			<view class="isLogin_2">
+			
 				<uni-list-item :show-extra-icon="true" showArrow :extra-icon="orderIcon" title="购票记录" 
 				clickable @click="to_orders()"/>
-				<uni-list-item :show-extra-icon="true" showArrow :extra-icon="setIcon" title="设定" />
+				
 			</view>
 			<view class="isLogin_3">
 				<uni-list-item :show-extra-icon="true" :extra-icon="logoutIcon" title="登出" clickable

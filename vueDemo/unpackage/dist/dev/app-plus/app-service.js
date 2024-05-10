@@ -31,41 +31,6 @@ if (uni.restoreGlobal) {
 }
 (function(vue, shared) {
   "use strict";
-  const _export_sfc = (sfc, props) => {
-    const target = sfc.__vccOpts || sfc;
-    for (const [key, val] of props) {
-      target[key] = val;
-    }
-    return target;
-  };
-  const _sfc_main$p = {
-    data() {
-      return {
-        title: "Hello world : )"
-      };
-    },
-    onLoad() {
-    },
-    methods: {}
-  };
-  function _sfc_render$o(_ctx, _cache, $props, $setup, $data, $options) {
-    return vue.openBlock(), vue.createElementBlock("view", { class: "content" }, [
-      vue.createElementVNode("image", {
-        class: "logo",
-        src: "/static/hello.png"
-      }),
-      vue.createElementVNode("view", { class: "text-area" }, [
-        vue.createElementVNode(
-          "text",
-          { class: "title" },
-          vue.toDisplayString($data.title),
-          1
-          /* TEXT */
-        )
-      ])
-    ]);
-  }
-  const PagesIndexIndex = /* @__PURE__ */ _export_sfc(_sfc_main$p, [["render", _sfc_render$o], ["__file", "E:/Senior_2/cinema/vueDemo/pages/index/index.vue"]]);
   function formatAppLog(type, filename, ...args) {
     if (uni.__log__) {
       uni.__log__(type, filename, ...args);
@@ -76,6 +41,108 @@ if (uni.restoreGlobal) {
   function resolveEasycom(component, easycom) {
     return shared.isString(component) ? easycom : component;
   }
+  const _export_sfc = (sfc, props) => {
+    const target = sfc.__vccOpts || sfc;
+    for (const [key, val] of props) {
+      target[key] = val;
+    }
+    return target;
+  };
+  const _sfc_main$U = {
+    name: "UniSegmentedControl",
+    emits: ["clickItem"],
+    props: {
+      current: {
+        type: Number,
+        default: 0
+      },
+      values: {
+        type: Array,
+        default() {
+          return [];
+        }
+      },
+      activeColor: {
+        type: String,
+        default: "#2979FF"
+      },
+      styleType: {
+        type: String,
+        default: "button"
+      }
+    },
+    data() {
+      return {
+        currentIndex: 0
+      };
+    },
+    watch: {
+      current(val) {
+        if (val !== this.currentIndex) {
+          this.currentIndex = val;
+        }
+      }
+    },
+    created() {
+      this.currentIndex = this.current;
+    },
+    methods: {
+      _onClick(index) {
+        if (this.currentIndex !== index) {
+          this.currentIndex = index;
+          this.$emit("clickItem", {
+            currentIndex: index
+          });
+        }
+      }
+    }
+  };
+  function _sfc_render$T(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock(
+      "view",
+      {
+        class: vue.normalizeClass([[$props.styleType === "text" ? "segmented-control--text" : "segmented-control--button"], "segmented-control"]),
+        style: vue.normalizeStyle({ borderColor: $props.styleType === "text" ? "" : $props.activeColor })
+      },
+      [
+        (vue.openBlock(true), vue.createElementBlock(
+          vue.Fragment,
+          null,
+          vue.renderList($props.values, (item, index) => {
+            return vue.openBlock(), vue.createElementBlock("view", {
+              class: vue.normalizeClass([[
+                $props.styleType === "text" ? "" : "segmented-control__item--button",
+                index === $data.currentIndex && $props.styleType === "button" ? "segmented-control__item--button--active" : "",
+                index === 0 && $props.styleType === "button" ? "segmented-control__item--button--first" : "",
+                index === $props.values.length - 1 && $props.styleType === "button" ? "segmented-control__item--button--last" : ""
+              ], "segmented-control__item"]),
+              key: index,
+              style: vue.normalizeStyle({ backgroundColor: index === $data.currentIndex && $props.styleType === "button" ? $props.activeColor : "", borderColor: index === $data.currentIndex && ($props.styleType === "text" || $props.styleType === "button") ? $props.activeColor : "#d9d9d9" }),
+              onClick: ($event) => $options._onClick(index)
+            }, [
+              vue.createElementVNode("view", null, [
+                vue.createElementVNode(
+                  "text",
+                  {
+                    style: vue.normalizeStyle({ color: index === $data.currentIndex ? $props.styleType === "text" ? $props.activeColor : "#fff" : $props.styleType === "text" ? "#999999" : $props.activeColor }),
+                    class: vue.normalizeClass(["segmented-control__text", $props.styleType === "text" && index === $data.currentIndex ? "segmented-control__item--text" : ""])
+                  },
+                  vue.toDisplayString(item),
+                  7
+                  /* TEXT, CLASS, STYLE */
+                )
+              ])
+            ], 14, ["onClick"]);
+          }),
+          128
+          /* KEYED_FRAGMENT */
+        ))
+      ],
+      6
+      /* CLASS, STYLE */
+    );
+  }
+  const __easycom_0$4 = /* @__PURE__ */ _export_sfc(_sfc_main$U, [["render", _sfc_render$T], ["__scopeId", "data-v-86aa1171"], ["__file", "E:/Senior_2/cinema/vueDemo/uni_modules/uni-segmented-control/components/uni-segmented-control/uni-segmented-control.vue"]]);
   const icons = {
     "id": "2852637",
     "name": "uniui图标库",
@@ -1251,7 +1318,7 @@ if (uni.restoreGlobal) {
     const reg = /^[0-9]*$/g;
     return typeof val === "number" || reg.test(val) ? val + "px" : val;
   };
-  const _sfc_main$o = {
+  const _sfc_main$T = {
     name: "UniIcons",
     emits: ["click"],
     props: {
@@ -1295,7 +1362,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$n(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$S(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock(
       "text",
       {
@@ -1308,7 +1375,885 @@ if (uni.restoreGlobal) {
       /* CLASS, STYLE */
     );
   }
-  const __easycom_0$5 = /* @__PURE__ */ _export_sfc(_sfc_main$o, [["render", _sfc_render$n], ["__scopeId", "data-v-d31e1c47"], ["__file", "E:/Senior_2/cinema/vueDemo/uni_modules/uni-icons/components/uni-icons/uni-icons.vue"]]);
+  const __easycom_1$1 = /* @__PURE__ */ _export_sfc(_sfc_main$T, [["render", _sfc_render$S], ["__scopeId", "data-v-d31e1c47"], ["__file", "E:/Senior_2/cinema/vueDemo/uni_modules/uni-icons/components/uni-icons/uni-icons.vue"]]);
+  const _sfc_main$S = {
+    name: "UniBadge",
+    emits: ["click"],
+    props: {
+      type: {
+        type: String,
+        default: "error"
+      },
+      inverted: {
+        type: Boolean,
+        default: false
+      },
+      isDot: {
+        type: Boolean,
+        default: false
+      },
+      maxNum: {
+        type: Number,
+        default: 99
+      },
+      absolute: {
+        type: String,
+        default: ""
+      },
+      offset: {
+        type: Array,
+        default() {
+          return [0, 0];
+        }
+      },
+      text: {
+        type: [String, Number],
+        default: ""
+      },
+      size: {
+        type: String,
+        default: "small"
+      },
+      customStyle: {
+        type: Object,
+        default() {
+          return {};
+        }
+      }
+    },
+    data() {
+      return {};
+    },
+    computed: {
+      width() {
+        return String(this.text).length * 8 + 12;
+      },
+      classNames() {
+        const {
+          inverted,
+          type,
+          size,
+          absolute
+        } = this;
+        return [
+          inverted ? "uni-badge--" + type + "-inverted" : "",
+          "uni-badge--" + type,
+          "uni-badge--" + size,
+          absolute ? "uni-badge--absolute" : ""
+        ].join(" ");
+      },
+      positionStyle() {
+        if (!this.absolute)
+          return {};
+        let w2 = this.width / 2, h2 = 10;
+        if (this.isDot) {
+          w2 = 5;
+          h2 = 5;
+        }
+        const x = `${-w2 + this.offset[0]}px`;
+        const y2 = `${-h2 + this.offset[1]}px`;
+        const whiteList = {
+          rightTop: {
+            right: x,
+            top: y2
+          },
+          rightBottom: {
+            right: x,
+            bottom: y2
+          },
+          leftBottom: {
+            left: x,
+            bottom: y2
+          },
+          leftTop: {
+            left: x,
+            top: y2
+          }
+        };
+        const match = whiteList[this.absolute];
+        return match ? match : whiteList["rightTop"];
+      },
+      dotStyle() {
+        if (!this.isDot)
+          return {};
+        return {
+          width: "10px",
+          minWidth: "0",
+          height: "10px",
+          padding: "0",
+          borderRadius: "10px"
+        };
+      },
+      displayValue() {
+        const {
+          isDot,
+          text,
+          maxNum
+        } = this;
+        return isDot ? "" : Number(text) > maxNum ? `${maxNum}+` : text;
+      }
+    },
+    methods: {
+      onClick() {
+        this.$emit("click");
+      }
+    }
+  };
+  function _sfc_render$R(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock("view", { class: "uni-badge--x" }, [
+      vue.renderSlot(_ctx.$slots, "default", {}, void 0, true),
+      $props.text ? (vue.openBlock(), vue.createElementBlock(
+        "text",
+        {
+          key: 0,
+          class: vue.normalizeClass([$options.classNames, "uni-badge"]),
+          style: vue.normalizeStyle([$options.positionStyle, $props.customStyle, $options.dotStyle]),
+          onClick: _cache[0] || (_cache[0] = ($event) => $options.onClick())
+        },
+        vue.toDisplayString($options.displayValue),
+        7
+        /* TEXT, CLASS, STYLE */
+      )) : vue.createCommentVNode("v-if", true)
+    ]);
+  }
+  const __easycom_1 = /* @__PURE__ */ _export_sfc(_sfc_main$S, [["render", _sfc_render$R], ["__scopeId", "data-v-c97cb896"], ["__file", "E:/Senior_2/cinema/vueDemo/uni_modules/uni-badge/components/uni-badge/uni-badge.vue"]]);
+  const _sfc_main$R = {
+    name: "UniListItem",
+    emits: ["click", "switchChange"],
+    props: {
+      direction: {
+        type: String,
+        default: "row"
+      },
+      title: {
+        type: String,
+        default: ""
+      },
+      note: {
+        type: String,
+        default: ""
+      },
+      ellipsis: {
+        type: [Number, String],
+        default: 0
+      },
+      disabled: {
+        type: [Boolean, String],
+        default: false
+      },
+      clickable: {
+        type: Boolean,
+        default: false
+      },
+      showArrow: {
+        type: [Boolean, String],
+        default: false
+      },
+      link: {
+        type: [Boolean, String],
+        default: false
+      },
+      to: {
+        type: String,
+        default: ""
+      },
+      showBadge: {
+        type: [Boolean, String],
+        default: false
+      },
+      showSwitch: {
+        type: [Boolean, String],
+        default: false
+      },
+      switchChecked: {
+        type: [Boolean, String],
+        default: false
+      },
+      badgeText: {
+        type: String,
+        default: ""
+      },
+      badgeType: {
+        type: String,
+        default: "success"
+      },
+      badgeStyle: {
+        type: Object,
+        default() {
+          return {};
+        }
+      },
+      rightText: {
+        type: String,
+        default: ""
+      },
+      thumb: {
+        type: String,
+        default: ""
+      },
+      thumbSize: {
+        type: String,
+        default: "base"
+      },
+      showExtraIcon: {
+        type: [Boolean, String],
+        default: false
+      },
+      extraIcon: {
+        type: Object,
+        default() {
+          return {
+            type: "",
+            color: "#000000",
+            size: 20,
+            customPrefix: ""
+          };
+        }
+      },
+      border: {
+        type: Boolean,
+        default: true
+      },
+      customStyle: {
+        type: Object,
+        default() {
+          return {
+            padding: "",
+            backgroundColor: "#FFFFFF"
+          };
+        }
+      },
+      keepScrollPosition: {
+        type: Boolean,
+        default: false
+      }
+    },
+    watch: {
+      "customStyle.padding": {
+        handler(padding) {
+          if (typeof padding == "number") {
+            padding += "";
+          }
+          let paddingArr = padding.split(" ");
+          if (paddingArr.length === 1) {
+            const allPadding = paddingArr[0];
+            this.padding = {
+              "top": allPadding,
+              "right": allPadding,
+              "bottom": allPadding,
+              "left": allPadding
+            };
+          } else if (paddingArr.length === 2) {
+            const [verticalPadding, horizontalPadding] = paddingArr;
+            this.padding = {
+              "top": verticalPadding,
+              "right": horizontalPadding,
+              "bottom": verticalPadding,
+              "left": horizontalPadding
+            };
+          } else if (paddingArr.length === 4) {
+            const [topPadding, rightPadding, bottomPadding, leftPadding] = paddingArr;
+            this.padding = {
+              "top": topPadding,
+              "right": rightPadding,
+              "bottom": bottomPadding,
+              "left": leftPadding
+            };
+          }
+        },
+        immediate: true
+      }
+    },
+    // inject: ['list'],
+    data() {
+      return {
+        isFirstChild: false,
+        padding: {
+          top: "",
+          right: "",
+          bottom: "",
+          left: ""
+        }
+      };
+    },
+    mounted() {
+      this.list = this.getForm();
+      if (this.list) {
+        if (!this.list.firstChildAppend) {
+          this.list.firstChildAppend = true;
+          this.isFirstChild = true;
+        }
+      }
+    },
+    methods: {
+      /**
+       * 获取父元素实例
+       */
+      getForm(name = "uniList") {
+        let parent = this.$parent;
+        let parentName = parent.$options.name;
+        while (parentName !== name) {
+          parent = parent.$parent;
+          if (!parent)
+            return false;
+          parentName = parent.$options.name;
+        }
+        return parent;
+      },
+      onClick() {
+        if (this.to !== "") {
+          this.openPage();
+          return;
+        }
+        if (this.clickable || this.link) {
+          this.$emit("click", {
+            data: {}
+          });
+        }
+      },
+      onSwitchChange(e2) {
+        this.$emit("switchChange", e2.detail);
+      },
+      openPage() {
+        if (["navigateTo", "redirectTo", "reLaunch", "switchTab"].indexOf(this.link) !== -1) {
+          this.pageApi(this.link);
+        } else {
+          this.pageApi("navigateTo");
+        }
+      },
+      pageApi(api) {
+        let callback = {
+          url: this.to,
+          success: (res) => {
+            this.$emit("click", {
+              data: res
+            });
+          },
+          fail: (err) => {
+            this.$emit("click", {
+              data: err
+            });
+          }
+        };
+        switch (api) {
+          case "navigateTo":
+            uni.navigateTo(callback);
+            break;
+          case "redirectTo":
+            uni.redirectTo(callback);
+            break;
+          case "reLaunch":
+            uni.reLaunch(callback);
+            break;
+          case "switchTab":
+            uni.switchTab(callback);
+            break;
+          default:
+            uni.navigateTo(callback);
+        }
+      }
+    }
+  };
+  function _sfc_render$Q(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_1$1);
+    const _component_uni_badge = resolveEasycom(vue.resolveDynamicComponent("uni-badge"), __easycom_1);
+    return vue.openBlock(), vue.createElementBlock("view", {
+      class: vue.normalizeClass([{ "uni-list-item--disabled": $props.disabled }, "uni-list-item"]),
+      style: { "background-color": "#010101" },
+      "hover-class": !$props.clickable && !$props.link || $props.disabled || $props.showSwitch ? "" : "uni-list-item--hover",
+      onClick: _cache[1] || (_cache[1] = (...args) => $options.onClick && $options.onClick(...args))
+    }, [
+      !$data.isFirstChild ? (vue.openBlock(), vue.createElementBlock(
+        "view",
+        {
+          key: 0,
+          class: vue.normalizeClass(["border--left", { "uni-list--border": $props.border }])
+        },
+        null,
+        2
+        /* CLASS */
+      )) : vue.createCommentVNode("v-if", true),
+      vue.createElementVNode(
+        "view",
+        {
+          class: vue.normalizeClass(["uni-list-item__container", { "container--right": $props.showArrow || $props.link, "flex--direction": $props.direction === "column" }]),
+          style: vue.normalizeStyle({ paddingTop: $data.padding.top, paddingLeft: $data.padding.left, paddingRight: $data.padding.right, paddingBottom: $data.padding.bottom })
+        },
+        [
+          vue.renderSlot(_ctx.$slots, "header", {}, () => [
+            vue.createElementVNode("view", { class: "uni-list-item__header" }, [
+              $props.thumb ? (vue.openBlock(), vue.createElementBlock("view", {
+                key: 0,
+                class: "uni-list-item__icon"
+              }, [
+                vue.createElementVNode("image", {
+                  src: $props.thumb,
+                  class: vue.normalizeClass(["uni-list-item__icon-img", ["uni-list--" + $props.thumbSize]])
+                }, null, 10, ["src"])
+              ])) : $props.showExtraIcon ? (vue.openBlock(), vue.createElementBlock("view", {
+                key: 1,
+                class: "uni-list-item__icon"
+              }, [
+                vue.createVNode(_component_uni_icons, {
+                  customPrefix: $props.extraIcon.customPrefix,
+                  color: $props.extraIcon.color,
+                  size: $props.extraIcon.size,
+                  type: $props.extraIcon.type
+                }, null, 8, ["customPrefix", "color", "size", "type"])
+              ])) : vue.createCommentVNode("v-if", true)
+            ])
+          ], true),
+          vue.renderSlot(_ctx.$slots, "body", {}, () => [
+            vue.createElementVNode(
+              "view",
+              {
+                class: vue.normalizeClass(["uni-list-item__content", { "uni-list-item__content--center": $props.thumb || $props.showExtraIcon || $props.showBadge || $props.showSwitch }])
+              },
+              [
+                $props.title ? (vue.openBlock(), vue.createElementBlock(
+                  "text",
+                  {
+                    key: 0,
+                    class: vue.normalizeClass(["uni-list-item__content-title", [$props.ellipsis !== 0 && $props.ellipsis <= 2 ? "uni-ellipsis-" + $props.ellipsis : ""]])
+                  },
+                  vue.toDisplayString($props.title),
+                  3
+                  /* TEXT, CLASS */
+                )) : vue.createCommentVNode("v-if", true),
+                $props.note ? (vue.openBlock(), vue.createElementBlock(
+                  "text",
+                  {
+                    key: 1,
+                    class: "uni-list-item__content-note"
+                  },
+                  vue.toDisplayString($props.note),
+                  1
+                  /* TEXT */
+                )) : vue.createCommentVNode("v-if", true)
+              ],
+              2
+              /* CLASS */
+            )
+          ], true),
+          vue.renderSlot(_ctx.$slots, "footer", {}, () => [
+            $props.rightText || $props.showBadge || $props.showSwitch ? (vue.openBlock(), vue.createElementBlock(
+              "view",
+              {
+                key: 0,
+                class: vue.normalizeClass(["uni-list-item__extra", { "flex--justify": $props.direction === "column" }])
+              },
+              [
+                $props.rightText ? (vue.openBlock(), vue.createElementBlock(
+                  "text",
+                  {
+                    key: 0,
+                    class: "uni-list-item__extra-text"
+                  },
+                  vue.toDisplayString($props.rightText),
+                  1
+                  /* TEXT */
+                )) : vue.createCommentVNode("v-if", true),
+                $props.showBadge ? (vue.openBlock(), vue.createBlock(_component_uni_badge, {
+                  key: 1,
+                  type: $props.badgeType,
+                  text: $props.badgeText,
+                  "custom-style": $props.badgeStyle
+                }, null, 8, ["type", "text", "custom-style"])) : vue.createCommentVNode("v-if", true),
+                $props.showSwitch ? (vue.openBlock(), vue.createElementBlock("switch", {
+                  key: 2,
+                  disabled: $props.disabled,
+                  checked: $props.switchChecked,
+                  onChange: _cache[0] || (_cache[0] = (...args) => $options.onSwitchChange && $options.onSwitchChange(...args))
+                }, null, 40, ["disabled", "checked"])) : vue.createCommentVNode("v-if", true)
+              ],
+              2
+              /* CLASS */
+            )) : vue.createCommentVNode("v-if", true)
+          ], true)
+        ],
+        6
+        /* CLASS, STYLE */
+      ),
+      $props.showArrow || $props.link ? (vue.openBlock(), vue.createBlock(_component_uni_icons, {
+        key: 1,
+        size: 16,
+        class: "uni-icon-wrapper",
+        color: "#999999",
+        type: "arrowright"
+      })) : vue.createCommentVNode("v-if", true)
+    ], 10, ["hover-class"]);
+  }
+  const __easycom_2 = /* @__PURE__ */ _export_sfc(_sfc_main$R, [["render", _sfc_render$Q], ["__scopeId", "data-v-c7524739"], ["__file", "E:/Senior_2/cinema/vueDemo/uni_modules/uni-list/components/uni-list-item/uni-list-item.vue"]]);
+  const _sfc_main$Q = {
+    name: "uniList",
+    "mp-weixin": {
+      options: {
+        multipleSlots: false
+      }
+    },
+    props: {
+      stackFromEnd: {
+        type: Boolean,
+        default: false
+      },
+      enableBackToTop: {
+        type: [Boolean, String],
+        default: false
+      },
+      scrollY: {
+        type: [Boolean, String],
+        default: false
+      },
+      border: {
+        type: Boolean,
+        default: true
+      },
+      renderReverse: {
+        type: Boolean,
+        default: false
+      }
+    },
+    // provide() {
+    // 	return {
+    // 		list: this
+    // 	};
+    // },
+    created() {
+      this.firstChildAppend = false;
+    },
+    methods: {
+      loadMore(e2) {
+        this.$emit("scrolltolower");
+      },
+      scroll(e2) {
+        this.$emit("scroll", e2);
+      }
+    }
+  };
+  function _sfc_render$P(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock("view", { class: "uni-list uni-border-top-bottom" }, [
+      $props.border ? (vue.openBlock(), vue.createElementBlock("view", {
+        key: 0,
+        class: "uni-list--border-top"
+      })) : vue.createCommentVNode("v-if", true),
+      vue.renderSlot(_ctx.$slots, "default", {}, void 0, true),
+      $props.border ? (vue.openBlock(), vue.createElementBlock("view", {
+        key: 1,
+        class: "uni-list--border-bottom"
+      })) : vue.createCommentVNode("v-if", true)
+    ]);
+  }
+  const __easycom_3 = /* @__PURE__ */ _export_sfc(_sfc_main$Q, [["render", _sfc_render$P], ["__scopeId", "data-v-c2f1266a"], ["__file", "E:/Senior_2/cinema/vueDemo/uni_modules/uni-list/components/uni-list/uni-list.vue"]]);
+  const _sfc_main$P = {
+    data() {
+      return {
+        isCinema: false,
+        movieData: [],
+        movieData_not: [],
+        items: ["正在上映", "待映"],
+        movieType: "",
+        current: 0,
+        cinemaData: [],
+        cinemaAfter: [{
+          cinemaAddress: "",
+          cinemaId: "",
+          cinemaName: "",
+          cinemaPassword: "",
+          cinemaPhone: "",
+          cinemaX: "",
+          cinemaY: "",
+          cinemaDistance: ""
+        }],
+        cinemaLocation: {
+          longitude: "",
+          latitude: ""
+        }
+      };
+    },
+    onShow: function(option) {
+      uni.request({
+        url: "/api/movie/infoMovieByState?movieState=1",
+        method: "GET",
+        dataType: "json",
+        success: (res) => {
+          this.movieData = res.data;
+          this.movieData.data.reverse();
+          formatAppLog("log", "at pages/movieCinema/cinema.vue:113", "电影页面", this.movieData.data);
+        }
+      });
+      uni.request({
+        url: "/api/movie/infoMovieByState?movieState=0",
+        method: "GET",
+        dataType: "json",
+        success: (res) => {
+          this.movieData_not = res.data;
+        }
+      });
+      uni.getLocation({
+        success: (res) => {
+          formatAppLog("log", "at pages/movieCinema/cinema.vue:129", "当前位置的经度：", res.longitude);
+          formatAppLog("log", "at pages/movieCinema/cinema.vue:130", "当前位置的纬度：", res.latitude);
+          this.cinemaLocation.longitude = res.longitude;
+          this.cinemaLocation.latitude = res.latitude;
+          formatAppLog("log", "at pages/movieCinema/cinema.vue:133", "标记", this.cinemaLocation);
+          uni.request({
+            url: "/api/cinema/infoAllCinema",
+            method: "GET",
+            dataType: "json",
+            success: (res2) => {
+              formatAppLog("log", "at pages/movieCinema/cinema.vue:140", res2.data);
+              this.cinemaData = res2.data.data;
+              formatAppLog("log", "at pages/movieCinema/cinema.vue:142", "电影院列表", this.cinemaData);
+              for (let i2 = 0; i2 < this.cinemaData.length; i2++) {
+                let distance = this.getDistance(this.cinemaLocation, this.cinemaData[i2].cinemaX, this.cinemaData[i2].cinemaY);
+                this.cinemaAfter[i2] = this.cinemaData[i2];
+                this.cinemaAfter[i2].cinemaDistance = distance;
+              }
+              this.cinemaAfter.sort((a2, b2) => a2.cinemaDistance - b2.cinemaDistance);
+              formatAppLog("log", "at pages/movieCinema/cinema.vue:153", "cinemaAfter sorted", this.cinemaAfter);
+            }
+          });
+        }
+      });
+    },
+    methods: {
+      to_movie_info(ref) {
+        let movie = {
+          "movieId": ref
+        };
+        uni.request({
+          url: "/api/movie/infoMovieById",
+          method: "GET",
+          dataType: "json",
+          data: movie,
+          success: (res) => {
+            this.movieType = "";
+            formatAppLog("log", "at pages/movieCinema/cinema.vue:176", "调用成功", res.data.data.movie);
+            uni.setStorageSync("movieId", res.data.data.movie.movieId);
+            uni.setStorageSync("movieNameCn", res.data.data.movie.movieNameCn);
+            uni.setStorageSync("movieNameEn", res.data.data.movie.movieNameEn);
+            uni.setStorageSync("movieDirector", res.data.data.movie.movieDirector);
+            uni.setStorageSync("movieReleaseDate", res.data.data.movie.movieReleaseDate);
+            uni.setStorageSync("movieDuration", res.data.data.movie.movieDuration);
+            uni.setStorageSync("movieUrl", res.data.data.movie.movieUrl);
+            uni.setStorageSync("movieDescription", res.data.data.movie.movieDescription);
+            uni.setStorageSync("movieCountry", res.data.data.movie.movieCountry);
+            for (let i2 = 0; i2 < res.data.data.type.length; i2++) {
+              this.movieType = this.movieType + " " + res.data.data.type[i2].genreName;
+            }
+            formatAppLog("log", "at pages/movieCinema/cinema.vue:191", "总类型", this.movieType);
+            uni.setStorageSync("movieType", this.movieType);
+            uni.navigateTo({
+              url: "/pages/movieCinema/movieInfo?movieId=" + ref,
+              animationType: "pop-in",
+              animationDuration: 200
+            });
+          }
+        });
+      },
+      to_cinema_info(ref) {
+        uni.setStorageSync("cinemaId", ref);
+        uni.navigateTo({
+          url: "/pages/schedule/byCinema",
+          animationType: "pop-in",
+          animationDuration: 200
+        });
+      },
+      onClickItem(e2) {
+        if (this.current != e2.currentIndex) {
+          this.current = e2.currentIndex;
+        }
+      },
+      getDistance(cinemaLocation, c_x, c_y) {
+        const earthRadius = 6378137;
+        const radLat1 = cinemaLocation.latitude * Math.PI / 180;
+        const radLat2 = c_y * Math.PI / 180;
+        const a2 = radLat1 - radLat2;
+        const b2 = cinemaLocation.longitude * Math.PI / 180 - c_x * Math.PI / 180;
+        const s2 = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a2 / 2), 2) + Math.cos(radLat1) * Math.cos(radLat2) * Math.pow(Math.sin(b2 / 2), 2)));
+        return (s2 * earthRadius / 1e3).toFixed(1);
+      }
+    }
+  };
+  function _sfc_render$O(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_segmented_control = resolveEasycom(vue.resolveDynamicComponent("uni-segmented-control"), __easycom_0$4);
+    const _component_uni_list_item = resolveEasycom(vue.resolveDynamicComponent("uni-list-item"), __easycom_2);
+    const _component_uni_list = resolveEasycom(vue.resolveDynamicComponent("uni-list"), __easycom_3);
+    return vue.openBlock(), vue.createElementBlock("view", { class: "cinema_main" }, [
+      vue.createElementVNode("view", { class: "movie_or_cinema" }, [
+        !$data.isCinema ? (vue.openBlock(), vue.createElementBlock("text", {
+          key: 0,
+          class: "movie_text_true",
+          onClick: _cache[0] || (_cache[0] = ($event) => $data.isCinema = true)
+        }, "电影 | ")) : vue.createCommentVNode("v-if", true),
+        $data.isCinema ? (vue.openBlock(), vue.createElementBlock("text", {
+          key: 1,
+          class: "movie_text_false",
+          onClick: _cache[1] || (_cache[1] = ($event) => $data.isCinema = false)
+        }, "电影")) : vue.createCommentVNode("v-if", true),
+        !$data.isCinema ? (vue.openBlock(), vue.createElementBlock("text", {
+          key: 2,
+          class: "cinema_text_false",
+          onClick: _cache[2] || (_cache[2] = ($event) => $data.isCinema = true)
+        }, "影院")) : vue.createCommentVNode("v-if", true),
+        $data.isCinema ? (vue.openBlock(), vue.createElementBlock("text", {
+          key: 3,
+          class: "cinema_text_true",
+          onClick: _cache[3] || (_cache[3] = ($event) => $data.isCinema = false)
+        }, " | 影院")) : vue.createCommentVNode("v-if", true)
+      ]),
+      !$data.isCinema ? (vue.openBlock(), vue.createElementBlock("view", {
+        key: 0,
+        class: "release_or_not"
+      }, [
+        vue.createElementVNode("view", { class: "uni-padding-wrap uni-common-mt" }, [
+          vue.createVNode(_component_uni_segmented_control, {
+            current: $data.current,
+            values: $data.items,
+            "style-type": "text",
+            "active-color": "#f9da49",
+            onClickItem: $options.onClickItem
+          }, null, 8, ["current", "values", "onClickItem"])
+        ])
+      ])) : vue.createCommentVNode("v-if", true),
+      !$data.isCinema ? (vue.openBlock(true), vue.createElementBlock(
+        vue.Fragment,
+        { key: 1 },
+        vue.renderList(this.movieData.data, (item, index) => {
+          return vue.withDirectives((vue.openBlock(), vue.createElementBlock("view", {
+            class: "movie_info",
+            key: index
+          }, [
+            vue.createVNode(
+              _component_uni_list,
+              null,
+              {
+                default: vue.withCtx(() => [
+                  vue.createVNode(_component_uni_list_item, {
+                    title: this.movieData.data[index].movieNameCn,
+                    ellipsis: "1",
+                    note: this.movieData.data[index].movieNameEn + "\n导演：" + this.movieData.data[index].movieDirector + "\n上映日期：" + this.movieData.data[index].movieReleaseDate + "\n时长：" + this.movieData.data[index].movieDuration + " min",
+                    thumb: this.movieData.data[index].movieUrl,
+                    "thumb-size": "lg",
+                    clickable: "",
+                    onClick: ($event) => $options.to_movie_info(this.movieData.data[index].movieId)
+                  }, {
+                    footer: vue.withCtx(() => [
+                      vue.createElementVNode("button", {
+                        class: "buy_button",
+                        "hover-class": "is_buy_hover",
+                        size: "mini"
+                      }, "购票")
+                    ]),
+                    _: 2
+                    /* DYNAMIC */
+                  }, 1032, ["title", "note", "thumb", "onClick"])
+                ]),
+                _: 2
+                /* DYNAMIC */
+              },
+              1024
+              /* DYNAMIC_SLOTS */
+            )
+          ])), [
+            [vue.vShow, $data.current === 0]
+          ]);
+        }),
+        128
+        /* KEYED_FRAGMENT */
+      )) : vue.createCommentVNode("v-if", true),
+      !$data.isCinema ? (vue.openBlock(true), vue.createElementBlock(
+        vue.Fragment,
+        { key: 2 },
+        vue.renderList(this.movieData_not.data, (item, index) => {
+          return vue.withDirectives((vue.openBlock(), vue.createElementBlock("view", {
+            class: "movie_info",
+            key: index
+          }, [
+            vue.createVNode(
+              _component_uni_list,
+              null,
+              {
+                default: vue.withCtx(() => [
+                  vue.createVNode(_component_uni_list_item, {
+                    title: this.movieData_not.data[index].movieNameCn,
+                    ellipsis: "1",
+                    note: this.movieData_not.data[index].movieNameEn + "\n导演：" + this.movieData_not.data[index].movieDirector + "\n上映日期：" + this.movieData_not.data[index].movieReleaseDate + "\n时长：" + this.movieData_not.data[index].movieDuration + " min",
+                    thumb: this.movieData_not.data[index].movieUrl,
+                    "thumb-size": "lg",
+                    clickable: "",
+                    onClick: ($event) => $options.to_movie_info(this.movieData_not.data[index].movieId)
+                  }, {
+                    footer: vue.withCtx(() => [
+                      vue.createElementVNode("button", {
+                        class: "buy_button",
+                        "hover-class": "is_buy_hover",
+                        size: "mini"
+                      }, "购票")
+                    ]),
+                    _: 2
+                    /* DYNAMIC */
+                  }, 1032, ["title", "note", "thumb", "onClick"])
+                ]),
+                _: 2
+                /* DYNAMIC */
+              },
+              1024
+              /* DYNAMIC_SLOTS */
+            )
+          ])), [
+            [vue.vShow, $data.current === 1]
+          ]);
+        }),
+        128
+        /* KEYED_FRAGMENT */
+      )) : vue.createCommentVNode("v-if", true),
+      $data.isCinema ? (vue.openBlock(true), vue.createElementBlock(
+        vue.Fragment,
+        { key: 3 },
+        vue.renderList(this.cinemaAfter, (item, index) => {
+          return vue.openBlock(), vue.createElementBlock("view", {
+            class: "cinema_info",
+            key: index
+          }, [
+            vue.createVNode(
+              _component_uni_list,
+              null,
+              {
+                default: vue.withCtx(() => [
+                  this.cinemaAfter[index].cinemaDistance <= 0.1 ? (vue.openBlock(), vue.createBlock(_component_uni_list_item, {
+                    key: 0,
+                    title: this.cinemaAfter[index].cinemaName,
+                    ellipsis: "2",
+                    note: this.cinemaAfter[index].cinemaAddress,
+                    clickable: "",
+                    onClick: ($event) => $options.to_cinema_info(this.cinemaAfter[index].cinemaId),
+                    "right-text": "< 0.1 km"
+                  }, null, 8, ["title", "note", "onClick"])) : vue.createCommentVNode("v-if", true),
+                  this.cinemaAfter[index].cinemaDistance > 0.1 ? (vue.openBlock(), vue.createBlock(_component_uni_list_item, {
+                    key: 1,
+                    title: this.cinemaAfter[index].cinemaName,
+                    ellipsis: "2",
+                    note: this.cinemaAfter[index].cinemaAddress,
+                    clickable: "",
+                    onClick: ($event) => $options.to_cinema_info(this.cinemaAfter[index].cinemaId),
+                    "right-text": this.cinemaAfter[index].cinemaDistance + " km"
+                  }, null, 8, ["title", "note", "onClick", "right-text"])) : vue.createCommentVNode("v-if", true)
+                ]),
+                _: 2
+                /* DYNAMIC */
+              },
+              1024
+              /* DYNAMIC_SLOTS */
+            )
+          ]);
+        }),
+        128
+        /* KEYED_FRAGMENT */
+      )) : vue.createCommentVNode("v-if", true)
+    ]);
+  }
+  const PagesMovieCinemaCinema = /* @__PURE__ */ _export_sfc(_sfc_main$P, [["render", _sfc_render$O], ["__scopeId", "data-v-8ee17c02"], ["__file", "E:/Senior_2/cinema/vueDemo/pages/movieCinema/cinema.vue"]]);
   function obj2strClass(obj) {
     let classess = "";
     for (let key in obj) {
@@ -1327,7 +2272,7 @@ if (uni.restoreGlobal) {
     }
     return style;
   }
-  const _sfc_main$n = {
+  const _sfc_main$O = {
     name: "uni-easyinput",
     emits: ["click", "iconClick", "update:modelValue", "input", "focus", "blur", "confirm", "clear", "eyes", "change", "keyboardheightchange"],
     model: {
@@ -1660,8 +2605,8 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$m(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$5);
+  function _sfc_render$N(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_1$1);
     return vue.openBlock(), vue.createElementBlock(
       "view",
       {
@@ -1732,7 +2677,7 @@ if (uni.restoreGlobal) {
                 $options.isVal ? (vue.openBlock(), vue.createBlock(_component_uni_icons, {
                   key: 0,
                   class: vue.normalizeClass(["content-clear-icon", { "is-textarea-icon": $props.type === "textarea" }]),
-                  type: $data.showPassword ? "eye-filled" : "eye-slash-filled",
+                  type: $data.showPassword ? "eye-slash-filled" : "eye-filled",
                   size: 22,
                   color: $data.focusShow ? $props.primaryColor : "#c0c4cc",
                   onClick: $options.onEyes
@@ -1781,8 +2726,8 @@ if (uni.restoreGlobal) {
       /* CLASS, STYLE */
     );
   }
-  const __easycom_0$4 = /* @__PURE__ */ _export_sfc(_sfc_main$n, [["render", _sfc_render$m], ["__scopeId", "data-v-09fd5285"], ["__file", "E:/Senior_2/cinema/vueDemo/uni_modules/uni-easyinput/components/uni-easyinput/uni-easyinput.vue"]]);
-  const _sfc_main$m = {
+  const __easycom_7$1 = /* @__PURE__ */ _export_sfc(_sfc_main$O, [["render", _sfc_render$N], ["__scopeId", "data-v-09fd5285"], ["__file", "E:/Senior_2/cinema/vueDemo/uni_modules/uni-easyinput/components/uni-easyinput/uni-easyinput.vue"]]);
+  const _sfc_main$N = {
     name: "uniFormsItem",
     options: {
       virtualHost: true
@@ -2114,7 +3059,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$l(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$M(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock(
       "view",
       {
@@ -2170,7 +3115,7 @@ if (uni.restoreGlobal) {
       /* CLASS */
     );
   }
-  const __easycom_1$3 = /* @__PURE__ */ _export_sfc(_sfc_main$m, [["render", _sfc_render$l], ["__scopeId", "data-v-462874dd"], ["__file", "E:/Senior_2/cinema/vueDemo/uni_modules/uni-forms/components/uni-forms-item/uni-forms-item.vue"]]);
+  const __easycom_5$1 = /* @__PURE__ */ _export_sfc(_sfc_main$N, [["render", _sfc_render$M], ["__scopeId", "data-v-462874dd"], ["__file", "E:/Senior_2/cinema/vueDemo/uni_modules/uni-forms/components/uni-forms-item/uni-forms-item.vue"]]);
   var pattern = {
     email: /^\S+?@\S+?\.\S+?$/,
     idcard: /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/,
@@ -2734,7 +3679,7 @@ if (uni.restoreGlobal) {
       return false;
     }
   };
-  const _sfc_main$l = {
+  const _sfc_main$M = {
     name: "uniForms",
     emits: ["validate", "submit"],
     options: {
@@ -3031,522 +3976,14 @@ if (uni.restoreGlobal) {
       _isEqual: isEqual
     }
   };
-  function _sfc_render$k(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$L(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "uni-forms" }, [
       vue.createElementVNode("form", null, [
         vue.renderSlot(_ctx.$slots, "default", {}, void 0, true)
       ])
     ]);
   }
-  const __easycom_2 = /* @__PURE__ */ _export_sfc(_sfc_main$l, [["render", _sfc_render$k], ["__scopeId", "data-v-9a1e3c32"], ["__file", "E:/Senior_2/cinema/vueDemo/uni_modules/uni-forms/components/uni-forms/uni-forms.vue"]]);
-  const _sfc_main$k = {
-    name: "UniBadge",
-    emits: ["click"],
-    props: {
-      type: {
-        type: String,
-        default: "error"
-      },
-      inverted: {
-        type: Boolean,
-        default: false
-      },
-      isDot: {
-        type: Boolean,
-        default: false
-      },
-      maxNum: {
-        type: Number,
-        default: 99
-      },
-      absolute: {
-        type: String,
-        default: ""
-      },
-      offset: {
-        type: Array,
-        default() {
-          return [0, 0];
-        }
-      },
-      text: {
-        type: [String, Number],
-        default: ""
-      },
-      size: {
-        type: String,
-        default: "small"
-      },
-      customStyle: {
-        type: Object,
-        default() {
-          return {};
-        }
-      }
-    },
-    data() {
-      return {};
-    },
-    computed: {
-      width() {
-        return String(this.text).length * 8 + 12;
-      },
-      classNames() {
-        const {
-          inverted,
-          type,
-          size,
-          absolute
-        } = this;
-        return [
-          inverted ? "uni-badge--" + type + "-inverted" : "",
-          "uni-badge--" + type,
-          "uni-badge--" + size,
-          absolute ? "uni-badge--absolute" : ""
-        ].join(" ");
-      },
-      positionStyle() {
-        if (!this.absolute)
-          return {};
-        let w2 = this.width / 2, h2 = 10;
-        if (this.isDot) {
-          w2 = 5;
-          h2 = 5;
-        }
-        const x = `${-w2 + this.offset[0]}px`;
-        const y2 = `${-h2 + this.offset[1]}px`;
-        const whiteList = {
-          rightTop: {
-            right: x,
-            top: y2
-          },
-          rightBottom: {
-            right: x,
-            bottom: y2
-          },
-          leftBottom: {
-            left: x,
-            bottom: y2
-          },
-          leftTop: {
-            left: x,
-            top: y2
-          }
-        };
-        const match = whiteList[this.absolute];
-        return match ? match : whiteList["rightTop"];
-      },
-      dotStyle() {
-        if (!this.isDot)
-          return {};
-        return {
-          width: "10px",
-          minWidth: "0",
-          height: "10px",
-          padding: "0",
-          borderRadius: "10px"
-        };
-      },
-      displayValue() {
-        const {
-          isDot,
-          text,
-          maxNum
-        } = this;
-        return isDot ? "" : Number(text) > maxNum ? `${maxNum}+` : text;
-      }
-    },
-    methods: {
-      onClick() {
-        this.$emit("click");
-      }
-    }
-  };
-  function _sfc_render$j(_ctx, _cache, $props, $setup, $data, $options) {
-    return vue.openBlock(), vue.createElementBlock("view", { class: "uni-badge--x" }, [
-      vue.renderSlot(_ctx.$slots, "default", {}, void 0, true),
-      $props.text ? (vue.openBlock(), vue.createElementBlock(
-        "text",
-        {
-          key: 0,
-          class: vue.normalizeClass([$options.classNames, "uni-badge"]),
-          style: vue.normalizeStyle([$options.positionStyle, $props.customStyle, $options.dotStyle]),
-          onClick: _cache[0] || (_cache[0] = ($event) => $options.onClick())
-        },
-        vue.toDisplayString($options.displayValue),
-        7
-        /* TEXT, CLASS, STYLE */
-      )) : vue.createCommentVNode("v-if", true)
-    ]);
-  }
-  const __easycom_1$2 = /* @__PURE__ */ _export_sfc(_sfc_main$k, [["render", _sfc_render$j], ["__scopeId", "data-v-c97cb896"], ["__file", "E:/Senior_2/cinema/vueDemo/uni_modules/uni-badge/components/uni-badge/uni-badge.vue"]]);
-  const _sfc_main$j = {
-    name: "UniListItem",
-    emits: ["click", "switchChange"],
-    props: {
-      direction: {
-        type: String,
-        default: "row"
-      },
-      title: {
-        type: String,
-        default: ""
-      },
-      note: {
-        type: String,
-        default: ""
-      },
-      ellipsis: {
-        type: [Number, String],
-        default: 0
-      },
-      disabled: {
-        type: [Boolean, String],
-        default: false
-      },
-      clickable: {
-        type: Boolean,
-        default: false
-      },
-      showArrow: {
-        type: [Boolean, String],
-        default: false
-      },
-      link: {
-        type: [Boolean, String],
-        default: false
-      },
-      to: {
-        type: String,
-        default: ""
-      },
-      showBadge: {
-        type: [Boolean, String],
-        default: false
-      },
-      showSwitch: {
-        type: [Boolean, String],
-        default: false
-      },
-      switchChecked: {
-        type: [Boolean, String],
-        default: false
-      },
-      badgeText: {
-        type: String,
-        default: ""
-      },
-      badgeType: {
-        type: String,
-        default: "success"
-      },
-      badgeStyle: {
-        type: Object,
-        default() {
-          return {};
-        }
-      },
-      rightText: {
-        type: String,
-        default: ""
-      },
-      thumb: {
-        type: String,
-        default: ""
-      },
-      thumbSize: {
-        type: String,
-        default: "base"
-      },
-      showExtraIcon: {
-        type: [Boolean, String],
-        default: false
-      },
-      extraIcon: {
-        type: Object,
-        default() {
-          return {
-            type: "",
-            color: "#000000",
-            size: 20,
-            customPrefix: ""
-          };
-        }
-      },
-      border: {
-        type: Boolean,
-        default: true
-      },
-      customStyle: {
-        type: Object,
-        default() {
-          return {
-            padding: "",
-            backgroundColor: "#FFFFFF"
-          };
-        }
-      },
-      keepScrollPosition: {
-        type: Boolean,
-        default: false
-      }
-    },
-    watch: {
-      "customStyle.padding": {
-        handler(padding) {
-          if (typeof padding == "number") {
-            padding += "";
-          }
-          let paddingArr = padding.split(" ");
-          if (paddingArr.length === 1) {
-            const allPadding = paddingArr[0];
-            this.padding = {
-              "top": allPadding,
-              "right": allPadding,
-              "bottom": allPadding,
-              "left": allPadding
-            };
-          } else if (paddingArr.length === 2) {
-            const [verticalPadding, horizontalPadding] = paddingArr;
-            this.padding = {
-              "top": verticalPadding,
-              "right": horizontalPadding,
-              "bottom": verticalPadding,
-              "left": horizontalPadding
-            };
-          } else if (paddingArr.length === 4) {
-            const [topPadding, rightPadding, bottomPadding, leftPadding] = paddingArr;
-            this.padding = {
-              "top": topPadding,
-              "right": rightPadding,
-              "bottom": bottomPadding,
-              "left": leftPadding
-            };
-          }
-        },
-        immediate: true
-      }
-    },
-    // inject: ['list'],
-    data() {
-      return {
-        isFirstChild: false,
-        padding: {
-          top: "",
-          right: "",
-          bottom: "",
-          left: ""
-        }
-      };
-    },
-    mounted() {
-      this.list = this.getForm();
-      if (this.list) {
-        if (!this.list.firstChildAppend) {
-          this.list.firstChildAppend = true;
-          this.isFirstChild = true;
-        }
-      }
-    },
-    methods: {
-      /**
-       * 获取父元素实例
-       */
-      getForm(name = "uniList") {
-        let parent = this.$parent;
-        let parentName = parent.$options.name;
-        while (parentName !== name) {
-          parent = parent.$parent;
-          if (!parent)
-            return false;
-          parentName = parent.$options.name;
-        }
-        return parent;
-      },
-      onClick() {
-        if (this.to !== "") {
-          this.openPage();
-          return;
-        }
-        if (this.clickable || this.link) {
-          this.$emit("click", {
-            data: {}
-          });
-        }
-      },
-      onSwitchChange(e2) {
-        this.$emit("switchChange", e2.detail);
-      },
-      openPage() {
-        if (["navigateTo", "redirectTo", "reLaunch", "switchTab"].indexOf(this.link) !== -1) {
-          this.pageApi(this.link);
-        } else {
-          this.pageApi("navigateTo");
-        }
-      },
-      pageApi(api) {
-        let callback = {
-          url: this.to,
-          success: (res) => {
-            this.$emit("click", {
-              data: res
-            });
-          },
-          fail: (err) => {
-            this.$emit("click", {
-              data: err
-            });
-          }
-        };
-        switch (api) {
-          case "navigateTo":
-            uni.navigateTo(callback);
-            break;
-          case "redirectTo":
-            uni.redirectTo(callback);
-            break;
-          case "reLaunch":
-            uni.reLaunch(callback);
-            break;
-          case "switchTab":
-            uni.switchTab(callback);
-            break;
-          default:
-            uni.navigateTo(callback);
-        }
-      }
-    }
-  };
-  function _sfc_render$i(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$5);
-    const _component_uni_badge = resolveEasycom(vue.resolveDynamicComponent("uni-badge"), __easycom_1$2);
-    return vue.openBlock(), vue.createElementBlock("view", {
-      class: vue.normalizeClass([{ "uni-list-item--disabled": $props.disabled }, "uni-list-item"]),
-      style: { "background-color": "#010101" },
-      "hover-class": !$props.clickable && !$props.link || $props.disabled || $props.showSwitch ? "" : "uni-list-item--hover",
-      onClick: _cache[1] || (_cache[1] = (...args) => $options.onClick && $options.onClick(...args))
-    }, [
-      !$data.isFirstChild ? (vue.openBlock(), vue.createElementBlock(
-        "view",
-        {
-          key: 0,
-          class: vue.normalizeClass(["border--left", { "uni-list--border": $props.border }])
-        },
-        null,
-        2
-        /* CLASS */
-      )) : vue.createCommentVNode("v-if", true),
-      vue.createElementVNode(
-        "view",
-        {
-          class: vue.normalizeClass(["uni-list-item__container", { "container--right": $props.showArrow || $props.link, "flex--direction": $props.direction === "column" }]),
-          style: vue.normalizeStyle({ paddingTop: $data.padding.top, paddingLeft: $data.padding.left, paddingRight: $data.padding.right, paddingBottom: $data.padding.bottom })
-        },
-        [
-          vue.renderSlot(_ctx.$slots, "header", {}, () => [
-            vue.createElementVNode("view", { class: "uni-list-item__header" }, [
-              $props.thumb ? (vue.openBlock(), vue.createElementBlock("view", {
-                key: 0,
-                class: "uni-list-item__icon"
-              }, [
-                vue.createElementVNode("image", {
-                  src: $props.thumb,
-                  class: vue.normalizeClass(["uni-list-item__icon-img", ["uni-list--" + $props.thumbSize]])
-                }, null, 10, ["src"])
-              ])) : $props.showExtraIcon ? (vue.openBlock(), vue.createElementBlock("view", {
-                key: 1,
-                class: "uni-list-item__icon"
-              }, [
-                vue.createVNode(_component_uni_icons, {
-                  customPrefix: $props.extraIcon.customPrefix,
-                  color: $props.extraIcon.color,
-                  size: $props.extraIcon.size,
-                  type: $props.extraIcon.type
-                }, null, 8, ["customPrefix", "color", "size", "type"])
-              ])) : vue.createCommentVNode("v-if", true)
-            ])
-          ], true),
-          vue.renderSlot(_ctx.$slots, "body", {}, () => [
-            vue.createElementVNode(
-              "view",
-              {
-                class: vue.normalizeClass(["uni-list-item__content", { "uni-list-item__content--center": $props.thumb || $props.showExtraIcon || $props.showBadge || $props.showSwitch }])
-              },
-              [
-                $props.title ? (vue.openBlock(), vue.createElementBlock(
-                  "text",
-                  {
-                    key: 0,
-                    class: vue.normalizeClass(["uni-list-item__content-title", [$props.ellipsis !== 0 && $props.ellipsis <= 2 ? "uni-ellipsis-" + $props.ellipsis : ""]])
-                  },
-                  vue.toDisplayString($props.title),
-                  3
-                  /* TEXT, CLASS */
-                )) : vue.createCommentVNode("v-if", true),
-                $props.note ? (vue.openBlock(), vue.createElementBlock(
-                  "text",
-                  {
-                    key: 1,
-                    class: "uni-list-item__content-note"
-                  },
-                  vue.toDisplayString($props.note),
-                  1
-                  /* TEXT */
-                )) : vue.createCommentVNode("v-if", true)
-              ],
-              2
-              /* CLASS */
-            )
-          ], true),
-          vue.renderSlot(_ctx.$slots, "footer", {}, () => [
-            $props.rightText || $props.showBadge || $props.showSwitch ? (vue.openBlock(), vue.createElementBlock(
-              "view",
-              {
-                key: 0,
-                class: vue.normalizeClass(["uni-list-item__extra", { "flex--justify": $props.direction === "column" }])
-              },
-              [
-                $props.rightText ? (vue.openBlock(), vue.createElementBlock(
-                  "text",
-                  {
-                    key: 0,
-                    class: "uni-list-item__extra-text"
-                  },
-                  vue.toDisplayString($props.rightText),
-                  1
-                  /* TEXT */
-                )) : vue.createCommentVNode("v-if", true),
-                $props.showBadge ? (vue.openBlock(), vue.createBlock(_component_uni_badge, {
-                  key: 1,
-                  type: $props.badgeType,
-                  text: $props.badgeText,
-                  "custom-style": $props.badgeStyle
-                }, null, 8, ["type", "text", "custom-style"])) : vue.createCommentVNode("v-if", true),
-                $props.showSwitch ? (vue.openBlock(), vue.createElementBlock("switch", {
-                  key: 2,
-                  disabled: $props.disabled,
-                  checked: $props.switchChecked,
-                  onChange: _cache[0] || (_cache[0] = (...args) => $options.onSwitchChange && $options.onSwitchChange(...args))
-                }, null, 40, ["disabled", "checked"])) : vue.createCommentVNode("v-if", true)
-              ],
-              2
-              /* CLASS */
-            )) : vue.createCommentVNode("v-if", true)
-          ], true)
-        ],
-        6
-        /* CLASS, STYLE */
-      ),
-      $props.showArrow || $props.link ? (vue.openBlock(), vue.createBlock(_component_uni_icons, {
-        key: 1,
-        size: 16,
-        class: "uni-icon-wrapper",
-        color: "#999999",
-        type: "arrowright"
-      })) : vue.createCommentVNode("v-if", true)
-    ], 10, ["hover-class"]);
-  }
-  const __easycom_0$3 = /* @__PURE__ */ _export_sfc(_sfc_main$j, [["render", _sfc_render$i], ["__scopeId", "data-v-c7524739"], ["__file", "E:/Senior_2/cinema/vueDemo/uni_modules/uni-list/components/uni-list-item/uni-list-item.vue"]]);
+  const __easycom_4$2 = /* @__PURE__ */ _export_sfc(_sfc_main$M, [["render", _sfc_render$L], ["__scopeId", "data-v-9a1e3c32"], ["__file", "E:/Senior_2/cinema/vueDemo/uni_modules/uni-forms/components/uni-forms/uni-forms.vue"]]);
   const popup = {
     data() {
       return {};
@@ -3855,34 +4292,34 @@ if (uni.restoreGlobal) {
       }
     };
   }
-  const en = {
+  const en$3 = {
     "uni-popup.cancel": "cancel",
     "uni-popup.ok": "ok",
     "uni-popup.placeholder": "pleace enter",
     "uni-popup.title": "Hint",
     "uni-popup.shareTitle": "Share to"
   };
-  const zhHans = {
+  const zhHans$3 = {
     "uni-popup.cancel": "取消",
     "uni-popup.ok": "确定",
     "uni-popup.placeholder": "请输入",
     "uni-popup.title": "提示",
     "uni-popup.shareTitle": "分享到"
   };
-  const zhHant = {
+  const zhHant$3 = {
     "uni-popup.cancel": "取消",
     "uni-popup.ok": "確定",
     "uni-popup.placeholder": "請輸入",
     "uni-popup.title": "提示",
     "uni-popup.shareTitle": "分享到"
   };
-  const messages = {
-    en,
-    "zh-Hans": zhHans,
-    "zh-Hant": zhHant
+  const messages$2 = {
+    en: en$3,
+    "zh-Hans": zhHans$3,
+    "zh-Hant": zhHant$3
   };
-  const { t: t$1 } = initVueI18n(messages);
-  const _sfc_main$i = {
+  const { t: t$5 } = initVueI18n(messages$2);
+  const _sfc_main$L = {
     name: "uniPopupDialog",
     mixins: [popup],
     emits: ["confirm", "close"],
@@ -3937,16 +4374,16 @@ if (uni.restoreGlobal) {
     },
     computed: {
       okText() {
-        return this.confirmText || t$1("uni-popup.ok");
+        return this.confirmText || t$5("uni-popup.ok");
       },
       closeText() {
-        return this.cancelText || t$1("uni-popup.cancel");
+        return this.cancelText || t$5("uni-popup.cancel");
       },
       placeholderText() {
-        return this.placeholder || t$1("uni-popup.placeholder");
+        return this.placeholder || t$5("uni-popup.placeholder");
       },
       titleText() {
-        return this.title || t$1("uni-popup.title");
+        return this.title || t$5("uni-popup.title");
       }
     },
     watch: {
@@ -4002,7 +4439,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$h(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$K(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "uni-popup-dialog" }, [
       vue.createElementVNode("view", { class: "uni-dialog-title" }, [
         vue.createElementVNode(
@@ -4072,7 +4509,7 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const __easycom_4 = /* @__PURE__ */ _export_sfc(_sfc_main$i, [["render", _sfc_render$h], ["__scopeId", "data-v-d78c88b7"], ["__file", "E:/Senior_2/cinema/vueDemo/uni_modules/uni-popup/components/uni-popup-dialog/uni-popup-dialog.vue"]]);
+  const __easycom_8$1 = /* @__PURE__ */ _export_sfc(_sfc_main$L, [["render", _sfc_render$K], ["__scopeId", "data-v-d78c88b7"], ["__file", "E:/Senior_2/cinema/vueDemo/uni_modules/uni-popup/components/uni-popup-dialog/uni-popup-dialog.vue"]]);
   class MPAnimation {
     constructor(options, _this) {
       this.options = options;
@@ -4185,7 +4622,7 @@ if (uni.restoreGlobal) {
     clearTimeout(_this.timer);
     return new MPAnimation(option, _this);
   }
-  const _sfc_main$h = {
+  const _sfc_main$K = {
     name: "uniTransition",
     emits: ["click", "change"],
     props: {
@@ -4436,7 +4873,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$g(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$J(_ctx, _cache, $props, $setup, $data, $options) {
     return $data.isShow || $props.onceRender ? vue.withDirectives((vue.openBlock(), vue.createElementBlock("view", {
       key: 0,
       ref: "ani",
@@ -4450,8 +4887,8 @@ if (uni.restoreGlobal) {
       [vue.vShow, $data.isShow]
     ]) : vue.createCommentVNode("v-if", true);
   }
-  const __easycom_0$2 = /* @__PURE__ */ _export_sfc(_sfc_main$h, [["render", _sfc_render$g], ["__file", "E:/Senior_2/cinema/vueDemo/uni_modules/uni-transition/components/uni-transition/uni-transition.vue"]]);
-  const _sfc_main$g = {
+  const __easycom_0$3 = /* @__PURE__ */ _export_sfc(_sfc_main$K, [["render", _sfc_render$J], ["__file", "E:/Senior_2/cinema/vueDemo/uni_modules/uni-transition/components/uni-transition/uni-transition.vue"]]);
+  const _sfc_main$J = {
     name: "uniPopup",
     components: {},
     emits: ["change", "maskClick"],
@@ -4778,8 +5215,8 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$f(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_uni_transition = resolveEasycom(vue.resolveDynamicComponent("uni-transition"), __easycom_0$2);
+  function _sfc_render$I(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_transition = resolveEasycom(vue.resolveDynamicComponent("uni-transition"), __easycom_0$3);
     return $data.showPopup ? (vue.openBlock(), vue.createElementBlock(
       "view",
       {
@@ -4838,8 +5275,8 @@ if (uni.restoreGlobal) {
       /* CLASS */
     )) : vue.createCommentVNode("v-if", true);
   }
-  const __easycom_5 = /* @__PURE__ */ _export_sfc(_sfc_main$g, [["render", _sfc_render$f], ["__scopeId", "data-v-4dd3c44b"], ["__file", "E:/Senior_2/cinema/vueDemo/uni_modules/uni-popup/components/uni-popup/uni-popup.vue"]]);
-  const _sfc_main$f = {
+  const __easycom_9$1 = /* @__PURE__ */ _export_sfc(_sfc_main$J, [["render", _sfc_render$I], ["__scopeId", "data-v-4dd3c44b"], ["__file", "E:/Senior_2/cinema/vueDemo/uni_modules/uni-popup/components/uni-popup/uni-popup.vue"]]);
+  const _sfc_main$I = {
     data() {
       return {
         isRegister: false,
@@ -5192,21 +5629,30 @@ if (uni.restoreGlobal) {
             uni.setStorageSync("userName", res.data.data.userName);
             uni.setStorageSync("userUrl", res.data.data.userUrl);
             uni.navigateTo({
-              url: "/pages/user/info"
+              url: "/pages/user/info",
+              animationType: "pop-in",
+              animationDuration: 200
             });
           }
+        });
+      },
+      to_orders() {
+        uni.navigateTo({
+          url: "/pages/orders/showOrders",
+          animationType: "pop-in",
+          animationDuration: 200
         });
       }
     }
   };
-  function _sfc_render$e(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$5);
-    const _component_uni_easyinput = resolveEasycom(vue.resolveDynamicComponent("uni-easyinput"), __easycom_0$4);
-    const _component_uni_forms_item = resolveEasycom(vue.resolveDynamicComponent("uni-forms-item"), __easycom_1$3);
-    const _component_uni_forms = resolveEasycom(vue.resolveDynamicComponent("uni-forms"), __easycom_2);
-    const _component_uni_list_item = resolveEasycom(vue.resolveDynamicComponent("uni-list-item"), __easycom_0$3);
-    const _component_uni_popup_dialog = resolveEasycom(vue.resolveDynamicComponent("uni-popup-dialog"), __easycom_4);
-    const _component_uni_popup = resolveEasycom(vue.resolveDynamicComponent("uni-popup"), __easycom_5);
+  function _sfc_render$H(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_1$1);
+    const _component_uni_easyinput = resolveEasycom(vue.resolveDynamicComponent("uni-easyinput"), __easycom_7$1);
+    const _component_uni_forms_item = resolveEasycom(vue.resolveDynamicComponent("uni-forms-item"), __easycom_5$1);
+    const _component_uni_forms = resolveEasycom(vue.resolveDynamicComponent("uni-forms"), __easycom_4$2);
+    const _component_uni_list_item = resolveEasycom(vue.resolveDynamicComponent("uni-list-item"), __easycom_2);
+    const _component_uni_popup_dialog = resolveEasycom(vue.resolveDynamicComponent("uni-popup-dialog"), __easycom_8$1);
+    const _component_uni_popup = resolveEasycom(vue.resolveDynamicComponent("uni-popup"), __easycom_9$1);
     return vue.openBlock(), vue.createElementBlock(
       vue.Fragment,
       null,
@@ -5431,20 +5877,14 @@ if (uni.restoreGlobal) {
               title: this.userData.userName,
               clickable: "",
               onClick: _cache[18] || (_cache[18] = ($event) => $options.to_info())
-            }, null, 8, ["extra-icon", "title"])
-          ]),
-          vue.createElementVNode("view", { class: "isLogin_2" }, [
+            }, null, 8, ["extra-icon", "title"]),
             vue.createVNode(_component_uni_list_item, {
               "show-extra-icon": true,
               showArrow: "",
               "extra-icon": $data.orderIcon,
-              title: "购票记录"
-            }, null, 8, ["extra-icon"]),
-            vue.createVNode(_component_uni_list_item, {
-              "show-extra-icon": true,
-              showArrow: "",
-              "extra-icon": $data.setIcon,
-              title: "设定"
+              title: "购票记录",
+              clickable: "",
+              onClick: _cache[19] || (_cache[19] = ($event) => $options.to_orders())
             }, null, 8, ["extra-icon"])
           ]),
           vue.createElementVNode("view", { class: "isLogin_3" }, [
@@ -5453,7 +5893,7 @@ if (uni.restoreGlobal) {
               "extra-icon": $data.logoutIcon,
               title: "登出",
               clickable: "",
-              onClick: _cache[19] || (_cache[19] = ($event) => $options.to_logout())
+              onClick: _cache[20] || (_cache[20] = ($event) => $options.to_logout())
             }, null, 8, ["extra-icon"])
           ])
         ])) : vue.createCommentVNode("v-if", true),
@@ -5488,10 +5928,10 @@ if (uni.restoreGlobal) {
       /* STABLE_FRAGMENT */
     );
   }
-  const PagesUserLogin = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["render", _sfc_render$e], ["__scopeId", "data-v-6163e5ce"], ["__file", "E:/Senior_2/cinema/vueDemo/pages/user/login.vue"]]);
+  const PagesUserLogin = /* @__PURE__ */ _export_sfc(_sfc_main$I, [["render", _sfc_render$H], ["__scopeId", "data-v-6163e5ce"], ["__file", "E:/Senior_2/cinema/vueDemo/pages/user/login.vue"]]);
   const pages = [
     {
-      path: "pages/index/index",
+      path: "pages/movieCinema/cinema",
       style: {
         navigationBarTitleText: ""
       }
@@ -5506,12 +5946,6 @@ if (uni.restoreGlobal) {
       path: "pages/user/info",
       style: {
         navigationBarTitleText: "个人信息"
-      }
-    },
-    {
-      path: "pages/movieCinema/cinema",
-      style: {
-        navigationBarTitleText: ""
       }
     },
     {
@@ -5539,16 +5973,124 @@ if (uni.restoreGlobal) {
       }
     },
     {
-      path: "pages/test",
+      path: "pages/movieCinema/detailInfo",
       style: {
-        navigationBarTitleText: "测试",
+        navigationBarTitleText: "详细信息"
+      }
+    },
+    {
+      path: "pages/schedule/byMovie",
+      style: {
+        navigationBarTitleText: ""
+      }
+    },
+    {
+      path: "pages/schedule/byMovieAndCinema",
+      style: {
+        navigationBarTitleText: ""
+      }
+    },
+    {
+      path: "pages/map/map",
+      style: {
+        navigationBarTitleText: "地图"
+      }
+    },
+    {
+      path: "pages/schedule/selectSeat",
+      style: {
+        navigationBarTitleText: "选择座位"
+      }
+    },
+    {
+      path: "pages/orders/showOrders",
+      style: {
+        navigationBarTitleText: "购票记录"
+      }
+    },
+    {
+      path: "pages/schedule/byCinema",
+      style: {
+        navigationBarTitleText: ""
+      }
+    },
+    {
+      path: "pages/schedule/byCinemaAndMovie",
+      style: {
+        navigationBarTitleText: ""
+      }
+    },
+    {
+      path: "pages/web/login",
+      style: {
+        navigationBarTitleText: "",
         navigationStyle: "custom"
       }
     },
     {
-      path: "pages/movieCinema/detailInfo",
+      path: "pages/web/movie/movieUpdate",
       style: {
-        navigationBarTitleText: "详细信息"
+        navigationBarTitleText: "查看电影信息"
+      }
+    },
+    {
+      path: "pages/web/movie/movieCreate",
+      style: {
+        navigationBarTitleText: "新增电影信息"
+      }
+    },
+    {
+      path: "pages/web/cinema/cinemaUpdate",
+      style: {
+        navigationBarTitleText: "查看影院信息"
+      }
+    },
+    {
+      path: "pages/web/cinema/cinemaCreate",
+      style: {
+        navigationBarTitleText: "新增影院信息"
+      }
+    },
+    {
+      path: "pages/web/house/houseUpdate",
+      style: {
+        navigationBarTitleText: "修改放映厅信息"
+      }
+    },
+    {
+      path: "pages/web/house/houseCreate",
+      style: {
+        navigationBarTitleText: "新增放映厅信息"
+      }
+    },
+    {
+      path: "pages/web/schedule/scheduleUpdate",
+      style: {
+        navigationBarTitleText: "查看场次信息"
+      }
+    },
+    {
+      path: "pages/web/schedule/scheduleCreate",
+      style: {
+        navigationBarTitleText: "新增场次信息"
+      }
+    },
+    {
+      path: "pages/web/movie/movieUUpdate",
+      style: {
+        navigationBarTitleText: "修改电影信息"
+      }
+    },
+    {
+      path: "pages/web/cinema/cinemaUUpdate",
+      style: {
+        navigationBarTitleText: "修改影院信息"
+      }
+    },
+    {
+      path: "pages/web/schedule/scheduleUUpdate",
+      style: {
+        navigationBarTitleText: "修改场次信息"
       }
     }
   ];
@@ -5561,12 +6103,6 @@ if (uni.restoreGlobal) {
     color: "#999999",
     selectedColor: "#ffffff",
     list: [
-      {
-        pagePath: "pages/index/index",
-        text: "首页",
-        iconPath: "static/ClarityHomeLine.png",
-        selectedIconPath: "static/ClarityHomeSolid.png"
-      },
       {
         pagePath: "pages/movieCinema/cinema",
         text: "电影",
@@ -5586,7 +6122,7 @@ if (uni.restoreGlobal) {
     globalStyle,
     tabBar
   };
-  function t(e2) {
+  function t$4(e2) {
     return e2 && e2.__esModule && Object.prototype.hasOwnProperty.call(e2, "default") ? e2.default : e2;
   }
   function n(e2, t2, n2) {
@@ -7590,7 +8126,7 @@ ${i3}
       });
     }
   }
-  const Zn = "token无效，跳转登录页面", es = "token过期，跳转登录页面", ts = { TOKEN_INVALID_TOKEN_EXPIRED: es, TOKEN_INVALID_INVALID_CLIENTID: Zn, TOKEN_INVALID: Zn, TOKEN_INVALID_WRONG_TOKEN: Zn, TOKEN_INVALID_ANONYMOUS_USER: Zn }, ns = { "uni-id-token-expired": es, "uni-id-check-token-failed": Zn, "uni-id-token-not-exist": Zn, "uni-id-check-device-feature-failed": Zn };
+  const Zn = "token无效，跳转登录页面", es$1 = "token过期，跳转登录页面", ts = { TOKEN_INVALID_TOKEN_EXPIRED: es$1, TOKEN_INVALID_INVALID_CLIENTID: Zn, TOKEN_INVALID: Zn, TOKEN_INVALID_WRONG_TOKEN: Zn, TOKEN_INVALID_ANONYMOUS_USER: Zn }, ns = { "uni-id-token-expired": es$1, "uni-id-check-token-failed": Zn, "uni-id-token-not-exist": Zn, "uni-id-check-device-feature-failed": Zn };
   function ss(e2, t2) {
     let n2 = "";
     return n2 = e2 ? `${e2}/${t2}` : t2, n2.replace(/^\//, "");
@@ -7865,7 +8401,7 @@ ${i3}
         }(t3), t3);
       };
     };
-  }), xs = t(Cs);
+  }), xs = t$4(Cs);
   const Os = "manual";
   function Es(e2) {
     return { props: { localdata: { type: Array, default: () => [] }, options: { type: [Object, Array], default: () => ({}) }, spaceInfo: { type: Object, default: () => ({}) }, collection: { type: [String, Array], default: "" }, action: { type: String, default: "" }, field: { type: String, default: "" }, orderby: { type: String, default: "" }, where: { type: [String, Object], default: "" }, pageData: { type: String, default: "add" }, pageCurrent: { type: Number, default: 1 }, pageSize: { type: Number, default: 20 }, getcount: { type: [Boolean, String], default: false }, gettree: { type: [Boolean, String], default: false }, gettreepath: { type: [Boolean, String], default: false }, startwith: { type: String, default: "" }, limitlevel: { type: Number, default: 10 }, groupby: { type: String, default: "" }, groupField: { type: String, default: "" }, distinct: { type: [Boolean, String], default: false }, foreignKey: { type: String, default: "" }, loadtime: { type: String, default: "auto" }, manual: { type: Boolean, default: false } }, data: () => ({ mixinDatacomLoading: false, mixinDatacomHasMore: false, mixinDatacomResData: [], mixinDatacomErrorMessage: "", mixinDatacomPage: {} }), created() {
@@ -8550,7 +9086,7 @@ ${i3}
     }
     return filedata;
   };
-  const _sfc_main$e = {
+  const _sfc_main$H = {
     name: "uploadImage",
     emits: ["uploadFiles", "choose", "delFile"],
     props: {
@@ -8697,7 +9233,7 @@ ${i3}
       }
     }
   };
-  function _sfc_render$d(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$G(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "uni-file-picker__container" }, [
       (vue.openBlock(true), vue.createElementBlock(
         vue.Fragment,
@@ -8790,8 +9326,8 @@ ${i3}
       )) : vue.createCommentVNode("v-if", true)
     ]);
   }
-  const uploadImage = /* @__PURE__ */ _export_sfc(_sfc_main$e, [["render", _sfc_render$d], ["__scopeId", "data-v-bdfc07e0"], ["__file", "E:/Senior_2/cinema/vueDemo/uni_modules/uni-file-picker/components/uni-file-picker/upload-image.vue"]]);
-  const _sfc_main$d = {
+  const uploadImage = /* @__PURE__ */ _export_sfc(_sfc_main$H, [["render", _sfc_render$G], ["__scopeId", "data-v-bdfc07e0"], ["__file", "E:/Senior_2/cinema/vueDemo/uni_modules/uni-file-picker/components/uni-file-picker/upload-image.vue"]]);
+  const _sfc_main$G = {
     name: "uploadFile",
     emits: ["uploadFiles", "choose", "delFile"],
     props: {
@@ -8927,7 +9463,7 @@ ${i3}
       }
     }
   };
-  function _sfc_render$c(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$F(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "uni-file-picker__files" }, [
       !$props.readonly ? (vue.openBlock(), vue.createElementBlock("view", {
         key: 0,
@@ -9009,8 +9545,8 @@ ${i3}
       )) : vue.createCommentVNode("v-if", true)
     ]);
   }
-  const uploadFile = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["render", _sfc_render$c], ["__scopeId", "data-v-a54939c6"], ["__file", "E:/Senior_2/cinema/vueDemo/uni_modules/uni-file-picker/components/uni-file-picker/upload-file.vue"]]);
-  const _sfc_main$c = {
+  const uploadFile = /* @__PURE__ */ _export_sfc(_sfc_main$G, [["render", _sfc_render$F], ["__scopeId", "data-v-a54939c6"], ["__file", "E:/Senior_2/cinema/vueDemo/uni_modules/uni-file-picker/components/uni-file-picker/upload-file.vue"]]);
+  const _sfc_main$F = {
     name: "uniFilePicker",
     components: {
       uploadImage,
@@ -9492,7 +10028,7 @@ ${i3}
       }
     }
   };
-  function _sfc_render$b(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$E(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_upload_image = vue.resolveComponent("upload-image");
     const _component_upload_file = vue.resolveComponent("upload-file");
     return vue.openBlock(), vue.createElementBlock("view", { class: "uni-file-picker" }, [
@@ -9562,8 +10098,8 @@ ${i3}
       }, 8, ["readonly", "list-styles", "files-list", "showType", "delIcon", "onUploadFiles", "onChoose", "onDelFile"])) : vue.createCommentVNode("v-if", true)
     ]);
   }
-  const __easycom_0$1 = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["render", _sfc_render$b], ["__scopeId", "data-v-6223573f"], ["__file", "E:/Senior_2/cinema/vueDemo/uni_modules/uni-file-picker/components/uni-file-picker/uni-file-picker.vue"]]);
-  const _sfc_main$b = {
+  const __easycom_0$2 = /* @__PURE__ */ _export_sfc(_sfc_main$F, [["render", _sfc_render$E], ["__scopeId", "data-v-6223573f"], ["__file", "E:/Senior_2/cinema/vueDemo/uni_modules/uni-file-picker/components/uni-file-picker/uni-file-picker.vue"]]);
+  const _sfc_main$E = {
     data() {
       return {
         userData: {
@@ -9690,24 +10226,30 @@ ${i3}
       },
       to_updateName() {
         uni.navigateTo({
-          url: "/pages/user/updateName"
+          url: "/pages/user/updateName",
+          animationType: "pop-in",
+          animationDuration: 200
         });
       },
       to_updatePhone() {
         uni.navigateTo({
-          url: "/pages/user/updatePhone"
+          url: "/pages/user/updatePhone",
+          animationType: "pop-in",
+          animationDuration: 200
         });
       },
       to_updateProfile() {
         uni.navigateTo({
-          url: "/pages/user/updateProfile"
+          url: "/pages/user/updateProfile",
+          animationType: "pop-in",
+          animationDuration: 200
         });
       }
     }
   };
-  function _sfc_render$a(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_uni_file_picker = resolveEasycom(vue.resolveDynamicComponent("uni-file-picker"), __easycom_0$1);
-    const _component_uni_list_item = resolveEasycom(vue.resolveDynamicComponent("uni-list-item"), __easycom_0$3);
+  function _sfc_render$D(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_file_picker = resolveEasycom(vue.resolveDynamicComponent("uni-file-picker"), __easycom_0$2);
+    const _component_uni_list_item = resolveEasycom(vue.resolveDynamicComponent("uni-list-item"), __easycom_2);
     return vue.openBlock(), vue.createElementBlock("view", { class: "info" }, [
       vue.createElementVNode("view", { class: "image_box" }, [
         this.userData.userUrl ? (vue.openBlock(), vue.createBlock(_component_uni_file_picker, {
@@ -9773,462 +10315,8 @@ ${i3}
       ])
     ]);
   }
-  const PagesUserInfo = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["render", _sfc_render$a], ["__scopeId", "data-v-aab93774"], ["__file", "E:/Senior_2/cinema/vueDemo/pages/user/info.vue"]]);
-  const _sfc_main$a = {
-    name: "UniSegmentedControl",
-    emits: ["clickItem"],
-    props: {
-      current: {
-        type: Number,
-        default: 0
-      },
-      values: {
-        type: Array,
-        default() {
-          return [];
-        }
-      },
-      activeColor: {
-        type: String,
-        default: "#2979FF"
-      },
-      styleType: {
-        type: String,
-        default: "button"
-      }
-    },
-    data() {
-      return {
-        currentIndex: 0
-      };
-    },
-    watch: {
-      current(val) {
-        if (val !== this.currentIndex) {
-          this.currentIndex = val;
-        }
-      }
-    },
-    created() {
-      this.currentIndex = this.current;
-    },
-    methods: {
-      _onClick(index) {
-        if (this.currentIndex !== index) {
-          this.currentIndex = index;
-          this.$emit("clickItem", {
-            currentIndex: index
-          });
-        }
-      }
-    }
-  };
-  function _sfc_render$9(_ctx, _cache, $props, $setup, $data, $options) {
-    return vue.openBlock(), vue.createElementBlock(
-      "view",
-      {
-        class: vue.normalizeClass([[$props.styleType === "text" ? "segmented-control--text" : "segmented-control--button"], "segmented-control"]),
-        style: vue.normalizeStyle({ borderColor: $props.styleType === "text" ? "" : $props.activeColor })
-      },
-      [
-        (vue.openBlock(true), vue.createElementBlock(
-          vue.Fragment,
-          null,
-          vue.renderList($props.values, (item, index) => {
-            return vue.openBlock(), vue.createElementBlock("view", {
-              class: vue.normalizeClass([[
-                $props.styleType === "text" ? "" : "segmented-control__item--button",
-                index === $data.currentIndex && $props.styleType === "button" ? "segmented-control__item--button--active" : "",
-                index === 0 && $props.styleType === "button" ? "segmented-control__item--button--first" : "",
-                index === $props.values.length - 1 && $props.styleType === "button" ? "segmented-control__item--button--last" : ""
-              ], "segmented-control__item"]),
-              key: index,
-              style: vue.normalizeStyle({ backgroundColor: index === $data.currentIndex && $props.styleType === "button" ? $props.activeColor : "", borderColor: index === $data.currentIndex && ($props.styleType === "text" || $props.styleType === "button") ? $props.activeColor : "#d9d9d9" }),
-              onClick: ($event) => $options._onClick(index)
-            }, [
-              vue.createElementVNode("view", null, [
-                vue.createElementVNode(
-                  "text",
-                  {
-                    style: vue.normalizeStyle({ color: index === $data.currentIndex ? $props.styleType === "text" ? $props.activeColor : "#fff" : $props.styleType === "text" ? "#999999" : $props.activeColor }),
-                    class: vue.normalizeClass(["segmented-control__text", $props.styleType === "text" && index === $data.currentIndex ? "segmented-control__item--text" : ""])
-                  },
-                  vue.toDisplayString(item),
-                  7
-                  /* TEXT, CLASS, STYLE */
-                )
-              ])
-            ], 14, ["onClick"]);
-          }),
-          128
-          /* KEYED_FRAGMENT */
-        ))
-      ],
-      6
-      /* CLASS, STYLE */
-    );
-  }
-  const __easycom_0 = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["render", _sfc_render$9], ["__scopeId", "data-v-86aa1171"], ["__file", "E:/Senior_2/cinema/vueDemo/uni_modules/uni-segmented-control/components/uni-segmented-control/uni-segmented-control.vue"]]);
-  const _sfc_main$9 = {
-    name: "uniList",
-    "mp-weixin": {
-      options: {
-        multipleSlots: false
-      }
-    },
-    props: {
-      stackFromEnd: {
-        type: Boolean,
-        default: false
-      },
-      enableBackToTop: {
-        type: [Boolean, String],
-        default: false
-      },
-      scrollY: {
-        type: [Boolean, String],
-        default: false
-      },
-      border: {
-        type: Boolean,
-        default: true
-      },
-      renderReverse: {
-        type: Boolean,
-        default: false
-      }
-    },
-    // provide() {
-    // 	return {
-    // 		list: this
-    // 	};
-    // },
-    created() {
-      this.firstChildAppend = false;
-    },
-    methods: {
-      loadMore(e2) {
-        this.$emit("scrolltolower");
-      },
-      scroll(e2) {
-        this.$emit("scroll", e2);
-      }
-    }
-  };
-  function _sfc_render$8(_ctx, _cache, $props, $setup, $data, $options) {
-    return vue.openBlock(), vue.createElementBlock("view", { class: "uni-list uni-border-top-bottom" }, [
-      $props.border ? (vue.openBlock(), vue.createElementBlock("view", {
-        key: 0,
-        class: "uni-list--border-top"
-      })) : vue.createCommentVNode("v-if", true),
-      vue.renderSlot(_ctx.$slots, "default", {}, void 0, true),
-      $props.border ? (vue.openBlock(), vue.createElementBlock("view", {
-        key: 1,
-        class: "uni-list--border-bottom"
-      })) : vue.createCommentVNode("v-if", true)
-    ]);
-  }
-  const __easycom_1$1 = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["render", _sfc_render$8], ["__scopeId", "data-v-c2f1266a"], ["__file", "E:/Senior_2/cinema/vueDemo/uni_modules/uni-list/components/uni-list/uni-list.vue"]]);
-  const _sfc_main$8 = {
-    data() {
-      return {
-        isCinema: false,
-        movieData: [],
-        movieData_not: [],
-        items: ["正在上映", "待映"],
-        movieType: "",
-        current: 0,
-        cinemaData: [],
-        cinemaAfter: [{
-          cinemaAddress: "",
-          cinemaId: "",
-          cinemaName: "",
-          cinemaPassword: "",
-          cinemaPhone: "",
-          cinemaX: "",
-          cinemaY: "",
-          cinemaDistance: ""
-        }],
-        cinemaLocation: {
-          longitude: "",
-          latitude: ""
-        }
-      };
-    },
-    onShow: function(option) {
-      uni.request({
-        url: "/api/movie/infoMovieByState?movieState=1",
-        method: "GET",
-        dataType: "json",
-        success: (res) => {
-          this.movieData = res.data;
-          this.movieData.data.reverse();
-          formatAppLog("log", "at pages/movieCinema/cinema.vue:112", "电影页面", this.movieData.data);
-        }
-      });
-      uni.request({
-        url: "/api/movie/infoMovieByState?movieState=0",
-        method: "GET",
-        dataType: "json",
-        success: (res) => {
-          this.movieData_not = res.data;
-        }
-      });
-      uni.getLocation({
-        success: (res) => {
-          formatAppLog("log", "at pages/movieCinema/cinema.vue:128", "当前位置的经度：", res.longitude);
-          formatAppLog("log", "at pages/movieCinema/cinema.vue:129", "当前位置的纬度：", res.latitude);
-          this.cinemaLocation.longitude = res.longitude;
-          this.cinemaLocation.latitude = res.latitude;
-          formatAppLog("log", "at pages/movieCinema/cinema.vue:132", "标记", this.cinemaLocation);
-          uni.request({
-            url: "/api/cinema/infoAllCinema",
-            method: "GET",
-            dataType: "json",
-            success: (res2) => {
-              formatAppLog("log", "at pages/movieCinema/cinema.vue:139", res2.data);
-              this.cinemaData = res2.data.data;
-              formatAppLog("log", "at pages/movieCinema/cinema.vue:141", "电影院列表", this.cinemaData);
-              for (let i2 = 0; i2 < this.cinemaData.length; i2++) {
-                let distance = this.getDistance(this.cinemaLocation, this.cinemaData[i2].cinemaX, this.cinemaData[i2].cinemaY);
-                this.cinemaAfter[i2] = this.cinemaData[i2];
-                this.cinemaAfter[i2].cinemaDistance = distance;
-              }
-              this.cinemaAfter.sort((a2, b2) => a2.cinemaDistance - b2.cinemaDistance);
-              formatAppLog("log", "at pages/movieCinema/cinema.vue:151", "cinemaAfter sorted", this.cinemaAfter);
-            }
-          });
-        }
-      });
-    },
-    methods: {
-      to_movie_info(ref) {
-        let movie = {
-          "movieId": ref
-        };
-        uni.request({
-          url: "/api/movie/infoMovieById",
-          method: "GET",
-          dataType: "json",
-          data: movie,
-          success: (res) => {
-            this.movieType = "";
-            formatAppLog("log", "at pages/movieCinema/cinema.vue:174", "调用成功", res.data.data.movie);
-            uni.setStorageSync("movieNameCn", res.data.data.movie.movieNameCn);
-            uni.setStorageSync("movieNameEn", res.data.data.movie.movieNameEn);
-            uni.setStorageSync("movieDirector", res.data.data.movie.movieDirector);
-            uni.setStorageSync("movieReleaseDate", res.data.data.movie.movieReleaseDate);
-            uni.setStorageSync("movieDuration", res.data.data.movie.movieDuration);
-            uni.setStorageSync("movieUrl", res.data.data.movie.movieUrl);
-            uni.setStorageSync("movieDescription", res.data.data.movie.movieDescription);
-            uni.setStorageSync("movieCountry", res.data.data.movie.movieCountry);
-            for (let i2 = 0; i2 < res.data.data.type.length; i2++) {
-              this.movieType = this.movieType + " " + res.data.data.type[i2].genreName;
-            }
-            formatAppLog("log", "at pages/movieCinema/cinema.vue:188", "总类型", this.movieType);
-            uni.setStorageSync("movieType", this.movieType);
-            uni.navigateTo({
-              url: "/pages/movieCinema/movieInfo?movieId=" + ref
-            });
-          }
-        });
-      },
-      onClickItem(e2) {
-        if (this.current != e2.currentIndex) {
-          this.current = e2.currentIndex;
-        }
-      },
-      getDistance(cinemaLocation, c_x, c_y) {
-        const earthRadius = 6378137;
-        const radLat1 = cinemaLocation.latitude * Math.PI / 180;
-        const radLat2 = c_y * Math.PI / 180;
-        const a2 = radLat1 - radLat2;
-        const b2 = cinemaLocation.longitude * Math.PI / 180 - c_x * Math.PI / 180;
-        const s2 = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a2 / 2), 2) + Math.cos(radLat1) * Math.cos(radLat2) * Math.pow(Math.sin(b2 / 2), 2)));
-        return (s2 * earthRadius / 1e3).toFixed(1);
-      }
-    }
-  };
-  function _sfc_render$7(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_uni_segmented_control = resolveEasycom(vue.resolveDynamicComponent("uni-segmented-control"), __easycom_0);
-    const _component_uni_list_item = resolveEasycom(vue.resolveDynamicComponent("uni-list-item"), __easycom_0$3);
-    const _component_uni_list = resolveEasycom(vue.resolveDynamicComponent("uni-list"), __easycom_1$1);
-    return vue.openBlock(), vue.createElementBlock("view", { class: "cinema_main" }, [
-      vue.createElementVNode("view", { class: "movie_or_cinema" }, [
-        !$data.isCinema ? (vue.openBlock(), vue.createElementBlock("text", {
-          key: 0,
-          class: "movie_text_true",
-          onClick: _cache[0] || (_cache[0] = ($event) => $data.isCinema = true)
-        }, "电影 | ")) : vue.createCommentVNode("v-if", true),
-        $data.isCinema ? (vue.openBlock(), vue.createElementBlock("text", {
-          key: 1,
-          class: "movie_text_false",
-          onClick: _cache[1] || (_cache[1] = ($event) => $data.isCinema = false)
-        }, "电影")) : vue.createCommentVNode("v-if", true),
-        !$data.isCinema ? (vue.openBlock(), vue.createElementBlock("text", {
-          key: 2,
-          class: "cinema_text_false",
-          onClick: _cache[2] || (_cache[2] = ($event) => $data.isCinema = true)
-        }, "影院")) : vue.createCommentVNode("v-if", true),
-        $data.isCinema ? (vue.openBlock(), vue.createElementBlock("text", {
-          key: 3,
-          class: "cinema_text_true",
-          onClick: _cache[3] || (_cache[3] = ($event) => $data.isCinema = false)
-        }, " | 影院")) : vue.createCommentVNode("v-if", true)
-      ]),
-      !$data.isCinema ? (vue.openBlock(), vue.createElementBlock("view", {
-        key: 0,
-        class: "release_or_not"
-      }, [
-        vue.createElementVNode("view", { class: "uni-padding-wrap uni-common-mt" }, [
-          vue.createVNode(_component_uni_segmented_control, {
-            current: $data.current,
-            values: $data.items,
-            "style-type": "text",
-            "active-color": "#f9da49",
-            onClickItem: $options.onClickItem
-          }, null, 8, ["current", "values", "onClickItem"])
-        ])
-      ])) : vue.createCommentVNode("v-if", true),
-      !$data.isCinema ? (vue.openBlock(true), vue.createElementBlock(
-        vue.Fragment,
-        { key: 1 },
-        vue.renderList(this.movieData.data, (item, index) => {
-          return vue.withDirectives((vue.openBlock(), vue.createElementBlock("view", {
-            class: "movie_info",
-            key: index
-          }, [
-            vue.createVNode(
-              _component_uni_list,
-              null,
-              {
-                default: vue.withCtx(() => [
-                  vue.createVNode(_component_uni_list_item, {
-                    title: this.movieData.data[index].movieNameCn,
-                    ellipsis: "1",
-                    note: this.movieData.data[index].movieNameEn + "\n导演：" + this.movieData.data[index].movieDirector + "\n上映日期：" + this.movieData.data[index].movieReleaseDate + "\n时长：" + this.movieData.data[index].movieDuration + " min",
-                    thumb: this.movieData.data[index].movieUrl,
-                    "thumb-size": "lg",
-                    clickable: "",
-                    onClick: ($event) => $options.to_movie_info(this.movieData.data[index].movieId)
-                  }, {
-                    footer: vue.withCtx(() => [
-                      vue.createElementVNode("button", {
-                        class: "buy_button",
-                        "hover-class": "is_buy_hover",
-                        size: "mini"
-                      }, "购票")
-                    ]),
-                    _: 2
-                    /* DYNAMIC */
-                  }, 1032, ["title", "note", "thumb", "onClick"])
-                ]),
-                _: 2
-                /* DYNAMIC */
-              },
-              1024
-              /* DYNAMIC_SLOTS */
-            )
-          ])), [
-            [vue.vShow, $data.current === 0]
-          ]);
-        }),
-        128
-        /* KEYED_FRAGMENT */
-      )) : vue.createCommentVNode("v-if", true),
-      !$data.isCinema ? (vue.openBlock(true), vue.createElementBlock(
-        vue.Fragment,
-        { key: 2 },
-        vue.renderList(this.movieData_not.data, (item, index) => {
-          return vue.withDirectives((vue.openBlock(), vue.createElementBlock("view", {
-            class: "movie_info",
-            key: index
-          }, [
-            vue.createVNode(
-              _component_uni_list,
-              null,
-              {
-                default: vue.withCtx(() => [
-                  vue.createVNode(_component_uni_list_item, {
-                    title: this.movieData_not.data[index].movieNameCn,
-                    ellipsis: "1",
-                    note: this.movieData_not.data[index].movieNameEn + "\n导演：" + this.movieData_not.data[index].movieDirector + "\n上映日期：" + this.movieData_not.data[index].movieReleaseDate + "\n时长：" + this.movieData_not.data[index].movieDuration + " min",
-                    thumb: this.movieData_not.data[index].movieUrl,
-                    "thumb-size": "lg",
-                    clickable: "",
-                    onClick: ($event) => $options.to_movie_info(this.movieData_not.data[index].movieId)
-                  }, {
-                    footer: vue.withCtx(() => [
-                      vue.createElementVNode("button", {
-                        class: "buy_button",
-                        "hover-class": "is_buy_hover",
-                        size: "mini"
-                      }, "购票")
-                    ]),
-                    _: 2
-                    /* DYNAMIC */
-                  }, 1032, ["title", "note", "thumb", "onClick"])
-                ]),
-                _: 2
-                /* DYNAMIC */
-              },
-              1024
-              /* DYNAMIC_SLOTS */
-            )
-          ])), [
-            [vue.vShow, $data.current === 1]
-          ]);
-        }),
-        128
-        /* KEYED_FRAGMENT */
-      )) : vue.createCommentVNode("v-if", true),
-      $data.isCinema ? (vue.openBlock(true), vue.createElementBlock(
-        vue.Fragment,
-        { key: 3 },
-        vue.renderList(this.cinemaAfter, (item, index) => {
-          return vue.openBlock(), vue.createElementBlock("view", {
-            class: "cinema_info",
-            key: index
-          }, [
-            vue.createVNode(
-              _component_uni_list,
-              null,
-              {
-                default: vue.withCtx(() => [
-                  this.cinemaAfter[index].cinemaDistance <= 0.1 ? (vue.openBlock(), vue.createBlock(_component_uni_list_item, {
-                    key: 0,
-                    title: this.cinemaAfter[index].cinemaName,
-                    ellipsis: "2",
-                    note: this.cinemaAfter[index].cinemaAddress,
-                    clickable: "",
-                    onClick: ($event) => _ctx.to_cinema_info(this.cinemaAfter[index].cinemaId),
-                    "right-text": "< 0.1 km"
-                  }, null, 8, ["title", "note", "onClick"])) : vue.createCommentVNode("v-if", true),
-                  this.cinemaAfter[index].cinemaDistance > 0.1 ? (vue.openBlock(), vue.createBlock(_component_uni_list_item, {
-                    key: 1,
-                    title: this.cinemaAfter[index].cinemaName,
-                    ellipsis: "2",
-                    note: this.cinemaAfter[index].cinemaAddress,
-                    clickable: "",
-                    onClick: ($event) => _ctx.to_cinema_info(this.cinemaAfter[index].cinemaId),
-                    "right-text": this.cinemaAfter[index].cinemaDistance + " km"
-                  }, null, 8, ["title", "note", "onClick", "right-text"])) : vue.createCommentVNode("v-if", true)
-                ]),
-                _: 2
-                /* DYNAMIC */
-              },
-              1024
-              /* DYNAMIC_SLOTS */
-            )
-          ]);
-        }),
-        128
-        /* KEYED_FRAGMENT */
-      )) : vue.createCommentVNode("v-if", true)
-    ]);
-  }
-  const PagesMovieCinemaCinema = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["render", _sfc_render$7], ["__scopeId", "data-v-8ee17c02"], ["__file", "E:/Senior_2/cinema/vueDemo/pages/movieCinema/cinema.vue"]]);
-  const _sfc_main$7 = {
+  const PagesUserInfo = /* @__PURE__ */ _export_sfc(_sfc_main$E, [["render", _sfc_render$D], ["__scopeId", "data-v-aab93774"], ["__file", "E:/Senior_2/cinema/vueDemo/pages/user/info.vue"]]);
+  const _sfc_main$D = {
     data() {
       return {
         userData: {
@@ -10309,13 +10397,13 @@ ${i3}
       }
     }
   };
-  function _sfc_render$6(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_uni_easyinput = resolveEasycom(vue.resolveDynamicComponent("uni-easyinput"), __easycom_0$4);
-    const _component_uni_forms_item = resolveEasycom(vue.resolveDynamicComponent("uni-forms-item"), __easycom_1$3);
-    const _component_uni_forms = resolveEasycom(vue.resolveDynamicComponent("uni-forms"), __easycom_2);
-    const _component_uni_list_item = resolveEasycom(vue.resolveDynamicComponent("uni-list-item"), __easycom_0$3);
-    const _component_uni_popup_dialog = resolveEasycom(vue.resolveDynamicComponent("uni-popup-dialog"), __easycom_4);
-    const _component_uni_popup = resolveEasycom(vue.resolveDynamicComponent("uni-popup"), __easycom_5);
+  function _sfc_render$C(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_easyinput = resolveEasycom(vue.resolveDynamicComponent("uni-easyinput"), __easycom_7$1);
+    const _component_uni_forms_item = resolveEasycom(vue.resolveDynamicComponent("uni-forms-item"), __easycom_5$1);
+    const _component_uni_forms = resolveEasycom(vue.resolveDynamicComponent("uni-forms"), __easycom_4$2);
+    const _component_uni_list_item = resolveEasycom(vue.resolveDynamicComponent("uni-list-item"), __easycom_2);
+    const _component_uni_popup_dialog = resolveEasycom(vue.resolveDynamicComponent("uni-popup-dialog"), __easycom_8$1);
+    const _component_uni_popup = resolveEasycom(vue.resolveDynamicComponent("uni-popup"), __easycom_9$1);
     return vue.openBlock(), vue.createElementBlock(
       vue.Fragment,
       null,
@@ -10387,8 +10475,8 @@ ${i3}
       /* STABLE_FRAGMENT */
     );
   }
-  const PagesUserUpdateName = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["render", _sfc_render$6], ["__scopeId", "data-v-362a8447"], ["__file", "E:/Senior_2/cinema/vueDemo/pages/user/updateName.vue"]]);
-  const _sfc_main$6 = {
+  const PagesUserUpdateName = /* @__PURE__ */ _export_sfc(_sfc_main$D, [["render", _sfc_render$C], ["__scopeId", "data-v-362a8447"], ["__file", "E:/Senior_2/cinema/vueDemo/pages/user/updateName.vue"]]);
+  const _sfc_main$C = {
     data() {
       return {
         userData: {
@@ -10469,13 +10557,13 @@ ${i3}
       }
     }
   };
-  function _sfc_render$5(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_uni_easyinput = resolveEasycom(vue.resolveDynamicComponent("uni-easyinput"), __easycom_0$4);
-    const _component_uni_forms_item = resolveEasycom(vue.resolveDynamicComponent("uni-forms-item"), __easycom_1$3);
-    const _component_uni_forms = resolveEasycom(vue.resolveDynamicComponent("uni-forms"), __easycom_2);
-    const _component_uni_list_item = resolveEasycom(vue.resolveDynamicComponent("uni-list-item"), __easycom_0$3);
-    const _component_uni_popup_dialog = resolveEasycom(vue.resolveDynamicComponent("uni-popup-dialog"), __easycom_4);
-    const _component_uni_popup = resolveEasycom(vue.resolveDynamicComponent("uni-popup"), __easycom_5);
+  function _sfc_render$B(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_easyinput = resolveEasycom(vue.resolveDynamicComponent("uni-easyinput"), __easycom_7$1);
+    const _component_uni_forms_item = resolveEasycom(vue.resolveDynamicComponent("uni-forms-item"), __easycom_5$1);
+    const _component_uni_forms = resolveEasycom(vue.resolveDynamicComponent("uni-forms"), __easycom_4$2);
+    const _component_uni_list_item = resolveEasycom(vue.resolveDynamicComponent("uni-list-item"), __easycom_2);
+    const _component_uni_popup_dialog = resolveEasycom(vue.resolveDynamicComponent("uni-popup-dialog"), __easycom_8$1);
+    const _component_uni_popup = resolveEasycom(vue.resolveDynamicComponent("uni-popup"), __easycom_9$1);
     return vue.openBlock(), vue.createElementBlock(
       vue.Fragment,
       null,
@@ -10547,8 +10635,8 @@ ${i3}
       /* STABLE_FRAGMENT */
     );
   }
-  const PagesUserUpdatePhone = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["render", _sfc_render$5], ["__scopeId", "data-v-35be5ac9"], ["__file", "E:/Senior_2/cinema/vueDemo/pages/user/updatePhone.vue"]]);
-  const _sfc_main$5 = {
+  const PagesUserUpdatePhone = /* @__PURE__ */ _export_sfc(_sfc_main$C, [["render", _sfc_render$B], ["__scopeId", "data-v-35be5ac9"], ["__file", "E:/Senior_2/cinema/vueDemo/pages/user/updatePhone.vue"]]);
+  const _sfc_main$B = {
     data() {
       return {
         userData: {
@@ -10629,13 +10717,13 @@ ${i3}
       }
     }
   };
-  function _sfc_render$4(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_uni_easyinput = resolveEasycom(vue.resolveDynamicComponent("uni-easyinput"), __easycom_0$4);
-    const _component_uni_forms_item = resolveEasycom(vue.resolveDynamicComponent("uni-forms-item"), __easycom_1$3);
-    const _component_uni_forms = resolveEasycom(vue.resolveDynamicComponent("uni-forms"), __easycom_2);
-    const _component_uni_list_item = resolveEasycom(vue.resolveDynamicComponent("uni-list-item"), __easycom_0$3);
-    const _component_uni_popup_dialog = resolveEasycom(vue.resolveDynamicComponent("uni-popup-dialog"), __easycom_4);
-    const _component_uni_popup = resolveEasycom(vue.resolveDynamicComponent("uni-popup"), __easycom_5);
+  function _sfc_render$A(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_easyinput = resolveEasycom(vue.resolveDynamicComponent("uni-easyinput"), __easycom_7$1);
+    const _component_uni_forms_item = resolveEasycom(vue.resolveDynamicComponent("uni-forms-item"), __easycom_5$1);
+    const _component_uni_forms = resolveEasycom(vue.resolveDynamicComponent("uni-forms"), __easycom_4$2);
+    const _component_uni_list_item = resolveEasycom(vue.resolveDynamicComponent("uni-list-item"), __easycom_2);
+    const _component_uni_popup_dialog = resolveEasycom(vue.resolveDynamicComponent("uni-popup-dialog"), __easycom_8$1);
+    const _component_uni_popup = resolveEasycom(vue.resolveDynamicComponent("uni-popup"), __easycom_9$1);
     return vue.openBlock(), vue.createElementBlock(
       vue.Fragment,
       null,
@@ -10708,8 +10796,8 @@ ${i3}
       /* STABLE_FRAGMENT */
     );
   }
-  const PagesUserUpdateProfile = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["render", _sfc_render$4], ["__scopeId", "data-v-7d6aa6f1"], ["__file", "E:/Senior_2/cinema/vueDemo/pages/user/updateProfile.vue"]]);
-  const _sfc_main$4 = {
+  const PagesUserUpdateProfile = /* @__PURE__ */ _export_sfc(_sfc_main$B, [["render", _sfc_render$A], ["__scopeId", "data-v-7d6aa6f1"], ["__file", "E:/Senior_2/cinema/vueDemo/pages/user/updateProfile.vue"]]);
+  const _sfc_main$A = {
     name: "UniCard",
     emits: ["click"],
     props: {
@@ -10770,7 +10858,7 @@ ${i3}
       }
     }
   };
-  function _sfc_render$3(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$z(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock(
       "view",
       {
@@ -10873,8 +10961,8 @@ ${i3}
       /* CLASS, STYLE */
     );
   }
-  const __easycom_1 = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["render", _sfc_render$3], ["__scopeId", "data-v-ae4bee67"], ["__file", "E:/Senior_2/cinema/vueDemo/uni_modules/uni-card/components/uni-card/uni-card.vue"]]);
-  const _sfc_main$3 = {
+  const __easycom_0$1 = /* @__PURE__ */ _export_sfc(_sfc_main$A, [["render", _sfc_render$z], ["__scopeId", "data-v-ae4bee67"], ["__file", "E:/Senior_2/cinema/vueDemo/uni_modules/uni-card/components/uni-card/uni-card.vue"]]);
+  const _sfc_main$z = {
     data() {
       return {
         movieData: {
@@ -10931,6 +11019,7 @@ ${i3}
     },
     onBackPress: function(option) {
       formatAppLog("log", "at pages/movieCinema/movieInfo.vue:90", "退出");
+      uni.removeStorageSync("movieId");
       uni.removeStorageSync("movieNameCn");
       uni.removeStorageSync("movieNameEn");
       uni.removeStorageSync("movieDirector");
@@ -10941,22 +11030,31 @@ ${i3}
       uni.removeStorageSync("movieCountry");
       uni.removeStorageSync("movieType");
       const res = uni.getStorageInfoSync();
-      formatAppLog("log", "at pages/movieCinema/movieInfo.vue:102", res.keys);
-      formatAppLog("log", "at pages/movieCinema/movieInfo.vue:103", res.currentSize);
-      formatAppLog("log", "at pages/movieCinema/movieInfo.vue:104", res.limitSize);
-      formatAppLog("log", "at pages/movieCinema/movieInfo.vue:105", "type", uni.getStorageSync("movieType"));
+      formatAppLog("log", "at pages/movieCinema/movieInfo.vue:103", res.keys);
+      formatAppLog("log", "at pages/movieCinema/movieInfo.vue:104", res.currentSize);
+      formatAppLog("log", "at pages/movieCinema/movieInfo.vue:105", res.limitSize);
+      formatAppLog("log", "at pages/movieCinema/movieInfo.vue:106", "type", uni.getStorageSync("movieType"));
     },
     methods: {
       to_movie_detail() {
         uni.navigateTo({
-          url: "/pages/movieCinema/detailInfo"
+          url: "/pages/movieCinema/detailInfo",
+          animationType: "pop-in",
+          animationDuration: 200
+        });
+      },
+      scheduleBymovie() {
+        uni.navigateTo({
+          url: "/pages/schedule/byMovie",
+          animationType: "pop-in",
+          animationDuration: 200
         });
       }
     }
   };
-  function _sfc_render$2(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_uni_list_item = resolveEasycom(vue.resolveDynamicComponent("uni-list-item"), __easycom_0$3);
-    const _component_uni_card = resolveEasycom(vue.resolveDynamicComponent("uni-card"), __easycom_1);
+  function _sfc_render$y(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_list_item = resolveEasycom(vue.resolveDynamicComponent("uni-list-item"), __easycom_2);
+    const _component_uni_card = resolveEasycom(vue.resolveDynamicComponent("uni-card"), __easycom_0$1);
     return vue.openBlock(), vue.createElementBlock("view", { class: "movieInfo" }, [
       $data.movieData ? (vue.openBlock(), vue.createBlock(_component_uni_list_item, {
         key: 0,
@@ -10985,61 +11083,13 @@ ${i3}
       vue.createElementVNode("button", { class: "true_button_bottom" }, "bottom"),
       vue.createElementVNode("button", {
         class: "true_button",
-        "hover-class": "is_hover"
+        "hover-class": "is_hover",
+        onClick: _cache[1] || (_cache[1] = ($event) => $options.scheduleBymovie())
       }, "电影场次")
     ]);
   }
-  const PagesMovieCinemaMovieInfo = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$2], ["__scopeId", "data-v-00b47dbf"], ["__file", "E:/Senior_2/cinema/vueDemo/pages/movieCinema/movieInfo.vue"]]);
-  const _sfc_main$2 = {
-    data() {
-      return {
-        title: "map",
-        latitude: 29.606335,
-        longitude: 106.293298,
-        covers: [
-          {
-            latitude: 29.606335,
-            longitude: 106.293298,
-            iconPath: "../../../static/Location.png"
-          },
-          {
-            latitude: "",
-            longitude: "",
-            iconPath: "../../../static/LocationPerson.png"
-          }
-        ]
-      };
-    },
-    onLoad: function(option) {
-      uni.getLocation({
-        success: (res) => {
-          formatAppLog("log", "at pages/test.vue:38", "当前位置的经度：", res.longitude);
-          formatAppLog("log", "at pages/test.vue:39", "当前位置的纬度：", res.latitude);
-          this.covers[1].longitude = res.longitude;
-          this.covers[1].latitude = res.latitude;
-          formatAppLog("log", "at pages/test.vue:42", "标记", this.covers);
-        }
-      });
-    },
-    methods: {}
-  };
-  function _sfc_render$1(_ctx, _cache, $props, $setup, $data, $options) {
-    return vue.openBlock(), vue.createElementBlock("view", null, [
-      vue.createElementVNode("view", { class: "page-body" }, [
-        vue.createElementVNode("view", { class: "page-section page-section-gap" }, [
-          vue.createElementVNode("map", {
-            class: "cinema_map",
-            style: { "width": "100%" },
-            latitude: $data.latitude,
-            longitude: $data.longitude,
-            markers: $data.covers
-          }, null, 8, ["latitude", "longitude", "markers"])
-        ])
-      ])
-    ]);
-  }
-  const PagesTest = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1], ["__scopeId", "data-v-2bebd757"], ["__file", "E:/Senior_2/cinema/vueDemo/pages/test.vue"]]);
-  const _sfc_main$1 = {
+  const PagesMovieCinemaMovieInfo = /* @__PURE__ */ _export_sfc(_sfc_main$z, [["render", _sfc_render$y], ["__scopeId", "data-v-00b47dbf"], ["__file", "E:/Senior_2/cinema/vueDemo/pages/movieCinema/movieInfo.vue"]]);
+  const _sfc_main$y = {
     data() {
       return {
         movie: {
@@ -11072,9 +11122,9 @@ ${i3}
     },
     methods: {}
   };
-  function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_uni_list_item = resolveEasycom(vue.resolveDynamicComponent("uni-list-item"), __easycom_0$3);
-    const _component_uni_list = resolveEasycom(vue.resolveDynamicComponent("uni-list"), __easycom_1$1);
+  function _sfc_render$x(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_list_item = resolveEasycom(vue.resolveDynamicComponent("uni-list-item"), __easycom_2);
+    const _component_uni_list = resolveEasycom(vue.resolveDynamicComponent("uni-list"), __easycom_3);
     return vue.openBlock(), vue.createElementBlock("view", { class: "detailInfo" }, [
       vue.createVNode(_component_uni_list, null, {
         default: vue.withCtx(() => [
@@ -11141,17 +11191,12626 @@ ${i3}
       })
     ]);
   }
-  const PagesMovieCinemaDetailInfo = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__scopeId", "data-v-e97a41a6"], ["__file", "E:/Senior_2/cinema/vueDemo/pages/movieCinema/detailInfo.vue"]]);
-  __definePage("pages/index/index", PagesIndexIndex);
+  const PagesMovieCinemaDetailInfo = /* @__PURE__ */ _export_sfc(_sfc_main$y, [["render", _sfc_render$x], ["__scopeId", "data-v-e97a41a6"], ["__file", "E:/Senior_2/cinema/vueDemo/pages/movieCinema/detailInfo.vue"]]);
+  const _sfc_main$x = {
+    data() {
+      return {
+        scheduleFlag: 0,
+        cinemaListFlag: 0,
+        scheduleData: [{
+          cinemaId: "",
+          houseId: "",
+          movieId: "",
+          scheduleDescription: "",
+          scheduleId: "",
+          schedulePrice: "",
+          scheduleRemain: "",
+          scheduleState: "",
+          scheduleTime: "",
+          scheduleDate: "",
+          cinemaName: "",
+          cinemaAddresss: "",
+          cinemaX: "",
+          cinemaY: ""
+        }],
+        dateItems: [],
+        items: [],
+        current: 0,
+        dateCurrent: "",
+        cinemaLocation: {
+          longitude: "",
+          latitude: ""
+        },
+        scheduleDataByDate: []
+      };
+    },
+    onShow: function(option) {
+      let currentDate = /* @__PURE__ */ new Date();
+      currentDate.setMinutes(currentDate.getMinutes() + 15);
+      let weekDays = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
+      currentDate.getDay();
+      this.movieId = uni.getStorageSync("movieId");
+      let schedule = {
+        "movieId": this.movieId
+      };
+      uni.request({
+        url: "/api/schedule/infoByMovie",
+        method: "GET",
+        dataType: "json",
+        data: schedule,
+        success: (res) => {
+          for (let i2 = 0; i2 < res.data.data.length; i2++) {
+            if (currentDate < new Date(res.data.data[i2].scheduleTime)) {
+              this.scheduleData.push(res.data.data[i2]);
+            }
+          }
+          for (let i2 = 0; i2 < this.scheduleData.length; i2++) {
+            if (this.scheduleData[i2].scheduleId == "") {
+              this.scheduleData.splice(i2, 1);
+            }
+          }
+          for (let i2 = 0; i2 < this.scheduleData.length; i2++) {
+            this.scheduleData[i2].scheduleTime = new Date(this.scheduleData[i2].scheduleTime);
+            this.scheduleData[i2].scheduleDate = new Date(this.scheduleData[i2].scheduleTime).getFullYear() + "/" + (new Date(this.scheduleData[i2].scheduleTime).getMonth() + 1) + "/" + new Date(this.scheduleData[i2].scheduleTime).getDate();
+          }
+          for (let i2 = 0; i2 < this.scheduleData.length; i2++) {
+            if (!this.dateItems.includes(this.scheduleData[i2].scheduleDate) && this.dateItems.length < 8) {
+              this.dateItems.push(this.scheduleData[i2].scheduleDate);
+            }
+          }
+          this.dateCurrent = this.dateItems[0];
+          let currentDateString = currentDate.getFullYear() + "/" + (currentDate.getMonth() + 1) + "/" + currentDate.getDate();
+          formatAppLog("log", "at pages/schedule/byMovie.vue:163", "currentDateString", currentDateString);
+          for (let i2 = 0; i2 < this.dateItems.length; i2++) {
+            if (this.dateItems[i2] == currentDateString) {
+              this.items.push("今天 " + this.dateItems[i2].split("/")[1] + "月" + this.dateItems[i2].split("/")[2] + "日");
+            } else {
+              this.items.push(weekDays[this.getWeekDay(this.dateItems[i2].split("/")[0], this.dateItems[i2].split("/")[1], this.dateItems[i2].split("/")[2])] + " " + this.dateItems[i2].split("/")[1] + "月" + this.dateItems[i2].split("/")[2] + "日");
+            }
+          }
+          for (let i2 = 0; i2 < this.dateItems.length; i2++) {
+            let row = [{
+              cinemaId: "",
+              houseId: "",
+              movieId: "",
+              scheduleDescription: "",
+              scheduleId: "",
+              schedulePrice: "",
+              scheduleRemain: "",
+              scheduleState: "",
+              scheduleTime: "",
+              scheduleDate: "",
+              cinemaName: "",
+              cinemaAddresss: "",
+              cinemaX: "",
+              cinemaY: "",
+              cinemaDistance: ""
+            }];
+            let addCinemaId = {};
+            for (let j2 = 0; j2 < this.scheduleData.length; j2++) {
+              const temp_cinemaId = this.scheduleData[j2].cinemaId;
+              if (this.dateItems[i2] == this.scheduleData[j2].scheduleDate) {
+                if (!addCinemaId[temp_cinemaId]) {
+                  row.push(this.scheduleData[j2]);
+                  addCinemaId[temp_cinemaId] = true;
+                }
+              }
+            }
+            this.scheduleDataByDate.push(row);
+          }
+          for (let i2 = 0; i2 < this.scheduleDataByDate.length; i2++) {
+            for (let j2 = 0; j2 < this.scheduleDataByDate[i2].length; j2++) {
+              this.scheduleDataByDate[i2][j2].cinemaName = "";
+              this.scheduleDataByDate[i2][j2].cinemaAddress = "";
+              this.scheduleDataByDate[i2][j2].cinemaX = "";
+              this.scheduleDataByDate[i2][j2].cinemaY = "";
+              this.scheduleDataByDate[i2][j2].cinemaDistance = "";
+            }
+          }
+          for (let i2 = 0; i2 < this.scheduleDataByDate.length; i2++) {
+            for (let j2 = 0; j2 < this.scheduleDataByDate[i2].length; j2++) {
+              if (this.scheduleDataByDate[i2][j2].scheduleId == "") {
+                this.scheduleDataByDate[i2].splice(j2, 1);
+              }
+            }
+          }
+          uni.getLocation({
+            success: (res2) => {
+              formatAppLog("log", "at pages/schedule/byMovie.vue:228", "当前位置的经度：", res2.longitude);
+              formatAppLog("log", "at pages/schedule/byMovie.vue:229", "当前位置的纬度：", res2.latitude);
+              this.cinemaLocation.longitude = res2.longitude;
+              this.cinemaLocation.latitude = res2.latitude;
+              formatAppLog("log", "at pages/schedule/byMovie.vue:232", "标记", this.cinemaLocation);
+              let requests = [];
+              for (let i2 = 0; i2 < this.scheduleDataByDate.length; i2++) {
+                for (let j2 = 0; j2 < this.scheduleDataByDate[i2].length; j2++) {
+                  let schedule_cinema = {
+                    "cinemaId": this.scheduleDataByDate[i2][j2].cinemaId
+                  };
+                  let request = new Promise((resolve, reject) => {
+                    uni.request({
+                      url: "/api/cinema/infoById",
+                      method: "GET",
+                      dataType: "json",
+                      data: schedule_cinema,
+                      success: (res3) => {
+                        this.scheduleDataByDate[i2][j2].cinemaName = res3.data.data.cinemaName;
+                        this.scheduleDataByDate[i2][j2].cinemaAddress = res3.data.data.cinemaAddress;
+                        this.scheduleDataByDate[i2][j2].cinemaX = res3.data.data.cinemaX;
+                        this.scheduleDataByDate[i2][j2].cinemaY = res3.data.data.cinemaY;
+                        resolve();
+                      }
+                    });
+                  });
+                  requests.push(request);
+                }
+              }
+              formatAppLog("log", "at pages/schedule/byMovie.vue:281", "请求", requests);
+              Promise.all(requests).then(() => {
+                formatAppLog("log", "at pages/schedule/byMovie.vue:283", "等待成功");
+                for (let i2 = 0; i2 < this.scheduleDataByDate.length; i2++) {
+                  for (let j2 = 0; j2 < this.scheduleDataByDate[i2].length; j2++) {
+                    let distance = this.getDistance(this.cinemaLocation, this.scheduleDataByDate[i2][j2].cinemaX, this.scheduleDataByDate[i2][j2].cinemaY);
+                    this.scheduleDataByDate[i2][j2].cinemaDistance = distance;
+                  }
+                }
+                for (let i2 = 0; i2 < this.scheduleDataByDate.length; i2++) {
+                  for (let j2 = 0; j2 < this.scheduleDataByDate[i2].length; j2++) {
+                    this.scheduleDataByDate[i2].sort((a2, b2) => a2.cinemaDistance - b2.cinemaDistance);
+                  }
+                }
+                this.cinemaListFlag = 1;
+                formatAppLog("log", "at pages/schedule/byMovie.vue:299", "Items", this.items);
+                formatAppLog("log", "at pages/schedule/byMovie.vue:300", "dateItems", this.dateItems);
+                formatAppLog("log", "at pages/schedule/byMovie.vue:301", "scheduleData", this.scheduleData);
+                formatAppLog("log", "at pages/schedule/byMovie.vue:302", "scheduleDataByDate", this.scheduleDataByDate);
+                this.scheduleFlag = 1;
+              });
+            }
+          });
+        }
+      });
+    },
+    onHide: function(option) {
+      this.scheduleFlag = 0;
+      this.cinemaListFlag = 0, this.scheduleData = [];
+      this.dateItems = [];
+      this.items = [];
+      this.current = 0;
+      this.dateCurrent = "";
+      this.cinemaLocation = {};
+      this.scheduleDataByDate = [];
+      formatAppLog("log", "at pages/schedule/byMovie.vue:322", "页面隐藏");
+    },
+    methods: {
+      onClickItem(e2) {
+        if (this.current != e2.currentIndex) {
+          this.current = e2.currentIndex;
+          this.dateCurrent = this.dateItems[this.current];
+          formatAppLog("log", "at pages/schedule/byMovie.vue:331", "dateCurrent", this.dateCurrent);
+        }
+      },
+      getWeekDay(year, month, day) {
+        const date = new Date(year, month - 1, day);
+        const weekday = date.getDay();
+        return weekday;
+      },
+      getDistance(cinemaLocation, c_x, c_y) {
+        const earthRadius = 6378137;
+        const radLat1 = cinemaLocation.latitude * Math.PI / 180;
+        const radLat2 = c_y * Math.PI / 180;
+        const a2 = radLat1 - radLat2;
+        const b2 = cinemaLocation.longitude * Math.PI / 180 - c_x * Math.PI / 180;
+        const s2 = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a2 / 2), 2) + Math.cos(radLat1) * Math.cos(radLat2) * Math.pow(Math.sin(b2 / 2), 2)));
+        return (s2 * earthRadius / 1e3).toFixed(1);
+      },
+      to_buy(ref) {
+        uni.setStorageSync("cinemaId", ref);
+        uni.navigateTo({
+          url: "/pages/schedule/byMovieAndCinema",
+          animationType: "pop-in",
+          animationDuration: 200
+        });
+      }
+    }
+  };
+  function _sfc_render$w(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_segmented_control = resolveEasycom(vue.resolveDynamicComponent("uni-segmented-control"), __easycom_0$4);
+    const _component_uni_list_item = resolveEasycom(vue.resolveDynamicComponent("uni-list-item"), __easycom_2);
+    const _component_uni_list = resolveEasycom(vue.resolveDynamicComponent("uni-list"), __easycom_3);
+    return vue.openBlock(), vue.createElementBlock(
+      vue.Fragment,
+      null,
+      [
+        this.items.length != 0 ? (vue.openBlock(), vue.createElementBlock("view", {
+          key: 0,
+          class: "byMovie"
+        }, [
+          vue.createElementVNode("view", { class: "which_date" }, [
+            this.items.length == 1 ? (vue.openBlock(), vue.createElementBlock("scroll-view", {
+              key: 0,
+              "scroll-x": "true",
+              "show-scrollbar": "false"
+            }, [
+              vue.createVNode(_component_uni_segmented_control, {
+                class: "date1",
+                current: $data.current,
+                values: $data.items,
+                "style-type": "text",
+                "active-color": "#f9da49",
+                onClickItem: $options.onClickItem
+              }, null, 8, ["current", "values", "onClickItem"])
+            ])) : vue.createCommentVNode("v-if", true),
+            this.items.length == 2 ? (vue.openBlock(), vue.createElementBlock("scroll-view", {
+              key: 1,
+              "scroll-x": "true",
+              "show-scrollbar": "false"
+            }, [
+              vue.createVNode(_component_uni_segmented_control, {
+                class: "date2",
+                current: $data.current,
+                values: $data.items,
+                "style-type": "text",
+                "active-color": "#f9da49",
+                onClickItem: $options.onClickItem
+              }, null, 8, ["current", "values", "onClickItem"])
+            ])) : vue.createCommentVNode("v-if", true),
+            this.items.length == 3 ? (vue.openBlock(), vue.createElementBlock("scroll-view", {
+              key: 2,
+              "scroll-x": "true",
+              "show-scrollbar": "false"
+            }, [
+              vue.createVNode(_component_uni_segmented_control, {
+                class: "date3",
+                current: $data.current,
+                values: $data.items,
+                "style-type": "text",
+                "active-color": "#f9da49",
+                onClickItem: $options.onClickItem
+              }, null, 8, ["current", "values", "onClickItem"])
+            ])) : vue.createCommentVNode("v-if", true),
+            this.items.length == 4 ? (vue.openBlock(), vue.createElementBlock("scroll-view", {
+              key: 3,
+              "scroll-x": "true",
+              "show-scrollbar": "false"
+            }, [
+              vue.createVNode(_component_uni_segmented_control, {
+                class: "date4",
+                current: $data.current,
+                values: $data.items,
+                "style-type": "text",
+                "active-color": "#f9da49",
+                onClickItem: $options.onClickItem
+              }, null, 8, ["current", "values", "onClickItem"])
+            ])) : vue.createCommentVNode("v-if", true),
+            this.items.length == 5 ? (vue.openBlock(), vue.createElementBlock("scroll-view", {
+              key: 4,
+              "scroll-x": "true",
+              "show-scrollbar": "false"
+            }, [
+              vue.createVNode(_component_uni_segmented_control, {
+                class: "date5",
+                current: $data.current,
+                values: $data.items,
+                "style-type": "text",
+                "active-color": "#f9da49",
+                onClickItem: $options.onClickItem
+              }, null, 8, ["current", "values", "onClickItem"])
+            ])) : vue.createCommentVNode("v-if", true),
+            this.items.length == 6 ? (vue.openBlock(), vue.createElementBlock("scroll-view", {
+              key: 5,
+              "scroll-x": "true",
+              "show-scrollbar": "false"
+            }, [
+              vue.createVNode(_component_uni_segmented_control, {
+                class: "date6",
+                current: $data.current,
+                values: $data.items,
+                "style-type": "text",
+                "active-color": "#f9da49",
+                onClickItem: $options.onClickItem
+              }, null, 8, ["current", "values", "onClickItem"])
+            ])) : vue.createCommentVNode("v-if", true),
+            this.items.length == 7 ? (vue.openBlock(), vue.createElementBlock("scroll-view", {
+              key: 6,
+              "scroll-x": "true",
+              "show-scrollbar": "false"
+            }, [
+              vue.createVNode(_component_uni_segmented_control, {
+                class: "date7",
+                current: $data.current,
+                values: $data.items,
+                "style-type": "text",
+                "active-color": "#f9da49",
+                onClickItem: $options.onClickItem
+              }, null, 8, ["current", "values", "onClickItem"])
+            ])) : vue.createCommentVNode("v-if", true)
+          ]),
+          this.cinemaListFlag == 1 ? (vue.openBlock(true), vue.createElementBlock(
+            vue.Fragment,
+            { key: 0 },
+            vue.renderList(this.dateItems, (item, index) => {
+              return vue.openBlock(), vue.createElementBlock("view", {
+                class: "which_cinema",
+                key: index
+              }, [
+                (vue.openBlock(true), vue.createElementBlock(
+                  vue.Fragment,
+                  null,
+                  vue.renderList(this.scheduleDataByDate[index], (item2, listIndex) => {
+                    return vue.withDirectives((vue.openBlock(), vue.createElementBlock("view", {
+                      class: "cinemaList",
+                      key: listIndex
+                    }, [
+                      vue.createVNode(
+                        _component_uni_list,
+                        null,
+                        {
+                          default: vue.withCtx(() => [
+                            this.scheduleDataByDate[index][listIndex].cinemaDistance <= 0.1 ? (vue.openBlock(), vue.createBlock(_component_uni_list_item, {
+                              key: 0,
+                              title: this.scheduleDataByDate[index][listIndex].cinemaName,
+                              ellipsis: "2",
+                              note: this.scheduleDataByDate[index][listIndex].cinemaAddress,
+                              clickable: "",
+                              onClick: ($event) => $options.to_buy(this.scheduleDataByDate[index][listIndex].cinemaId),
+                              "right-text": "< 0.1 km"
+                            }, null, 8, ["title", "note", "onClick"])) : vue.createCommentVNode("v-if", true),
+                            this.scheduleDataByDate[index][listIndex].cinemaDistance > 0.1 ? (vue.openBlock(), vue.createBlock(_component_uni_list_item, {
+                              key: 1,
+                              title: this.scheduleDataByDate[index][listIndex].cinemaName,
+                              ellipsis: "2",
+                              note: this.scheduleDataByDate[index][listIndex].cinemaAddress,
+                              clickable: "",
+                              onClick: ($event) => $options.to_buy(this.scheduleDataByDate[index][listIndex].cinemaId),
+                              "right-text": this.scheduleDataByDate[index][listIndex].cinemaDistance + " km"
+                            }, null, 8, ["title", "note", "onClick", "right-text"])) : vue.createCommentVNode("v-if", true)
+                          ]),
+                          _: 2
+                          /* DYNAMIC */
+                        },
+                        1024
+                        /* DYNAMIC_SLOTS */
+                      )
+                    ])), [
+                      [vue.vShow, $data.dateCurrent === this.dateItems[index]]
+                    ]);
+                  }),
+                  128
+                  /* KEYED_FRAGMENT */
+                ))
+              ]);
+            }),
+            128
+            /* KEYED_FRAGMENT */
+          )) : vue.createCommentVNode("v-if", true)
+        ])) : vue.createCommentVNode("v-if", true),
+        this.items.length == 0 && this.scheduleFlag == 1 ? (vue.openBlock(), vue.createElementBlock("view", {
+          key: 1,
+          class: "byMovieNotSchedule"
+        }, [
+          vue.createElementVNode("text", null, "暂无场次 :(")
+        ])) : vue.createCommentVNode("v-if", true)
+      ],
+      64
+      /* STABLE_FRAGMENT */
+    );
+  }
+  const PagesScheduleByMovie = /* @__PURE__ */ _export_sfc(_sfc_main$x, [["render", _sfc_render$w], ["__scopeId", "data-v-43b0d6ba"], ["__file", "E:/Senior_2/cinema/vueDemo/pages/schedule/byMovie.vue"]]);
+  function pad(str, length = 2) {
+    str += "";
+    while (str.length < length) {
+      str = "0" + str;
+    }
+    return str.slice(-length);
+  }
+  const parser = {
+    yyyy: (dateObj) => {
+      return pad(dateObj.year, 4);
+    },
+    yy: (dateObj) => {
+      return pad(dateObj.year);
+    },
+    MM: (dateObj) => {
+      return pad(dateObj.month);
+    },
+    M: (dateObj) => {
+      return dateObj.month;
+    },
+    dd: (dateObj) => {
+      return pad(dateObj.day);
+    },
+    d: (dateObj) => {
+      return dateObj.day;
+    },
+    hh: (dateObj) => {
+      return pad(dateObj.hour);
+    },
+    h: (dateObj) => {
+      return dateObj.hour;
+    },
+    mm: (dateObj) => {
+      return pad(dateObj.minute);
+    },
+    m: (dateObj) => {
+      return dateObj.minute;
+    },
+    ss: (dateObj) => {
+      return pad(dateObj.second);
+    },
+    s: (dateObj) => {
+      return dateObj.second;
+    },
+    SSS: (dateObj) => {
+      return pad(dateObj.millisecond, 3);
+    },
+    S: (dateObj) => {
+      return dateObj.millisecond;
+    }
+  };
+  function getDate$1(time) {
+    if (time instanceof Date) {
+      return time;
+    }
+    switch (typeof time) {
+      case "string": {
+        if (time.indexOf("T") > -1) {
+          return new Date(time);
+        }
+        return new Date(time.replace(/-/g, "/"));
+      }
+      default:
+        return new Date(time);
+    }
+  }
+  function formatDate(date, format = "yyyy/MM/dd hh:mm:ss") {
+    if (!date && date !== 0) {
+      return "";
+    }
+    date = getDate$1(date);
+    const dateObj = {
+      year: date.getFullYear(),
+      month: date.getMonth() + 1,
+      day: date.getDate(),
+      hour: date.getHours(),
+      minute: date.getMinutes(),
+      second: date.getSeconds(),
+      millisecond: date.getMilliseconds()
+    };
+    const tokenRegExp = /yyyy|yy|MM|M|dd|d|hh|h|mm|m|ss|s|SSS|SS|S/;
+    let flag = true;
+    let result = format;
+    while (flag) {
+      flag = false;
+      result = result.replace(tokenRegExp, function(matched) {
+        flag = true;
+        return parser[matched](dateObj);
+      });
+    }
+    return result;
+  }
+  function friendlyDate(time, {
+    locale = "zh",
+    threshold = [6e4, 36e5],
+    format = "yyyy/MM/dd hh:mm:ss"
+  }) {
+    if (time === "-") {
+      return time;
+    }
+    if (!time && time !== 0) {
+      return "";
+    }
+    const localeText = {
+      zh: {
+        year: "年",
+        month: "月",
+        day: "天",
+        hour: "小时",
+        minute: "分钟",
+        second: "秒",
+        ago: "前",
+        later: "后",
+        justNow: "刚刚",
+        soon: "马上",
+        template: "{num}{unit}{suffix}"
+      },
+      en: {
+        year: "year",
+        month: "month",
+        day: "day",
+        hour: "hour",
+        minute: "minute",
+        second: "second",
+        ago: "ago",
+        later: "later",
+        justNow: "just now",
+        soon: "soon",
+        template: "{num} {unit} {suffix}"
+      }
+    };
+    const text = localeText[locale] || localeText.zh;
+    let date = getDate$1(time);
+    let ms2 = date.getTime() - Date.now();
+    let absMs = Math.abs(ms2);
+    if (absMs < threshold[0]) {
+      return ms2 < 0 ? text.justNow : text.soon;
+    }
+    if (absMs >= threshold[1]) {
+      return formatDate(date, format);
+    }
+    let num;
+    let unit;
+    let suffix = text.later;
+    if (ms2 < 0) {
+      suffix = text.ago;
+      ms2 = -ms2;
+    }
+    const seconds = Math.floor(ms2 / 1e3);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+    const months = Math.floor(days / 30);
+    const years = Math.floor(months / 12);
+    switch (true) {
+      case years > 0:
+        num = years;
+        unit = text.year;
+        break;
+      case months > 0:
+        num = months;
+        unit = text.month;
+        break;
+      case days > 0:
+        num = days;
+        unit = text.day;
+        break;
+      case hours > 0:
+        num = hours;
+        unit = text.hour;
+        break;
+      case minutes > 0:
+        num = minutes;
+        unit = text.minute;
+        break;
+      default:
+        num = seconds;
+        unit = text.second;
+        break;
+    }
+    if (locale === "en") {
+      if (num === 1) {
+        num = "a";
+      } else {
+        unit += "s";
+      }
+    }
+    return text.template.replace(/{\s*num\s*}/g, num + "").replace(/{\s*unit\s*}/g, unit).replace(
+      /{\s*suffix\s*}/g,
+      suffix
+    );
+  }
+  const _sfc_main$w = {
+    name: "uniDateformat",
+    props: {
+      date: {
+        type: [Object, String, Number],
+        default() {
+          return "-";
+        }
+      },
+      locale: {
+        type: String,
+        default: "zh"
+      },
+      threshold: {
+        type: Array,
+        default() {
+          return [0, 0];
+        }
+      },
+      format: {
+        type: String,
+        default: "yyyy/MM/dd hh:mm:ss"
+      },
+      // refreshRate使用不当可能导致性能问题，谨慎使用
+      refreshRate: {
+        type: [Number, String],
+        default: 0
+      }
+    },
+    data() {
+      return {
+        refreshMark: 0
+      };
+    },
+    computed: {
+      dateShow() {
+        this.refreshMark;
+        return friendlyDate(this.date, {
+          locale: this.locale,
+          threshold: this.threshold,
+          format: this.format
+        });
+      }
+    },
+    watch: {
+      refreshRate: {
+        handler() {
+          this.setAutoRefresh();
+        },
+        immediate: true
+      }
+    },
+    methods: {
+      refresh() {
+        this.refreshMark++;
+      },
+      setAutoRefresh() {
+        clearInterval(this.refreshInterval);
+        if (this.refreshRate) {
+          this.refreshInterval = setInterval(() => {
+            this.refresh();
+          }, parseInt(this.refreshRate));
+        }
+      }
+    }
+  };
+  function _sfc_render$v(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock(
+      "text",
+      null,
+      vue.toDisplayString($options.dateShow),
+      1
+      /* TEXT */
+    );
+  }
+  const __easycom_4$1 = /* @__PURE__ */ _export_sfc(_sfc_main$w, [["render", _sfc_render$v], ["__file", "E:/Senior_2/cinema/vueDemo/uni_modules/uni-dateformat/components/uni-dateformat/uni-dateformat.vue"]]);
+  const _sfc_main$v = {
+    data() {
+      return {
+        allRequest: 0,
+        scheduleData: [{
+          cinemaId: "",
+          houseId: "",
+          movieId: "",
+          scheduleDescription: "",
+          scheduleId: "",
+          schedulePrice: "",
+          scheduleRemain: "",
+          scheduleState: "",
+          scheduleTime: "",
+          scheduleDate: "",
+          scheduleFinal: "",
+          houseName: ""
+        }],
+        scheduleInfo: {
+          movieNameCn: "",
+          movieNameEn: "",
+          movieUrl: "",
+          movieDuration: "",
+          movieType: "",
+          cinemaName: "",
+          cinemaAddress: "",
+          cinemaX: "",
+          cinemaY: ""
+        },
+        dateItems: [],
+        items: [],
+        dateCurrent: "",
+        current: 0,
+        cinemaLocation: {
+          longitude: "",
+          latitude: ""
+        },
+        scheduleDataByDate: []
+      };
+    },
+    onLoad: function(option) {
+      this.movieId = uni.getStorageSync("movieId");
+      this.movieDuration = uni.getStorageSync("movieDuration");
+      this.movieType = uni.getStorageSync("movieType");
+      this.scheduleInfo.movieDuration = this.movieDuration;
+      this.scheduleInfo.movieType = this.movieType;
+      this.cinemaId = uni.getStorageSync("cinemaId");
+      formatAppLog("log", "at pages/schedule/byMovieAndCinema.vue:148", "movieId", this.movieId);
+      formatAppLog("log", "at pages/schedule/byMovieAndCinema.vue:149", "cinemaId", this.cinemaId);
+      let currentDate = /* @__PURE__ */ new Date();
+      currentDate.setMinutes(currentDate.getMinutes() + 15);
+      formatAppLog("log", "at pages/schedule/byMovieAndCinema.vue:153", "currentDate", currentDate);
+      let weekDays = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
+      let schedule = {
+        "movieId": this.movieId,
+        "cinemaId": this.cinemaId
+      };
+      uni.request({
+        url: "/api/schedule/infoByMovieAndCinema",
+        method: "GET",
+        dataType: "json",
+        data: schedule,
+        success: (res) => {
+          for (let i2 = 0; i2 < res.data.data.length; i2++) {
+            if (currentDate < new Date(res.data.data[i2].scheduleTime)) {
+              this.scheduleData.push(res.data.data[i2]);
+            }
+          }
+          for (let i2 = 0; i2 < this.scheduleData.length; i2++) {
+            if (this.scheduleData[i2].scheduleId == "") {
+              this.scheduleData.splice(i2, 1);
+            }
+          }
+          for (let i2 = 0; i2 < this.scheduleData.length; i2++) {
+            this.scheduleData[i2].scheduleTime = new Date(this.scheduleData[i2].scheduleTime);
+            this.scheduleData[i2].scheduleDate = new Date(this.scheduleData[i2].scheduleTime).getFullYear() + "/" + (new Date(this.scheduleData[i2].scheduleTime).getMonth() + 1) + "/" + new Date(this.scheduleData[i2].scheduleTime).getDate();
+          }
+          for (let i2 = 0; i2 < this.scheduleData.length; i2++) {
+            if (!this.dateItems.includes(this.scheduleData[i2].scheduleDate) && this.dateItems.length < 8) {
+              this.dateItems.push(this.scheduleData[i2].scheduleDate);
+            }
+          }
+          this.dateCurrent = this.dateItems[0];
+          let currentDateString = currentDate.getFullYear() + "/" + (currentDate.getMonth() + 1) + "/" + currentDate.getDate();
+          formatAppLog("log", "at pages/schedule/byMovieAndCinema.vue:200", "currentDateString", currentDateString);
+          for (let i2 = 0; i2 < this.dateItems.length; i2++) {
+            if (this.dateItems[i2] == currentDateString) {
+              this.items.push("今天 " + this.dateItems[i2].split("/")[1] + "月" + this.dateItems[i2].split("/")[2] + "日");
+            } else {
+              this.items.push(weekDays[this.getWeekDay(this.dateItems[i2].split("/")[0], this.dateItems[i2].split("/")[1], this.dateItems[i2].split("/")[2])] + " " + this.dateItems[i2].split("/")[1] + "月" + this.dateItems[i2].split("/")[2] + "日");
+            }
+          }
+          for (let i2 = 0; i2 < this.dateItems.length; i2++) {
+            let row = [{
+              cinemaId: "",
+              houseId: "",
+              movieId: "",
+              scheduleDate: "",
+              scheduleDescription: "",
+              scheduleId: "",
+              schedulePrice: "",
+              scheduleRemain: "",
+              scheduleState: "",
+              scheduleTime: "",
+              scheduleFinal: ""
+            }];
+            for (let j2 = 0; j2 < this.scheduleData.length; j2++) {
+              if (this.dateItems[i2] == this.scheduleData[j2].scheduleDate) {
+                row.push(this.scheduleData[j2]);
+              }
+            }
+            this.scheduleDataByDate.push(row);
+          }
+          for (let i2 = 0; i2 < this.scheduleDataByDate.length; i2++) {
+            for (let j2 = 0; j2 < this.scheduleDataByDate[i2].length; j2++) {
+              this.scheduleDataByDate[i2][j2].scheduleFinal = new Date(this.scheduleDataByDate[i2][j2].scheduleTime);
+              let temp_minutes = this.scheduleDataByDate[i2][j2].scheduleFinal.getMinutes() + parseInt(this.scheduleInfo.movieDuration);
+              this.scheduleDataByDate[i2][j2].scheduleFinal.setMinutes(temp_minutes);
+            }
+          }
+          for (let i2 = 0; i2 < this.scheduleDataByDate.length; i2++) {
+            for (let j2 = 0; j2 < this.scheduleDataByDate[i2].length; j2++) {
+              if (this.scheduleDataByDate[i2][j2].scheduleId == "") {
+                this.scheduleDataByDate[i2].splice(j2, 1);
+              }
+            }
+          }
+          uni.request({
+            url: "/api/movie/infoMovieById",
+            method: "GET",
+            dataType: "json",
+            data: schedule,
+            success: (res2) => {
+              this.scheduleInfo.movieNameCn = res2.data.data.movie.movieNameCn;
+              this.scheduleInfo.movieNameEn = res2.data.data.movie.movieNameEn;
+              this.scheduleInfo.movieUrl = res2.data.data.movie.movieUrl;
+              uni.request({
+                url: "/api/cinema/infoById",
+                method: "GET",
+                dataType: "json",
+                data: schedule,
+                success: (res3) => {
+                  this.scheduleInfo.cinemaName = res3.data.data.cinemaName;
+                  this.scheduleInfo.cinemaAddress = res3.data.data.cinemaAddress;
+                  this.scheduleInfo.cinemaX = res3.data.data.cinemaX;
+                  this.scheduleInfo.cinemaY = res3.data.data.cinemaY;
+                  let requests = [];
+                  for (let i2 = 0; i2 < this.scheduleDataByDate.length; i2++) {
+                    for (let j2 = 0; j2 < this.scheduleDataByDate[i2].length; j2++) {
+                      let house = {
+                        "houseId": this.scheduleDataByDate[i2][j2].houseId
+                      };
+                      let request = new Promise((resolve, reject) => {
+                        uni.request({
+                          url: "/api/house/infoById",
+                          method: "GET",
+                          dataType: "json",
+                          data: house,
+                          success: (res4) => {
+                            this.scheduleDataByDate[i2][j2].houseName = res4.data.data.houseName;
+                            resolve();
+                          }
+                        });
+                      });
+                      requests.push(request);
+                    }
+                  }
+                  Promise.all(requests).then(() => {
+                    this.allRequest = 1;
+                  });
+                }
+              });
+            }
+          });
+        }
+      });
+    },
+    onBackPress: function(option) {
+      formatAppLog("log", "at pages/schedule/byMovieAndCinema.vue:327", "退出场次页面");
+      uni.removeStorageSync("cinemaId");
+    },
+    methods: {
+      getWeekDay(year, month, day) {
+        const date = new Date(year, month - 1, day);
+        const weekday = date.getDay();
+        return weekday;
+      },
+      onClickItem(e2) {
+        if (this.current != e2.currentIndex) {
+          this.current = e2.currentIndex;
+          this.dateCurrent = this.dateItems[this.current];
+          formatAppLog("log", "at pages/schedule/byMovieAndCinema.vue:341", "dateCurrent", this.dateCurrent);
+        }
+      },
+      to_map(res) {
+        uni.setStorageSync("cinemaX", res.cinemaX);
+        uni.setStorageSync("cinemaY", res.cinemaY);
+        uni.navigateTo({
+          url: "/pages/map/map",
+          animationType: "pop-in",
+          animationDuration: 200
+        });
+      },
+      to_selection_seat(id, time, houseId) {
+        let clickTime = /* @__PURE__ */ new Date();
+        clickTime.setMinutes(clickTime.getMinutes() + 15);
+        if (clickTime < time) {
+          uni.setStorageSync("scheduleId", id);
+          uni.setStorageSync("houseId", houseId);
+          uni.navigateTo({
+            url: "/pages/schedule/selectSeat",
+            animationType: "pop-in",
+            animationDuration: 200
+          });
+        } else {
+          uni.showToast({
+            title: "该场次已停售，请前往前台购票",
+            icon: "error",
+            mask: "true"
+          });
+        }
+      }
+    }
+  };
+  function _sfc_render$u(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_1$1);
+    const _component_uni_list_item = resolveEasycom(vue.resolveDynamicComponent("uni-list-item"), __easycom_2);
+    const _component_uni_list = resolveEasycom(vue.resolveDynamicComponent("uni-list"), __easycom_3);
+    const _component_uni_segmented_control = resolveEasycom(vue.resolveDynamicComponent("uni-segmented-control"), __easycom_0$4);
+    const _component_uni_dateformat = resolveEasycom(vue.resolveDynamicComponent("uni-dateformat"), __easycom_4$1);
+    return this.allRequest == 1 ? (vue.openBlock(), vue.createElementBlock("view", {
+      key: 0,
+      class: "byMovieAndCinema"
+    }, [
+      vue.createElementVNode("view", { class: "cinemaDetail" }, [
+        vue.createVNode(_component_uni_list, null, {
+          default: vue.withCtx(() => [
+            vue.createVNode(_component_uni_list_item, {
+              title: this.scheduleInfo.cinemaName,
+              ellipsis: "2",
+              note: this.scheduleInfo.cinemaAddress,
+              clickable: "",
+              onClick: _cache[0] || (_cache[0] = ($event) => $options.to_map(this.scheduleInfo))
+            }, {
+              footer: vue.withCtx(() => [
+                vue.createVNode(_component_uni_icons, {
+                  class: "mapIcon",
+                  type: "location-filled",
+                  size: "30",
+                  color: "#f9da49"
+                })
+              ]),
+              _: 1
+              /* STABLE */
+            }, 8, ["title", "note"])
+          ]),
+          _: 1
+          /* STABLE */
+        }),
+        vue.createTextVNode("> ")
+      ]),
+      vue.createElementVNode("view", { class: "movieDetail" }, [
+        vue.createElementVNode("image", {
+          class: "movieImg",
+          src: this.scheduleInfo.movieUrl
+        }, null, 8, ["src"]),
+        vue.createElementVNode("text", { class: "titleGap" }, '" "'),
+        vue.createElementVNode(
+          "text",
+          { class: "movieTitle" },
+          vue.toDisplayString(this.scheduleInfo.movieNameCn),
+          1
+          /* TEXT */
+        ),
+        vue.createElementVNode(
+          "text",
+          { class: "movieTitle0" },
+          vue.toDisplayString(this.scheduleInfo.movieNameEn),
+          1
+          /* TEXT */
+        ),
+        vue.createElementVNode(
+          "text",
+          { class: "movieNote" },
+          vue.toDisplayString(this.scheduleInfo.movieDuration) + " 分钟 | " + vue.toDisplayString(this.scheduleInfo.movieType),
+          1
+          /* TEXT */
+        ),
+        vue.createElementVNode("text", { class: "titleGap" }, '" "'),
+        vue.createElementVNode("view", { class: "movieLine" })
+      ]),
+      vue.createElementVNode("view", { class: "which_date" }, [
+        this.items.length == 1 ? (vue.openBlock(), vue.createElementBlock("scroll-view", {
+          key: 0,
+          "scroll-x": "true",
+          "show-scrollbar": "false"
+        }, [
+          vue.createVNode(_component_uni_segmented_control, {
+            class: "date1",
+            current: $data.current,
+            values: $data.items,
+            "style-type": "text",
+            "active-color": "#f9da49",
+            onClickItem: $options.onClickItem
+          }, null, 8, ["current", "values", "onClickItem"])
+        ])) : vue.createCommentVNode("v-if", true),
+        this.items.length == 2 ? (vue.openBlock(), vue.createElementBlock("scroll-view", {
+          key: 1,
+          "scroll-x": "true",
+          "show-scrollbar": "false"
+        }, [
+          vue.createVNode(_component_uni_segmented_control, {
+            class: "date2",
+            current: $data.current,
+            values: $data.items,
+            "style-type": "text",
+            "active-color": "#f9da49",
+            onClickItem: $options.onClickItem
+          }, null, 8, ["current", "values", "onClickItem"])
+        ])) : vue.createCommentVNode("v-if", true),
+        this.items.length == 3 ? (vue.openBlock(), vue.createElementBlock("scroll-view", {
+          key: 2,
+          "scroll-x": "true",
+          "show-scrollbar": "false"
+        }, [
+          vue.createVNode(_component_uni_segmented_control, {
+            class: "date3",
+            current: $data.current,
+            values: $data.items,
+            "style-type": "text",
+            "active-color": "#f9da49",
+            onClickItem: $options.onClickItem
+          }, null, 8, ["current", "values", "onClickItem"])
+        ])) : vue.createCommentVNode("v-if", true),
+        this.items.length == 4 ? (vue.openBlock(), vue.createElementBlock("scroll-view", {
+          key: 3,
+          "scroll-x": "true",
+          "show-scrollbar": "false"
+        }, [
+          vue.createVNode(_component_uni_segmented_control, {
+            class: "date4",
+            current: $data.current,
+            values: $data.items,
+            "style-type": "text",
+            "active-color": "#f9da49",
+            onClickItem: $options.onClickItem
+          }, null, 8, ["current", "values", "onClickItem"])
+        ])) : vue.createCommentVNode("v-if", true),
+        this.items.length == 5 ? (vue.openBlock(), vue.createElementBlock("scroll-view", {
+          key: 4,
+          "scroll-x": "true",
+          "show-scrollbar": "false"
+        }, [
+          vue.createVNode(_component_uni_segmented_control, {
+            class: "date5",
+            current: $data.current,
+            values: $data.items,
+            "style-type": "text",
+            "active-color": "#f9da49",
+            onClickItem: $options.onClickItem
+          }, null, 8, ["current", "values", "onClickItem"])
+        ])) : vue.createCommentVNode("v-if", true),
+        this.items.length == 6 ? (vue.openBlock(), vue.createElementBlock("scroll-view", {
+          key: 5,
+          "scroll-x": "true",
+          "show-scrollbar": "false"
+        }, [
+          vue.createVNode(_component_uni_segmented_control, {
+            class: "date6",
+            current: $data.current,
+            values: $data.items,
+            "style-type": "text",
+            "active-color": "#f9da49",
+            onClickItem: $options.onClickItem
+          }, null, 8, ["current", "values", "onClickItem"])
+        ])) : vue.createCommentVNode("v-if", true),
+        this.items.length == 7 ? (vue.openBlock(), vue.createElementBlock("scroll-view", {
+          key: 6,
+          "scroll-x": "true",
+          "show-scrollbar": "false"
+        }, [
+          vue.createVNode(_component_uni_segmented_control, {
+            class: "date7",
+            current: $data.current,
+            values: $data.items,
+            "style-type": "text",
+            "active-color": "#f9da49",
+            onClickItem: $options.onClickItem
+          }, null, 8, ["current", "values", "onClickItem"])
+        ])) : vue.createCommentVNode("v-if", true)
+      ]),
+      (vue.openBlock(true), vue.createElementBlock(
+        vue.Fragment,
+        null,
+        vue.renderList(this.dateItems, (item, index) => {
+          return vue.openBlock(), vue.createElementBlock("view", {
+            class: "which_cinema",
+            key: index
+          }, [
+            (vue.openBlock(true), vue.createElementBlock(
+              vue.Fragment,
+              null,
+              vue.renderList(this.scheduleDataByDate[index], (item2, listIndex) => {
+                return vue.withDirectives((vue.openBlock(), vue.createElementBlock("view", {
+                  class: "cinemaList",
+                  key: listIndex
+                }, [
+                  vue.createVNode(
+                    _component_uni_list,
+                    null,
+                    {
+                      default: vue.withCtx(() => [
+                        vue.createVNode(_component_uni_list_item, {
+                          title: this.scheduleDataByDate[index][listIndex].scheduleDescription,
+                          ellipsis: "2",
+                          note: this.scheduleDataByDate[index][listIndex].houseName,
+                          clickable: "",
+                          onClick: ($event) => $options.to_selection_seat(this.scheduleDataByDate[index][listIndex].scheduleId, this.scheduleDataByDate[index][listIndex].scheduleTime, this.scheduleDataByDate[index][listIndex].houseId)
+                        }, {
+                          footer: vue.withCtx(() => [
+                            vue.createElementVNode("view", { class: "rightInfo" }, [
+                              vue.createElementVNode(
+                                "text",
+                                { class: "price" },
+                                "￥" + vue.toDisplayString(this.scheduleDataByDate[index][listIndex].schedulePrice),
+                                1
+                                /* TEXT */
+                              ),
+                              vue.createElementVNode("button", {
+                                class: "buy_button",
+                                "hover-class": "is_buy_hover",
+                                size: "mini"
+                              }, "购票")
+                            ])
+                          ]),
+                          header: vue.withCtx(() => [
+                            vue.createElementVNode("view", { class: "scheduleWhichTime" }, [
+                              vue.createVNode(_component_uni_dateformat, {
+                                class: "scheduleTime",
+                                date: this.scheduleDataByDate[index][listIndex].scheduleTime,
+                                format: "hh:mm"
+                              }, null, 8, ["date"]),
+                              vue.createElementVNode("view", { class: "finalTime" }, [
+                                vue.createVNode(_component_uni_dateformat, {
+                                  class: "scheduleFinalTime",
+                                  date: this.scheduleDataByDate[index][listIndex].scheduleFinal,
+                                  format: "hh:mm"
+                                }, null, 8, ["date"]),
+                                vue.createElementVNode("text", { class: "finalTimeText" }, " 结束")
+                              ])
+                            ])
+                          ]),
+                          _: 2
+                          /* DYNAMIC */
+                        }, 1032, ["title", "note", "onClick"])
+                      ]),
+                      _: 2
+                      /* DYNAMIC */
+                    },
+                    1024
+                    /* DYNAMIC_SLOTS */
+                  )
+                ])), [
+                  [vue.vShow, $data.dateCurrent === this.dateItems[index]]
+                ]);
+              }),
+              128
+              /* KEYED_FRAGMENT */
+            ))
+          ]);
+        }),
+        128
+        /* KEYED_FRAGMENT */
+      ))
+    ])) : vue.createCommentVNode("v-if", true);
+  }
+  const PagesScheduleByMovieAndCinema = /* @__PURE__ */ _export_sfc(_sfc_main$v, [["render", _sfc_render$u], ["__scopeId", "data-v-391676ca"], ["__file", "E:/Senior_2/cinema/vueDemo/pages/schedule/byMovieAndCinema.vue"]]);
+  const _sfc_main$u = {
+    data() {
+      return {
+        cinemaLocation: {
+          longitude: "",
+          latitude: ""
+        },
+        covers: [
+          {
+            latitude: "",
+            longitude: "",
+            iconPath: "/static/Location.png"
+          },
+          {
+            latitude: "",
+            longitude: "",
+            iconPath: "/static/LocationPerson.png"
+          }
+        ]
+      };
+    },
+    onLoad: function(option) {
+      this.cinemaX = uni.getStorageSync("cinemaX");
+      this.cinemaY = uni.getStorageSync("cinemaY");
+      this.cinemaLocation.longitude = this.cinemaX;
+      this.cinemaLocation.latitude = this.cinemaY;
+      this.covers[0].longitude = this.cinemaX;
+      this.covers[0].latitude = this.cinemaY;
+      formatAppLog("log", "at pages/map/map.vue:42", "cinemaLocation", this.cinemaLocation);
+      uni.getLocation({
+        success: (res) => {
+          formatAppLog("log", "at pages/map/map.vue:45", "当前位置的经度：", res.longitude);
+          formatAppLog("log", "at pages/map/map.vue:46", "当前位置的纬度：", res.latitude);
+          this.covers[1].longitude = res.longitude;
+          this.covers[1].latitude = res.latitude;
+          formatAppLog("log", "at pages/map/map.vue:49", "标记", this.covers);
+        }
+      });
+    },
+    onBackPress: function(option) {
+      uni.removeStorageSync("cinemaX");
+      uni.removeStorageSync("cinemaY");
+    },
+    methods: {}
+  };
+  function _sfc_render$t(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock("view", null, [
+      vue.createElementVNode("view", { class: "page-body" }, [
+        vue.createElementVNode("view", { class: "page-section page-section-gap" }, [
+          vue.createElementVNode("map", {
+            class: "cinema_map",
+            style: { "width": "100%" },
+            latitude: this.cinemaLocation.latitude,
+            longitude: this.cinemaLocation.longitude,
+            markers: $data.covers
+          }, null, 8, ["latitude", "longitude", "markers"])
+        ])
+      ])
+    ]);
+  }
+  const PagesMapMap = /* @__PURE__ */ _export_sfc(_sfc_main$u, [["render", _sfc_render$t], ["__scopeId", "data-v-e06b858f"], ["__file", "E:/Senior_2/cinema/vueDemo/pages/map/map.vue"]]);
+  const _sfc_main$t = {
+    data() {
+      return {
+        requestFlag: 0,
+        scheduleData: {},
+        seatData: [],
+        selectCnt: 0,
+        selectPrice: 0,
+        selectedData: [],
+        ordersData: [],
+        houseRow: "",
+        houseColumn: "",
+        selectList: []
+      };
+    },
+    onLoad: function(option) {
+      this.scheduleId = uni.getStorageSync("scheduleId");
+      this.houseId = uni.getStorageSync("houseId");
+      this.cinemaId = uni.getStorageSync("cinemaId");
+      this.movieId = uni.getStorageSync("movieId");
+      let schedule = {
+        "scheduleId": this.scheduleId,
+        "cinemaId": this.cinemaId,
+        "movieId": this.movieId,
+        "houseId": this.houseId
+      };
+      uni.request({
+        url: "/api/schedule/infoById",
+        method: "GET",
+        dataType: "json",
+        data: schedule,
+        success: (res) => {
+          this.scheduleData = res.data.data;
+          uni.request({
+            url: "/api/cinema/infoById",
+            method: "GET",
+            dataType: "json",
+            data: schedule,
+            success: (res2) => {
+              this.scheduleData.cinemaName = res2.data.data.cinemaName;
+              uni.request({
+                url: "/api/movie/infoMovieById",
+                method: "GET",
+                dataType: "json",
+                data: schedule,
+                success: (res3) => {
+                  this.scheduleData.movieNameCn = res3.data.data.movie.movieNameCn;
+                  uni.request({
+                    url: "/api/house/infoById",
+                    method: "GET",
+                    dataType: "json",
+                    data: schedule,
+                    success: (res4) => {
+                      this.scheduleData.houseName = res4.data.data.houseName;
+                      this.scheduleData.houseSeats = res4.data.data.houseSeats;
+                      this.houseRow = parseInt(res4.data.data.houseX);
+                      this.houseColumn = parseInt(res4.data.data.houseY);
+                      for (let i2 = 1; i2 < this.houseRow + 1; i2++) {
+                        let row = [{
+                          seatState: "",
+                          seatX: "",
+                          seatY: ""
+                        }];
+                        for (let j2 = 1; j2 < this.houseColumn + 1; j2++) {
+                          let temp_row = {
+                            seatState: "",
+                            seatX: "",
+                            seatY: ""
+                          };
+                          temp_row.seatState = 0;
+                          temp_row.seatX = j2;
+                          temp_row.seatY = i2;
+                          row.push(temp_row);
+                        }
+                        this.seatData.push(
+                          row
+                        );
+                      }
+                      for (let i2 = 0; i2 < this.seatData.length; i2++) {
+                        for (let j2 = 0; j2 < this.seatData[i2].length; j2++) {
+                          if (this.seatData[i2][j2].seatState == "" && this.seatData[i2][j2].seatX == "" && this.seatData[i2][j2].seatY == "") {
+                            this.seatData[i2].splice(
+                              j2,
+                              1
+                            );
+                          }
+                        }
+                      }
+                      uni.request({
+                        url: "/api/orders/infoByScheduleId",
+                        method: "GET",
+                        dataType: "json",
+                        data: schedule,
+                        success: (res5) => {
+                          this.ordersData = res5.data.data;
+                          formatAppLog("log", "at pages/schedule/selectSeat.vue:207", "this.ordersData", this.ordersData);
+                          for (let i2 = 0; i2 < this.ordersData.length; i2++) {
+                            let boughtCnt = this.ordersData[i2].ordersSeat.split(" ").length;
+                            for (let j2 = 0; j2 < boughtCnt; j2++) {
+                              let temp_seat = this.ordersData[i2].ordersSeat.split(" ")[j2];
+                              let temp_x = temp_seat.split("/")[1] - 1;
+                              let temp_y = temp_seat.split("/")[0] - 1;
+                              this.seatData[temp_y][temp_x].seatState = 2;
+                            }
+                          }
+                          this.requestFlag = 1;
+                        }
+                      });
+                      formatAppLog(
+                        "log",
+                        "at pages/schedule/selectSeat.vue:222",
+                        "this.houseRow",
+                        this.houseRow
+                      );
+                      formatAppLog(
+                        "log",
+                        "at pages/schedule/selectSeat.vue:225",
+                        "this.houseColumn",
+                        this.houseColumn
+                      );
+                      formatAppLog("log", "at pages/schedule/selectSeat.vue:228", "info", this.scheduleData);
+                      formatAppLog(
+                        "log",
+                        "at pages/schedule/selectSeat.vue:230",
+                        "seatData",
+                        this.seatData
+                      );
+                    }
+                  });
+                }
+              });
+            }
+          });
+        }
+      });
+    },
+    onBackPress: function(option) {
+      formatAppLog("log", "at pages/schedule/selectSeat.vue:245", "退出场次页面");
+      uni.removeStorageSync("scheduleId");
+      uni.removeStorageSync("houseId");
+    },
+    methods: {
+      selectSeat(x, y2) {
+        formatAppLog("log", "at pages/schedule/selectSeat.vue:252", x + 1, "排", y2 + 1, "座");
+        formatAppLog("log", "at pages/schedule/selectSeat.vue:253", "数量", x * this.houseColumn + (y2 + 1));
+        formatAppLog("log", "at pages/schedule/selectSeat.vue:254", "座位状态", this.seatData[x][y2].seatState);
+        if (this.seatData[x][y2].seatState == 2) {
+          return;
+        } else {
+          if (this.seatData[x][y2].seatState == 0 && this.selectCnt < 4) {
+            this.seatData[x][y2].seatState = 1;
+            this.selectCnt++;
+            let tmep_info = x + 1 + "排" + (y2 + 1) + "座";
+            this.selectList.push(tmep_info);
+            formatAppLog("log", "at pages/schedule/selectSeat.vue:263", "this.selectList", this.selectList);
+            let temp_price = parseFloat(this.selectPrice) + parseFloat(this.scheduleData.schedulePrice);
+            this.selectPrice = temp_price.toFixed(1);
+          } else if (this.seatData[x][y2].seatState == 1) {
+            this.seatData[x][y2].seatState = 0;
+            this.selectCnt--;
+            let tmep_info = x + 1 + "排" + (y2 + 1) + "座";
+            this.selectList = this.selectList.filter((item) => item !== tmep_info);
+            formatAppLog("log", "at pages/schedule/selectSeat.vue:272", "this.selectList", this.selectList);
+            let temp_price = parseFloat(this.selectPrice) - parseFloat(this.scheduleData.schedulePrice);
+            this.selectPrice = temp_price.toFixed(1);
+          } else {
+            uni.showToast({
+              title: "最多选座四人",
+              icon: "error",
+              mask: "true"
+            });
+          }
+        }
+        formatAppLog("log", "at pages/schedule/selectSeat.vue:283", "已选座位数量", this.selectCnt);
+      },
+      popSeatList(res) {
+        let temp_x = res[0];
+        let x = temp_x - 1;
+        let temp_y = res[2];
+        let y2 = temp_y - 1;
+        this.selectCnt--;
+        this.seatData[x][y2].seatState = 0;
+        this.selectList = this.selectList.filter((item) => item !== res);
+        let temp_price = parseFloat(this.selectPrice) - parseFloat(this.scheduleData.schedulePrice);
+        this.selectPrice = temp_price.toFixed(1);
+      },
+      scheduleBymovie() {
+        this.token = uni.getStorageSync("token");
+        if (this.token) {
+          this.$refs.buyDialog.open();
+          formatAppLog("log", "at pages/schedule/selectSeat.vue:302", "yes");
+        } else {
+          this.$refs.alertDialog.open();
+          formatAppLog("log", "at pages/schedule/selectSeat.vue:306", "no");
+        }
+        formatAppLog("log", "at pages/schedule/selectSeat.vue:308", "seatList", this.selectList);
+      },
+      buyConfirm() {
+        formatAppLog("log", "at pages/schedule/selectSeat.vue:312", this.selectList);
+        let selectListStr = "";
+        for (let i2 = 0; i2 < this.seatData.length; i2++) {
+          for (let j2 = 0; j2 < this.seatData[i2].length; j2++) {
+            if (this.seatData[i2][j2].seatState == 1) {
+              selectListStr = selectListStr + this.seatData[i2][j2].seatY + "/" + this.seatData[i2][j2].seatX + " ";
+            }
+          }
+        }
+        selectListStr = selectListStr.slice(0, -1);
+        formatAppLog("log", "at pages/schedule/selectSeat.vue:322", "selectListStr", selectListStr);
+        let schedule = {
+          "scheduleId": this.scheduleId,
+          "ordersSeat": selectListStr
+        };
+        formatAppLog("log", "at pages/schedule/selectSeat.vue:327", "schedule", schedule);
+        uni.request({
+          url: "/api/orders/infoSeatFlag",
+          method: "GET",
+          dataType: "json",
+          data: schedule,
+          header: {
+            "Authorization": this.token
+          },
+          success: (res) => {
+            formatAppLog("log", "at pages/schedule/selectSeat.vue:337", "res", res.data.data);
+            if (res.data.data == false) {
+              this.userId = uni.getStorageSync("userId");
+              this.token = uni.getStorageSync("token");
+              let price_sum = parseFloat(0);
+              for (let i2 = 0; i2 < this.selectCnt; i2++) {
+                price_sum = parseFloat(price_sum) + parseFloat(this.scheduleData.schedulePrice);
+              }
+              formatAppLog("log", "at pages/schedule/selectSeat.vue:345", "选座", selectListStr);
+              let pay = {
+                "userId": this.userId,
+                "scheduleId": this.scheduleId,
+                "ordersSeat": selectListStr,
+                "ordersState": 1,
+                "ordersPrice": price_sum
+              };
+              uni.request({
+                url: "/api/orders/create",
+                method: "POST",
+                dataType: "json",
+                data: pay,
+                header: {
+                  "Authorization": this.token
+                },
+                success: (res2) => {
+                  formatAppLog("log", "at pages/schedule/selectSeat.vue:362", "订单", res2.data);
+                  uni.showToast({
+                    title: "购票成功",
+                    icon: "true",
+                    mask: "true"
+                  });
+                  uni.removeStorageSync("scheduleId");
+                  uni.removeStorageSync("houseId");
+                  uni.navigateBack({
+                    delta: 1
+                  });
+                }
+              });
+            } else {
+              this.$refs.payDialog.open();
+            }
+          }
+        });
+      },
+      payConfirm() {
+        uni.removeStorageSync("scheduleId");
+        uni.removeStorageSync("houseId");
+        uni.navigateBack({
+          delta: 1
+        });
+      },
+      dialogConfirm() {
+        uni.clearStorageSync();
+        uni.reLaunch({
+          url: "/pages/user/login"
+        });
+      },
+      dialogClose() {
+      }
+    }
+  };
+  function _sfc_render$s(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_popup_dialog = resolveEasycom(vue.resolveDynamicComponent("uni-popup-dialog"), __easycom_8$1);
+    const _component_uni_popup = resolveEasycom(vue.resolveDynamicComponent("uni-popup"), __easycom_9$1);
+    return vue.openBlock(), vue.createElementBlock(
+      vue.Fragment,
+      null,
+      [
+        this.requestFlag == 1 ? (vue.openBlock(), vue.createElementBlock("view", { key: 0 }, [
+          vue.createElementVNode(
+            "view",
+            {
+              class: "selectSeat",
+              style: vue.normalizeStyle("height:" + (this.houseRow * 110 + 60 + 130 + 400) + "rpx;")
+            },
+            [
+              vue.createElementVNode(
+                "movable-area",
+                {
+                  class: "house_area",
+                  style: vue.normalizeStyle("height:" + (this.houseRow * 110 + 60 + 130) + "rpx;width:100vw;")
+                },
+                [
+                  vue.createElementVNode("movable-view", {
+                    class: "seat_area",
+                    style: vue.normalizeStyle("height:" + (this.houseRow * 110 + 60 + 130) + "rpx;width:100vw;"),
+                    direction: "all",
+                    inertia: true,
+                    scale: true,
+                    "scale-min": 0.95,
+                    "scale-max": 2
+                  }, [
+                    vue.createElementVNode(
+                      "view",
+                      { class: "screen" },
+                      vue.toDisplayString(this.scheduleData.houseName),
+                      1
+                      /* TEXT */
+                    ),
+                    vue.createElementVNode("view", {
+                      style: { "width": "100vw", "height": "30rpx" },
+                      class: "screen_mid"
+                    }, "银幕中央"),
+                    (vue.openBlock(true), vue.createElementBlock(
+                      vue.Fragment,
+                      null,
+                      vue.renderList(this.seatData, (item, index) => {
+                        return vue.openBlock(), vue.createElementBlock("view", {
+                          class: "seats",
+                          key: index
+                        }, [
+                          (vue.openBlock(true), vue.createElementBlock(
+                            vue.Fragment,
+                            null,
+                            vue.renderList(this.seatData[index], (item2, indexColumn) => {
+                              return vue.openBlock(), vue.createElementBlock("view", {
+                                class: "seats_for",
+                                key: indexColumn,
+                                onClick: ($event) => $options.selectSeat(index, indexColumn)
+                              }, [
+                                this.seatData[index][indexColumn].seatState == 0 && index * this.houseColumn + (indexColumn + 1) <= this.scheduleData.houseSeats ? (vue.openBlock(), vue.createElementBlock("image", {
+                                  key: 0,
+                                  class: "unselectSeat",
+                                  src: "/static/unselected.png",
+                                  mode: "aspectFit"
+                                })) : vue.createCommentVNode("v-if", true),
+                                this.seatData[index][indexColumn].seatState == 1 && index * this.houseColumn + (indexColumn + 1) <= this.scheduleData.houseSeats ? (vue.openBlock(), vue.createElementBlock("image", {
+                                  key: 1,
+                                  class: "unselectSeat",
+                                  src: "/static/selected.png",
+                                  mode: "aspectFit"
+                                })) : vue.createCommentVNode("v-if", true),
+                                this.seatData[index][indexColumn].seatState == 2 && index * this.houseColumn + (indexColumn + 1) <= this.scheduleData.houseSeats ? (vue.openBlock(), vue.createElementBlock("image", {
+                                  key: 2,
+                                  class: "unselectSeat",
+                                  src: "/static/bought.png",
+                                  mode: "aspectFit"
+                                })) : vue.createCommentVNode("v-if", true)
+                              ], 8, ["onClick"]);
+                            }),
+                            128
+                            /* KEYED_FRAGMENT */
+                          ))
+                        ]);
+                      }),
+                      128
+                      /* KEYED_FRAGMENT */
+                    ))
+                  ], 12, ["scale-min"])
+                ],
+                4
+                /* STYLE */
+              )
+            ],
+            4
+            /* STYLE */
+          ),
+          vue.createElementVNode("view", {
+            class: "buy_info",
+            style: "top:70vh;"
+          }, [
+            vue.createElementVNode("view", { class: "description_seat" }, [
+              vue.createElementVNode("view", { class: "description_seat_unselected" }, [
+                vue.createElementVNode("image", {
+                  style: "width:60rpx;height:60rpx",
+                  src: "/static/unselected.png",
+                  mode: "aspectFit"
+                }),
+                vue.createElementVNode("span", { style: "color: #ffffff;" }, "可选")
+              ]),
+              vue.createElementVNode("view", { class: "description_seat_unselected" }, [
+                vue.createElementVNode("image", {
+                  style: "width:60rpx;height:60rpx",
+                  src: "/static/bought.png",
+                  mode: "aspectFit"
+                }),
+                vue.createElementVNode("span", { style: "color: #ffffff;" }, "已售")
+              ]),
+              vue.createElementVNode("view", { class: "description_seat_unselected" }, [
+                vue.createElementVNode("image", {
+                  style: "width:60rpx;height:60rpx",
+                  src: "/static/selected.png",
+                  mode: "aspectFit"
+                }),
+                vue.createElementVNode("span", { style: "color: #ffffff;" }, "选中")
+              ])
+            ]),
+            this.selectCnt > 0 ? (vue.openBlock(), vue.createElementBlock("view", {
+              key: 0,
+              class: "show_select"
+            }, [
+              (vue.openBlock(true), vue.createElementBlock(
+                vue.Fragment,
+                null,
+                vue.renderList(this.selectList, (item, index) => {
+                  return vue.openBlock(), vue.createElementBlock("button", {
+                    class: "show_select_button",
+                    key: index,
+                    onClick: ($event) => $options.popSeatList(this.selectList[index])
+                  }, vue.toDisplayString(this.selectList[index]), 9, ["onClick"]);
+                }),
+                128
+                /* KEYED_FRAGMENT */
+              ))
+            ])) : vue.createCommentVNode("v-if", true),
+            vue.createElementVNode("view", { class: "buy_button" }, [
+              this.selectCnt > 0 ? (vue.openBlock(), vue.createElementBlock(
+                "button",
+                {
+                  key: 0,
+                  class: "true_button",
+                  "hover-class": "is_hover",
+                  onClick: _cache[0] || (_cache[0] = ($event) => $options.scheduleBymovie())
+                },
+                "￥" + vue.toDisplayString(this.selectPrice) + " 确认选座",
+                1
+                /* TEXT */
+              )) : vue.createCommentVNode("v-if", true),
+              this.selectCnt == 0 ? (vue.openBlock(), vue.createElementBlock("button", {
+                key: 1,
+                class: "false_button"
+              }, "请先选座")) : vue.createCommentVNode("v-if", true)
+            ])
+          ])
+        ])) : vue.createCommentVNode("v-if", true),
+        vue.createElementVNode("view", null, [
+          vue.createCommentVNode(" 提示窗示例 "),
+          vue.createVNode(
+            _component_uni_popup,
+            {
+              ref: "alertDialog",
+              type: "dialog"
+            },
+            {
+              default: vue.withCtx(() => [
+                vue.createVNode(_component_uni_popup_dialog, {
+                  type: _ctx.error,
+                  cancelText: "关闭",
+                  confirmText: "确定",
+                  content: "请先登录",
+                  onConfirm: $options.dialogConfirm,
+                  onClose: $options.dialogClose
+                }, null, 8, ["type", "onConfirm", "onClose"])
+              ]),
+              _: 1
+              /* STABLE */
+            },
+            512
+            /* NEED_PATCH */
+          )
+        ]),
+        vue.createElementVNode("view", null, [
+          vue.createCommentVNode(" 提示窗示例 "),
+          vue.createVNode(
+            _component_uni_popup,
+            {
+              ref: "buyDialog",
+              type: "dialog"
+            },
+            {
+              default: vue.withCtx(() => [
+                vue.createVNode(_component_uni_popup_dialog, {
+                  type: _ctx.error,
+                  cancelText: "关闭",
+                  confirmText: "确定",
+                  content: "请确认购票",
+                  onConfirm: $options.buyConfirm,
+                  onClose: $options.dialogClose
+                }, null, 8, ["type", "onConfirm", "onClose"])
+              ]),
+              _: 1
+              /* STABLE */
+            },
+            512
+            /* NEED_PATCH */
+          )
+        ]),
+        vue.createElementVNode("view", null, [
+          vue.createCommentVNode(" 提示窗示例 "),
+          vue.createVNode(
+            _component_uni_popup,
+            {
+              ref: "payDialog",
+              type: "dialog"
+            },
+            {
+              default: vue.withCtx(() => [
+                vue.createVNode(_component_uni_popup_dialog, {
+                  type: _ctx.error,
+                  cancelText: "关闭",
+                  confirmText: "确定",
+                  content: "座位已售请重新选座",
+                  onConfirm: $options.payConfirm,
+                  onClose: $options.dialogClose
+                }, null, 8, ["type", "onConfirm", "onClose"])
+              ]),
+              _: 1
+              /* STABLE */
+            },
+            512
+            /* NEED_PATCH */
+          )
+        ])
+      ],
+      64
+      /* STABLE_FRAGMENT */
+    );
+  }
+  const PagesScheduleSelectSeat = /* @__PURE__ */ _export_sfc(_sfc_main$t, [["render", _sfc_render$s], ["__scopeId", "data-v-c342b6fe"], ["__file", "E:/Senior_2/cinema/vueDemo/pages/schedule/selectSeat.vue"]]);
+  const _sfc_main$s = {
+    data() {
+      return {
+        ordersData: [],
+        requestFlag: 0,
+        notFlag: 0
+      };
+    },
+    onLoad: function(option) {
+      this.userId = uni.getStorageSync("userId");
+      this.token = uni.getStorageSync("token");
+      let orders = {
+        "userId": this.userId
+      };
+      uni.request({
+        url: "/api/orders/infoByUserId",
+        method: "GET",
+        dataType: "json",
+        data: orders,
+        header: {
+          "Authorization": this.token
+        },
+        success: (res) => {
+          this.ordersData = res.data.data;
+          formatAppLog("log", "at pages/orders/showOrders.vue:45", "orders", this.ordersData.length);
+          for (let i2 = 0; i2 < this.ordersData.length; i2++) {
+            let schedule = {
+              "scheduleId": this.ordersData[i2].scheduleId
+            };
+            uni.request({
+              url: "/api/schedule/infoById",
+              method: "GET",
+              dataType: "json",
+              data: schedule,
+              success: (res2) => {
+                this.ordersData[i2].cinemaId = res2.data.data.cinemaId;
+                this.ordersData[i2].movieId = res2.data.data.movieId;
+                this.ordersData[i2].houseId = res2.data.data.houseId;
+                this.ordersData[i2].scheduleDescription = res2.data.data.scheduleDescription;
+                this.ordersData[i2].scheduleTime = res2.data.data.scheduleTime;
+                let idObject = {
+                  "cinemaId": this.ordersData[i2].cinemaId,
+                  "movieId": this.ordersData[i2].movieId,
+                  "houseId": this.ordersData[i2].houseId
+                };
+                uni.request({
+                  url: "/api/movie/infoMovieById",
+                  method: "GET",
+                  dataType: "json",
+                  data: idObject,
+                  success: (res3) => {
+                    this.ordersData[i2].movieNameCn = res3.data.data.movie.movieNameCn;
+                    this.ordersData[i2].movieUrl = res3.data.data.movie.movieUrl;
+                    uni.request({
+                      url: "/api/cinema/infoById",
+                      method: "GET",
+                      dataType: "json",
+                      data: idObject,
+                      success: (res4) => {
+                        this.ordersData[i2].cinemaName = res4.data.data.cinemaName;
+                        this.ordersData[i2].cinemaPhone = res4.data.data.cinemaPhone;
+                        uni.request({
+                          url: "/api/house/infoById",
+                          method: "GET",
+                          dataType: "json",
+                          data: idObject,
+                          success: (res5) => {
+                            this.ordersData[i2].houseName = res5.data.data.houseName;
+                            this.ordersData[i2].seatString = "";
+                            for (let j2 = 0; j2 < this.ordersData[i2].ordersSeat.split(" ").length; j2++) {
+                              this.ordersData[i2].seatString = this.ordersData[i2].seatString + this.ordersData[i2].ordersSeat.split(" ")[j2][0] + "排" + this.ordersData[i2].ordersSeat.split(" ")[j2][2] + "座  ";
+                            }
+                            if (i2 == this.ordersData.length - 1) {
+                              this.requestFlag = 1;
+                            }
+                            formatAppLog("log", "at pages/orders/showOrders.vue:103", "yes");
+                          }
+                        });
+                      }
+                    });
+                  }
+                });
+              }
+            });
+          }
+          formatAppLog("log", "at pages/orders/showOrders.vue:116", "card", this.ordersData);
+          this.notFlag = 1;
+        }
+      });
+    },
+    methods: {}
+  };
+  function _sfc_render$r(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_card = resolveEasycom(vue.resolveDynamicComponent("uni-card"), __easycom_0$1);
+    return vue.openBlock(), vue.createElementBlock(
+      vue.Fragment,
+      null,
+      [
+        this.requestFlag == 1 && this.ordersData != "" ? (vue.openBlock(), vue.createElementBlock("view", {
+          key: 0,
+          class: "showOrder"
+        }, [
+          (vue.openBlock(true), vue.createElementBlock(
+            vue.Fragment,
+            null,
+            vue.renderList(this.ordersData, (item, index) => {
+              return vue.openBlock(), vue.createElementBlock("view", { key: index }, [
+                vue.createVNode(_component_uni_card, {
+                  title: this.ordersData[index].cinemaName,
+                  "sub-title": this.ordersData[index].movieNameCn + "\n\n" + this.ordersData[index].scheduleTime + "\n\n" + this.ordersData[index].houseName + "\n" + this.ordersData[index].seatString,
+                  thumbnail: this.ordersData[index].movieUrl
+                }, {
+                  default: vue.withCtx(() => [
+                    vue.createElementVNode(
+                      "text",
+                      { class: "uni-body" },
+                      "总价：" + vue.toDisplayString(this.ordersData[index].ordersPrice) + " 元",
+                      1
+                      /* TEXT */
+                    )
+                  ]),
+                  _: 2
+                  /* DYNAMIC */
+                }, 1032, ["title", "sub-title", "thumbnail"])
+              ]);
+            }),
+            128
+            /* KEYED_FRAGMENT */
+          ))
+        ])) : vue.createCommentVNode("v-if", true),
+        this.notFlag == 1 && this.ordersData == "" ? (vue.openBlock(), vue.createElementBlock("view", {
+          key: 1,
+          class: "noOrders"
+        }, [
+          vue.createElementVNode("text", null, "尚无购票记录")
+        ])) : vue.createCommentVNode("v-if", true)
+      ],
+      64
+      /* STABLE_FRAGMENT */
+    );
+  }
+  const PagesOrdersShowOrders = /* @__PURE__ */ _export_sfc(_sfc_main$s, [["render", _sfc_render$r], ["__scopeId", "data-v-4df1c57a"], ["__file", "E:/Senior_2/cinema/vueDemo/pages/orders/showOrders.vue"]]);
+  const _sfc_main$r = {
+    data() {
+      return {
+        scheduleFlag: 0,
+        movieListFlag: 0,
+        scheduleData: [],
+        dateItems: [],
+        dateCurrent: "",
+        items: [],
+        current: 0,
+        scheduleDataByDate: []
+      };
+    },
+    onShow: function(option) {
+      let currentDate = /* @__PURE__ */ new Date();
+      currentDate.setMinutes(currentDate.getMinutes() + 15);
+      let weekDays = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
+      this.cinemaId = uni.getStorageSync("cinemaId");
+      formatAppLog("log", "at pages/schedule/byCinema.vue:83", "this.cinemaId", this.cinemaId);
+      let schedule = {
+        "cinemaId": this.cinemaId
+      };
+      uni.request({
+        url: "/api/schedule/infoByCinema",
+        method: "GET",
+        dataType: "json",
+        data: schedule,
+        success: (res) => {
+          for (let i2 = 0; i2 < res.data.data.length; i2++) {
+            if (currentDate < new Date(res.data.data[i2].scheduleTime)) {
+              this.scheduleData.push(res.data.data[i2]);
+            }
+          }
+          for (let i2 = 0; i2 < this.scheduleData.length; i2++) {
+            this.scheduleData[i2].scheduleTime = new Date(this.scheduleData[i2].scheduleTime);
+            this.scheduleData[i2].scheduleDate = new Date(this.scheduleData[i2].scheduleTime).getFullYear() + "/" + (new Date(this.scheduleData[i2].scheduleTime).getMonth() + 1) + "/" + new Date(this.scheduleData[i2].scheduleTime).getDate();
+          }
+          for (let i2 = 0; i2 < this.scheduleData.length; i2++) {
+            if (!this.dateItems.includes(this.scheduleData[i2].scheduleDate) && this.dateItems.length < 8) {
+              this.dateItems.push(this.scheduleData[i2].scheduleDate);
+            }
+          }
+          this.dateCurrent = this.dateItems[0];
+          let currentDateString = currentDate.getFullYear() + "/" + (currentDate.getMonth() + 1) + "/" + currentDate.getDate();
+          formatAppLog("log", "at pages/schedule/byCinema.vue:122", "currentDateString", currentDateString);
+          for (let i2 = 0; i2 < this.dateItems.length; i2++) {
+            if (this.dateItems[i2] == currentDateString) {
+              this.items.push("今天 " + this.dateItems[i2].split("/")[1] + "月" + this.dateItems[i2].split("/")[2] + "日");
+            } else {
+              this.items.push(weekDays[this.getWeekDay(this.dateItems[i2].split("/")[0], this.dateItems[i2].split("/")[1], this.dateItems[i2].split("/")[2])] + " " + this.dateItems[i2].split("/")[1] + "月" + this.dateItems[i2].split("/")[2] + "日");
+            }
+          }
+          for (let i2 = 0; i2 < this.dateItems.length; i2++) {
+            let row = [{
+              cinemaId: "",
+              houseId: "",
+              movieId: "",
+              scheduleDescription: "",
+              scheduleId: "",
+              schedulePrice: "",
+              scheduleRemain: "",
+              scheduleState: "",
+              scheduleTime: "",
+              scheduleDate: "",
+              movieNameCn: "",
+              movieNameEn: "",
+              movieUrl: "",
+              movieDirector: "",
+              movieRealeasDate: "",
+              movieDuration: ""
+            }];
+            let addCinemaId = {};
+            for (let j2 = 0; j2 < this.scheduleData.length; j2++) {
+              const temp_movieId = this.scheduleData[j2].movieId;
+              if (this.dateItems[i2] == this.scheduleData[j2].scheduleDate) {
+                if (!addCinemaId[temp_movieId]) {
+                  row.push(this.scheduleData[j2]);
+                  addCinemaId[temp_movieId] = true;
+                }
+              }
+            }
+            this.scheduleDataByDate.push(row);
+          }
+          for (let i2 = 0; i2 < this.scheduleDataByDate.length; i2++) {
+            for (let j2 = 0; j2 < this.scheduleDataByDate[i2].length; j2++) {
+              this.scheduleDataByDate[i2][j2].movieNameCn = "";
+              this.scheduleDataByDate[i2][j2].movieNameEn = "";
+              this.scheduleDataByDate[i2][j2].movieUrl = "";
+              this.scheduleDataByDate[i2][j2].movieDirector = "";
+              this.scheduleDataByDate[i2][j2].movieRealeasDate = "";
+              this.scheduleDataByDate[i2][j2].movieDuration = "";
+            }
+          }
+          for (let i2 = 0; i2 < this.scheduleDataByDate.length; i2++) {
+            for (let j2 = 0; j2 < this.scheduleDataByDate[i2].length; j2++) {
+              if (this.scheduleDataByDate[i2][j2].scheduleId == "") {
+                this.scheduleDataByDate[i2].splice(j2, 1);
+              }
+            }
+          }
+          let requests = [];
+          for (let i2 = 0; i2 < this.scheduleDataByDate.length; i2++) {
+            for (let j2 = 0; j2 < this.scheduleDataByDate[i2].length; j2++) {
+              let schedule_movie = {
+                "movieId": this.scheduleDataByDate[i2][j2].movieId
+              };
+              let request = new Promise((resolve, reject) => {
+                uni.request({
+                  url: "/api/movie/infoMovieById",
+                  method: "GET",
+                  dataType: "json",
+                  data: schedule_movie,
+                  success: (res2) => {
+                    this.scheduleDataByDate[i2][j2].movieType = "";
+                    this.scheduleDataByDate[i2][j2].movieNameCn = res2.data.data.movie.movieNameCn;
+                    this.scheduleDataByDate[i2][j2].movieNameEn = res2.data.data.movie.movieNameEn;
+                    this.scheduleDataByDate[i2][j2].movieUrl = res2.data.data.movie.movieUrl;
+                    this.scheduleDataByDate[i2][j2].movieDirector = res2.data.data.movie.movieDirector;
+                    this.scheduleDataByDate[i2][j2].movieRealeasDate = res2.data.data.movie.movieRealeasDate;
+                    this.scheduleDataByDate[i2][j2].movieDuration = res2.data.data.movie.movieDuration;
+                    for (let k = 0; k < res2.data.data.type.length; k++) {
+                      this.scheduleDataByDate[i2][j2].movieType = this.scheduleDataByDate[i2][j2].movieType + " " + res2.data.data.type[k].genreName;
+                    }
+                    resolve();
+                  }
+                });
+              });
+              requests.push(request);
+            }
+          }
+          Promise.all(requests).then(() => {
+            this.movieListFlag = 1;
+            formatAppLog("log", "at pages/schedule/byCinema.vue:222", "this.scheduleData", this.scheduleData);
+            formatAppLog("log", "at pages/schedule/byCinema.vue:223", "this.dateItems", this.dateItems);
+            formatAppLog("log", "at pages/schedule/byCinema.vue:224", "this.items", this.items);
+            formatAppLog("log", "at pages/schedule/byCinema.vue:225", "this.scheduleDataByDate", this.scheduleDataByDate);
+          });
+        }
+      });
+    },
+    onHide: function(option) {
+      this.scheduleFlag = 0;
+      this.movieListFlag = 0, this.scheduleData = [];
+      this.dateItems = [];
+      this.items = [];
+      this.current = 0;
+      this.dateCurrent = "";
+      this.scheduleDataByDate = [];
+      formatAppLog("log", "at pages/schedule/byCinema.vue:240", "页面隐藏");
+    },
+    onBackPress: function(option) {
+      uni.removeStorageSync("cinemaId");
+    },
+    methods: {
+      getWeekDay(year, month, day) {
+        const date = new Date(year, month - 1, day);
+        const weekday = date.getDay();
+        return weekday;
+      },
+      onClickItem(e2) {
+        if (this.current != e2.currentIndex) {
+          this.current = e2.currentIndex;
+          this.dateCurrent = this.dateItems[this.current];
+          formatAppLog("log", "at pages/schedule/byCinema.vue:258", "dateCurrent", this.dateCurrent);
+        }
+      },
+      to_buy(index, listIndex) {
+        uni.setStorageSync("movieId", this.scheduleDataByDate[index][listIndex].movieId);
+        uni.setStorageSync("movieDuration", this.scheduleDataByDate[index][listIndex].movieDuration);
+        uni.setStorageSync("movieType", this.scheduleDataByDate[index][listIndex].movieType);
+        uni.navigateTo({
+          url: "/pages/schedule/byCinemaAndMovie",
+          animationType: "pop-in",
+          animationDuration: 200
+        });
+      }
+    }
+  };
+  function _sfc_render$q(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_segmented_control = resolveEasycom(vue.resolveDynamicComponent("uni-segmented-control"), __easycom_0$4);
+    const _component_uni_list_item = resolveEasycom(vue.resolveDynamicComponent("uni-list-item"), __easycom_2);
+    const _component_uni_list = resolveEasycom(vue.resolveDynamicComponent("uni-list"), __easycom_3);
+    return vue.openBlock(), vue.createElementBlock(
+      vue.Fragment,
+      null,
+      [
+        this.items.length != 0 ? (vue.openBlock(), vue.createElementBlock("view", {
+          key: 0,
+          class: "byCinema"
+        }, [
+          vue.createElementVNode("view", { class: "which_date" }, [
+            this.items.length == 1 ? (vue.openBlock(), vue.createElementBlock("scroll-view", {
+              key: 0,
+              "scroll-x": "true",
+              "show-scrollbar": "false"
+            }, [
+              vue.createVNode(_component_uni_segmented_control, {
+                class: "date1",
+                current: $data.current,
+                values: $data.items,
+                "style-type": "text",
+                "active-color": "#f9da49",
+                onClickItem: $options.onClickItem
+              }, null, 8, ["current", "values", "onClickItem"])
+            ])) : vue.createCommentVNode("v-if", true),
+            this.items.length == 2 ? (vue.openBlock(), vue.createElementBlock("scroll-view", {
+              key: 1,
+              "scroll-x": "true",
+              "show-scrollbar": "false"
+            }, [
+              vue.createVNode(_component_uni_segmented_control, {
+                class: "date2",
+                current: $data.current,
+                values: $data.items,
+                "style-type": "text",
+                "active-color": "#f9da49",
+                onClickItem: $options.onClickItem
+              }, null, 8, ["current", "values", "onClickItem"])
+            ])) : vue.createCommentVNode("v-if", true),
+            this.items.length == 3 ? (vue.openBlock(), vue.createElementBlock("scroll-view", {
+              key: 2,
+              "scroll-x": "true",
+              "show-scrollbar": "false"
+            }, [
+              vue.createVNode(_component_uni_segmented_control, {
+                class: "date3",
+                current: $data.current,
+                values: $data.items,
+                "style-type": "text",
+                "active-color": "#f9da49",
+                onClickItem: $options.onClickItem
+              }, null, 8, ["current", "values", "onClickItem"])
+            ])) : vue.createCommentVNode("v-if", true),
+            this.items.length == 4 ? (vue.openBlock(), vue.createElementBlock("scroll-view", {
+              key: 3,
+              "scroll-x": "true",
+              "show-scrollbar": "false"
+            }, [
+              vue.createVNode(_component_uni_segmented_control, {
+                class: "date4",
+                current: $data.current,
+                values: $data.items,
+                "style-type": "text",
+                "active-color": "#f9da49",
+                onClickItem: $options.onClickItem
+              }, null, 8, ["current", "values", "onClickItem"])
+            ])) : vue.createCommentVNode("v-if", true),
+            this.items.length == 5 ? (vue.openBlock(), vue.createElementBlock("scroll-view", {
+              key: 4,
+              "scroll-x": "true",
+              "show-scrollbar": "false"
+            }, [
+              vue.createVNode(_component_uni_segmented_control, {
+                class: "date5",
+                current: $data.current,
+                values: $data.items,
+                "style-type": "text",
+                "active-color": "#f9da49",
+                onClickItem: $options.onClickItem
+              }, null, 8, ["current", "values", "onClickItem"])
+            ])) : vue.createCommentVNode("v-if", true),
+            this.items.length == 6 ? (vue.openBlock(), vue.createElementBlock("scroll-view", {
+              key: 5,
+              "scroll-x": "true",
+              "show-scrollbar": "false"
+            }, [
+              vue.createVNode(_component_uni_segmented_control, {
+                class: "date6",
+                current: $data.current,
+                values: $data.items,
+                "style-type": "text",
+                "active-color": "#f9da49",
+                onClickItem: $options.onClickItem
+              }, null, 8, ["current", "values", "onClickItem"])
+            ])) : vue.createCommentVNode("v-if", true),
+            this.items.length == 7 ? (vue.openBlock(), vue.createElementBlock("scroll-view", {
+              key: 6,
+              "scroll-x": "true",
+              "show-scrollbar": "false"
+            }, [
+              vue.createVNode(_component_uni_segmented_control, {
+                class: "date7",
+                current: $data.current,
+                values: $data.items,
+                "style-type": "text",
+                "active-color": "#f9da49",
+                onClickItem: $options.onClickItem
+              }, null, 8, ["current", "values", "onClickItem"])
+            ])) : vue.createCommentVNode("v-if", true)
+          ]),
+          this.movieListFlag == 1 ? (vue.openBlock(true), vue.createElementBlock(
+            vue.Fragment,
+            { key: 0 },
+            vue.renderList(this.dateItems, (item, index) => {
+              return vue.openBlock(), vue.createElementBlock("view", {
+                class: "which_movie",
+                key: index
+              }, [
+                (vue.openBlock(true), vue.createElementBlock(
+                  vue.Fragment,
+                  null,
+                  vue.renderList(this.scheduleDataByDate[index], (item2, listIndex) => {
+                    return vue.withDirectives((vue.openBlock(), vue.createElementBlock("view", {
+                      class: "movieList",
+                      key: listIndex
+                    }, [
+                      vue.createVNode(
+                        _component_uni_list,
+                        null,
+                        {
+                          default: vue.withCtx(() => [
+                            vue.createVNode(_component_uni_list_item, {
+                              "show-arrow": "true",
+                              title: this.scheduleDataByDate[index][listIndex].movieNameCn,
+                              ellipsis: "1",
+                              note: this.scheduleDataByDate[index][listIndex].movieNameEn + "\n导演：" + this.scheduleDataByDate[index][listIndex].movieDirector + "\n上映日期：" + this.scheduleDataByDate[index][listIndex].movieReleaseDate + "\n时长：" + this.scheduleDataByDate[index][listIndex].movieDuration + " min",
+                              thumb: this.scheduleDataByDate[index][listIndex].movieUrl,
+                              "thumb-size": "lg",
+                              clickable: "",
+                              onClick: ($event) => $options.to_buy(index, listIndex)
+                            }, null, 8, ["title", "note", "thumb", "onClick"])
+                          ]),
+                          _: 2
+                          /* DYNAMIC */
+                        },
+                        1024
+                        /* DYNAMIC_SLOTS */
+                      )
+                    ])), [
+                      [vue.vShow, $data.dateCurrent === this.dateItems[index]]
+                    ]);
+                  }),
+                  128
+                  /* KEYED_FRAGMENT */
+                ))
+              ]);
+            }),
+            128
+            /* KEYED_FRAGMENT */
+          )) : vue.createCommentVNode("v-if", true)
+        ])) : vue.createCommentVNode("v-if", true),
+        this.items.length == 0 && this.movieListFlag == 1 ? (vue.openBlock(), vue.createElementBlock("view", {
+          key: 1,
+          class: "byMovieNotSchedule"
+        }, [
+          vue.createElementVNode("text", null, "暂无场次 :(")
+        ])) : vue.createCommentVNode("v-if", true)
+      ],
+      64
+      /* STABLE_FRAGMENT */
+    );
+  }
+  const PagesScheduleByCinema = /* @__PURE__ */ _export_sfc(_sfc_main$r, [["render", _sfc_render$q], ["__scopeId", "data-v-16d0d82b"], ["__file", "E:/Senior_2/cinema/vueDemo/pages/schedule/byCinema.vue"]]);
+  const _sfc_main$q = {
+    data() {
+      return {
+        allRequest: 0,
+        scheduleData: [{
+          cinemaId: "",
+          houseId: "",
+          movieId: "",
+          scheduleDescription: "",
+          scheduleId: "",
+          schedulePrice: "",
+          scheduleRemain: "",
+          scheduleState: "",
+          scheduleTime: "",
+          scheduleDate: "",
+          scheduleFinal: "",
+          houseName: ""
+        }],
+        scheduleInfo: {
+          movieNameCn: "",
+          movieNameEn: "",
+          movieUrl: "",
+          movieDuration: "",
+          movieType: "",
+          cinemaName: "",
+          cinemaAddress: "",
+          cinemaX: "",
+          cinemaY: ""
+        },
+        dateItems: [],
+        items: [],
+        dateCurrent: "",
+        current: 0,
+        cinemaLocation: {
+          longitude: "",
+          latitude: ""
+        },
+        scheduleDataByDate: []
+      };
+    },
+    onLoad: function(option) {
+      this.movieId = uni.getStorageSync("movieId");
+      this.movieDuration = uni.getStorageSync("movieDuration");
+      this.movieType = uni.getStorageSync("movieType");
+      this.scheduleInfo.movieDuration = this.movieDuration;
+      this.scheduleInfo.movieType = this.movieType;
+      this.cinemaId = uni.getStorageSync("cinemaId");
+      formatAppLog("log", "at pages/schedule/byCinemaAndMovie.vue:148", "movieId", this.movieId);
+      formatAppLog("log", "at pages/schedule/byCinemaAndMovie.vue:149", "cinemaId", this.cinemaId);
+      let currentDate = /* @__PURE__ */ new Date();
+      currentDate.setMinutes(currentDate.getMinutes() + 15);
+      formatAppLog("log", "at pages/schedule/byCinemaAndMovie.vue:153", "currentDate", currentDate);
+      let weekDays = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
+      let schedule = {
+        "movieId": this.movieId,
+        "cinemaId": this.cinemaId
+      };
+      uni.request({
+        url: "/api/schedule/infoByMovieAndCinema",
+        method: "GET",
+        dataType: "json",
+        data: schedule,
+        success: (res) => {
+          for (let i2 = 0; i2 < res.data.data.length; i2++) {
+            if (currentDate < new Date(res.data.data[i2].scheduleTime)) {
+              this.scheduleData.push(res.data.data[i2]);
+            }
+          }
+          for (let i2 = 0; i2 < this.scheduleData.length; i2++) {
+            if (this.scheduleData[i2].scheduleId == "") {
+              this.scheduleData.splice(i2, 1);
+            }
+          }
+          for (let i2 = 0; i2 < this.scheduleData.length; i2++) {
+            this.scheduleData[i2].scheduleTime = new Date(this.scheduleData[i2].scheduleTime);
+            this.scheduleData[i2].scheduleDate = new Date(this.scheduleData[i2].scheduleTime).getFullYear() + "/" + (new Date(this.scheduleData[i2].scheduleTime).getMonth() + 1) + "/" + new Date(this.scheduleData[i2].scheduleTime).getDate();
+          }
+          for (let i2 = 0; i2 < this.scheduleData.length; i2++) {
+            if (!this.dateItems.includes(this.scheduleData[i2].scheduleDate) && this.dateItems.length < 8) {
+              this.dateItems.push(this.scheduleData[i2].scheduleDate);
+            }
+          }
+          this.dateCurrent = this.dateItems[0];
+          let currentDateString = currentDate.getFullYear() + "/" + (currentDate.getMonth() + 1) + "/" + currentDate.getDate();
+          formatAppLog("log", "at pages/schedule/byCinemaAndMovie.vue:200", "currentDateString", currentDateString);
+          for (let i2 = 0; i2 < this.dateItems.length; i2++) {
+            if (this.dateItems[i2] == currentDateString) {
+              this.items.push("今天 " + this.dateItems[i2].split("/")[1] + "月" + this.dateItems[i2].split("/")[2] + "日");
+            } else {
+              this.items.push(weekDays[this.getWeekDay(this.dateItems[i2].split("/")[0], this.dateItems[i2].split("/")[1], this.dateItems[i2].split("/")[2])] + " " + this.dateItems[i2].split("/")[1] + "月" + this.dateItems[i2].split("/")[2] + "日");
+            }
+          }
+          for (let i2 = 0; i2 < this.dateItems.length; i2++) {
+            let row = [{
+              cinemaId: "",
+              houseId: "",
+              movieId: "",
+              scheduleDate: "",
+              scheduleDescription: "",
+              scheduleId: "",
+              schedulePrice: "",
+              scheduleRemain: "",
+              scheduleState: "",
+              scheduleTime: "",
+              scheduleFinal: ""
+            }];
+            for (let j2 = 0; j2 < this.scheduleData.length; j2++) {
+              if (this.dateItems[i2] == this.scheduleData[j2].scheduleDate) {
+                row.push(this.scheduleData[j2]);
+              }
+            }
+            this.scheduleDataByDate.push(row);
+          }
+          for (let i2 = 0; i2 < this.scheduleDataByDate.length; i2++) {
+            for (let j2 = 0; j2 < this.scheduleDataByDate[i2].length; j2++) {
+              this.scheduleDataByDate[i2][j2].scheduleFinal = new Date(this.scheduleDataByDate[i2][j2].scheduleTime);
+              let temp_minutes = this.scheduleDataByDate[i2][j2].scheduleFinal.getMinutes() + parseInt(this.scheduleInfo.movieDuration);
+              this.scheduleDataByDate[i2][j2].scheduleFinal.setMinutes(temp_minutes);
+            }
+          }
+          for (let i2 = 0; i2 < this.scheduleDataByDate.length; i2++) {
+            for (let j2 = 0; j2 < this.scheduleDataByDate[i2].length; j2++) {
+              if (this.scheduleDataByDate[i2][j2].scheduleId == "") {
+                this.scheduleDataByDate[i2].splice(j2, 1);
+              }
+            }
+          }
+          uni.request({
+            url: "/api/movie/infoMovieById",
+            method: "GET",
+            dataType: "json",
+            data: schedule,
+            success: (res2) => {
+              this.scheduleInfo.movieNameCn = res2.data.data.movie.movieNameCn;
+              this.scheduleInfo.movieNameEn = res2.data.data.movie.movieNameEn;
+              this.scheduleInfo.movieUrl = res2.data.data.movie.movieUrl;
+              uni.request({
+                url: "/api/cinema/infoById",
+                method: "GET",
+                dataType: "json",
+                data: schedule,
+                success: (res3) => {
+                  this.scheduleInfo.cinemaName = res3.data.data.cinemaName;
+                  this.scheduleInfo.cinemaAddress = res3.data.data.cinemaAddress;
+                  this.scheduleInfo.cinemaX = res3.data.data.cinemaX;
+                  this.scheduleInfo.cinemaY = res3.data.data.cinemaY;
+                  let requests = [];
+                  for (let i2 = 0; i2 < this.scheduleDataByDate.length; i2++) {
+                    for (let j2 = 0; j2 < this.scheduleDataByDate[i2].length; j2++) {
+                      let house = {
+                        "houseId": this.scheduleDataByDate[i2][j2].houseId
+                      };
+                      let request = new Promise((resolve, reject) => {
+                        uni.request({
+                          url: "/api/house/infoById",
+                          method: "GET",
+                          dataType: "json",
+                          data: house,
+                          success: (res4) => {
+                            this.scheduleDataByDate[i2][j2].houseName = res4.data.data.houseName;
+                            resolve();
+                          }
+                        });
+                      });
+                      requests.push(request);
+                    }
+                  }
+                  Promise.all(requests).then(() => {
+                    this.allRequest = 1;
+                  });
+                }
+              });
+            }
+          });
+        }
+      });
+    },
+    onBackPress: function(option) {
+      formatAppLog("log", "at pages/schedule/byCinemaAndMovie.vue:327", "退出场次页面");
+      uni.removeStorageSync("movieId");
+      uni.removeStorageSync("movieDuration");
+      uni.removeStorageSync("movieType");
+    },
+    methods: {
+      getWeekDay(year, month, day) {
+        const date = new Date(year, month - 1, day);
+        const weekday = date.getDay();
+        return weekday;
+      },
+      onClickItem(e2) {
+        if (this.current != e2.currentIndex) {
+          this.current = e2.currentIndex;
+          this.dateCurrent = this.dateItems[this.current];
+          formatAppLog("log", "at pages/schedule/byCinemaAndMovie.vue:343", "dateCurrent", this.dateCurrent);
+        }
+      },
+      to_map(res) {
+        uni.setStorageSync("cinemaX", res.cinemaX);
+        uni.setStorageSync("cinemaY", res.cinemaY);
+        uni.navigateTo({
+          url: "/pages/map/map",
+          animationType: "pop-in",
+          animationDuration: 200
+        });
+      },
+      to_selection_seat(id, time, houseId) {
+        let clickTime = /* @__PURE__ */ new Date();
+        clickTime.setMinutes(clickTime.getMinutes() + 15);
+        if (clickTime < time) {
+          uni.setStorageSync("scheduleId", id);
+          uni.setStorageSync("houseId", houseId);
+          uni.navigateTo({
+            url: "/pages/schedule/selectSeat",
+            animationType: "pop-in",
+            animationDuration: 200
+          });
+        } else {
+          uni.showToast({
+            title: "该场次已停售，请前往前台购票",
+            icon: "error",
+            mask: "true"
+          });
+        }
+      }
+    }
+  };
+  function _sfc_render$p(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_1$1);
+    const _component_uni_list_item = resolveEasycom(vue.resolveDynamicComponent("uni-list-item"), __easycom_2);
+    const _component_uni_list = resolveEasycom(vue.resolveDynamicComponent("uni-list"), __easycom_3);
+    const _component_uni_segmented_control = resolveEasycom(vue.resolveDynamicComponent("uni-segmented-control"), __easycom_0$4);
+    const _component_uni_dateformat = resolveEasycom(vue.resolveDynamicComponent("uni-dateformat"), __easycom_4$1);
+    return this.allRequest == 1 ? (vue.openBlock(), vue.createElementBlock("view", {
+      key: 0,
+      class: "byMovieAndCinema"
+    }, [
+      vue.createElementVNode("view", { class: "cinemaDetail" }, [
+        vue.createVNode(_component_uni_list, null, {
+          default: vue.withCtx(() => [
+            vue.createVNode(_component_uni_list_item, {
+              title: this.scheduleInfo.cinemaName,
+              ellipsis: "2",
+              note: this.scheduleInfo.cinemaAddress,
+              clickable: "",
+              onClick: _cache[0] || (_cache[0] = ($event) => $options.to_map(this.scheduleInfo))
+            }, {
+              footer: vue.withCtx(() => [
+                vue.createVNode(_component_uni_icons, {
+                  class: "mapIcon",
+                  type: "location-filled",
+                  size: "30",
+                  color: "#f9da49"
+                })
+              ]),
+              _: 1
+              /* STABLE */
+            }, 8, ["title", "note"])
+          ]),
+          _: 1
+          /* STABLE */
+        }),
+        vue.createTextVNode("> ")
+      ]),
+      vue.createElementVNode("view", { class: "movieDetail" }, [
+        vue.createElementVNode("image", {
+          class: "movieImg",
+          src: this.scheduleInfo.movieUrl
+        }, null, 8, ["src"]),
+        vue.createElementVNode("text", { class: "titleGap" }, '" "'),
+        vue.createElementVNode(
+          "text",
+          { class: "movieTitle" },
+          vue.toDisplayString(this.scheduleInfo.movieNameCn),
+          1
+          /* TEXT */
+        ),
+        vue.createElementVNode(
+          "text",
+          { class: "movieTitle0" },
+          vue.toDisplayString(this.scheduleInfo.movieNameEn),
+          1
+          /* TEXT */
+        ),
+        vue.createElementVNode(
+          "text",
+          { class: "movieNote" },
+          vue.toDisplayString(this.scheduleInfo.movieDuration) + " 分钟 | " + vue.toDisplayString(this.scheduleInfo.movieType),
+          1
+          /* TEXT */
+        ),
+        vue.createElementVNode("text", { class: "titleGap" }, '" "'),
+        vue.createElementVNode("view", { class: "movieLine" })
+      ]),
+      vue.createElementVNode("view", { class: "which_date" }, [
+        this.items.length == 1 ? (vue.openBlock(), vue.createElementBlock("scroll-view", {
+          key: 0,
+          "scroll-x": "true",
+          "show-scrollbar": "false"
+        }, [
+          vue.createVNode(_component_uni_segmented_control, {
+            class: "date1",
+            current: $data.current,
+            values: $data.items,
+            "style-type": "text",
+            "active-color": "#f9da49",
+            onClickItem: $options.onClickItem
+          }, null, 8, ["current", "values", "onClickItem"])
+        ])) : vue.createCommentVNode("v-if", true),
+        this.items.length == 2 ? (vue.openBlock(), vue.createElementBlock("scroll-view", {
+          key: 1,
+          "scroll-x": "true",
+          "show-scrollbar": "false"
+        }, [
+          vue.createVNode(_component_uni_segmented_control, {
+            class: "date2",
+            current: $data.current,
+            values: $data.items,
+            "style-type": "text",
+            "active-color": "#f9da49",
+            onClickItem: $options.onClickItem
+          }, null, 8, ["current", "values", "onClickItem"])
+        ])) : vue.createCommentVNode("v-if", true),
+        this.items.length == 3 ? (vue.openBlock(), vue.createElementBlock("scroll-view", {
+          key: 2,
+          "scroll-x": "true",
+          "show-scrollbar": "false"
+        }, [
+          vue.createVNode(_component_uni_segmented_control, {
+            class: "date3",
+            current: $data.current,
+            values: $data.items,
+            "style-type": "text",
+            "active-color": "#f9da49",
+            onClickItem: $options.onClickItem
+          }, null, 8, ["current", "values", "onClickItem"])
+        ])) : vue.createCommentVNode("v-if", true),
+        this.items.length == 4 ? (vue.openBlock(), vue.createElementBlock("scroll-view", {
+          key: 3,
+          "scroll-x": "true",
+          "show-scrollbar": "false"
+        }, [
+          vue.createVNode(_component_uni_segmented_control, {
+            class: "date4",
+            current: $data.current,
+            values: $data.items,
+            "style-type": "text",
+            "active-color": "#f9da49",
+            onClickItem: $options.onClickItem
+          }, null, 8, ["current", "values", "onClickItem"])
+        ])) : vue.createCommentVNode("v-if", true),
+        this.items.length == 5 ? (vue.openBlock(), vue.createElementBlock("scroll-view", {
+          key: 4,
+          "scroll-x": "true",
+          "show-scrollbar": "false"
+        }, [
+          vue.createVNode(_component_uni_segmented_control, {
+            class: "date5",
+            current: $data.current,
+            values: $data.items,
+            "style-type": "text",
+            "active-color": "#f9da49",
+            onClickItem: $options.onClickItem
+          }, null, 8, ["current", "values", "onClickItem"])
+        ])) : vue.createCommentVNode("v-if", true),
+        this.items.length == 6 ? (vue.openBlock(), vue.createElementBlock("scroll-view", {
+          key: 5,
+          "scroll-x": "true",
+          "show-scrollbar": "false"
+        }, [
+          vue.createVNode(_component_uni_segmented_control, {
+            class: "date6",
+            current: $data.current,
+            values: $data.items,
+            "style-type": "text",
+            "active-color": "#f9da49",
+            onClickItem: $options.onClickItem
+          }, null, 8, ["current", "values", "onClickItem"])
+        ])) : vue.createCommentVNode("v-if", true),
+        this.items.length == 7 ? (vue.openBlock(), vue.createElementBlock("scroll-view", {
+          key: 6,
+          "scroll-x": "true",
+          "show-scrollbar": "false"
+        }, [
+          vue.createVNode(_component_uni_segmented_control, {
+            class: "date7",
+            current: $data.current,
+            values: $data.items,
+            "style-type": "text",
+            "active-color": "#f9da49",
+            onClickItem: $options.onClickItem
+          }, null, 8, ["current", "values", "onClickItem"])
+        ])) : vue.createCommentVNode("v-if", true)
+      ]),
+      (vue.openBlock(true), vue.createElementBlock(
+        vue.Fragment,
+        null,
+        vue.renderList(this.dateItems, (item, index) => {
+          return vue.openBlock(), vue.createElementBlock("view", {
+            class: "which_cinema",
+            key: index
+          }, [
+            (vue.openBlock(true), vue.createElementBlock(
+              vue.Fragment,
+              null,
+              vue.renderList(this.scheduleDataByDate[index], (item2, listIndex) => {
+                return vue.withDirectives((vue.openBlock(), vue.createElementBlock("view", {
+                  class: "cinemaList",
+                  key: listIndex
+                }, [
+                  vue.createVNode(
+                    _component_uni_list,
+                    null,
+                    {
+                      default: vue.withCtx(() => [
+                        vue.createVNode(_component_uni_list_item, {
+                          title: this.scheduleDataByDate[index][listIndex].scheduleDescription,
+                          ellipsis: "2",
+                          note: this.scheduleDataByDate[index][listIndex].houseName,
+                          clickable: "",
+                          onClick: ($event) => $options.to_selection_seat(this.scheduleDataByDate[index][listIndex].scheduleId, this.scheduleDataByDate[index][listIndex].scheduleTime, this.scheduleDataByDate[index][listIndex].houseId)
+                        }, {
+                          footer: vue.withCtx(() => [
+                            vue.createElementVNode("view", { class: "rightInfo" }, [
+                              vue.createElementVNode(
+                                "text",
+                                { class: "price" },
+                                "￥" + vue.toDisplayString(this.scheduleDataByDate[index][listIndex].schedulePrice),
+                                1
+                                /* TEXT */
+                              ),
+                              vue.createElementVNode("button", {
+                                class: "buy_button",
+                                "hover-class": "is_buy_hover",
+                                size: "mini"
+                              }, "购票")
+                            ])
+                          ]),
+                          header: vue.withCtx(() => [
+                            vue.createElementVNode("view", { class: "scheduleWhichTime" }, [
+                              vue.createVNode(_component_uni_dateformat, {
+                                class: "scheduleTime",
+                                date: this.scheduleDataByDate[index][listIndex].scheduleTime,
+                                format: "hh:mm"
+                              }, null, 8, ["date"]),
+                              vue.createElementVNode("view", { class: "finalTime" }, [
+                                vue.createVNode(_component_uni_dateformat, {
+                                  class: "scheduleFinalTime",
+                                  date: this.scheduleDataByDate[index][listIndex].scheduleFinal,
+                                  format: "hh:mm"
+                                }, null, 8, ["date"]),
+                                vue.createElementVNode("text", { class: "finalTimeText" }, " 结束")
+                              ])
+                            ])
+                          ]),
+                          _: 2
+                          /* DYNAMIC */
+                        }, 1032, ["title", "note", "onClick"])
+                      ]),
+                      _: 2
+                      /* DYNAMIC */
+                    },
+                    1024
+                    /* DYNAMIC_SLOTS */
+                  )
+                ])), [
+                  [vue.vShow, $data.dateCurrent === this.dateItems[index]]
+                ]);
+              }),
+              128
+              /* KEYED_FRAGMENT */
+            ))
+          ]);
+        }),
+        128
+        /* KEYED_FRAGMENT */
+      ))
+    ])) : vue.createCommentVNode("v-if", true);
+  }
+  const PagesScheduleByCinemaAndMovie = /* @__PURE__ */ _export_sfc(_sfc_main$q, [["render", _sfc_render$p], ["__scopeId", "data-v-cd380a94"], ["__file", "E:/Senior_2/cinema/vueDemo/pages/schedule/byCinemaAndMovie.vue"]]);
+  const _sfc_main$p = {
+    name: "uniTh",
+    options: {
+      virtualHost: true
+    },
+    components: {},
+    emits: ["sort-change", "filter-change"],
+    props: {
+      width: {
+        type: [String, Number],
+        default: ""
+      },
+      align: {
+        type: String,
+        default: "left"
+      },
+      rowspan: {
+        type: [Number, String],
+        default: 1
+      },
+      colspan: {
+        type: [Number, String],
+        default: 1
+      },
+      sortable: {
+        type: Boolean,
+        default: false
+      },
+      filterType: {
+        type: String,
+        default: ""
+      },
+      filterData: {
+        type: Array,
+        default() {
+          return [];
+        }
+      },
+      filterDefaultValue: {
+        type: [Array, String],
+        default() {
+          return "";
+        }
+      }
+    },
+    data() {
+      return {
+        border: false,
+        ascending: false,
+        descending: false
+      };
+    },
+    computed: {
+      // 根据props中的width属性 自动匹配当前th的宽度(px)
+      customWidth() {
+        if (typeof this.width === "number") {
+          return this.width;
+        } else if (typeof this.width === "string") {
+          let regexHaveUnitPx = new RegExp(/^[1-9][0-9]*px$/g);
+          let regexHaveUnitRpx = new RegExp(/^[1-9][0-9]*rpx$/g);
+          let regexHaveNotUnit = new RegExp(/^[1-9][0-9]*$/g);
+          if (this.width.match(regexHaveUnitPx) !== null) {
+            return this.width.replace("px", "");
+          } else if (this.width.match(regexHaveUnitRpx) !== null) {
+            let numberRpx = Number(this.width.replace("rpx", ""));
+            let widthCoe = uni.getSystemInfoSync().screenWidth / 750;
+            return Math.round(numberRpx * widthCoe);
+          } else if (this.width.match(regexHaveNotUnit) !== null) {
+            return this.width;
+          } else {
+            return "";
+          }
+        } else {
+          return "";
+        }
+      },
+      contentAlign() {
+        let align = "left";
+        switch (this.align) {
+          case "left":
+            align = "flex-start";
+            break;
+          case "center":
+            align = "center";
+            break;
+          case "right":
+            align = "flex-end";
+            break;
+        }
+        return align;
+      }
+    },
+    created() {
+      this.root = this.getTable("uniTable");
+      this.rootTr = this.getTable("uniTr");
+      this.rootTr.minWidthUpdate(this.customWidth ? this.customWidth : 140);
+      this.border = this.root.border;
+      this.root.thChildren.push(this);
+    },
+    methods: {
+      sort() {
+        if (!this.sortable)
+          return;
+        this.clearOther();
+        if (!this.ascending && !this.descending) {
+          this.ascending = true;
+          this.$emit("sort-change", { order: "ascending" });
+          return;
+        }
+        if (this.ascending && !this.descending) {
+          this.ascending = false;
+          this.descending = true;
+          this.$emit("sort-change", { order: "descending" });
+          return;
+        }
+        if (!this.ascending && this.descending) {
+          this.ascending = false;
+          this.descending = false;
+          this.$emit("sort-change", { order: null });
+        }
+      },
+      ascendingFn() {
+        this.clearOther();
+        this.ascending = !this.ascending;
+        this.descending = false;
+        this.$emit("sort-change", { order: this.ascending ? "ascending" : null });
+      },
+      descendingFn() {
+        this.clearOther();
+        this.descending = !this.descending;
+        this.ascending = false;
+        this.$emit("sort-change", { order: this.descending ? "descending" : null });
+      },
+      clearOther() {
+        this.root.thChildren.map((item) => {
+          if (item !== this) {
+            item.ascending = false;
+            item.descending = false;
+          }
+          return item;
+        });
+      },
+      ondropdown(e2) {
+        this.$emit("filter-change", e2);
+      },
+      /**
+       * 获取父元素实例
+       */
+      getTable(name) {
+        let parent = this.$parent;
+        let parentName = parent.$options.name;
+        while (parentName !== name) {
+          parent = parent.$parent;
+          if (!parent)
+            return false;
+          parentName = parent.$options.name;
+        }
+        return parent;
+      }
+    }
+  };
+  function _sfc_render$o(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock(
+      "view",
+      {
+        class: vue.normalizeClass(["uni-table-th", { "table--border": $data.border }]),
+        style: vue.normalizeStyle({ width: $options.customWidth + "px", "text-align": $props.align })
+      },
+      [
+        vue.renderSlot(_ctx.$slots, "default", {}, void 0, true)
+      ],
+      6
+      /* CLASS, STYLE */
+    );
+  }
+  const __easycom_6$1 = /* @__PURE__ */ _export_sfc(_sfc_main$p, [["render", _sfc_render$o], ["__scopeId", "data-v-bf970acd"], ["__file", "E:/Senior_2/cinema/vueDemo/uni_modules/uni-table/components/uni-th/uni-th.vue"]]);
+  const _sfc_main$o = {
+    name: "TableCheckbox",
+    emits: ["checkboxSelected"],
+    props: {
+      indeterminate: {
+        type: Boolean,
+        default: false
+      },
+      checked: {
+        type: [Boolean, String],
+        default: false
+      },
+      disabled: {
+        type: Boolean,
+        default: false
+      },
+      index: {
+        type: Number,
+        default: -1
+      },
+      cellData: {
+        type: Object,
+        default() {
+          return {};
+        }
+      }
+    },
+    watch: {
+      checked(newVal) {
+        if (typeof this.checked === "boolean") {
+          this.isChecked = newVal;
+        } else {
+          this.isChecked = true;
+        }
+      },
+      indeterminate(newVal) {
+        this.isIndeterminate = newVal;
+      }
+    },
+    data() {
+      return {
+        isChecked: false,
+        isDisabled: false,
+        isIndeterminate: false
+      };
+    },
+    created() {
+      if (typeof this.checked === "boolean") {
+        this.isChecked = this.checked;
+      }
+      this.isDisabled = this.disabled;
+    },
+    methods: {
+      selected() {
+        if (this.isDisabled)
+          return;
+        this.isIndeterminate = false;
+        this.isChecked = !this.isChecked;
+        this.$emit("checkboxSelected", {
+          checked: this.isChecked,
+          data: this.cellData
+        });
+      }
+    }
+  };
+  function _sfc_render$n(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock("view", {
+      class: "uni-table-checkbox",
+      onClick: _cache[0] || (_cache[0] = (...args) => $options.selected && $options.selected(...args))
+    }, [
+      !$props.indeterminate ? (vue.openBlock(), vue.createElementBlock(
+        "view",
+        {
+          key: 0,
+          class: vue.normalizeClass(["checkbox__inner", { "is-checked": $data.isChecked, "is-disable": $data.isDisabled }])
+        },
+        [
+          vue.createElementVNode("view", { class: "checkbox__inner-icon" })
+        ],
+        2
+        /* CLASS */
+      )) : (vue.openBlock(), vue.createElementBlock("view", {
+        key: 1,
+        class: "checkbox__inner checkbox--indeterminate"
+      }, [
+        vue.createElementVNode("view", { class: "checkbox__inner-icon" })
+      ]))
+    ]);
+  }
+  const tableCheckbox = /* @__PURE__ */ _export_sfc(_sfc_main$o, [["render", _sfc_render$n], ["__scopeId", "data-v-25e435b1"], ["__file", "E:/Senior_2/cinema/vueDemo/uni_modules/uni-table/components/uni-tr/table-checkbox.vue"]]);
+  const _sfc_main$n = {
+    name: "uniTr",
+    components: { tableCheckbox },
+    props: {
+      disabled: {
+        type: Boolean,
+        default: false
+      },
+      keyValue: {
+        type: [String, Number],
+        default: ""
+      }
+    },
+    options: {
+      virtualHost: true
+    },
+    data() {
+      return {
+        value: false,
+        border: false,
+        selection: false,
+        widthThArr: [],
+        ishead: true,
+        checked: false,
+        indeterminate: false
+      };
+    },
+    created() {
+      this.root = this.getTable();
+      this.head = this.getTable("uniThead");
+      if (this.head) {
+        this.ishead = false;
+        this.head.init(this);
+      }
+      this.border = this.root.border;
+      this.selection = this.root.type;
+      this.root.trChildren.push(this);
+      const rowData = this.root.data.find((v2) => v2[this.root.rowKey] === this.keyValue);
+      if (rowData) {
+        this.rowData = rowData;
+      }
+      this.root.isNodata();
+    },
+    mounted() {
+      if (this.widthThArr.length > 0) {
+        const selectionWidth = this.selection === "selection" ? 50 : 0;
+        this.root.minWidth = this.widthThArr.reduce((a2, b2) => Number(a2) + Number(b2)) + selectionWidth;
+      }
+    },
+    unmounted() {
+      const index = this.root.trChildren.findIndex((i2) => i2 === this);
+      this.root.trChildren.splice(index, 1);
+      this.root.isNodata();
+    },
+    methods: {
+      minWidthUpdate(width) {
+        this.widthThArr.push(width);
+      },
+      // 选中
+      checkboxSelected(e2) {
+        let rootData = this.root.data.find((v2) => v2[this.root.rowKey] === this.keyValue);
+        this.checked = e2.checked;
+        this.root.check(rootData || this, e2.checked, rootData ? this.keyValue : null);
+      },
+      change(e2) {
+        this.root.trChildren.forEach((item) => {
+          if (item === this) {
+            this.root.check(this, e2.detail.value.length > 0 ? true : false);
+          }
+        });
+      },
+      /**
+       * 获取父元素实例
+       */
+      getTable(name = "uniTable") {
+        let parent = this.$parent;
+        let parentName = parent.$options.name;
+        while (parentName !== name) {
+          parent = parent.$parent;
+          if (!parent)
+            return false;
+          parentName = parent.$options.name;
+        }
+        return parent;
+      }
+    }
+  };
+  function _sfc_render$m(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_table_checkbox = vue.resolveComponent("table-checkbox");
+    return vue.openBlock(), vue.createElementBlock("view", { class: "uni-table-tr" }, [
+      $data.selection === "selection" ? (vue.openBlock(), vue.createElementBlock(
+        "view",
+        {
+          key: 0,
+          class: vue.normalizeClass(["checkbox", { "tr-table--border": $data.border }])
+        },
+        [
+          vue.createVNode(_component_table_checkbox, {
+            checked: $data.checked,
+            indeterminate: $data.indeterminate,
+            disabled: $props.disabled,
+            onCheckboxSelected: $options.checkboxSelected
+          }, null, 8, ["checked", "indeterminate", "disabled", "onCheckboxSelected"])
+        ],
+        2
+        /* CLASS */
+      )) : vue.createCommentVNode("v-if", true),
+      vue.renderSlot(_ctx.$slots, "default", {}, void 0, true)
+    ]);
+  }
+  const __easycom_7 = /* @__PURE__ */ _export_sfc(_sfc_main$n, [["render", _sfc_render$m], ["__scopeId", "data-v-b48b3e32"], ["__file", "E:/Senior_2/cinema/vueDemo/uni_modules/uni-table/components/uni-tr/uni-tr.vue"]]);
+  const _sfc_main$m = {
+    name: "uniTd",
+    options: {
+      virtualHost: true
+    },
+    props: {
+      width: {
+        type: [String, Number],
+        default: ""
+      },
+      align: {
+        type: String,
+        default: "left"
+      },
+      rowspan: {
+        type: [Number, String],
+        default: 1
+      },
+      colspan: {
+        type: [Number, String],
+        default: 1
+      }
+    },
+    data() {
+      return {
+        border: false
+      };
+    },
+    created() {
+      this.root = this.getTable();
+      this.border = this.root.border;
+    },
+    methods: {
+      /**
+       * 获取父元素实例
+       */
+      getTable() {
+        let parent = this.$parent;
+        let parentName = parent.$options.name;
+        while (parentName !== "uniTable") {
+          parent = parent.$parent;
+          if (!parent)
+            return false;
+          parentName = parent.$options.name;
+        }
+        return parent;
+      }
+    }
+  };
+  function _sfc_render$l(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock(
+      vue.Fragment,
+      null,
+      [
+        vue.createCommentVNode(` :class="{'table--border':border}"  `),
+        vue.createElementVNode(
+          "view",
+          {
+            class: vue.normalizeClass(["uni-table-td", { "table--border": $data.border }]),
+            style: vue.normalizeStyle({ width: $props.width + "px", "text-align": $props.align })
+          },
+          [
+            vue.renderSlot(_ctx.$slots, "default", {}, void 0, true)
+          ],
+          6
+          /* CLASS, STYLE */
+        )
+      ],
+      2112
+      /* STABLE_FRAGMENT, DEV_ROOT_FRAGMENT */
+    );
+  }
+  const __easycom_8 = /* @__PURE__ */ _export_sfc(_sfc_main$m, [["render", _sfc_render$l], ["__scopeId", "data-v-edae4802"], ["__file", "E:/Senior_2/cinema/vueDemo/uni_modules/uni-table/components/uni-td/uni-td.vue"]]);
+  const _sfc_main$l = {
+    name: "uniTable",
+    options: {
+      virtualHost: true
+    },
+    emits: ["selection-change"],
+    props: {
+      data: {
+        type: Array,
+        default() {
+          return [];
+        }
+      },
+      // 是否有竖线
+      border: {
+        type: Boolean,
+        default: false
+      },
+      // 是否显示斑马线
+      stripe: {
+        type: Boolean,
+        default: false
+      },
+      // 多选
+      type: {
+        type: String,
+        default: ""
+      },
+      // 没有更多数据
+      emptyText: {
+        type: String,
+        default: "没有更多数据"
+      },
+      loading: {
+        type: Boolean,
+        default: false
+      },
+      rowKey: {
+        type: String,
+        default: ""
+      }
+    },
+    data() {
+      return {
+        noData: true,
+        minWidth: 0,
+        multiTableHeads: []
+      };
+    },
+    watch: {
+      loading(val) {
+      },
+      data(newVal) {
+        this.theadChildren;
+        if (this.theadChildren) {
+          this.theadChildren.rowspan;
+        }
+        this.noData = false;
+      }
+    },
+    created() {
+      this.trChildren = [];
+      this.thChildren = [];
+      this.theadChildren = null;
+      this.backData = [];
+      this.backIndexData = [];
+    },
+    methods: {
+      isNodata() {
+        this.theadChildren;
+        let rowspan = 1;
+        if (this.theadChildren) {
+          rowspan = this.theadChildren.rowspan;
+        }
+        this.noData = this.trChildren.length - rowspan <= 0;
+      },
+      /**
+       * 选中所有
+       */
+      selectionAll() {
+        let startIndex = 1;
+        let theadChildren = this.theadChildren;
+        if (!this.theadChildren) {
+          theadChildren = this.trChildren[0];
+        } else {
+          startIndex = theadChildren.rowspan - 1;
+        }
+        let isHaveData = this.data && this.data.length > 0;
+        theadChildren.checked = true;
+        theadChildren.indeterminate = false;
+        this.trChildren.forEach((item, index) => {
+          if (!item.disabled) {
+            item.checked = true;
+            if (isHaveData && item.keyValue) {
+              const row = this.data.find((v2) => v2[this.rowKey] === item.keyValue);
+              if (!this.backData.find((v2) => v2[this.rowKey] === row[this.rowKey])) {
+                this.backData.push(row);
+              }
+            }
+            if (index > startIndex - 1 && this.backIndexData.indexOf(index - startIndex) === -1) {
+              this.backIndexData.push(index - startIndex);
+            }
+          }
+        });
+        this.$emit("selection-change", {
+          detail: {
+            value: this.backData,
+            index: this.backIndexData
+          }
+        });
+      },
+      /**
+       * 用于多选表格，切换某一行的选中状态，如果使用了第二个参数，则是设置这一行选中与否（selected 为 true 则选中）
+       */
+      toggleRowSelection(row, selected) {
+        row = [].concat(row);
+        this.trChildren.forEach((item, index) => {
+          const select = row.findIndex((v2) => {
+            if (typeof v2 === "number") {
+              return v2 === index - 1;
+            } else {
+              return v2[this.rowKey] === item.keyValue;
+            }
+          });
+          let ischeck = item.checked;
+          if (select !== -1) {
+            if (typeof selected === "boolean") {
+              item.checked = selected;
+            } else {
+              item.checked = !item.checked;
+            }
+            if (ischeck !== item.checked) {
+              this.check(item.rowData || item, item.checked, item.rowData ? item.keyValue : null, true);
+            }
+          }
+        });
+        this.$emit("selection-change", {
+          detail: {
+            value: this.backData,
+            index: this.backIndexData
+          }
+        });
+      },
+      /**
+       * 用于多选表格，清空用户的选择
+       */
+      clearSelection() {
+        let theadChildren = this.theadChildren;
+        if (!this.theadChildren) {
+          theadChildren = this.trChildren[0];
+        }
+        theadChildren.checked = false;
+        theadChildren.indeterminate = false;
+        this.trChildren.forEach((item) => {
+          item.checked = false;
+        });
+        this.backData = [];
+        this.backIndexData = [];
+        this.$emit("selection-change", {
+          detail: {
+            value: [],
+            index: []
+          }
+        });
+      },
+      /**
+       * 用于多选表格，切换所有行的选中状态
+       */
+      toggleAllSelection() {
+        let list = [];
+        let startIndex = 1;
+        let theadChildren = this.theadChildren;
+        if (!this.theadChildren) {
+          theadChildren = this.trChildren[0];
+        } else {
+          startIndex = theadChildren.rowspan - 1;
+        }
+        this.trChildren.forEach((item, index) => {
+          if (!item.disabled) {
+            if (index > startIndex - 1) {
+              list.push(index - startIndex);
+            }
+          }
+        });
+        this.toggleRowSelection(list);
+      },
+      /**
+       * 选中\取消选中
+       * @param {Object} child
+       * @param {Object} check
+       * @param {Object} rowValue
+       */
+      check(child, check, keyValue, emit) {
+        let theadChildren = this.theadChildren;
+        if (!this.theadChildren) {
+          theadChildren = this.trChildren[0];
+        }
+        let childDomIndex = this.trChildren.findIndex((item, index) => child === item);
+        if (childDomIndex < 0) {
+          childDomIndex = this.data.findIndex((v2) => v2[this.rowKey] === keyValue) + 1;
+        }
+        this.trChildren.filter((v2) => !v2.disabled && v2.keyValue).length;
+        if (childDomIndex === 0) {
+          check ? this.selectionAll() : this.clearSelection();
+          return;
+        }
+        if (check) {
+          if (keyValue) {
+            this.backData.push(child);
+          }
+          this.backIndexData.push(childDomIndex - 1);
+        } else {
+          const index = this.backData.findIndex((v2) => v2[this.rowKey] === keyValue);
+          const idx = this.backIndexData.findIndex((item) => item === childDomIndex - 1);
+          if (keyValue) {
+            this.backData.splice(index, 1);
+          }
+          this.backIndexData.splice(idx, 1);
+        }
+        const domCheckAll = this.trChildren.find((item, index) => index > 0 && !item.checked && !item.disabled);
+        if (!domCheckAll) {
+          theadChildren.indeterminate = false;
+          theadChildren.checked = true;
+        } else {
+          theadChildren.indeterminate = true;
+          theadChildren.checked = false;
+        }
+        if (this.backIndexData.length === 0) {
+          theadChildren.indeterminate = false;
+        }
+        if (!emit) {
+          this.$emit("selection-change", {
+            detail: {
+              value: this.backData,
+              index: this.backIndexData
+            }
+          });
+        }
+      }
+    }
+  };
+  function _sfc_render$k(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock(
+      "view",
+      {
+        class: vue.normalizeClass(["uni-table-scroll", { "table--border": $props.border, "border-none": !$data.noData }])
+      },
+      [
+        vue.createElementVNode(
+          "view",
+          {
+            class: vue.normalizeClass(["uni-table", { "table--stripe": $props.stripe }]),
+            style: vue.normalizeStyle({ "min-width": $data.minWidth + "px" })
+          },
+          [
+            vue.renderSlot(_ctx.$slots, "default", {}, void 0, true),
+            $data.noData ? (vue.openBlock(), vue.createElementBlock("view", {
+              key: 0,
+              class: "uni-table-loading"
+            }, [
+              vue.createElementVNode(
+                "view",
+                {
+                  class: vue.normalizeClass(["uni-table-text", { "empty-border": $props.border }])
+                },
+                vue.toDisplayString($props.emptyText),
+                3
+                /* TEXT, CLASS */
+              )
+            ])) : vue.createCommentVNode("v-if", true),
+            $props.loading ? (vue.openBlock(), vue.createElementBlock(
+              "view",
+              {
+                key: 1,
+                class: vue.normalizeClass(["uni-table-mask", { "empty-border": $props.border }])
+              },
+              [
+                vue.createElementVNode("div", { class: "uni-table--loader" })
+              ],
+              2
+              /* CLASS */
+            )) : vue.createCommentVNode("v-if", true)
+          ],
+          6
+          /* CLASS, STYLE */
+        )
+      ],
+      2
+      /* CLASS */
+    );
+  }
+  const __easycom_9 = /* @__PURE__ */ _export_sfc(_sfc_main$l, [["render", _sfc_render$k], ["__scopeId", "data-v-c1ea9b5d"], ["__file", "E:/Senior_2/cinema/vueDemo/uni_modules/uni-table/components/uni-table/uni-table.vue"]]);
+  const en$2 = {
+    "uni-pagination.prevText": "prev",
+    "uni-pagination.nextText": "next",
+    "uni-pagination.piecePerPage": "piece/page"
+  };
+  const es = {
+    "uni-pagination.prevText": "anterior",
+    "uni-pagination.nextText": "prxima",
+    "uni-pagination.piecePerPage": "Art��culo/P��gina"
+  };
+  const fr = {
+    "uni-pagination.prevText": "précédente",
+    "uni-pagination.nextText": "suivante",
+    "uni-pagination.piecePerPage": "Articles/Pages"
+  };
+  const zhHans$2 = {
+    "uni-pagination.prevText": "上一页",
+    "uni-pagination.nextText": "下一页",
+    "uni-pagination.piecePerPage": "条/页"
+  };
+  const zhHant$2 = {
+    "uni-pagination.prevText": "上一頁",
+    "uni-pagination.nextText": "下一頁",
+    "uni-pagination.piecePerPage": "條/頁"
+  };
+  const messages$1 = {
+    en: en$2,
+    es,
+    fr,
+    "zh-Hans": zhHans$2,
+    "zh-Hant": zhHant$2
+  };
+  const {
+    t: t$3
+  } = initVueI18n(messages$1);
+  const _sfc_main$k = {
+    name: "UniPagination",
+    emits: ["update:modelValue", "input", "change", "pageSizeChange"],
+    props: {
+      value: {
+        type: [Number, String],
+        default: 1
+      },
+      modelValue: {
+        type: [Number, String],
+        default: 1
+      },
+      prevText: {
+        type: String
+      },
+      nextText: {
+        type: String
+      },
+      piecePerPageText: {
+        type: String
+      },
+      current: {
+        type: [Number, String],
+        default: 1
+      },
+      total: {
+        // 数据总量
+        type: [Number, String],
+        default: 0
+      },
+      pageSize: {
+        // 每页数据量
+        type: [Number, String],
+        default: 10
+      },
+      showIcon: {
+        // 是否以 icon 形式展示按钮
+        type: [Boolean, String],
+        default: false
+      },
+      showPageSize: {
+        // 是否以 icon 形式展示按钮
+        type: [Boolean, String],
+        default: false
+      },
+      pagerCount: {
+        type: Number,
+        default: 7
+      },
+      pageSizeRange: {
+        type: Array,
+        default: () => [20, 50, 100, 500]
+      }
+    },
+    data() {
+      return {
+        pageSizeIndex: 0,
+        currentIndex: 1,
+        paperData: [],
+        pickerShow: false
+      };
+    },
+    computed: {
+      piecePerPage() {
+        return this.piecePerPageText || t$3("uni-pagination.piecePerPage");
+      },
+      prevPageText() {
+        return this.prevText || t$3("uni-pagination.prevText");
+      },
+      nextPageText() {
+        return this.nextText || t$3("uni-pagination.nextText");
+      },
+      maxPage() {
+        let maxPage = 1;
+        let total = Number(this.total);
+        let pageSize = Number(this.pageSize);
+        if (total && pageSize) {
+          maxPage = Math.ceil(total / pageSize);
+        }
+        return maxPage;
+      },
+      paper() {
+        const num = this.currentIndex;
+        const pagerCount = this.pagerCount;
+        const total = this.total;
+        const pageSize = this.pageSize;
+        let totalArr = [];
+        let showPagerArr = [];
+        let pagerNum = Math.ceil(total / pageSize);
+        for (let i2 = 0; i2 < pagerNum; i2++) {
+          totalArr.push(i2 + 1);
+        }
+        showPagerArr.push(1);
+        const totalNum = totalArr[totalArr.length - (pagerCount + 1) / 2];
+        totalArr.forEach((item, index) => {
+          if ((pagerCount + 1) / 2 >= num) {
+            if (item < pagerCount + 1 && item > 1) {
+              showPagerArr.push(item);
+            }
+          } else if (num + 2 <= totalNum) {
+            if (item > num - (pagerCount + 1) / 2 && item < num + (pagerCount + 1) / 2) {
+              showPagerArr.push(item);
+            }
+          } else {
+            if ((item > num - (pagerCount + 1) / 2 || pagerNum - pagerCount < item) && item < totalArr[totalArr.length - 1]) {
+              showPagerArr.push(item);
+            }
+          }
+        });
+        if (pagerNum > pagerCount) {
+          if ((pagerCount + 1) / 2 >= num) {
+            showPagerArr[showPagerArr.length - 1] = "...";
+          } else if (num + 2 <= totalNum) {
+            showPagerArr[1] = "...";
+            showPagerArr[showPagerArr.length - 1] = "...";
+          } else {
+            showPagerArr[1] = "...";
+          }
+          showPagerArr.push(totalArr[totalArr.length - 1]);
+        } else {
+          if ((pagerCount + 1) / 2 >= num)
+            ;
+          else if (num + 2 <= totalNum)
+            ;
+          else {
+            showPagerArr.shift();
+            showPagerArr.push(totalArr[totalArr.length - 1]);
+          }
+        }
+        return showPagerArr;
+      }
+    },
+    watch: {
+      current: {
+        immediate: true,
+        handler(val, old) {
+          if (val < 1) {
+            this.currentIndex = 1;
+          } else {
+            this.currentIndex = val;
+          }
+        }
+      },
+      value: {
+        immediate: true,
+        handler(val) {
+          if (Number(this.current) !== 1)
+            return;
+          if (val < 1) {
+            this.currentIndex = 1;
+          } else {
+            this.currentIndex = val;
+          }
+        }
+      },
+      pageSizeIndex(val) {
+        this.$emit("pageSizeChange", this.pageSizeRange[val]);
+      }
+    },
+    methods: {
+      pickerChange(e2) {
+        this.pageSizeIndex = e2.detail.value;
+        this.pickerClick();
+      },
+      pickerClick() {
+      },
+      // 选择标签
+      selectPage(e2, index) {
+        if (parseInt(e2)) {
+          this.currentIndex = e2;
+          this.change("current");
+        } else {
+          let pagerNum = Math.ceil(this.total / this.pageSize);
+          if (index <= 1) {
+            if (this.currentIndex - 5 > 1) {
+              this.currentIndex -= 5;
+            } else {
+              this.currentIndex = 1;
+            }
+            return;
+          }
+          if (index >= 6) {
+            if (this.currentIndex + 5 > pagerNum) {
+              this.currentIndex = pagerNum;
+            } else {
+              this.currentIndex += 5;
+            }
+            return;
+          }
+        }
+      },
+      clickLeft() {
+        if (Number(this.currentIndex) === 1) {
+          return;
+        }
+        this.currentIndex -= 1;
+        this.change("prev");
+      },
+      clickRight() {
+        if (Number(this.currentIndex) >= this.maxPage) {
+          return;
+        }
+        this.currentIndex += 1;
+        this.change("next");
+      },
+      change(e2) {
+        this.$emit("input", this.currentIndex);
+        this.$emit("update:modelValue", this.currentIndex);
+        this.$emit("change", {
+          type: e2,
+          current: this.currentIndex
+        });
+      }
+    }
+  };
+  function _sfc_render$j(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_1$1);
+    return vue.openBlock(), vue.createElementBlock("view", { class: "uni-pagination" }, [
+      $props.showPageSize === true || $props.showPageSize === "true" ? (vue.openBlock(), vue.createElementBlock("picker", {
+        key: 0,
+        class: "select-picker",
+        mode: "selector",
+        value: $data.pageSizeIndex,
+        range: $props.pageSizeRange,
+        onChange: _cache[0] || (_cache[0] = (...args) => $options.pickerChange && $options.pickerChange(...args)),
+        onCancel: _cache[1] || (_cache[1] = (...args) => $options.pickerClick && $options.pickerClick(...args)),
+        onClick: _cache[2] || (_cache[2] = (...args) => $options.pickerClick && $options.pickerClick(...args))
+      }, [
+        vue.createElementVNode("button", {
+          type: "default",
+          size: "mini",
+          plain: true
+        }, [
+          vue.createElementVNode(
+            "text",
+            null,
+            vue.toDisplayString($props.pageSizeRange[$data.pageSizeIndex]) + " " + vue.toDisplayString($options.piecePerPage),
+            1
+            /* TEXT */
+          ),
+          vue.createVNode(_component_uni_icons, {
+            class: "select-picker-icon",
+            type: "arrowdown",
+            size: "12",
+            color: "#999"
+          })
+        ])
+      ], 40, ["value", "range"])) : vue.createCommentVNode("v-if", true),
+      vue.createElementVNode(
+        "view",
+        { class: "uni-pagination__total is-phone-hide" },
+        "共 " + vue.toDisplayString($props.total) + " 条",
+        1
+        /* TEXT */
+      ),
+      vue.createElementVNode("view", {
+        class: vue.normalizeClass(["uni-pagination__btn", $data.currentIndex === 1 ? "uni-pagination--disabled" : "uni-pagination--enabled"]),
+        "hover-class": $data.currentIndex === 1 ? "" : "uni-pagination--hover",
+        "hover-start-time": 20,
+        "hover-stay-time": 70,
+        onClick: _cache[3] || (_cache[3] = (...args) => $options.clickLeft && $options.clickLeft(...args))
+      }, [
+        $props.showIcon === true || $props.showIcon === "true" ? (vue.openBlock(), vue.createBlock(_component_uni_icons, {
+          key: 0,
+          color: "#666",
+          size: "16",
+          type: "left"
+        })) : (vue.openBlock(), vue.createElementBlock(
+          "text",
+          {
+            key: 1,
+            class: "uni-pagination__child-btn"
+          },
+          vue.toDisplayString($options.prevPageText),
+          1
+          /* TEXT */
+        ))
+      ], 10, ["hover-class"]),
+      vue.createElementVNode("view", { class: "uni-pagination__num uni-pagination__num-flex-none" }, [
+        vue.createElementVNode("view", { class: "uni-pagination__num-current" }, [
+          vue.createElementVNode(
+            "text",
+            { class: "uni-pagination__num-current-text is-pc-hide current-index-text" },
+            vue.toDisplayString($data.currentIndex),
+            1
+            /* TEXT */
+          ),
+          vue.createElementVNode(
+            "text",
+            { class: "uni-pagination__num-current-text is-pc-hide" },
+            "/" + vue.toDisplayString($options.maxPage || 0),
+            1
+            /* TEXT */
+          ),
+          (vue.openBlock(true), vue.createElementBlock(
+            vue.Fragment,
+            null,
+            vue.renderList($options.paper, (item, index) => {
+              return vue.openBlock(), vue.createElementBlock("view", {
+                key: index,
+                class: vue.normalizeClass([{ "page--active": item === $data.currentIndex }, "uni-pagination__num-tag tag--active is-phone-hide"]),
+                onClick: ($event) => $options.selectPage(item, index)
+              }, [
+                vue.createElementVNode(
+                  "text",
+                  null,
+                  vue.toDisplayString(item),
+                  1
+                  /* TEXT */
+                )
+              ], 10, ["onClick"]);
+            }),
+            128
+            /* KEYED_FRAGMENT */
+          ))
+        ])
+      ]),
+      vue.createElementVNode("view", {
+        class: vue.normalizeClass(["uni-pagination__btn", $data.currentIndex >= $options.maxPage ? "uni-pagination--disabled" : "uni-pagination--enabled"]),
+        "hover-class": $data.currentIndex === $options.maxPage ? "" : "uni-pagination--hover",
+        "hover-start-time": 20,
+        "hover-stay-time": 70,
+        onClick: _cache[4] || (_cache[4] = (...args) => $options.clickRight && $options.clickRight(...args))
+      }, [
+        $props.showIcon === true || $props.showIcon === "true" ? (vue.openBlock(), vue.createBlock(_component_uni_icons, {
+          key: 0,
+          color: "#666",
+          size: "16",
+          type: "right"
+        })) : (vue.openBlock(), vue.createElementBlock(
+          "text",
+          {
+            key: 1,
+            class: "uni-pagination__child-btn"
+          },
+          vue.toDisplayString($options.nextPageText),
+          1
+          /* TEXT */
+        ))
+      ], 10, ["hover-class"])
+    ]);
+  }
+  const __easycom_10 = /* @__PURE__ */ _export_sfc(_sfc_main$k, [["render", _sfc_render$j], ["__scopeId", "data-v-88b7506d"], ["__file", "E:/Senior_2/cinema/vueDemo/uni_modules/uni-pagination/components/uni-pagination/uni-pagination.vue"]]);
+  const _sfc_main$j = {
+    data() {
+      return {
+        cinemaInfoFlag: 0,
+        isRegister: false,
+        isLogin: false,
+        movieSystemMovieId: 0,
+        movieRequestFlag: 0,
+        cinemaSystemCinemaId: 0,
+        cinemaRequestFlag: 0,
+        houseSystemHouseId: 0,
+        houseRequestFlag: 0,
+        scheduleSystemScheduleId: 0,
+        scheduleRequestFlag: 0,
+        // 校验表单数据
+        loginData: {
+          cinemaPhone: "",
+          cinemaPassword: ""
+        },
+        cinemaData: {
+          cinemaId: "",
+          cinemaName: "",
+          cinemaPassword: "",
+          cinemaPhone: "",
+          cinemaAddress: "",
+          cinemaX: "",
+          cinemaY: ""
+        },
+        // 校验规则
+        rules_login: {
+          cinemaPhone: {
+            rules: [{
+              required: true
+            }]
+          },
+          cinemaPassword: {
+            rules: [{
+              required: true
+            }]
+          }
+        },
+        orderIcon: {
+          color: "#f9da49",
+          size: "60rpx",
+          type: "cart"
+        },
+        infoIcon: {
+          color: "#f9da49",
+          size: "200rpx",
+          type: "shop"
+        },
+        setIcon: {
+          color: "#f9da49",
+          size: "60rpx",
+          type: "gear"
+        },
+        logoutIcon: {
+          color: "#f9da49",
+          size: "60rpx",
+          type: "arrow-left"
+        },
+        adminIcon: {
+          color: "#f9da49",
+          size: "60rpx",
+          type: "bars"
+        },
+        cinemaIcon: {
+          color: "#f9da49",
+          size: "60rpx",
+          type: "info"
+        },
+        chose_cinemaIcon: {
+          color: "#000000",
+          size: "60rpx",
+          type: "info"
+        },
+        movieIcon: {
+          color: "#f9da49",
+          size: "60rpx",
+          type: "images"
+        },
+        chose_movieIcon: {
+          color: "#000000",
+          size: "60rpx",
+          type: "images"
+        },
+        houseIcon: {
+          color: "#f9da49",
+          size: "60rpx",
+          type: "home"
+        },
+        chose_houseIcon: {
+          color: "#000000",
+          size: "60rpx",
+          type: "home"
+        },
+        scheduleIcon: {
+          color: "#f9da49",
+          size: "60rpx",
+          type: "plus"
+        },
+        chose_scheduleIcon: {
+          color: "#000000",
+          size: "60rpx",
+          type: "plus"
+        },
+        webState: 0,
+        movieDataAdminList: [],
+        movieDataAdminListPages: [],
+        cinemaDataAdminList: [],
+        cinemaDataAdminListPages: [],
+        houseDataList: [],
+        houseDataListPages: [],
+        scheduleDataList: [],
+        scheduleDataListPages: [],
+        pageSize: 13,
+        pageCurrent: 1,
+        loading: false,
+        total: 0,
+        pageSizeCinema: 13,
+        pageCurrentCinema: 1,
+        loadingCinema: false,
+        cinemaTotal: 0,
+        pageSizeHouse: 13,
+        pageCurrentHouse: 1,
+        loadingHouse: false,
+        houseTotal: 0,
+        pageSizeSchedule: 13,
+        pageCurrentSchedule: 1,
+        loadingSchedule: false,
+        scheduleTotal: 0,
+        covers: [{
+          latitude: "",
+          longitude: "",
+          iconPath: "/static/Location.png"
+        }]
+      };
+    },
+    onLoad: function(option) {
+      this.cinemaId = uni.getStorageSync("cinemaId");
+      this.token = uni.getStorageSync("token");
+      this.isLogin = uni.getStorageSync("isLogin");
+      let cinema = {
+        "cinemaId": this.cinemaId
+      };
+      uni.request({
+        url: "/api/cinema/info",
+        method: "GET",
+        dataType: "json",
+        data: cinema,
+        header: {
+          "Authorization": this.token
+        },
+        success: (res) => {
+          this.cinemaData.cinemaId = res.data.data.cinemaId;
+          this.cinemaData.cinemaName = res.data.data.cinemaName;
+          this.cinemaData.cinemaPassword = res.data.data.cinemaPassword;
+          this.cinemaData.cinemaPhone = res.data.data.cinemaPhone;
+          this.cinemaData.cinemaAddress = res.data.data.cinemaAddress;
+          this.cinemaData.cinemaX = res.data.data.cinemaX;
+          this.cinemaData.cinemaY = res.data.data.cinemaY;
+          this.covers[0].longitude = this.cinemaData.cinemaX;
+          this.covers[0].latitude = this.cinemaData.cinemaY;
+          this.cinemaInfoFlag = 1;
+        }
+      });
+      uni.request({
+        url: "/api/house/infoByCinemaId",
+        method: "GET",
+        dataType: "json",
+        data: cinema,
+        header: {
+          "Authorization": this.token
+        },
+        success: (res) => {
+          this.houseDataList = res.data.data;
+          let temp_arr = [];
+          for (let i2 = 0; i2 < this.houseDataList.length; i2++) {
+            temp_arr.push(this.houseDataList[i2]);
+            if (temp_arr.length == 13) {
+              this.houseDataListPages.push(temp_arr);
+              temp_arr = [];
+            }
+            if (i2 == this.houseDataList.length - 1) {
+              this.houseDataListPages.push(temp_arr);
+              temp_arr = [];
+            }
+          }
+          formatAppLog("log", "at pages/web/login.vue:513", "house", this.houseDataList);
+          formatAppLog("log", "at pages/web/login.vue:514", "this.houseDataListPages", this.houseDataListPages);
+          this.houseTotal = this.houseDataList.length;
+          this.houseRequestFlag = 1;
+        }
+      });
+      uni.request({
+        url: "/api/movie/info",
+        method: "GET",
+        dataType: "json",
+        success: (res) => {
+          this.movieDataAdminList = res.data.data;
+          let temp_arr = [];
+          for (let i2 = 0; i2 < this.movieDataAdminList.length; i2++) {
+            temp_arr.push(this.movieDataAdminList[i2]);
+            if (temp_arr.length == 13) {
+              this.movieDataAdminListPages.push(temp_arr);
+              temp_arr = [];
+            }
+            if (i2 == this.movieDataAdminList.length - 1) {
+              this.movieDataAdminListPages.push(temp_arr);
+              temp_arr = [];
+            }
+          }
+          formatAppLog("log", "at pages/web/login.vue:540", "movie", this.movieDataAdminList);
+          formatAppLog("log", "at pages/web/login.vue:541", "this.movieDataAdminListPages", this.movieDataAdminListPages);
+          this.total = this.movieDataAdminList.length;
+          this.movieRequestFlag = 1;
+        }
+      });
+      uni.request({
+        url: "/api/cinema/infoAllCinema",
+        method: "GET",
+        dataType: "json",
+        success: (res) => {
+          this.cinemaDataAdminList = res.data.data;
+          let temp_arr = [];
+          for (let i2 = 0; i2 < this.cinemaDataAdminList.length; i2++) {
+            temp_arr.push(this.cinemaDataAdminList[i2]);
+            if (temp_arr.length == 13) {
+              this.cinemaDataAdminListPages.push(temp_arr);
+              temp_arr = [];
+            }
+            if (i2 == this.cinemaDataAdminList.length - 1) {
+              this.cinemaDataAdminListPages.push(temp_arr);
+              temp_arr = [];
+            }
+          }
+          formatAppLog("log", "at pages/web/login.vue:565", "cinema", this.cinemaDataAdminList);
+          formatAppLog("log", "at pages/web/login.vue:566", "this.cinemaDataAdminListPages", this.cinemaDataAdminListPages);
+          this.cinemaTotal = this.cinemaDataAdminList.length;
+          this.cinemaRequestFlag = 1;
+        }
+      });
+      let currentDate = /* @__PURE__ */ new Date();
+      formatAppLog("log", "at pages/web/login.vue:573", "currentDate", currentDate);
+      uni.request({
+        url: "/api/schedule/infoByCinema",
+        method: "GET",
+        dataType: "json",
+        data: cinema,
+        header: {
+          "Authorization": this.token
+        },
+        success: (res) => {
+          for (let i2 = 0; i2 < res.data.data.length; i2++) {
+            if (currentDate < new Date(res.data.data[i2].scheduleTime)) {
+              this.scheduleDataList.push(res.data.data[i2]);
+            }
+          }
+          let requests = [];
+          for (let i2 = 0; i2 < this.scheduleDataList.length; i2++) {
+            let house = {
+              "houseId": this.scheduleDataList[i2].houseId
+            };
+            let request = new Promise((resolve, reject) => {
+              uni.request({
+                url: "/api/house/infoById",
+                method: "GET",
+                dataType: "json",
+                data: house,
+                success: (res2) => {
+                  this.scheduleDataList[i2].houseName = res2.data.data.houseName;
+                  this.scheduleDataList[i2].houseSeats = res2.data.data.houseSeats;
+                  resolve();
+                }
+              });
+            });
+            requests.push(request);
+          }
+          for (let i2 = 0; i2 < this.scheduleDataList.length; i2++) {
+            let movie = {
+              "movieId": this.scheduleDataList[i2].movieId
+            };
+            let request = new Promise((resolve, reject) => {
+              uni.request({
+                url: "/api/movie/infoMovieById",
+                method: "GET",
+                dataType: "json",
+                data: movie,
+                success: (res2) => {
+                  this.scheduleDataList[i2].movieNameCn = res2.data.data.movie.movieNameCn;
+                  resolve();
+                }
+              });
+            });
+            requests.push(request);
+          }
+          Promise.all(requests).then(() => {
+            let temp_arr = [];
+            for (let i2 = 0; i2 < this.scheduleDataList.length; i2++) {
+              temp_arr.push(this.scheduleDataList[i2]);
+              if (temp_arr.length == 13) {
+                this.scheduleDataListPages.push(temp_arr);
+                temp_arr = [];
+              }
+              if (i2 == this.scheduleDataList.length - 1) {
+                this.scheduleDataListPages.push(temp_arr);
+                temp_arr = [];
+              }
+            }
+            formatAppLog("log", "at pages/web/login.vue:644", "schedule", this.scheduleDataList);
+            formatAppLog("log", "at pages/web/login.vue:645", "this.scheduleDataListPages", this.scheduleDataListPages);
+            this.scheduleTotal = this.scheduleDataList.length;
+            this.scheduleRequestFlag = 1;
+          });
+        }
+      });
+    },
+    methods: {
+      err_submit() {
+        if (this.loginData.cinemaPhone && !this.loginData.cinemaPassword) {
+          uni.showToast({
+            title: "请输入密码",
+            icon: "error",
+            mask: "true"
+          });
+        } else {
+          uni.showToast({
+            title: "请输入电话号码",
+            icon: "error",
+            mask: "true"
+          });
+        }
+      },
+      //submit_login函数
+      submit_login(ref) {
+        this.$refs[ref].validate().then((res) => {
+          let cinema = {
+            "cinemaPhone": this.loginData.cinemaPhone,
+            "cinemaPassword": this.loginData.cinemaPassword
+          };
+          uni.request({
+            url: "/api/cinema/login",
+            method: "POST",
+            dataType: "json",
+            data: cinema,
+            success: (res2) => {
+              if (res2.data.code == 0) {
+                formatAppLog("log", "at pages/web/login.vue:690", "调用成功", res2.data.data);
+                uni.setStorageSync("cinemaId", res2.data.data.cinema.cinemaId);
+                uni.setStorageSync("token", res2.data.data.token);
+                uni.setStorageSync("isLogin", true);
+                uni.reLaunch({
+                  url: "/pages/web/login"
+                });
+              }
+              if (res2.data.code == 1) {
+                uni.showToast({
+                  title: res2.data.message,
+                  icon: "error",
+                  mask: "true"
+                });
+              }
+            },
+            fail: (res2) => {
+              formatAppLog("log", "at pages/web/login.vue:709", res2.errMsg);
+              formatAppLog("log", "at pages/web/login.vue:710", "调用接口失败");
+            }
+          });
+        });
+      },
+      to_logout() {
+        this.$refs.alertDialog.open();
+      },
+      dialogConfirm() {
+        uni.clearStorageSync();
+        uni.reLaunch({
+          url: "/pages/web/login"
+        });
+      },
+      movieDeleteConfirm() {
+        formatAppLog("log", "at pages/web/login.vue:726", "movieId", this.movieSystemMovieId);
+        uni.request({
+          url: "/api/movie/deleteByMovieId?movieId=" + this.movieSystemMovieId,
+          method: "DELETE",
+          dataType: "json",
+          header: {
+            "Authorization": this.token
+          },
+          success: (res) => {
+            uni.showToast({
+              title: "删除成功",
+              icon: "true",
+              mask: "true"
+            });
+            uni.reLaunch({
+              url: "/pages/web/login"
+            });
+          }
+        });
+      },
+      cinemaDeleteConfirm() {
+        formatAppLog("log", "at pages/web/login.vue:748", "cinemaId", this.cinemaSystemCinemaId);
+        uni.request({
+          url: "/api/cinema/deleteByCinemaId?cinemaId=" + this.cinemaSystemCinemaId,
+          method: "DELETE",
+          dataType: "json",
+          header: {
+            "Authorization": this.token
+          },
+          success: (res) => {
+            uni.showToast({
+              title: "删除成功",
+              icon: "true",
+              mask: "true"
+            });
+            uni.reLaunch({
+              url: "/pages/web/login"
+            });
+          }
+        });
+      },
+      houseDeleteConfirm() {
+        formatAppLog("log", "at pages/web/login.vue:771", "houseId", this.houseSystemHouseId);
+        uni.request({
+          url: "/api/house/deleteByHouseId?houseId=" + this.houseSystemHouseId,
+          method: "DELETE",
+          dataType: "json",
+          header: {
+            "Authorization": this.token
+          },
+          success: (res) => {
+            uni.showToast({
+              title: "删除成功",
+              icon: "true",
+              mask: "true"
+            });
+            uni.reLaunch({
+              url: "/pages/web/login"
+            });
+          }
+        });
+      },
+      scheduleDeleteConfirm() {
+        formatAppLog("log", "at pages/web/login.vue:794", "scheduleId", this.scheduleSystemScheduleId);
+        uni.request({
+          url: "/api/schedule/deleteByScheduleId?scheduleId=" + this.scheduleSystemScheduleId,
+          method: "DELETE",
+          dataType: "json",
+          header: {
+            "Authorization": this.token
+          },
+          success: (res) => {
+            uni.showToast({
+              title: "删除成功",
+              icon: "true",
+              mask: "true"
+            });
+            uni.reLaunch({
+              url: "/pages/web/login"
+            });
+          }
+        });
+      },
+      dialogClose() {
+      },
+      to_cinema() {
+        this.webState = 0;
+      },
+      to_movie() {
+        this.webState = 1;
+      },
+      to_movie_admin() {
+        this.webState = 0;
+      },
+      to_house() {
+        this.webState = 2;
+      },
+      to_house_admin() {
+        this.webState = 2;
+      },
+      to_schedule() {
+        this.webState = 3;
+      },
+      // 多选
+      selectionChange(e2) {
+        formatAppLog("log", "at pages/web/login.vue:846", e2.detail.index);
+        this.selectedIndexs = e2.detail.index;
+      },
+      // 分页触发
+      change(e2) {
+        this.$refs.table.clearSelection();
+        this.selectedIndexs.length = 0;
+        this.pageCurrent = e2.current;
+      },
+      selectionChangeCinema(e2) {
+        formatAppLog("log", "at pages/web/login.vue:857", e2.detail.index);
+        this.selectedIndexsCinema = e2.detail.index;
+      },
+      changeCinema(e2) {
+        this.$refs.table_cinema.clearSelection();
+        this.selectedIndexsCinema.length = 0;
+        this.pageCurrentCinema = e2.current;
+      },
+      selectionChangeHouse(e2) {
+        formatAppLog("log", "at pages/web/login.vue:867", e2.detail.index);
+        this.selectedIndexsHouse = e2.detail.index;
+      },
+      changeHouse(e2) {
+        this.$refs.table_house.clearSelection();
+        this.selectedIndexsHouse.length = 0;
+        this.pageCurrentHouse = e2.current;
+      },
+      selectionChangeSchedule(e2) {
+        formatAppLog("log", "at pages/web/login.vue:877", e2.detail.index);
+        this.selectedIndexsSchedule = e2.detail.index;
+      },
+      changeSchedule(e2) {
+        this.$refs.table_schedule.clearSelection();
+        this.selectedIndexsSchedule.length = 0;
+        this.pageCurrentSchedule = e2.current;
+      },
+      movie_update(movieId) {
+        uni.navigateTo({
+          url: "/pages/web/movie/movieUpdate?movieId=" + movieId,
+          animationType: "pop-in",
+          animationDuration: 200
+        });
+      },
+      movieUpdate(movieId) {
+        uni.navigateTo({
+          url: "/pages/web/movie/movieUUpdate?movieId=" + movieId,
+          animationType: "pop-in",
+          animationDuration: 200
+        });
+      },
+      cinema_update(cinemaId) {
+        uni.navigateTo({
+          url: "/pages/web/cinema/cinemaUpdate?cinemaId=" + cinemaId,
+          animationType: "pop-in",
+          animationDuration: 200
+        });
+      },
+      cinemaUpdate(cinemaId) {
+        uni.navigateTo({
+          url: "/pages/web/cinema/cinemaUUpdate?cinemaId=" + cinemaId,
+          animationType: "pop-in",
+          animationDuration: 200
+        });
+      },
+      house_update(houseId) {
+        uni.navigateTo({
+          url: "/pages/web/house/houseUpdate?houseId=" + houseId,
+          animationType: "pop-in",
+          animationDuration: 200
+        });
+      },
+      schedule_update(scheduleId) {
+        uni.navigateTo({
+          url: "/pages/web/schedule/scheduleUpdate?scheduleId=" + scheduleId,
+          animationType: "pop-in",
+          animationDuration: 200
+        });
+      },
+      scheduleUpdate(scheduleId) {
+        uni.navigateTo({
+          url: "/pages/web/schedule/scheduleUUpdate?scheduleId=" + scheduleId,
+          animationType: "pop-in",
+          animationDuration: 200
+        });
+      },
+      movie_delete(movieId) {
+        this.$refs.movieDeleteDialog.open();
+        this.movieSystemMovieId = movieId;
+        formatAppLog("log", "at pages/web/login.vue:943", "movieSystemMovieId", this.movieSystemMovieId);
+      },
+      cinema_delete(cinemaId) {
+        this.$refs.cinemaDeleteDialog.open();
+        this.cinemaSystemCinemaId = cinemaId;
+        formatAppLog("log", "at pages/web/login.vue:949", "cinemaSystemCinemaId", this.cinemaSystemCinemaId);
+      },
+      house_delete(houseId) {
+        this.$refs.houseDeleteDialog.open();
+        this.houseSystemHouseId = houseId;
+        formatAppLog("log", "at pages/web/login.vue:955", "houseSystemHouseId", this.houseSystemHouseId);
+      },
+      schedule_delete(scheduleId) {
+        this.$refs.scheduleDeleteDialog.open();
+        this.scheduleSystemScheduleId = scheduleId;
+        formatAppLog("log", "at pages/web/login.vue:960", "scheduleSystemScheduleId", this.scheduleSystemScheduleId);
+      },
+      movie_create() {
+        uni.navigateTo({
+          url: "/pages/web/movie/movieCreate",
+          animationType: "pop-in",
+          animationDuration: 200
+        });
+      },
+      cinema_create() {
+        uni.navigateTo({
+          url: "/pages/web/cinema/cinemaCreate",
+          animationType: "pop-in",
+          animationDuration: 200
+        });
+      },
+      house_create() {
+        uni.navigateTo({
+          url: "/pages/web/house/houseCreate",
+          animationType: "pop-in",
+          animationDuration: 200
+        });
+      },
+      schedule_create() {
+        uni.navigateTo({
+          url: "/pages/web/schedule/scheduleCreate",
+          animationType: "pop-in",
+          animationDuration: 200
+        });
+      }
+    }
+  };
+  function _sfc_render$i(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_1$1);
+    const _component_uni_easyinput = resolveEasycom(vue.resolveDynamicComponent("uni-easyinput"), __easycom_7$1);
+    const _component_uni_forms_item = resolveEasycom(vue.resolveDynamicComponent("uni-forms-item"), __easycom_5$1);
+    const _component_uni_forms = resolveEasycom(vue.resolveDynamicComponent("uni-forms"), __easycom_4$2);
+    const _component_uni_list_item = resolveEasycom(vue.resolveDynamicComponent("uni-list-item"), __easycom_2);
+    const _component_uni_list = resolveEasycom(vue.resolveDynamicComponent("uni-list"), __easycom_3);
+    const _component_uni_th = resolveEasycom(vue.resolveDynamicComponent("uni-th"), __easycom_6$1);
+    const _component_uni_tr = resolveEasycom(vue.resolveDynamicComponent("uni-tr"), __easycom_7);
+    const _component_uni_td = resolveEasycom(vue.resolveDynamicComponent("uni-td"), __easycom_8);
+    const _component_uni_table = resolveEasycom(vue.resolveDynamicComponent("uni-table"), __easycom_9);
+    const _component_uni_pagination = resolveEasycom(vue.resolveDynamicComponent("uni-pagination"), __easycom_10);
+    const _component_uni_popup_dialog = resolveEasycom(vue.resolveDynamicComponent("uni-popup-dialog"), __easycom_8$1);
+    const _component_uni_popup = resolveEasycom(vue.resolveDynamicComponent("uni-popup"), __easycom_9$1);
+    return vue.openBlock(), vue.createElementBlock(
+      vue.Fragment,
+      null,
+      [
+        !$data.isLogin ? (vue.openBlock(), vue.createElementBlock("view", {
+          key: 0,
+          class: "isLogin_false"
+        }, [
+          vue.createTextVNode(" //登录页面 "),
+          !$data.isRegister ? (vue.openBlock(), vue.createElementBlock("view", {
+            key: 0,
+            class: "login"
+          }, [
+            vue.createElementVNode("view", { class: "login_text" }, [
+              vue.createElementVNode("view", { class: "info_login_register" }, [
+                !$data.isRegister ? (vue.openBlock(), vue.createElementBlock("text", {
+                  key: 0,
+                  class: "login_text_true",
+                  onClick: _cache[0] || (_cache[0] = ($event) => $data.isRegister = true)
+                }, "登录")) : vue.createCommentVNode("v-if", true)
+              ]),
+              vue.createElementVNode("view", { class: "info_icon" }, [
+                vue.createVNode(_component_uni_icons, {
+                  type: "contact-filled",
+                  size: "150rpx",
+                  color: "#999999"
+                })
+              ])
+            ]),
+            vue.createElementVNode("view", { class: "login_example" }, [
+              vue.createCommentVNode(" 基础表单校验 "),
+              vue.createVNode(_component_uni_forms, {
+                ref: "loginForm",
+                rules: $data.rules_login,
+                modelValue: $data.loginData
+              }, {
+                default: vue.withCtx(() => [
+                  vue.createVNode(_component_uni_forms_item, { name: "cinemaPhone" }, {
+                    default: vue.withCtx(() => [
+                      vue.createVNode(_component_uni_easyinput, {
+                        prefixIcon: "phone-filled",
+                        modelValue: $data.loginData.cinemaPhone,
+                        "onUpdate:modelValue": _cache[1] || (_cache[1] = ($event) => $data.loginData.cinemaPhone = $event),
+                        placeholder: "请输入电话号码"
+                      }, null, 8, ["modelValue"])
+                    ]),
+                    _: 1
+                    /* STABLE */
+                  }),
+                  vue.createVNode(_component_uni_forms_item, { name: "cinemaPassword" }, {
+                    default: vue.withCtx(() => [
+                      vue.createVNode(_component_uni_easyinput, {
+                        prefixIcon: "locked-filled",
+                        type: "password",
+                        modelValue: $data.loginData.cinemaPassword,
+                        "onUpdate:modelValue": _cache[2] || (_cache[2] = ($event) => $data.loginData.cinemaPassword = $event),
+                        placeholder: "请输入密码"
+                      }, null, 8, ["modelValue"])
+                    ]),
+                    _: 1
+                    /* STABLE */
+                  })
+                ]),
+                _: 1
+                /* STABLE */
+              }, 8, ["rules", "modelValue"]),
+              !$data.loginData.cinemaPhone || !$data.loginData.cinemaPassword ? (vue.openBlock(), vue.createElementBlock("button", {
+                key: 0,
+                class: "false_button",
+                onClick: _cache[3] || (_cache[3] = ($event) => $options.err_submit()),
+                "hover-class": "is_errhover"
+              }, "登录")) : vue.createCommentVNode("v-if", true),
+              $data.loginData.cinemaPhone && $data.loginData.cinemaPassword ? (vue.openBlock(), vue.createElementBlock("button", {
+                key: 1,
+                class: "true_button",
+                onClick: _cache[4] || (_cache[4] = ($event) => $options.submit_login("loginForm")),
+                "hover-class": "is_hover"
+              }, "登录")) : vue.createCommentVNode("v-if", true)
+            ])
+          ])) : vue.createCommentVNode("v-if", true)
+        ])) : vue.createCommentVNode("v-if", true),
+        vue.createCommentVNode("影院账号"),
+        $data.isLogin && this.cinemaId != -1 ? (vue.openBlock(), vue.createElementBlock("view", {
+          key: 1,
+          class: "isCinema_true"
+        }, [
+          vue.createElementVNode("view", { class: "cinema_tabbar" }, [
+            vue.createElementVNode("view", { class: "cinema_admin" }, [
+              vue.createVNode(_component_uni_list, null, {
+                default: vue.withCtx(() => [
+                  vue.createVNode(_component_uni_list_item, {
+                    "show-extra-icon": true,
+                    "extra-icon": $data.adminIcon,
+                    title: "影院管理系统"
+                  }, null, 8, ["extra-icon"]),
+                  vue.createElementVNode("view", { class: "border_line" })
+                ]),
+                _: 1
+                /* STABLE */
+              })
+            ]),
+            vue.createElementVNode("view", { class: "tabbar_info" }, [
+              vue.createVNode(_component_uni_list, null, {
+                default: vue.withCtx(() => [
+                  vue.createElementVNode("view", { class: "border_line" }),
+                  this.webState != 0 ? (vue.openBlock(), vue.createBlock(_component_uni_list_item, {
+                    key: 0,
+                    "show-extra-icon": true,
+                    "extra-icon": $data.cinemaIcon,
+                    title: "影院信息",
+                    clickable: "",
+                    onClick: _cache[5] || (_cache[5] = ($event) => $options.to_cinema())
+                  }, null, 8, ["extra-icon"])) : vue.createCommentVNode("v-if", true),
+                  this.webState == 0 ? (vue.openBlock(), vue.createBlock(_component_uni_list_item, {
+                    key: 1,
+                    class: "chose_cinema",
+                    "show-extra-icon": true,
+                    "extra-icon": $data.chose_cinemaIcon,
+                    title: "影院信息",
+                    clickable: "",
+                    onClick: _cache[6] || (_cache[6] = ($event) => $options.to_cinema())
+                  }, null, 8, ["extra-icon"])) : vue.createCommentVNode("v-if", true),
+                  vue.createElementVNode("view", { class: "border_line" }),
+                  this.webState != 2 ? (vue.openBlock(), vue.createBlock(_component_uni_list_item, {
+                    key: 2,
+                    "show-extra-icon": true,
+                    "extra-icon": $data.houseIcon,
+                    title: "放映厅信息管理",
+                    clickable: "",
+                    onClick: _cache[7] || (_cache[7] = ($event) => $options.to_house())
+                  }, null, 8, ["extra-icon"])) : vue.createCommentVNode("v-if", true),
+                  this.webState == 2 ? (vue.openBlock(), vue.createBlock(_component_uni_list_item, {
+                    key: 3,
+                    class: "chose_house",
+                    "show-extra-icon": true,
+                    "extra-icon": $data.chose_houseIcon,
+                    title: "放映厅信息管理",
+                    clickable: "",
+                    onClick: _cache[8] || (_cache[8] = ($event) => $options.to_house())
+                  }, null, 8, ["extra-icon"])) : vue.createCommentVNode("v-if", true),
+                  vue.createElementVNode("view", { class: "border_line" }),
+                  this.webState != 3 ? (vue.openBlock(), vue.createBlock(_component_uni_list_item, {
+                    key: 4,
+                    "show-extra-icon": true,
+                    "extra-icon": $data.scheduleIcon,
+                    title: "场次信息管理",
+                    clickable: "",
+                    onClick: _cache[9] || (_cache[9] = ($event) => $options.to_schedule())
+                  }, null, 8, ["extra-icon"])) : vue.createCommentVNode("v-if", true),
+                  this.webState == 3 ? (vue.openBlock(), vue.createBlock(_component_uni_list_item, {
+                    key: 5,
+                    class: "chose_schedule",
+                    "show-extra-icon": true,
+                    "extra-icon": $data.chose_scheduleIcon,
+                    title: "场次信息管理",
+                    clickable: "",
+                    onClick: _cache[10] || (_cache[10] = ($event) => $options.to_schedule())
+                  }, null, 8, ["extra-icon"])) : vue.createCommentVNode("v-if", true),
+                  vue.createElementVNode("view", { class: "border_line" }),
+                  vue.createVNode(_component_uni_list_item, {
+                    "show-extra-icon": true,
+                    "extra-icon": $data.logoutIcon,
+                    title: "登出",
+                    clickable: "",
+                    onClick: _cache[11] || (_cache[11] = ($event) => $options.to_logout())
+                  }, null, 8, ["extra-icon"]),
+                  vue.createElementVNode("view", { class: "border_line" })
+                ]),
+                _: 1
+                /* STABLE */
+              })
+            ])
+          ]),
+          this.webState == 0 && this.cinemaInfoFlag == 1 ? (vue.openBlock(), vue.createElementBlock("view", {
+            key: 0,
+            class: "isLogin_true"
+          }, [
+            vue.createElementVNode("view", { class: "isLogin_1" }, [
+              vue.createVNode(_component_uni_list, null, {
+                default: vue.withCtx(() => [
+                  vue.createVNode(_component_uni_list_item, {
+                    "show-extra-icon": true,
+                    "extra-icon": $data.infoIcon,
+                    title: this.cinemaData.cinemaName + "\n" + this.cinemaData.cinemaAddress + "\n电话：" + this.cinemaData.cinemaPhone
+                  }, null, 8, ["extra-icon", "title"])
+                ]),
+                _: 1
+                /* STABLE */
+              })
+            ]),
+            vue.createElementVNode("view", { class: "isLogin_2" }, [
+              vue.createVNode(_component_uni_list, null, {
+                default: vue.withCtx(() => [
+                  vue.createElementVNode("view", { class: "border_line" }),
+                  vue.createElementVNode("map", {
+                    class: "cinema_map",
+                    style: { "width": "100%" },
+                    latitude: this.cinemaData.cinemaY,
+                    longitude: this.cinemaData.cinemaX,
+                    markers: $data.covers
+                  }, null, 8, ["latitude", "longitude", "markers"])
+                ]),
+                _: 1
+                /* STABLE */
+              })
+            ])
+          ])) : vue.createCommentVNode("v-if", true),
+          this.webState == 2 && this.houseRequestFlag == 1 ? (vue.openBlock(), vue.createElementBlock("view", {
+            key: 1,
+            class: "house_info_cinema"
+          }, [
+            vue.createVNode(_component_uni_table, {
+              class: "house_info_admin_table",
+              ref: "table_house",
+              loading: $data.loadingHouse,
+              border: "",
+              stripe: "",
+              emptyText: "暂无更多数据",
+              onSelectionChange: $options.selectionChangeHouse
+            }, {
+              default: vue.withCtx(() => [
+                vue.createVNode(_component_uni_tr, null, {
+                  default: vue.withCtx(() => [
+                    vue.createVNode(_component_uni_th, {
+                      width: "100",
+                      align: "center"
+                    }, {
+                      default: vue.withCtx(() => [
+                        vue.createTextVNode("序号")
+                      ]),
+                      _: 1
+                      /* STABLE */
+                    }),
+                    vue.createVNode(_component_uni_th, {
+                      width: "200",
+                      align: "center"
+                    }, {
+                      default: vue.withCtx(() => [
+                        vue.createTextVNode("放映厅名称")
+                      ]),
+                      _: 1
+                      /* STABLE */
+                    }),
+                    vue.createVNode(_component_uni_th, {
+                      width: "100",
+                      align: "center"
+                    }, {
+                      default: vue.withCtx(() => [
+                        vue.createTextVNode("行数")
+                      ]),
+                      _: 1
+                      /* STABLE */
+                    }),
+                    vue.createVNode(_component_uni_th, {
+                      width: "100",
+                      align: "center"
+                    }, {
+                      default: vue.withCtx(() => [
+                        vue.createTextVNode("列数")
+                      ]),
+                      _: 1
+                      /* STABLE */
+                    }),
+                    vue.createVNode(_component_uni_th, {
+                      width: "50",
+                      align: "center"
+                    }, {
+                      default: vue.withCtx(() => [
+                        vue.createTextVNode("设置")
+                      ]),
+                      _: 1
+                      /* STABLE */
+                    })
+                  ]),
+                  _: 1
+                  /* STABLE */
+                }),
+                (vue.openBlock(true), vue.createElementBlock(
+                  vue.Fragment,
+                  null,
+                  vue.renderList($data.houseDataListPages[$data.pageCurrentHouse - 1], (item, index) => {
+                    return vue.openBlock(), vue.createBlock(
+                      _component_uni_tr,
+                      { key: index },
+                      {
+                        default: vue.withCtx(() => [
+                          vue.createVNode(
+                            _component_uni_td,
+                            { align: "center" },
+                            {
+                              default: vue.withCtx(() => [
+                                vue.createTextVNode(
+                                  vue.toDisplayString(($data.pageCurrentHouse - 1) * 13 + (index + 1)),
+                                  1
+                                  /* TEXT */
+                                )
+                              ]),
+                              _: 2
+                              /* DYNAMIC */
+                            },
+                            1024
+                            /* DYNAMIC_SLOTS */
+                          ),
+                          vue.createVNode(
+                            _component_uni_td,
+                            { align: "center" },
+                            {
+                              default: vue.withCtx(() => [
+                                vue.createTextVNode(
+                                  vue.toDisplayString(item.houseName),
+                                  1
+                                  /* TEXT */
+                                )
+                              ]),
+                              _: 2
+                              /* DYNAMIC */
+                            },
+                            1024
+                            /* DYNAMIC_SLOTS */
+                          ),
+                          vue.createVNode(
+                            _component_uni_td,
+                            { align: "center" },
+                            {
+                              default: vue.withCtx(() => [
+                                vue.createTextVNode(
+                                  vue.toDisplayString(item.houseX),
+                                  1
+                                  /* TEXT */
+                                )
+                              ]),
+                              _: 2
+                              /* DYNAMIC */
+                            },
+                            1024
+                            /* DYNAMIC_SLOTS */
+                          ),
+                          vue.createVNode(
+                            _component_uni_td,
+                            { align: "center" },
+                            {
+                              default: vue.withCtx(() => [
+                                vue.createTextVNode(
+                                  vue.toDisplayString(item.houseY),
+                                  1
+                                  /* TEXT */
+                                )
+                              ]),
+                              _: 2
+                              /* DYNAMIC */
+                            },
+                            1024
+                            /* DYNAMIC_SLOTS */
+                          ),
+                          vue.createVNode(
+                            _component_uni_td,
+                            null,
+                            {
+                              default: vue.withCtx(() => [
+                                vue.createElementVNode("view", { class: "uni-group" }, [
+                                  vue.createElementVNode("button", {
+                                    class: "house_info_admin_button1",
+                                    size: "mini",
+                                    type: "primary",
+                                    onClick: ($event) => $options.house_update($data.houseDataListPages[$data.pageCurrentHouse - 1][index].houseId)
+                                  }, "修改", 8, ["onClick"]),
+                                  vue.createElementVNode("button", {
+                                    class: "house_info_admin_button2",
+                                    size: "mini",
+                                    type: "warn",
+                                    onClick: ($event) => $options.house_delete($data.houseDataListPages[$data.pageCurrentHouse - 1][index].houseId)
+                                  }, "删除", 8, ["onClick"])
+                                ])
+                              ]),
+                              _: 2
+                              /* DYNAMIC */
+                            },
+                            1024
+                            /* DYNAMIC_SLOTS */
+                          )
+                        ]),
+                        _: 2
+                        /* DYNAMIC */
+                      },
+                      1024
+                      /* DYNAMIC_SLOTS */
+                    );
+                  }),
+                  128
+                  /* KEYED_FRAGMENT */
+                ))
+              ]),
+              _: 1
+              /* STABLE */
+            }, 8, ["loading", "onSelectionChange"]),
+            vue.createElementVNode("view", { class: "house_info_admin_box" }, [
+              vue.createVNode(_component_uni_pagination, {
+                class: "house_pages",
+                "show-icon": "",
+                "page-size": $data.pageSizeHouse,
+                current: $data.pageCurrentHouse,
+                total: $data.houseTotal,
+                onChange: $options.changeHouse
+              }, null, 8, ["page-size", "current", "total", "onChange"]),
+              vue.createElementVNode("button", {
+                class: "create_house",
+                size: "mini",
+                onClick: _cache[12] || (_cache[12] = ($event) => $options.house_create())
+              }, "新增放映厅")
+            ])
+          ])) : vue.createCommentVNode("v-if", true),
+          this.webState == 3 && this.scheduleRequestFlag == 1 ? (vue.openBlock(), vue.createElementBlock("view", {
+            key: 2,
+            class: "schedule_info_cinema"
+          }, [
+            vue.createVNode(_component_uni_table, {
+              class: "schedule_info_admin_table",
+              ref: "table_schedule",
+              loading: $data.loadingSchedule,
+              border: "",
+              stripe: "",
+              emptyText: "暂无更多数据",
+              onSelectionChange: $options.selectionChangeSchedule
+            }, {
+              default: vue.withCtx(() => [
+                vue.createVNode(_component_uni_tr, null, {
+                  default: vue.withCtx(() => [
+                    vue.createVNode(_component_uni_th, {
+                      width: "10",
+                      align: "center"
+                    }, {
+                      default: vue.withCtx(() => [
+                        vue.createTextVNode("序号")
+                      ]),
+                      _: 1
+                      /* STABLE */
+                    }),
+                    vue.createVNode(_component_uni_th, {
+                      width: "100",
+                      align: "center"
+                    }, {
+                      default: vue.withCtx(() => [
+                        vue.createTextVNode("电影")
+                      ]),
+                      _: 1
+                      /* STABLE */
+                    }),
+                    vue.createVNode(_component_uni_th, {
+                      width: "100",
+                      align: "center"
+                    }, {
+                      default: vue.withCtx(() => [
+                        vue.createTextVNode("放映厅")
+                      ]),
+                      _: 1
+                      /* STABLE */
+                    }),
+                    vue.createVNode(_component_uni_th, {
+                      width: "200",
+                      align: "center"
+                    }, {
+                      default: vue.withCtx(() => [
+                        vue.createTextVNode("时间")
+                      ]),
+                      _: 1
+                      /* STABLE */
+                    }),
+                    vue.createVNode(_component_uni_th, {
+                      width: "100",
+                      align: "center"
+                    }, {
+                      default: vue.withCtx(() => [
+                        vue.createTextVNode("设置")
+                      ]),
+                      _: 1
+                      /* STABLE */
+                    })
+                  ]),
+                  _: 1
+                  /* STABLE */
+                }),
+                (vue.openBlock(true), vue.createElementBlock(
+                  vue.Fragment,
+                  null,
+                  vue.renderList($data.scheduleDataListPages[$data.pageCurrentSchedule - 1], (item, index) => {
+                    return vue.openBlock(), vue.createBlock(
+                      _component_uni_tr,
+                      { key: index },
+                      {
+                        default: vue.withCtx(() => [
+                          vue.createVNode(
+                            _component_uni_td,
+                            { align: "center" },
+                            {
+                              default: vue.withCtx(() => [
+                                vue.createTextVNode(
+                                  vue.toDisplayString(($data.pageCurrentSchedule - 1) * 13 + (index + 1)),
+                                  1
+                                  /* TEXT */
+                                )
+                              ]),
+                              _: 2
+                              /* DYNAMIC */
+                            },
+                            1024
+                            /* DYNAMIC_SLOTS */
+                          ),
+                          vue.createVNode(
+                            _component_uni_td,
+                            { align: "center" },
+                            {
+                              default: vue.withCtx(() => [
+                                vue.createTextVNode(
+                                  vue.toDisplayString(item.movieNameCn),
+                                  1
+                                  /* TEXT */
+                                )
+                              ]),
+                              _: 2
+                              /* DYNAMIC */
+                            },
+                            1024
+                            /* DYNAMIC_SLOTS */
+                          ),
+                          vue.createVNode(
+                            _component_uni_td,
+                            { align: "center" },
+                            {
+                              default: vue.withCtx(() => [
+                                vue.createTextVNode(
+                                  vue.toDisplayString(item.houseName),
+                                  1
+                                  /* TEXT */
+                                )
+                              ]),
+                              _: 2
+                              /* DYNAMIC */
+                            },
+                            1024
+                            /* DYNAMIC_SLOTS */
+                          ),
+                          vue.createVNode(
+                            _component_uni_td,
+                            { align: "center" },
+                            {
+                              default: vue.withCtx(() => [
+                                vue.createTextVNode(
+                                  vue.toDisplayString(item.scheduleTime),
+                                  1
+                                  /* TEXT */
+                                )
+                              ]),
+                              _: 2
+                              /* DYNAMIC */
+                            },
+                            1024
+                            /* DYNAMIC_SLOTS */
+                          ),
+                          vue.createVNode(
+                            _component_uni_td,
+                            null,
+                            {
+                              default: vue.withCtx(() => [
+                                vue.createElementVNode("view", { class: "uni-group" }, [
+                                  vue.createElementVNode("button", {
+                                    class: "schedule_info_admin_button1",
+                                    size: "mini",
+                                    type: "primary",
+                                    onClick: ($event) => $options.schedule_update($data.scheduleDataListPages[$data.pageCurrentSchedule - 1][index].scheduleId)
+                                  }, "查看", 8, ["onClick"]),
+                                  vue.createElementVNode("button", {
+                                    class: "schedule_info_admin_button1",
+                                    size: "mini",
+                                    type: "primary",
+                                    onClick: ($event) => $options.scheduleUpdate($data.scheduleDataListPages[$data.pageCurrentSchedule - 1][index].scheduleId)
+                                  }, "修改", 8, ["onClick"]),
+                                  vue.createElementVNode("button", {
+                                    class: "schedule_info_admin_button2",
+                                    size: "mini",
+                                    type: "warn",
+                                    onClick: ($event) => $options.schedule_delete($data.scheduleDataListPages[$data.pageCurrentSchedule - 1][index].scheduleId)
+                                  }, "删除", 8, ["onClick"])
+                                ])
+                              ]),
+                              _: 2
+                              /* DYNAMIC */
+                            },
+                            1024
+                            /* DYNAMIC_SLOTS */
+                          )
+                        ]),
+                        _: 2
+                        /* DYNAMIC */
+                      },
+                      1024
+                      /* DYNAMIC_SLOTS */
+                    );
+                  }),
+                  128
+                  /* KEYED_FRAGMENT */
+                ))
+              ]),
+              _: 1
+              /* STABLE */
+            }, 8, ["loading", "onSelectionChange"]),
+            vue.createElementVNode("view", { class: "schedule_info_admin_box" }, [
+              vue.createVNode(_component_uni_pagination, {
+                class: "schedule_pages",
+                "show-icon": "",
+                "page-size": $data.pageSizeSchedule,
+                current: $data.pageCurrentSchedule,
+                total: $data.scheduleTotal,
+                onChange: $options.changeSchedule
+              }, null, 8, ["page-size", "current", "total", "onChange"]),
+              vue.createElementVNode("button", {
+                class: "create_schedule",
+                size: "mini",
+                onClick: _cache[13] || (_cache[13] = ($event) => $options.schedule_create())
+              }, "新增场次")
+            ])
+          ])) : vue.createCommentVNode("v-if", true)
+        ])) : vue.createCommentVNode("v-if", true),
+        vue.createCommentVNode("admin账号"),
+        $data.isLogin && this.cinemaId == -1 ? (vue.openBlock(), vue.createElementBlock("view", {
+          key: 2,
+          class: "isCinema_true"
+        }, [
+          vue.createElementVNode("view", { class: "cinema_tabbar" }, [
+            vue.createElementVNode("view", { class: "cinema_admin" }, [
+              vue.createVNode(_component_uni_list, null, {
+                default: vue.withCtx(() => [
+                  vue.createVNode(_component_uni_list_item, {
+                    "show-extra-icon": true,
+                    "extra-icon": $data.adminIcon,
+                    title: "后台管理系统"
+                  }, null, 8, ["extra-icon"]),
+                  vue.createElementVNode("view", { class: "border_line" })
+                ]),
+                _: 1
+                /* STABLE */
+              })
+            ]),
+            vue.createElementVNode("view", { class: "tabbar_info" }, [
+              vue.createVNode(_component_uni_list, null, {
+                default: vue.withCtx(() => [
+                  vue.createElementVNode("view", { class: "border_line" }),
+                  this.webState != 0 ? (vue.openBlock(), vue.createBlock(_component_uni_list_item, {
+                    key: 0,
+                    "show-extra-icon": true,
+                    "extra-icon": $data.movieIcon,
+                    title: "电影信息管理",
+                    clickable: "",
+                    onClick: _cache[14] || (_cache[14] = ($event) => $options.to_movie_admin())
+                  }, null, 8, ["extra-icon"])) : vue.createCommentVNode("v-if", true),
+                  this.webState == 0 ? (vue.openBlock(), vue.createBlock(_component_uni_list_item, {
+                    key: 1,
+                    class: "chose_movie",
+                    "show-extra-icon": true,
+                    "extra-icon": $data.chose_movieIcon,
+                    title: "电影信息管理",
+                    clickable: "",
+                    onClick: _cache[15] || (_cache[15] = ($event) => $options.to_movie_admin())
+                  }, null, 8, ["extra-icon"])) : vue.createCommentVNode("v-if", true),
+                  vue.createElementVNode("view", { class: "border_line" }),
+                  this.webState != 2 ? (vue.openBlock(), vue.createBlock(_component_uni_list_item, {
+                    key: 2,
+                    "show-extra-icon": true,
+                    "extra-icon": $data.houseIcon,
+                    title: "影院信息管理",
+                    clickable: "",
+                    onClick: _cache[16] || (_cache[16] = ($event) => $options.to_house_admin())
+                  }, null, 8, ["extra-icon"])) : vue.createCommentVNode("v-if", true),
+                  this.webState == 2 ? (vue.openBlock(), vue.createBlock(_component_uni_list_item, {
+                    key: 3,
+                    class: "chose_house",
+                    "show-extra-icon": true,
+                    "extra-icon": $data.chose_houseIcon,
+                    title: "影院信息管理",
+                    clickable: "",
+                    onClick: _cache[17] || (_cache[17] = ($event) => $options.to_house_admin())
+                  }, null, 8, ["extra-icon"])) : vue.createCommentVNode("v-if", true),
+                  vue.createElementVNode("view", { class: "border_line" }),
+                  vue.createVNode(_component_uni_list_item, {
+                    "show-extra-icon": true,
+                    "extra-icon": $data.logoutIcon,
+                    title: "登出",
+                    clickable: "",
+                    onClick: _cache[18] || (_cache[18] = ($event) => $options.to_logout())
+                  }, null, 8, ["extra-icon"]),
+                  vue.createElementVNode("view", { class: "border_line" })
+                ]),
+                _: 1
+                /* STABLE */
+              })
+            ])
+          ]),
+          this.webState == 0 && this.movieRequestFlag == 1 ? (vue.openBlock(), vue.createElementBlock("view", {
+            key: 0,
+            class: "movie_info_admin"
+          }, [
+            vue.createVNode(_component_uni_table, {
+              class: "movie_info_admin_table",
+              ref: "table",
+              loading: $data.loading,
+              border: "",
+              stripe: "",
+              emptyText: "暂无更多数据",
+              onSelectionChange: $options.selectionChange
+            }, {
+              default: vue.withCtx(() => [
+                vue.createVNode(_component_uni_tr, null, {
+                  default: vue.withCtx(() => [
+                    vue.createVNode(_component_uni_th, {
+                      width: "50",
+                      align: "center"
+                    }, {
+                      default: vue.withCtx(() => [
+                        vue.createTextVNode("序号")
+                      ]),
+                      _: 1
+                      /* STABLE */
+                    }),
+                    vue.createVNode(_component_uni_th, {
+                      width: "150",
+                      align: "center"
+                    }, {
+                      default: vue.withCtx(() => [
+                        vue.createTextVNode("电影中文名")
+                      ]),
+                      _: 1
+                      /* STABLE */
+                    }),
+                    vue.createVNode(_component_uni_th, {
+                      width: "150",
+                      align: "center"
+                    }, {
+                      default: vue.withCtx(() => [
+                        vue.createTextVNode("电影外文名")
+                      ]),
+                      _: 1
+                      /* STABLE */
+                    }),
+                    vue.createVNode(_component_uni_th, {
+                      width: "150",
+                      align: "center"
+                    }, {
+                      default: vue.withCtx(() => [
+                        vue.createTextVNode("时长（min）")
+                      ]),
+                      _: 1
+                      /* STABLE */
+                    }),
+                    vue.createVNode(_component_uni_th, { align: "center" }, {
+                      default: vue.withCtx(() => [
+                        vue.createTextVNode("上映日期")
+                      ]),
+                      _: 1
+                      /* STABLE */
+                    }),
+                    vue.createVNode(_component_uni_th, {
+                      width: "250",
+                      align: "center"
+                    }, {
+                      default: vue.withCtx(() => [
+                        vue.createTextVNode("设置")
+                      ]),
+                      _: 1
+                      /* STABLE */
+                    })
+                  ]),
+                  _: 1
+                  /* STABLE */
+                }),
+                (vue.openBlock(true), vue.createElementBlock(
+                  vue.Fragment,
+                  null,
+                  vue.renderList($data.movieDataAdminListPages[$data.pageCurrent - 1], (item, index) => {
+                    return vue.openBlock(), vue.createBlock(
+                      _component_uni_tr,
+                      { key: index },
+                      {
+                        default: vue.withCtx(() => [
+                          vue.createVNode(
+                            _component_uni_td,
+                            { align: "center" },
+                            {
+                              default: vue.withCtx(() => [
+                                vue.createTextVNode(
+                                  vue.toDisplayString(($data.pageCurrent - 1) * 13 + (index + 1)),
+                                  1
+                                  /* TEXT */
+                                )
+                              ]),
+                              _: 2
+                              /* DYNAMIC */
+                            },
+                            1024
+                            /* DYNAMIC_SLOTS */
+                          ),
+                          vue.createVNode(
+                            _component_uni_td,
+                            { align: "center" },
+                            {
+                              default: vue.withCtx(() => [
+                                vue.createTextVNode(
+                                  vue.toDisplayString(item.movieNameCn),
+                                  1
+                                  /* TEXT */
+                                )
+                              ]),
+                              _: 2
+                              /* DYNAMIC */
+                            },
+                            1024
+                            /* DYNAMIC_SLOTS */
+                          ),
+                          vue.createVNode(
+                            _component_uni_td,
+                            { align: "center" },
+                            {
+                              default: vue.withCtx(() => [
+                                vue.createTextVNode(
+                                  vue.toDisplayString(item.movieNameEn),
+                                  1
+                                  /* TEXT */
+                                )
+                              ]),
+                              _: 2
+                              /* DYNAMIC */
+                            },
+                            1024
+                            /* DYNAMIC_SLOTS */
+                          ),
+                          vue.createVNode(
+                            _component_uni_td,
+                            { align: "center" },
+                            {
+                              default: vue.withCtx(() => [
+                                vue.createTextVNode(
+                                  vue.toDisplayString(item.movieDuration),
+                                  1
+                                  /* TEXT */
+                                )
+                              ]),
+                              _: 2
+                              /* DYNAMIC */
+                            },
+                            1024
+                            /* DYNAMIC_SLOTS */
+                          ),
+                          vue.createVNode(
+                            _component_uni_td,
+                            { align: "center" },
+                            {
+                              default: vue.withCtx(() => [
+                                vue.createTextVNode(
+                                  vue.toDisplayString(item.movieReleaseDate),
+                                  1
+                                  /* TEXT */
+                                )
+                              ]),
+                              _: 2
+                              /* DYNAMIC */
+                            },
+                            1024
+                            /* DYNAMIC_SLOTS */
+                          ),
+                          vue.createVNode(
+                            _component_uni_td,
+                            null,
+                            {
+                              default: vue.withCtx(() => [
+                                vue.createElementVNode("view", { class: "uni-group" }, [
+                                  vue.createElementVNode("button", {
+                                    class: "movie_info_admin_button1",
+                                    size: "mini",
+                                    type: "primary",
+                                    onClick: ($event) => $options.movie_update($data.movieDataAdminListPages[$data.pageCurrent - 1][index].movieId)
+                                  }, "查看", 8, ["onClick"]),
+                                  vue.createElementVNode("button", {
+                                    class: "movie_info_admin_button1",
+                                    size: "mini",
+                                    type: "primary",
+                                    onClick: ($event) => $options.movieUpdate($data.movieDataAdminListPages[$data.pageCurrent - 1][index].movieId)
+                                  }, "修改", 8, ["onClick"]),
+                                  vue.createElementVNode("button", {
+                                    class: "movie_info_admin_button2",
+                                    size: "mini",
+                                    type: "warn",
+                                    onClick: ($event) => $options.movie_delete($data.movieDataAdminListPages[$data.pageCurrent - 1][index].movieId)
+                                  }, "删除", 8, ["onClick"])
+                                ])
+                              ]),
+                              _: 2
+                              /* DYNAMIC */
+                            },
+                            1024
+                            /* DYNAMIC_SLOTS */
+                          )
+                        ]),
+                        _: 2
+                        /* DYNAMIC */
+                      },
+                      1024
+                      /* DYNAMIC_SLOTS */
+                    );
+                  }),
+                  128
+                  /* KEYED_FRAGMENT */
+                ))
+              ]),
+              _: 1
+              /* STABLE */
+            }, 8, ["loading", "onSelectionChange"]),
+            vue.createElementVNode("view", { class: "movie_info_admin_box" }, [
+              vue.createVNode(_component_uni_pagination, {
+                class: "movie_pages",
+                "show-icon": "",
+                "page-size": $data.pageSize,
+                current: $data.pageCurrent,
+                total: $data.total,
+                onChange: $options.change
+              }, null, 8, ["page-size", "current", "total", "onChange"]),
+              vue.createElementVNode("button", {
+                class: "create_movie",
+                size: "mini",
+                onClick: _cache[19] || (_cache[19] = ($event) => $options.movie_create())
+              }, "新增电影")
+            ])
+          ])) : vue.createCommentVNode("v-if", true),
+          this.webState == 2 && this.cinemaRequestFlag == 1 ? (vue.openBlock(), vue.createElementBlock("view", {
+            key: 1,
+            class: "cinema_info_admin"
+          }, [
+            vue.createVNode(_component_uni_table, {
+              class: "cinema_info_admin_table",
+              ref: "table_cinema",
+              loading: $data.loadingCinema,
+              border: "",
+              stripe: "",
+              emptyText: "暂无更多数据",
+              onSelectionChange: $options.selectionChangeCinema
+            }, {
+              default: vue.withCtx(() => [
+                vue.createVNode(_component_uni_tr, null, {
+                  default: vue.withCtx(() => [
+                    vue.createVNode(_component_uni_th, {
+                      width: "50",
+                      align: "center"
+                    }, {
+                      default: vue.withCtx(() => [
+                        vue.createTextVNode("序号")
+                      ]),
+                      _: 1
+                      /* STABLE */
+                    }),
+                    vue.createVNode(_component_uni_th, {
+                      width: "200",
+                      align: "center"
+                    }, {
+                      default: vue.withCtx(() => [
+                        vue.createTextVNode("影院名称")
+                      ]),
+                      _: 1
+                      /* STABLE */
+                    }),
+                    vue.createVNode(_component_uni_th, {
+                      width: "50",
+                      align: "center"
+                    }, {
+                      default: vue.withCtx(() => [
+                        vue.createTextVNode("电话")
+                      ]),
+                      _: 1
+                      /* STABLE */
+                    }),
+                    vue.createVNode(_component_uni_th, {
+                      width: "350",
+                      align: "center"
+                    }, {
+                      default: vue.withCtx(() => [
+                        vue.createTextVNode("影院地址")
+                      ]),
+                      _: 1
+                      /* STABLE */
+                    }),
+                    vue.createVNode(_component_uni_th, {
+                      width: "200",
+                      align: "center"
+                    }, {
+                      default: vue.withCtx(() => [
+                        vue.createTextVNode("设置")
+                      ]),
+                      _: 1
+                      /* STABLE */
+                    })
+                  ]),
+                  _: 1
+                  /* STABLE */
+                }),
+                (vue.openBlock(true), vue.createElementBlock(
+                  vue.Fragment,
+                  null,
+                  vue.renderList($data.cinemaDataAdminListPages[$data.pageCurrentCinema - 1], (item, index) => {
+                    return vue.openBlock(), vue.createBlock(
+                      _component_uni_tr,
+                      { key: index },
+                      {
+                        default: vue.withCtx(() => [
+                          vue.createVNode(
+                            _component_uni_td,
+                            { align: "center" },
+                            {
+                              default: vue.withCtx(() => [
+                                vue.createTextVNode(
+                                  vue.toDisplayString(($data.pageCurrentCinema - 1) * 13 + (index + 1)),
+                                  1
+                                  /* TEXT */
+                                )
+                              ]),
+                              _: 2
+                              /* DYNAMIC */
+                            },
+                            1024
+                            /* DYNAMIC_SLOTS */
+                          ),
+                          vue.createVNode(
+                            _component_uni_td,
+                            { align: "center" },
+                            {
+                              default: vue.withCtx(() => [
+                                vue.createTextVNode(
+                                  vue.toDisplayString(item.cinemaName),
+                                  1
+                                  /* TEXT */
+                                )
+                              ]),
+                              _: 2
+                              /* DYNAMIC */
+                            },
+                            1024
+                            /* DYNAMIC_SLOTS */
+                          ),
+                          vue.createVNode(
+                            _component_uni_td,
+                            { align: "center" },
+                            {
+                              default: vue.withCtx(() => [
+                                vue.createTextVNode(
+                                  vue.toDisplayString(item.cinemaPhone),
+                                  1
+                                  /* TEXT */
+                                )
+                              ]),
+                              _: 2
+                              /* DYNAMIC */
+                            },
+                            1024
+                            /* DYNAMIC_SLOTS */
+                          ),
+                          vue.createVNode(
+                            _component_uni_td,
+                            { align: "center" },
+                            {
+                              default: vue.withCtx(() => [
+                                vue.createTextVNode(
+                                  vue.toDisplayString(item.cinemaAddress),
+                                  1
+                                  /* TEXT */
+                                )
+                              ]),
+                              _: 2
+                              /* DYNAMIC */
+                            },
+                            1024
+                            /* DYNAMIC_SLOTS */
+                          ),
+                          vue.createVNode(
+                            _component_uni_td,
+                            null,
+                            {
+                              default: vue.withCtx(() => [
+                                vue.createElementVNode("view", { class: "uni-group" }, [
+                                  vue.createElementVNode("button", {
+                                    class: "cinema_info_admin_button1",
+                                    size: "mini",
+                                    type: "primary",
+                                    onClick: ($event) => $options.cinema_update($data.cinemaDataAdminListPages[$data.pageCurrentCinema - 1][index].cinemaId)
+                                  }, "查看", 8, ["onClick"]),
+                                  vue.createElementVNode("button", {
+                                    class: "cinema_info_admin_button1",
+                                    size: "mini",
+                                    type: "primary",
+                                    onClick: ($event) => $options.cinemaUpdate($data.cinemaDataAdminListPages[$data.pageCurrentCinema - 1][index].cinemaId)
+                                  }, "修改", 8, ["onClick"]),
+                                  vue.createElementVNode("button", {
+                                    class: "cinema_info_admin_button2",
+                                    size: "mini",
+                                    type: "warn",
+                                    onClick: ($event) => $options.cinema_delete($data.cinemaDataAdminListPages[$data.pageCurrentCinema - 1][index].cinemaId)
+                                  }, "删除", 8, ["onClick"])
+                                ])
+                              ]),
+                              _: 2
+                              /* DYNAMIC */
+                            },
+                            1024
+                            /* DYNAMIC_SLOTS */
+                          )
+                        ]),
+                        _: 2
+                        /* DYNAMIC */
+                      },
+                      1024
+                      /* DYNAMIC_SLOTS */
+                    );
+                  }),
+                  128
+                  /* KEYED_FRAGMENT */
+                ))
+              ]),
+              _: 1
+              /* STABLE */
+            }, 8, ["loading", "onSelectionChange"]),
+            vue.createElementVNode("view", { class: "cinema_info_admin_box" }, [
+              vue.createVNode(_component_uni_pagination, {
+                class: "cinema_pages",
+                "show-icon": "",
+                "page-size": $data.pageSizeCinema,
+                current: $data.pageCurrentCinema,
+                total: $data.cinemaTotal,
+                onChange: $options.changeCinema
+              }, null, 8, ["page-size", "current", "total", "onChange"]),
+              vue.createElementVNode("button", {
+                class: "create_cinema",
+                size: "mini",
+                onClick: _cache[20] || (_cache[20] = ($event) => $options.cinema_create())
+              }, "新增影院")
+            ])
+          ])) : vue.createCommentVNode("v-if", true)
+        ])) : vue.createCommentVNode("v-if", true),
+        vue.createElementVNode("view", null, [
+          vue.createCommentVNode(" 提示窗示例 "),
+          vue.createVNode(
+            _component_uni_popup,
+            {
+              ref: "alertDialog",
+              type: "dialog"
+            },
+            {
+              default: vue.withCtx(() => [
+                vue.createVNode(_component_uni_popup_dialog, {
+                  type: _ctx.error,
+                  cancelText: "关闭",
+                  confirmText: "确定",
+                  content: "是否确定登出",
+                  onConfirm: $options.dialogConfirm,
+                  onClose: $options.dialogClose
+                }, null, 8, ["type", "onConfirm", "onClose"])
+              ]),
+              _: 1
+              /* STABLE */
+            },
+            512
+            /* NEED_PATCH */
+          )
+        ]),
+        vue.createElementVNode("view", null, [
+          vue.createVNode(
+            _component_uni_popup,
+            {
+              ref: "movieDeleteDialog",
+              type: "dialog"
+            },
+            {
+              default: vue.withCtx(() => [
+                vue.createVNode(_component_uni_popup_dialog, {
+                  type: _ctx.error,
+                  cancelText: "关闭",
+                  confirmText: "确定",
+                  content: "是否确定删除该电影信息",
+                  onConfirm: $options.movieDeleteConfirm,
+                  onClose: $options.dialogClose
+                }, null, 8, ["type", "onConfirm", "onClose"])
+              ]),
+              _: 1
+              /* STABLE */
+            },
+            512
+            /* NEED_PATCH */
+          )
+        ]),
+        vue.createElementVNode("view", null, [
+          vue.createVNode(
+            _component_uni_popup,
+            {
+              ref: "cinemaDeleteDialog",
+              type: "dialog"
+            },
+            {
+              default: vue.withCtx(() => [
+                vue.createVNode(_component_uni_popup_dialog, {
+                  type: _ctx.error,
+                  cancelText: "关闭",
+                  confirmText: "确定",
+                  content: "是否确定删除该电影院信息",
+                  onConfirm: $options.cinemaDeleteConfirm,
+                  onClose: $options.dialogClose
+                }, null, 8, ["type", "onConfirm", "onClose"])
+              ]),
+              _: 1
+              /* STABLE */
+            },
+            512
+            /* NEED_PATCH */
+          )
+        ]),
+        vue.createElementVNode("view", null, [
+          vue.createVNode(
+            _component_uni_popup,
+            {
+              ref: "houseDeleteDialog",
+              type: "dialog"
+            },
+            {
+              default: vue.withCtx(() => [
+                vue.createVNode(_component_uni_popup_dialog, {
+                  type: _ctx.error,
+                  cancelText: "关闭",
+                  confirmText: "确定",
+                  content: "是否确定删除该放映厅信息",
+                  onConfirm: $options.houseDeleteConfirm,
+                  onClose: $options.dialogClose
+                }, null, 8, ["type", "onConfirm", "onClose"])
+              ]),
+              _: 1
+              /* STABLE */
+            },
+            512
+            /* NEED_PATCH */
+          )
+        ]),
+        vue.createElementVNode("view", null, [
+          vue.createVNode(
+            _component_uni_popup,
+            {
+              ref: "scheduleDeleteDialog",
+              type: "dialog"
+            },
+            {
+              default: vue.withCtx(() => [
+                vue.createVNode(_component_uni_popup_dialog, {
+                  type: _ctx.error,
+                  cancelText: "关闭",
+                  confirmText: "确定",
+                  content: "是否确定删除该场次信息",
+                  onConfirm: $options.scheduleDeleteConfirm,
+                  onClose: $options.dialogClose
+                }, null, 8, ["type", "onConfirm", "onClose"])
+              ]),
+              _: 1
+              /* STABLE */
+            },
+            512
+            /* NEED_PATCH */
+          )
+        ])
+      ],
+      64
+      /* STABLE_FRAGMENT */
+    );
+  }
+  const PagesWebLogin = /* @__PURE__ */ _export_sfc(_sfc_main$j, [["render", _sfc_render$i], ["__scopeId", "data-v-eb8f8914"], ["__file", "E:/Senior_2/cinema/vueDemo/pages/web/login.vue"]]);
+  const _sfc_main$i = {
+    data() {
+      return {
+        movieData: [],
+        movieType: [],
+        typeData: "",
+        requestFlag: 0
+      };
+    },
+    onLoad: function(option) {
+      formatAppLog("log", "at pages/web/movie/movieUpdate.vue:40", option);
+      uni.request({
+        url: "/api/movie/infoMovieById",
+        method: "GET",
+        dataType: "json",
+        data: option,
+        success: (res) => {
+          this.movieData = res.data.data.movie;
+          this.movieType = res.data.data.type;
+          formatAppLog("log", "at pages/web/movie/movieUpdate.vue:49", "movieINFO", this.movieData);
+          formatAppLog("log", "at pages/web/movie/movieUpdate.vue:50", "movieType", this.movieType);
+          for (let i2 = 0; i2 < this.movieType.length; i2++) {
+            this.typeData = this.typeData + this.movieType[i2].genreName + " ";
+          }
+          formatAppLog("log", "at pages/web/movie/movieUpdate.vue:54", "this.typeData", this.typeData);
+          this.requestFlag = 1;
+        }
+      });
+    },
+    methods: {}
+  };
+  function _sfc_render$h(_ctx, _cache, $props, $setup, $data, $options) {
+    return this.requestFlag == 1 ? (vue.openBlock(), vue.createElementBlock("view", {
+      key: 0,
+      class: "movieUpdate"
+    }, [
+      vue.createElementVNode("view", { class: "movieImage" }, [
+        vue.createElementVNode("image", {
+          src: this.movieData.movieUrl,
+          class: "movieImage_url"
+        }, null, 8, ["src"])
+      ]),
+      vue.createElementVNode("view", { class: "movieDATA" }, [
+        vue.createElementVNode(
+          "text",
+          { class: "movieNameCn" },
+          vue.toDisplayString(this.movieData.movieNameCn),
+          1
+          /* TEXT */
+        ),
+        vue.createElementVNode(
+          "text",
+          { class: "movieNameEn" },
+          "外文名：" + vue.toDisplayString(this.movieData.movieNameEn),
+          1
+          /* TEXT */
+        ),
+        vue.createElementVNode(
+          "text",
+          { class: "movieDirector" },
+          "导演：" + vue.toDisplayString(this.movieData.movieDirector),
+          1
+          /* TEXT */
+        ),
+        vue.createElementVNode("scroll-view", {
+          "scroll-top": _ctx.scrollTop,
+          "scroll-y": "true",
+          class: "scroll-Y",
+          onScrolltoupper: _cache[0] || (_cache[0] = (...args) => _ctx.upper && _ctx.upper(...args)),
+          onScrolltolower: _cache[1] || (_cache[1] = (...args) => _ctx.lower && _ctx.lower(...args)),
+          onScroll: _cache[2] || (_cache[2] = (...args) => _ctx.scroll && _ctx.scroll(...args)),
+          "show-scrollbar": false
+        }, [
+          vue.createElementVNode("text", { class: "description" }, "简介："),
+          vue.createElementVNode(
+            "text",
+            { class: "movieDescription" },
+            vue.toDisplayString(this.movieData.movieDescription),
+            1
+            /* TEXT */
+          )
+        ], 40, ["scroll-top"]),
+        vue.createElementVNode(
+          "text",
+          { class: "movieReleaseDate" },
+          "上映时间：" + vue.toDisplayString(this.movieData.movieReleaseDate.split("/")[0] + " 年 " + this.movieData.movieReleaseDate.split("/")[1] + " 月 " + this.movieData.movieReleaseDate.split("/")[2] + " 日"),
+          1
+          /* TEXT */
+        ),
+        vue.createElementVNode(
+          "text",
+          { class: "movieType" },
+          "类型：" + vue.toDisplayString(this.typeData),
+          1
+          /* TEXT */
+        ),
+        vue.createElementVNode(
+          "text",
+          { class: "movieDuration" },
+          "时长：" + vue.toDisplayString(this.movieData.movieDuration) + " min",
+          1
+          /* TEXT */
+        ),
+        vue.createElementVNode(
+          "text",
+          { class: "movieCountry" },
+          "片源地：" + vue.toDisplayString(this.movieData.movieCountry),
+          1
+          /* TEXT */
+        ),
+        this.movieData.movieState == 0 ? (vue.openBlock(), vue.createElementBlock("text", {
+          key: 0,
+          class: "movieState"
+        }, "电影状态：待映")) : vue.createCommentVNode("v-if", true),
+        this.movieData.movieState == 1 ? (vue.openBlock(), vue.createElementBlock("text", {
+          key: 1,
+          class: "movieState"
+        }, "电影状态：正在上映")) : vue.createCommentVNode("v-if", true)
+      ])
+    ])) : vue.createCommentVNode("v-if", true);
+  }
+  const PagesWebMovieMovieUpdate = /* @__PURE__ */ _export_sfc(_sfc_main$i, [["render", _sfc_render$h], ["__scopeId", "data-v-4631af8a"], ["__file", "E:/Senior_2/cinema/vueDemo/pages/web/movie/movieUpdate.vue"]]);
+  let Calendar$1 = class Calendar {
+    constructor({
+      selected,
+      startDate,
+      endDate,
+      range
+    } = {}) {
+      this.date = this.getDateObj(/* @__PURE__ */ new Date());
+      this.selected = selected || [];
+      this.startDate = startDate;
+      this.endDate = endDate;
+      this.range = range;
+      this.cleanMultipleStatus();
+      this.weeks = {};
+      this.lastHover = false;
+    }
+    /**
+     * 设置日期
+     * @param {Object} date
+     */
+    setDate(date) {
+      const selectDate = this.getDateObj(date);
+      this.getWeeks(selectDate.fullDate);
+    }
+    /**
+     * 清理多选状态
+     */
+    cleanMultipleStatus() {
+      this.multipleStatus = {
+        before: "",
+        after: "",
+        data: []
+      };
+    }
+    setStartDate(startDate) {
+      this.startDate = startDate;
+    }
+    setEndDate(endDate) {
+      this.endDate = endDate;
+    }
+    getPreMonthObj(date) {
+      date = fixIosDateFormat(date);
+      date = new Date(date);
+      const oldMonth = date.getMonth();
+      date.setMonth(oldMonth - 1);
+      const newMonth = date.getMonth();
+      if (oldMonth !== 0 && newMonth - oldMonth === 0) {
+        date.setMonth(newMonth - 1);
+      }
+      return this.getDateObj(date);
+    }
+    getNextMonthObj(date) {
+      date = fixIosDateFormat(date);
+      date = new Date(date);
+      const oldMonth = date.getMonth();
+      date.setMonth(oldMonth + 1);
+      const newMonth = date.getMonth();
+      if (newMonth - oldMonth > 1) {
+        date.setMonth(newMonth - 1);
+      }
+      return this.getDateObj(date);
+    }
+    /**
+     * 获取指定格式Date对象
+     */
+    getDateObj(date) {
+      date = fixIosDateFormat(date);
+      date = new Date(date);
+      return {
+        fullDate: getDate(date),
+        year: date.getFullYear(),
+        month: addZero(date.getMonth() + 1),
+        date: addZero(date.getDate()),
+        day: date.getDay()
+      };
+    }
+    /**
+     * 获取上一个月日期集合
+     */
+    getPreMonthDays(amount, dateObj) {
+      const result = [];
+      for (let i2 = amount - 1; i2 >= 0; i2--) {
+        const month = dateObj.month - 1;
+        result.push({
+          date: new Date(dateObj.year, month, -i2).getDate(),
+          month,
+          disable: true
+        });
+      }
+      return result;
+    }
+    /**
+     * 获取本月日期集合
+     */
+    getCurrentMonthDays(amount, dateObj) {
+      const result = [];
+      const fullDate = this.date.fullDate;
+      for (let i2 = 1; i2 <= amount; i2++) {
+        const currentDate = `${dateObj.year}-${dateObj.month}-${addZero(i2)}`;
+        const isToday = fullDate === currentDate;
+        const info = this.selected && this.selected.find((item) => {
+          if (this.dateEqual(currentDate, item.date)) {
+            return item;
+          }
+        });
+        if (this.startDate) {
+          dateCompare(this.startDate, currentDate);
+        }
+        if (this.endDate) {
+          dateCompare(currentDate, this.endDate);
+        }
+        let multiples = this.multipleStatus.data;
+        let multiplesStatus = -1;
+        if (this.range && multiples) {
+          multiplesStatus = multiples.findIndex((item) => {
+            return this.dateEqual(item, currentDate);
+          });
+        }
+        const checked = multiplesStatus !== -1;
+        result.push({
+          fullDate: currentDate,
+          year: dateObj.year,
+          date: i2,
+          multiple: this.range ? checked : false,
+          beforeMultiple: this.isLogicBefore(currentDate, this.multipleStatus.before, this.multipleStatus.after),
+          afterMultiple: this.isLogicAfter(currentDate, this.multipleStatus.before, this.multipleStatus.after),
+          month: dateObj.month,
+          disable: this.startDate && !dateCompare(this.startDate, currentDate) || this.endDate && !dateCompare(currentDate, this.endDate),
+          isToday,
+          userChecked: false,
+          extraInfo: info
+        });
+      }
+      return result;
+    }
+    /**
+     * 获取下一个月日期集合
+     */
+    _getNextMonthDays(amount, dateObj) {
+      const result = [];
+      const month = dateObj.month + 1;
+      for (let i2 = 1; i2 <= amount; i2++) {
+        result.push({
+          date: i2,
+          month,
+          disable: true
+        });
+      }
+      return result;
+    }
+    /**
+     * 获取当前日期详情
+     * @param {Object} date
+     */
+    getInfo(date) {
+      if (!date) {
+        date = /* @__PURE__ */ new Date();
+      }
+      return this.calendar.find((item) => item.fullDate === this.getDateObj(date).fullDate);
+    }
+    /**
+     * 比较时间是否相等
+     */
+    dateEqual(before, after) {
+      before = new Date(fixIosDateFormat(before));
+      after = new Date(fixIosDateFormat(after));
+      return before.valueOf() === after.valueOf();
+    }
+    /**
+     *  比较真实起始日期
+     */
+    isLogicBefore(currentDate, before, after) {
+      let logicBefore = before;
+      if (before && after) {
+        logicBefore = dateCompare(before, after) ? before : after;
+      }
+      return this.dateEqual(logicBefore, currentDate);
+    }
+    isLogicAfter(currentDate, before, after) {
+      let logicAfter = after;
+      if (before && after) {
+        logicAfter = dateCompare(before, after) ? after : before;
+      }
+      return this.dateEqual(logicAfter, currentDate);
+    }
+    /**
+     * 获取日期范围内所有日期
+     * @param {Object} begin
+     * @param {Object} end
+     */
+    geDateAll(begin, end) {
+      var arr = [];
+      var ab = begin.split("-");
+      var ae2 = end.split("-");
+      var db = /* @__PURE__ */ new Date();
+      db.setFullYear(ab[0], ab[1] - 1, ab[2]);
+      var de2 = /* @__PURE__ */ new Date();
+      de2.setFullYear(ae2[0], ae2[1] - 1, ae2[2]);
+      var unixDb = db.getTime() - 24 * 60 * 60 * 1e3;
+      var unixDe = de2.getTime() - 24 * 60 * 60 * 1e3;
+      for (var k = unixDb; k <= unixDe; ) {
+        k = k + 24 * 60 * 60 * 1e3;
+        arr.push(this.getDateObj(new Date(parseInt(k))).fullDate);
+      }
+      return arr;
+    }
+    /**
+     *  获取多选状态
+     */
+    setMultiple(fullDate) {
+      if (!this.range)
+        return;
+      let {
+        before,
+        after
+      } = this.multipleStatus;
+      if (before && after) {
+        if (!this.lastHover) {
+          this.lastHover = true;
+          return;
+        }
+        this.multipleStatus.before = fullDate;
+        this.multipleStatus.after = "";
+        this.multipleStatus.data = [];
+        this.multipleStatus.fulldate = "";
+        this.lastHover = false;
+      } else {
+        if (!before) {
+          this.multipleStatus.before = fullDate;
+          this.lastHover = false;
+        } else {
+          this.multipleStatus.after = fullDate;
+          if (dateCompare(this.multipleStatus.before, this.multipleStatus.after)) {
+            this.multipleStatus.data = this.geDateAll(this.multipleStatus.before, this.multipleStatus.after);
+          } else {
+            this.multipleStatus.data = this.geDateAll(this.multipleStatus.after, this.multipleStatus.before);
+          }
+          this.lastHover = true;
+        }
+      }
+      this.getWeeks(fullDate);
+    }
+    /**
+     *  鼠标 hover 更新多选状态
+     */
+    setHoverMultiple(fullDate) {
+      if (!this.range || this.lastHover)
+        return;
+      const { before } = this.multipleStatus;
+      if (!before) {
+        this.multipleStatus.before = fullDate;
+      } else {
+        this.multipleStatus.after = fullDate;
+        if (dateCompare(this.multipleStatus.before, this.multipleStatus.after)) {
+          this.multipleStatus.data = this.geDateAll(this.multipleStatus.before, this.multipleStatus.after);
+        } else {
+          this.multipleStatus.data = this.geDateAll(this.multipleStatus.after, this.multipleStatus.before);
+        }
+      }
+      this.getWeeks(fullDate);
+    }
+    /**
+     * 更新默认值多选状态
+     */
+    setDefaultMultiple(before, after) {
+      this.multipleStatus.before = before;
+      this.multipleStatus.after = after;
+      if (before && after) {
+        if (dateCompare(before, after)) {
+          this.multipleStatus.data = this.geDateAll(before, after);
+          this.getWeeks(after);
+        } else {
+          this.multipleStatus.data = this.geDateAll(after, before);
+          this.getWeeks(before);
+        }
+      }
+    }
+    /**
+     * 获取每周数据
+     * @param {Object} dateData
+     */
+    getWeeks(dateData) {
+      const {
+        year,
+        month
+      } = this.getDateObj(dateData);
+      const preMonthDayAmount = new Date(year, month - 1, 1).getDay();
+      const preMonthDays = this.getPreMonthDays(preMonthDayAmount, this.getDateObj(dateData));
+      const currentMonthDayAmount = new Date(year, month, 0).getDate();
+      const currentMonthDays = this.getCurrentMonthDays(currentMonthDayAmount, this.getDateObj(dateData));
+      const nextMonthDayAmount = 42 - preMonthDayAmount - currentMonthDayAmount;
+      const nextMonthDays = this._getNextMonthDays(nextMonthDayAmount, this.getDateObj(dateData));
+      const calendarDays = [...preMonthDays, ...currentMonthDays, ...nextMonthDays];
+      const weeks = new Array(6);
+      for (let i2 = 0; i2 < calendarDays.length; i2++) {
+        const index = Math.floor(i2 / 7);
+        if (!weeks[index]) {
+          weeks[index] = new Array(7);
+        }
+        weeks[index][i2 % 7] = calendarDays[i2];
+      }
+      this.calendar = calendarDays;
+      this.weeks = weeks;
+    }
+  };
+  function getDateTime(date, hideSecond) {
+    return `${getDate(date)} ${getTime(date, hideSecond)}`;
+  }
+  function getDate(date) {
+    date = fixIosDateFormat(date);
+    date = new Date(date);
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    return `${year}-${addZero(month)}-${addZero(day)}`;
+  }
+  function getTime(date, hideSecond) {
+    date = fixIosDateFormat(date);
+    date = new Date(date);
+    const hour = date.getHours();
+    const minute = date.getMinutes();
+    const second = date.getSeconds();
+    return hideSecond ? `${addZero(hour)}:${addZero(minute)}` : `${addZero(hour)}:${addZero(minute)}:${addZero(second)}`;
+  }
+  function addZero(num) {
+    if (num < 10) {
+      num = `0${num}`;
+    }
+    return num;
+  }
+  function getDefaultSecond(hideSecond) {
+    return hideSecond ? "00:00" : "00:00:00";
+  }
+  function dateCompare(startDate, endDate) {
+    startDate = new Date(fixIosDateFormat(startDate));
+    endDate = new Date(fixIosDateFormat(endDate));
+    return startDate <= endDate;
+  }
+  function checkDate(date) {
+    const dateReg = /((19|20)\d{2})(-|\/)\d{1,2}(-|\/)\d{1,2}/g;
+    return date.match(dateReg);
+  }
+  const dateTimeReg = /^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])( [0-5][0-9]:[0-5][0-9]:[0-5][0-9])?$/;
+  function fixIosDateFormat(value) {
+    if (typeof value === "string" && dateTimeReg.test(value)) {
+      value = value.replace(/-/g, "/");
+    }
+    return value;
+  }
+  const _sfc_main$h = {
+    props: {
+      weeks: {
+        type: Object,
+        default() {
+          return {};
+        }
+      },
+      calendar: {
+        type: Object,
+        default: () => {
+          return {};
+        }
+      },
+      selected: {
+        type: Array,
+        default: () => {
+          return [];
+        }
+      },
+      checkHover: {
+        type: Boolean,
+        default: false
+      }
+    },
+    methods: {
+      choiceDate(weeks) {
+        this.$emit("change", weeks);
+      },
+      handleMousemove(weeks) {
+        this.$emit("handleMouse", weeks);
+      }
+    }
+  };
+  function _sfc_render$g(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock(
+      "view",
+      {
+        class: vue.normalizeClass(["uni-calendar-item__weeks-box", {
+          "uni-calendar-item--disable": $props.weeks.disable,
+          "uni-calendar-item--before-checked-x": $props.weeks.beforeMultiple,
+          "uni-calendar-item--multiple": $props.weeks.multiple,
+          "uni-calendar-item--after-checked-x": $props.weeks.afterMultiple
+        }]),
+        onClick: _cache[0] || (_cache[0] = ($event) => $options.choiceDate($props.weeks)),
+        onMouseenter: _cache[1] || (_cache[1] = ($event) => $options.handleMousemove($props.weeks))
+      },
+      [
+        vue.createElementVNode(
+          "view",
+          {
+            class: vue.normalizeClass(["uni-calendar-item__weeks-box-item", {
+              "uni-calendar-item--checked": $props.calendar.fullDate === $props.weeks.fullDate && ($props.calendar.userChecked || !$props.checkHover),
+              "uni-calendar-item--checked-range-text": $props.checkHover,
+              "uni-calendar-item--before-checked": $props.weeks.beforeMultiple,
+              "uni-calendar-item--multiple": $props.weeks.multiple,
+              "uni-calendar-item--after-checked": $props.weeks.afterMultiple,
+              "uni-calendar-item--disable": $props.weeks.disable
+            }])
+          },
+          [
+            $props.selected && $props.weeks.extraInfo ? (vue.openBlock(), vue.createElementBlock("text", {
+              key: 0,
+              class: "uni-calendar-item__weeks-box-circle"
+            })) : vue.createCommentVNode("v-if", true),
+            vue.createElementVNode(
+              "text",
+              { class: "uni-calendar-item__weeks-box-text uni-calendar-item__weeks-box-text-disable uni-calendar-item--checked-text" },
+              vue.toDisplayString($props.weeks.date),
+              1
+              /* TEXT */
+            )
+          ],
+          2
+          /* CLASS */
+        ),
+        vue.createElementVNode(
+          "view",
+          {
+            class: vue.normalizeClass({ "uni-calendar-item--today": $props.weeks.isToday })
+          },
+          null,
+          2
+          /* CLASS */
+        )
+      ],
+      34
+      /* CLASS, HYDRATE_EVENTS */
+    );
+  }
+  const calendarItem = /* @__PURE__ */ _export_sfc(_sfc_main$h, [["render", _sfc_render$g], ["__scopeId", "data-v-3c762a01"], ["__file", "E:/Senior_2/cinema/vueDemo/uni_modules/uni-datetime-picker/components/uni-datetime-picker/calendar-item.vue"]]);
+  const en$1 = {
+    "uni-datetime-picker.selectDate": "select date",
+    "uni-datetime-picker.selectTime": "select time",
+    "uni-datetime-picker.selectDateTime": "select date and time",
+    "uni-datetime-picker.startDate": "start date",
+    "uni-datetime-picker.endDate": "end date",
+    "uni-datetime-picker.startTime": "start time",
+    "uni-datetime-picker.endTime": "end time",
+    "uni-datetime-picker.ok": "ok",
+    "uni-datetime-picker.clear": "clear",
+    "uni-datetime-picker.cancel": "cancel",
+    "uni-datetime-picker.year": "-",
+    "uni-datetime-picker.month": "",
+    "uni-calender.MON": "MON",
+    "uni-calender.TUE": "TUE",
+    "uni-calender.WED": "WED",
+    "uni-calender.THU": "THU",
+    "uni-calender.FRI": "FRI",
+    "uni-calender.SAT": "SAT",
+    "uni-calender.SUN": "SUN",
+    "uni-calender.confirm": "confirm"
+  };
+  const zhHans$1 = {
+    "uni-datetime-picker.selectDate": "选择日期",
+    "uni-datetime-picker.selectTime": "选择时间",
+    "uni-datetime-picker.selectDateTime": "选择日期时间",
+    "uni-datetime-picker.startDate": "开始日期",
+    "uni-datetime-picker.endDate": "结束日期",
+    "uni-datetime-picker.startTime": "开始时间",
+    "uni-datetime-picker.endTime": "结束时间",
+    "uni-datetime-picker.ok": "确定",
+    "uni-datetime-picker.clear": "清除",
+    "uni-datetime-picker.cancel": "取消",
+    "uni-datetime-picker.year": "年",
+    "uni-datetime-picker.month": "月",
+    "uni-calender.SUN": "日",
+    "uni-calender.MON": "一",
+    "uni-calender.TUE": "二",
+    "uni-calender.WED": "三",
+    "uni-calender.THU": "四",
+    "uni-calender.FRI": "五",
+    "uni-calender.SAT": "六",
+    "uni-calender.confirm": "确认"
+  };
+  const zhHant$1 = {
+    "uni-datetime-picker.selectDate": "選擇日期",
+    "uni-datetime-picker.selectTime": "選擇時間",
+    "uni-datetime-picker.selectDateTime": "選擇日期時間",
+    "uni-datetime-picker.startDate": "開始日期",
+    "uni-datetime-picker.endDate": "結束日期",
+    "uni-datetime-picker.startTime": "開始时间",
+    "uni-datetime-picker.endTime": "結束时间",
+    "uni-datetime-picker.ok": "確定",
+    "uni-datetime-picker.clear": "清除",
+    "uni-datetime-picker.cancel": "取消",
+    "uni-datetime-picker.year": "年",
+    "uni-datetime-picker.month": "月",
+    "uni-calender.SUN": "日",
+    "uni-calender.MON": "一",
+    "uni-calender.TUE": "二",
+    "uni-calender.WED": "三",
+    "uni-calender.THU": "四",
+    "uni-calender.FRI": "五",
+    "uni-calender.SAT": "六",
+    "uni-calender.confirm": "確認"
+  };
+  const i18nMessages = {
+    en: en$1,
+    "zh-Hans": zhHans$1,
+    "zh-Hant": zhHant$1
+  };
+  const { t: t$2 } = initVueI18n(i18nMessages);
+  const _sfc_main$g = {
+    name: "UniDatetimePicker",
+    data() {
+      return {
+        indicatorStyle: `height: 50px;`,
+        visible: false,
+        fixNvueBug: {},
+        dateShow: true,
+        timeShow: true,
+        title: "日期和时间",
+        // 输入框当前时间
+        time: "",
+        // 当前的年月日时分秒
+        year: 1920,
+        month: 0,
+        day: 0,
+        hour: 0,
+        minute: 0,
+        second: 0,
+        // 起始时间
+        startYear: 1920,
+        startMonth: 1,
+        startDay: 1,
+        startHour: 0,
+        startMinute: 0,
+        startSecond: 0,
+        // 结束时间
+        endYear: 2120,
+        endMonth: 12,
+        endDay: 31,
+        endHour: 23,
+        endMinute: 59,
+        endSecond: 59
+      };
+    },
+    props: {
+      type: {
+        type: String,
+        default: "datetime"
+      },
+      value: {
+        type: [String, Number],
+        default: ""
+      },
+      modelValue: {
+        type: [String, Number],
+        default: ""
+      },
+      start: {
+        type: [Number, String],
+        default: ""
+      },
+      end: {
+        type: [Number, String],
+        default: ""
+      },
+      returnType: {
+        type: String,
+        default: "string"
+      },
+      disabled: {
+        type: [Boolean, String],
+        default: false
+      },
+      border: {
+        type: [Boolean, String],
+        default: true
+      },
+      hideSecond: {
+        type: [Boolean, String],
+        default: false
+      }
+    },
+    watch: {
+      modelValue: {
+        handler(newVal) {
+          if (newVal) {
+            this.parseValue(fixIosDateFormat(newVal));
+            this.initTime(false);
+          } else {
+            this.time = "";
+            this.parseValue(Date.now());
+          }
+        },
+        immediate: true
+      },
+      type: {
+        handler(newValue) {
+          if (newValue === "date") {
+            this.dateShow = true;
+            this.timeShow = false;
+            this.title = "日期";
+          } else if (newValue === "time") {
+            this.dateShow = false;
+            this.timeShow = true;
+            this.title = "时间";
+          } else {
+            this.dateShow = true;
+            this.timeShow = true;
+            this.title = "日期和时间";
+          }
+        },
+        immediate: true
+      },
+      start: {
+        handler(newVal) {
+          this.parseDatetimeRange(fixIosDateFormat(newVal), "start");
+        },
+        immediate: true
+      },
+      end: {
+        handler(newVal) {
+          this.parseDatetimeRange(fixIosDateFormat(newVal), "end");
+        },
+        immediate: true
+      },
+      // 月、日、时、分、秒可选范围变化后，检查当前值是否在范围内，不在则当前值重置为可选范围第一项
+      months(newVal) {
+        this.checkValue("month", this.month, newVal);
+      },
+      days(newVal) {
+        this.checkValue("day", this.day, newVal);
+      },
+      hours(newVal) {
+        this.checkValue("hour", this.hour, newVal);
+      },
+      minutes(newVal) {
+        this.checkValue("minute", this.minute, newVal);
+      },
+      seconds(newVal) {
+        this.checkValue("second", this.second, newVal);
+      }
+    },
+    computed: {
+      // 当前年、月、日、时、分、秒选择范围
+      years() {
+        return this.getCurrentRange("year");
+      },
+      months() {
+        return this.getCurrentRange("month");
+      },
+      days() {
+        return this.getCurrentRange("day");
+      },
+      hours() {
+        return this.getCurrentRange("hour");
+      },
+      minutes() {
+        return this.getCurrentRange("minute");
+      },
+      seconds() {
+        return this.getCurrentRange("second");
+      },
+      // picker 当前值数组
+      ymd() {
+        return [this.year - this.minYear, this.month - this.minMonth, this.day - this.minDay];
+      },
+      hms() {
+        return [this.hour - this.minHour, this.minute - this.minMinute, this.second - this.minSecond];
+      },
+      // 当前 date 是 start
+      currentDateIsStart() {
+        return this.year === this.startYear && this.month === this.startMonth && this.day === this.startDay;
+      },
+      // 当前 date 是 end
+      currentDateIsEnd() {
+        return this.year === this.endYear && this.month === this.endMonth && this.day === this.endDay;
+      },
+      // 当前年、月、日、时、分、秒的最小值和最大值
+      minYear() {
+        return this.startYear;
+      },
+      maxYear() {
+        return this.endYear;
+      },
+      minMonth() {
+        if (this.year === this.startYear) {
+          return this.startMonth;
+        } else {
+          return 1;
+        }
+      },
+      maxMonth() {
+        if (this.year === this.endYear) {
+          return this.endMonth;
+        } else {
+          return 12;
+        }
+      },
+      minDay() {
+        if (this.year === this.startYear && this.month === this.startMonth) {
+          return this.startDay;
+        } else {
+          return 1;
+        }
+      },
+      maxDay() {
+        if (this.year === this.endYear && this.month === this.endMonth) {
+          return this.endDay;
+        } else {
+          return this.daysInMonth(this.year, this.month);
+        }
+      },
+      minHour() {
+        if (this.type === "datetime") {
+          if (this.currentDateIsStart) {
+            return this.startHour;
+          } else {
+            return 0;
+          }
+        }
+        if (this.type === "time") {
+          return this.startHour;
+        }
+      },
+      maxHour() {
+        if (this.type === "datetime") {
+          if (this.currentDateIsEnd) {
+            return this.endHour;
+          } else {
+            return 23;
+          }
+        }
+        if (this.type === "time") {
+          return this.endHour;
+        }
+      },
+      minMinute() {
+        if (this.type === "datetime") {
+          if (this.currentDateIsStart && this.hour === this.startHour) {
+            return this.startMinute;
+          } else {
+            return 0;
+          }
+        }
+        if (this.type === "time") {
+          if (this.hour === this.startHour) {
+            return this.startMinute;
+          } else {
+            return 0;
+          }
+        }
+      },
+      maxMinute() {
+        if (this.type === "datetime") {
+          if (this.currentDateIsEnd && this.hour === this.endHour) {
+            return this.endMinute;
+          } else {
+            return 59;
+          }
+        }
+        if (this.type === "time") {
+          if (this.hour === this.endHour) {
+            return this.endMinute;
+          } else {
+            return 59;
+          }
+        }
+      },
+      minSecond() {
+        if (this.type === "datetime") {
+          if (this.currentDateIsStart && this.hour === this.startHour && this.minute === this.startMinute) {
+            return this.startSecond;
+          } else {
+            return 0;
+          }
+        }
+        if (this.type === "time") {
+          if (this.hour === this.startHour && this.minute === this.startMinute) {
+            return this.startSecond;
+          } else {
+            return 0;
+          }
+        }
+      },
+      maxSecond() {
+        if (this.type === "datetime") {
+          if (this.currentDateIsEnd && this.hour === this.endHour && this.minute === this.endMinute) {
+            return this.endSecond;
+          } else {
+            return 59;
+          }
+        }
+        if (this.type === "time") {
+          if (this.hour === this.endHour && this.minute === this.endMinute) {
+            return this.endSecond;
+          } else {
+            return 59;
+          }
+        }
+      },
+      /**
+       * for i18n
+       */
+      selectTimeText() {
+        return t$2("uni-datetime-picker.selectTime");
+      },
+      okText() {
+        return t$2("uni-datetime-picker.ok");
+      },
+      clearText() {
+        return t$2("uni-datetime-picker.clear");
+      },
+      cancelText() {
+        return t$2("uni-datetime-picker.cancel");
+      }
+    },
+    mounted() {
+    },
+    methods: {
+      /**
+       * @param {Object} item
+       * 小于 10 在前面加个 0
+       */
+      lessThanTen(item) {
+        return item < 10 ? "0" + item : item;
+      },
+      /**
+       * 解析时分秒字符串，例如：00:00:00
+       * @param {String} timeString
+       */
+      parseTimeType(timeString) {
+        if (timeString) {
+          let timeArr = timeString.split(":");
+          this.hour = Number(timeArr[0]);
+          this.minute = Number(timeArr[1]);
+          this.second = Number(timeArr[2]);
+        }
+      },
+      /**
+       * 解析选择器初始值，类型可以是字符串、时间戳，例如：2000-10-02、'08:30:00'、 1610695109000
+       * @param {String | Number} datetime
+       */
+      initPickerValue(datetime) {
+        let defaultValue = null;
+        if (datetime) {
+          defaultValue = this.compareValueWithStartAndEnd(datetime, this.start, this.end);
+        } else {
+          defaultValue = Date.now();
+          defaultValue = this.compareValueWithStartAndEnd(defaultValue, this.start, this.end);
+        }
+        this.parseValue(defaultValue);
+      },
+      /**
+       * 初始值规则：
+       * - 用户设置初始值 value
+       * 	- 设置了起始时间 start、终止时间 end，并 start < value < end，初始值为 value， 否则初始值为 start
+       * 	- 只设置了起始时间 start，并 start < value，初始值为 value，否则初始值为 start
+       * 	- 只设置了终止时间 end，并 value < end，初始值为 value，否则初始值为 end
+       * 	- 无起始终止时间，则初始值为 value
+       * - 无初始值 value，则初始值为当前本地时间 Date.now()
+       * @param {Object} value
+       * @param {Object} dateBase
+       */
+      compareValueWithStartAndEnd(value, start, end) {
+        let winner = null;
+        value = this.superTimeStamp(value);
+        start = this.superTimeStamp(start);
+        end = this.superTimeStamp(end);
+        if (start && end) {
+          if (value < start) {
+            winner = new Date(start);
+          } else if (value > end) {
+            winner = new Date(end);
+          } else {
+            winner = new Date(value);
+          }
+        } else if (start && !end) {
+          winner = start <= value ? new Date(value) : new Date(start);
+        } else if (!start && end) {
+          winner = value <= end ? new Date(value) : new Date(end);
+        } else {
+          winner = new Date(value);
+        }
+        return winner;
+      },
+      /**
+       * 转换为可比较的时间戳，接受日期、时分秒、时间戳
+       * @param {Object} value
+       */
+      superTimeStamp(value) {
+        let dateBase = "";
+        if (this.type === "time" && value && typeof value === "string") {
+          const now = /* @__PURE__ */ new Date();
+          const year = now.getFullYear();
+          const month = now.getMonth() + 1;
+          const day = now.getDate();
+          dateBase = year + "/" + month + "/" + day + " ";
+        }
+        if (Number(value)) {
+          value = parseInt(value);
+          dateBase = 0;
+        }
+        return this.createTimeStamp(dateBase + value);
+      },
+      /**
+       * 解析默认值 value，字符串、时间戳
+       * @param {Object} defaultTime
+       */
+      parseValue(value) {
+        if (!value) {
+          return;
+        }
+        if (this.type === "time" && typeof value === "string") {
+          this.parseTimeType(value);
+        } else {
+          let defaultDate = null;
+          defaultDate = new Date(value);
+          if (this.type !== "time") {
+            this.year = defaultDate.getFullYear();
+            this.month = defaultDate.getMonth() + 1;
+            this.day = defaultDate.getDate();
+          }
+          if (this.type !== "date") {
+            this.hour = defaultDate.getHours();
+            this.minute = defaultDate.getMinutes();
+            this.second = defaultDate.getSeconds();
+          }
+        }
+        if (this.hideSecond) {
+          this.second = 0;
+        }
+      },
+      /**
+       * 解析可选择时间范围 start、end，年月日字符串、时间戳
+       * @param {Object} defaultTime
+       */
+      parseDatetimeRange(point, pointType) {
+        if (!point) {
+          if (pointType === "start") {
+            this.startYear = 1920;
+            this.startMonth = 1;
+            this.startDay = 1;
+            this.startHour = 0;
+            this.startMinute = 0;
+            this.startSecond = 0;
+          }
+          if (pointType === "end") {
+            this.endYear = 2120;
+            this.endMonth = 12;
+            this.endDay = 31;
+            this.endHour = 23;
+            this.endMinute = 59;
+            this.endSecond = 59;
+          }
+          return;
+        }
+        if (this.type === "time") {
+          const pointArr = point.split(":");
+          this[pointType + "Hour"] = Number(pointArr[0]);
+          this[pointType + "Minute"] = Number(pointArr[1]);
+          this[pointType + "Second"] = Number(pointArr[2]);
+        } else {
+          if (!point) {
+            pointType === "start" ? this.startYear = this.year - 60 : this.endYear = this.year + 60;
+            return;
+          }
+          if (Number(point)) {
+            point = parseInt(point);
+          }
+          const hasTime = /[0-9]:[0-9]/;
+          if (this.type === "datetime" && pointType === "end" && typeof point === "string" && !hasTime.test(
+            point
+          )) {
+            point = point + " 23:59:59";
+          }
+          const pointDate = new Date(point);
+          this[pointType + "Year"] = pointDate.getFullYear();
+          this[pointType + "Month"] = pointDate.getMonth() + 1;
+          this[pointType + "Day"] = pointDate.getDate();
+          if (this.type === "datetime") {
+            this[pointType + "Hour"] = pointDate.getHours();
+            this[pointType + "Minute"] = pointDate.getMinutes();
+            this[pointType + "Second"] = pointDate.getSeconds();
+          }
+        }
+      },
+      // 获取 年、月、日、时、分、秒 当前可选范围
+      getCurrentRange(value) {
+        const range = [];
+        for (let i2 = this["min" + this.capitalize(value)]; i2 <= this["max" + this.capitalize(value)]; i2++) {
+          range.push(i2);
+        }
+        return range;
+      },
+      // 字符串首字母大写
+      capitalize(str) {
+        return str.charAt(0).toUpperCase() + str.slice(1);
+      },
+      // 检查当前值是否在范围内，不在则当前值重置为可选范围第一项
+      checkValue(name, value, values) {
+        if (values.indexOf(value) === -1) {
+          this[name] = values[0];
+        }
+      },
+      // 每个月的实际天数
+      daysInMonth(year, month) {
+        return new Date(year, month, 0).getDate();
+      },
+      //兼容 iOS、safari 日期格式
+      fixIosDateFormat(value) {
+        if (typeof value === "string") {
+          value = value.replace(/-/g, "/");
+        }
+        return value;
+      },
+      /**
+       * 生成时间戳
+       * @param {Object} time
+       */
+      createTimeStamp(time) {
+        if (!time)
+          return;
+        if (typeof time === "number") {
+          return time;
+        } else {
+          time = time.replace(/-/g, "/");
+          if (this.type === "date") {
+            time = time + " 00:00:00";
+          }
+          return Date.parse(time);
+        }
+      },
+      /**
+       * 生成日期或时间的字符串
+       */
+      createDomSting() {
+        const yymmdd = this.year + "-" + this.lessThanTen(this.month) + "-" + this.lessThanTen(this.day);
+        let hhmmss = this.lessThanTen(this.hour) + ":" + this.lessThanTen(this.minute);
+        if (!this.hideSecond) {
+          hhmmss = hhmmss + ":" + this.lessThanTen(this.second);
+        }
+        if (this.type === "date") {
+          return yymmdd;
+        } else if (this.type === "time") {
+          return hhmmss;
+        } else {
+          return yymmdd + " " + hhmmss;
+        }
+      },
+      /**
+       * 初始化返回值，并抛出 change 事件
+       */
+      initTime(emit = true) {
+        this.time = this.createDomSting();
+        if (!emit)
+          return;
+        if (this.returnType === "timestamp" && this.type !== "time") {
+          this.$emit("change", this.createTimeStamp(this.time));
+          this.$emit("input", this.createTimeStamp(this.time));
+          this.$emit("update:modelValue", this.createTimeStamp(this.time));
+        } else {
+          this.$emit("change", this.time);
+          this.$emit("input", this.time);
+          this.$emit("update:modelValue", this.time);
+        }
+      },
+      /**
+       * 用户选择日期或时间更新 data
+       * @param {Object} e
+       */
+      bindDateChange(e2) {
+        const val = e2.detail.value;
+        this.year = this.years[val[0]];
+        this.month = this.months[val[1]];
+        this.day = this.days[val[2]];
+      },
+      bindTimeChange(e2) {
+        const val = e2.detail.value;
+        this.hour = this.hours[val[0]];
+        this.minute = this.minutes[val[1]];
+        this.second = this.seconds[val[2]];
+      },
+      /**
+       * 初始化弹出层
+       */
+      initTimePicker() {
+        if (this.disabled)
+          return;
+        const value = fixIosDateFormat(this.time);
+        this.initPickerValue(value);
+        this.visible = !this.visible;
+      },
+      /**
+       * 触发或关闭弹框
+       */
+      tiggerTimePicker(e2) {
+        this.visible = !this.visible;
+      },
+      /**
+       * 用户点击“清空”按钮，清空当前值
+       */
+      clearTime() {
+        this.time = "";
+        this.$emit("change", this.time);
+        this.$emit("input", this.time);
+        this.$emit("update:modelValue", this.time);
+        this.tiggerTimePicker();
+      },
+      /**
+       * 用户点击“确定”按钮
+       */
+      setTime() {
+        this.initTime();
+        this.tiggerTimePicker();
+      }
+    }
+  };
+  function _sfc_render$f(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock("view", { class: "uni-datetime-picker" }, [
+      vue.createElementVNode("view", {
+        onClick: _cache[0] || (_cache[0] = (...args) => $options.initTimePicker && $options.initTimePicker(...args))
+      }, [
+        vue.renderSlot(_ctx.$slots, "default", {}, () => [
+          vue.createElementVNode(
+            "view",
+            {
+              class: vue.normalizeClass(["uni-datetime-picker-timebox-pointer", { "uni-datetime-picker-disabled": $props.disabled, "uni-datetime-picker-timebox": $props.border }])
+            },
+            [
+              vue.createElementVNode(
+                "text",
+                { class: "uni-datetime-picker-text" },
+                vue.toDisplayString($data.time),
+                1
+                /* TEXT */
+              ),
+              !$data.time ? (vue.openBlock(), vue.createElementBlock("view", {
+                key: 0,
+                class: "uni-datetime-picker-time"
+              }, [
+                vue.createElementVNode(
+                  "text",
+                  { class: "uni-datetime-picker-text" },
+                  vue.toDisplayString($options.selectTimeText),
+                  1
+                  /* TEXT */
+                )
+              ])) : vue.createCommentVNode("v-if", true)
+            ],
+            2
+            /* CLASS */
+          )
+        ], true)
+      ]),
+      $data.visible ? (vue.openBlock(), vue.createElementBlock("view", {
+        key: 0,
+        id: "mask",
+        class: "uni-datetime-picker-mask",
+        onClick: _cache[1] || (_cache[1] = (...args) => $options.tiggerTimePicker && $options.tiggerTimePicker(...args))
+      })) : vue.createCommentVNode("v-if", true),
+      $data.visible ? (vue.openBlock(), vue.createElementBlock(
+        "view",
+        {
+          key: 1,
+          class: vue.normalizeClass(["uni-datetime-picker-popup", [$data.dateShow && $data.timeShow ? "" : "fix-nvue-height"]]),
+          style: vue.normalizeStyle($data.fixNvueBug)
+        },
+        [
+          vue.createElementVNode("view", { class: "uni-title" }, [
+            vue.createElementVNode(
+              "text",
+              { class: "uni-datetime-picker-text" },
+              vue.toDisplayString($options.selectTimeText),
+              1
+              /* TEXT */
+            )
+          ]),
+          $data.dateShow ? (vue.openBlock(), vue.createElementBlock("view", {
+            key: 0,
+            class: "uni-datetime-picker__container-box"
+          }, [
+            vue.createElementVNode("picker-view", {
+              class: "uni-datetime-picker-view",
+              "indicator-style": $data.indicatorStyle,
+              value: $options.ymd,
+              onChange: _cache[2] || (_cache[2] = (...args) => $options.bindDateChange && $options.bindDateChange(...args))
+            }, [
+              vue.createElementVNode("picker-view-column", null, [
+                (vue.openBlock(true), vue.createElementBlock(
+                  vue.Fragment,
+                  null,
+                  vue.renderList($options.years, (item, index) => {
+                    return vue.openBlock(), vue.createElementBlock("view", {
+                      class: "uni-datetime-picker-item",
+                      key: index
+                    }, [
+                      vue.createElementVNode(
+                        "text",
+                        { class: "uni-datetime-picker-item" },
+                        vue.toDisplayString($options.lessThanTen(item)),
+                        1
+                        /* TEXT */
+                      )
+                    ]);
+                  }),
+                  128
+                  /* KEYED_FRAGMENT */
+                ))
+              ]),
+              vue.createElementVNode("picker-view-column", null, [
+                (vue.openBlock(true), vue.createElementBlock(
+                  vue.Fragment,
+                  null,
+                  vue.renderList($options.months, (item, index) => {
+                    return vue.openBlock(), vue.createElementBlock("view", {
+                      class: "uni-datetime-picker-item",
+                      key: index
+                    }, [
+                      vue.createElementVNode(
+                        "text",
+                        { class: "uni-datetime-picker-item" },
+                        vue.toDisplayString($options.lessThanTen(item)),
+                        1
+                        /* TEXT */
+                      )
+                    ]);
+                  }),
+                  128
+                  /* KEYED_FRAGMENT */
+                ))
+              ]),
+              vue.createElementVNode("picker-view-column", null, [
+                (vue.openBlock(true), vue.createElementBlock(
+                  vue.Fragment,
+                  null,
+                  vue.renderList($options.days, (item, index) => {
+                    return vue.openBlock(), vue.createElementBlock("view", {
+                      class: "uni-datetime-picker-item",
+                      key: index
+                    }, [
+                      vue.createElementVNode(
+                        "text",
+                        { class: "uni-datetime-picker-item" },
+                        vue.toDisplayString($options.lessThanTen(item)),
+                        1
+                        /* TEXT */
+                      )
+                    ]);
+                  }),
+                  128
+                  /* KEYED_FRAGMENT */
+                ))
+              ])
+            ], 40, ["indicator-style", "value"]),
+            vue.createCommentVNode(" 兼容 nvue 不支持伪类 "),
+            vue.createElementVNode("text", { class: "uni-datetime-picker-sign sign-left" }, "-"),
+            vue.createElementVNode("text", { class: "uni-datetime-picker-sign sign-right" }, "-")
+          ])) : vue.createCommentVNode("v-if", true),
+          $data.timeShow ? (vue.openBlock(), vue.createElementBlock("view", {
+            key: 1,
+            class: "uni-datetime-picker__container-box"
+          }, [
+            vue.createElementVNode("picker-view", {
+              class: vue.normalizeClass(["uni-datetime-picker-view", [$props.hideSecond ? "time-hide-second" : ""]]),
+              "indicator-style": $data.indicatorStyle,
+              value: $options.hms,
+              onChange: _cache[3] || (_cache[3] = (...args) => $options.bindTimeChange && $options.bindTimeChange(...args))
+            }, [
+              vue.createElementVNode("picker-view-column", null, [
+                (vue.openBlock(true), vue.createElementBlock(
+                  vue.Fragment,
+                  null,
+                  vue.renderList($options.hours, (item, index) => {
+                    return vue.openBlock(), vue.createElementBlock("view", {
+                      class: "uni-datetime-picker-item",
+                      key: index
+                    }, [
+                      vue.createElementVNode(
+                        "text",
+                        { class: "uni-datetime-picker-item" },
+                        vue.toDisplayString($options.lessThanTen(item)),
+                        1
+                        /* TEXT */
+                      )
+                    ]);
+                  }),
+                  128
+                  /* KEYED_FRAGMENT */
+                ))
+              ]),
+              vue.createElementVNode("picker-view-column", null, [
+                (vue.openBlock(true), vue.createElementBlock(
+                  vue.Fragment,
+                  null,
+                  vue.renderList($options.minutes, (item, index) => {
+                    return vue.openBlock(), vue.createElementBlock("view", {
+                      class: "uni-datetime-picker-item",
+                      key: index
+                    }, [
+                      vue.createElementVNode(
+                        "text",
+                        { class: "uni-datetime-picker-item" },
+                        vue.toDisplayString($options.lessThanTen(item)),
+                        1
+                        /* TEXT */
+                      )
+                    ]);
+                  }),
+                  128
+                  /* KEYED_FRAGMENT */
+                ))
+              ]),
+              !$props.hideSecond ? (vue.openBlock(), vue.createElementBlock("picker-view-column", { key: 0 }, [
+                (vue.openBlock(true), vue.createElementBlock(
+                  vue.Fragment,
+                  null,
+                  vue.renderList($options.seconds, (item, index) => {
+                    return vue.openBlock(), vue.createElementBlock("view", {
+                      class: "uni-datetime-picker-item",
+                      key: index
+                    }, [
+                      vue.createElementVNode(
+                        "text",
+                        { class: "uni-datetime-picker-item" },
+                        vue.toDisplayString($options.lessThanTen(item)),
+                        1
+                        /* TEXT */
+                      )
+                    ]);
+                  }),
+                  128
+                  /* KEYED_FRAGMENT */
+                ))
+              ])) : vue.createCommentVNode("v-if", true)
+            ], 42, ["indicator-style", "value"]),
+            vue.createCommentVNode(" 兼容 nvue 不支持伪类 "),
+            vue.createElementVNode(
+              "text",
+              {
+                class: vue.normalizeClass(["uni-datetime-picker-sign", [$props.hideSecond ? "sign-center" : "sign-left"]])
+              },
+              ":",
+              2
+              /* CLASS */
+            ),
+            !$props.hideSecond ? (vue.openBlock(), vue.createElementBlock("text", {
+              key: 0,
+              class: "uni-datetime-picker-sign sign-right"
+            }, ":")) : vue.createCommentVNode("v-if", true)
+          ])) : vue.createCommentVNode("v-if", true),
+          vue.createElementVNode("view", { class: "uni-datetime-picker-btn" }, [
+            vue.createElementVNode("view", {
+              onClick: _cache[4] || (_cache[4] = (...args) => $options.clearTime && $options.clearTime(...args))
+            }, [
+              vue.createElementVNode(
+                "text",
+                { class: "uni-datetime-picker-btn-text" },
+                vue.toDisplayString($options.clearText),
+                1
+                /* TEXT */
+              )
+            ]),
+            vue.createElementVNode("view", { class: "uni-datetime-picker-btn-group" }, [
+              vue.createElementVNode("view", {
+                class: "uni-datetime-picker-cancel",
+                onClick: _cache[5] || (_cache[5] = (...args) => $options.tiggerTimePicker && $options.tiggerTimePicker(...args))
+              }, [
+                vue.createElementVNode(
+                  "text",
+                  { class: "uni-datetime-picker-btn-text" },
+                  vue.toDisplayString($options.cancelText),
+                  1
+                  /* TEXT */
+                )
+              ]),
+              vue.createElementVNode("view", {
+                onClick: _cache[6] || (_cache[6] = (...args) => $options.setTime && $options.setTime(...args))
+              }, [
+                vue.createElementVNode(
+                  "text",
+                  { class: "uni-datetime-picker-btn-text" },
+                  vue.toDisplayString($options.okText),
+                  1
+                  /* TEXT */
+                )
+              ])
+            ])
+          ])
+        ],
+        6
+        /* CLASS, STYLE */
+      )) : vue.createCommentVNode("v-if", true)
+    ]);
+  }
+  const TimePicker = /* @__PURE__ */ _export_sfc(_sfc_main$g, [["render", _sfc_render$f], ["__scopeId", "data-v-1d532b70"], ["__file", "E:/Senior_2/cinema/vueDemo/uni_modules/uni-datetime-picker/components/uni-datetime-picker/time-picker.vue"]]);
+  const { t: t$1 } = initVueI18n(i18nMessages);
+  const _sfc_main$f = {
+    components: {
+      calendarItem,
+      timePicker: TimePicker
+    },
+    props: {
+      date: {
+        type: String,
+        default: ""
+      },
+      defTime: {
+        type: [String, Object],
+        default: ""
+      },
+      selectableTimes: {
+        type: [Object],
+        default() {
+          return {};
+        }
+      },
+      selected: {
+        type: Array,
+        default() {
+          return [];
+        }
+      },
+      startDate: {
+        type: String,
+        default: ""
+      },
+      endDate: {
+        type: String,
+        default: ""
+      },
+      startPlaceholder: {
+        type: String,
+        default: ""
+      },
+      endPlaceholder: {
+        type: String,
+        default: ""
+      },
+      range: {
+        type: Boolean,
+        default: false
+      },
+      hasTime: {
+        type: Boolean,
+        default: false
+      },
+      insert: {
+        type: Boolean,
+        default: true
+      },
+      showMonth: {
+        type: Boolean,
+        default: true
+      },
+      clearDate: {
+        type: Boolean,
+        default: true
+      },
+      checkHover: {
+        type: Boolean,
+        default: true
+      },
+      hideSecond: {
+        type: [Boolean],
+        default: false
+      },
+      pleStatus: {
+        type: Object,
+        default() {
+          return {
+            before: "",
+            after: "",
+            data: [],
+            fulldate: ""
+          };
+        }
+      },
+      defaultValue: {
+        type: [String, Object, Array],
+        default: ""
+      }
+    },
+    data() {
+      return {
+        show: false,
+        weeks: [],
+        calendar: {},
+        nowDate: {},
+        aniMaskShow: false,
+        firstEnter: true,
+        time: "",
+        timeRange: {
+          startTime: "",
+          endTime: ""
+        },
+        tempSingleDate: "",
+        tempRange: {
+          before: "",
+          after: ""
+        }
+      };
+    },
+    watch: {
+      date: {
+        immediate: true,
+        handler(newVal) {
+          if (!this.range) {
+            this.tempSingleDate = newVal;
+            setTimeout(() => {
+              this.init(newVal);
+            }, 100);
+          }
+        }
+      },
+      defTime: {
+        immediate: true,
+        handler(newVal) {
+          if (!this.range) {
+            this.time = newVal;
+          } else {
+            this.timeRange.startTime = newVal.start;
+            this.timeRange.endTime = newVal.end;
+          }
+        }
+      },
+      startDate(val) {
+        if (!this.cale) {
+          return;
+        }
+        this.cale.setStartDate(val);
+        this.cale.setDate(this.nowDate.fullDate);
+        this.weeks = this.cale.weeks;
+      },
+      endDate(val) {
+        if (!this.cale) {
+          return;
+        }
+        this.cale.setEndDate(val);
+        this.cale.setDate(this.nowDate.fullDate);
+        this.weeks = this.cale.weeks;
+      },
+      selected(newVal) {
+        if (!this.cale) {
+          return;
+        }
+        this.cale.setSelectInfo(this.nowDate.fullDate, newVal);
+        this.weeks = this.cale.weeks;
+      },
+      pleStatus: {
+        immediate: true,
+        handler(newVal) {
+          const {
+            before,
+            after,
+            fulldate,
+            which
+          } = newVal;
+          this.tempRange.before = before;
+          this.tempRange.after = after;
+          setTimeout(() => {
+            if (fulldate) {
+              this.cale.setHoverMultiple(fulldate);
+              if (before && after) {
+                this.cale.lastHover = true;
+                if (this.rangeWithinMonth(after, before))
+                  return;
+                this.setDate(before);
+              } else {
+                this.cale.setMultiple(fulldate);
+                this.setDate(this.nowDate.fullDate);
+                this.calendar.fullDate = "";
+                this.cale.lastHover = false;
+              }
+            } else {
+              if (!this.cale) {
+                return;
+              }
+              this.cale.setDefaultMultiple(before, after);
+              if (which === "left" && before) {
+                this.setDate(before);
+                this.weeks = this.cale.weeks;
+              } else if (after) {
+                this.setDate(after);
+                this.weeks = this.cale.weeks;
+              }
+              this.cale.lastHover = true;
+            }
+          }, 16);
+        }
+      }
+    },
+    computed: {
+      timepickerStartTime() {
+        const activeDate = this.range ? this.tempRange.before : this.calendar.fullDate;
+        return activeDate === this.startDate ? this.selectableTimes.start : "";
+      },
+      timepickerEndTime() {
+        const activeDate = this.range ? this.tempRange.after : this.calendar.fullDate;
+        return activeDate === this.endDate ? this.selectableTimes.end : "";
+      },
+      /**
+       * for i18n
+       */
+      selectDateText() {
+        return t$1("uni-datetime-picker.selectDate");
+      },
+      startDateText() {
+        return this.startPlaceholder || t$1("uni-datetime-picker.startDate");
+      },
+      endDateText() {
+        return this.endPlaceholder || t$1("uni-datetime-picker.endDate");
+      },
+      okText() {
+        return t$1("uni-datetime-picker.ok");
+      },
+      yearText() {
+        return t$1("uni-datetime-picker.year");
+      },
+      monthText() {
+        return t$1("uni-datetime-picker.month");
+      },
+      MONText() {
+        return t$1("uni-calender.MON");
+      },
+      TUEText() {
+        return t$1("uni-calender.TUE");
+      },
+      WEDText() {
+        return t$1("uni-calender.WED");
+      },
+      THUText() {
+        return t$1("uni-calender.THU");
+      },
+      FRIText() {
+        return t$1("uni-calender.FRI");
+      },
+      SATText() {
+        return t$1("uni-calender.SAT");
+      },
+      SUNText() {
+        return t$1("uni-calender.SUN");
+      },
+      confirmText() {
+        return t$1("uni-calender.confirm");
+      }
+    },
+    created() {
+      this.cale = new Calendar$1({
+        selected: this.selected,
+        startDate: this.startDate,
+        endDate: this.endDate,
+        range: this.range
+      });
+      this.init(this.date);
+    },
+    methods: {
+      leaveCale() {
+        this.firstEnter = true;
+      },
+      handleMouse(weeks) {
+        if (weeks.disable)
+          return;
+        if (this.cale.lastHover)
+          return;
+        let {
+          before,
+          after
+        } = this.cale.multipleStatus;
+        if (!before)
+          return;
+        this.calendar = weeks;
+        this.cale.setHoverMultiple(this.calendar.fullDate);
+        this.weeks = this.cale.weeks;
+        if (this.firstEnter) {
+          this.$emit("firstEnterCale", this.cale.multipleStatus);
+          this.firstEnter = false;
+        }
+      },
+      rangeWithinMonth(A2, B2) {
+        const [yearA, monthA] = A2.split("-");
+        const [yearB, monthB] = B2.split("-");
+        return yearA === yearB && monthA === monthB;
+      },
+      // 蒙版点击事件
+      maskClick() {
+        this.close();
+        this.$emit("maskClose");
+      },
+      clearCalender() {
+        if (this.range) {
+          this.timeRange.startTime = "";
+          this.timeRange.endTime = "";
+          this.tempRange.before = "";
+          this.tempRange.after = "";
+          this.cale.multipleStatus.before = "";
+          this.cale.multipleStatus.after = "";
+          this.cale.multipleStatus.data = [];
+          this.cale.lastHover = false;
+        } else {
+          this.time = "";
+          this.tempSingleDate = "";
+        }
+        this.calendar.fullDate = "";
+        this.setDate(/* @__PURE__ */ new Date());
+      },
+      bindDateChange(e2) {
+        const value = e2.detail.value + "-1";
+        this.setDate(value);
+      },
+      /**
+       * 初始化日期显示
+       * @param {Object} date
+       */
+      init(date) {
+        if (!this.cale) {
+          return;
+        }
+        this.cale.setDate(date || /* @__PURE__ */ new Date());
+        this.weeks = this.cale.weeks;
+        this.nowDate = this.cale.getInfo(date);
+        this.calendar = { ...this.nowDate };
+        if (!date) {
+          this.calendar.fullDate = "";
+          if (this.defaultValue && !this.range) {
+            const defaultDate = new Date(this.defaultValue);
+            const fullDate = getDate(defaultDate);
+            const year = defaultDate.getFullYear();
+            const month = defaultDate.getMonth() + 1;
+            const date2 = defaultDate.getDate();
+            const day = defaultDate.getDay();
+            this.calendar = {
+              fullDate,
+              year,
+              month,
+              date: date2,
+              day
+            }, this.tempSingleDate = fullDate;
+            this.time = getTime(defaultDate, this.hideSecond);
+          }
+        }
+      },
+      /**
+       * 打开日历弹窗
+       */
+      open() {
+        if (this.clearDate && !this.insert) {
+          this.cale.cleanMultipleStatus();
+          this.init(this.date);
+        }
+        this.show = true;
+        this.$nextTick(() => {
+          setTimeout(() => {
+            this.aniMaskShow = true;
+          }, 50);
+        });
+      },
+      /**
+       * 关闭日历弹窗
+       */
+      close() {
+        this.aniMaskShow = false;
+        this.$nextTick(() => {
+          setTimeout(() => {
+            this.show = false;
+            this.$emit("close");
+          }, 300);
+        });
+      },
+      /**
+       * 确认按钮
+       */
+      confirm() {
+        this.setEmit("confirm");
+        this.close();
+      },
+      /**
+       * 变化触发
+       */
+      change() {
+        if (!this.insert)
+          return;
+        this.setEmit("change");
+      },
+      /**
+       * 选择月份触发
+       */
+      monthSwitch() {
+        let {
+          year,
+          month
+        } = this.nowDate;
+        this.$emit("monthSwitch", {
+          year,
+          month: Number(month)
+        });
+      },
+      /**
+       * 派发事件
+       * @param {Object} name
+       */
+      setEmit(name) {
+        if (!this.range) {
+          if (!this.calendar.fullDate) {
+            this.calendar = this.cale.getInfo(/* @__PURE__ */ new Date());
+            this.tempSingleDate = this.calendar.fullDate;
+          }
+          if (this.hasTime && !this.time) {
+            this.time = getTime(/* @__PURE__ */ new Date(), this.hideSecond);
+          }
+        }
+        let {
+          year,
+          month,
+          date,
+          fullDate,
+          extraInfo
+        } = this.calendar;
+        this.$emit(name, {
+          range: this.cale.multipleStatus,
+          year,
+          month,
+          date,
+          time: this.time,
+          timeRange: this.timeRange,
+          fulldate: fullDate,
+          extraInfo: extraInfo || {}
+        });
+      },
+      /**
+       * 选择天触发
+       * @param {Object} weeks
+       */
+      choiceDate(weeks) {
+        if (weeks.disable)
+          return;
+        this.calendar = weeks;
+        this.calendar.userChecked = true;
+        this.cale.setMultiple(this.calendar.fullDate, true);
+        this.weeks = this.cale.weeks;
+        this.tempSingleDate = this.calendar.fullDate;
+        const beforeDate = new Date(this.cale.multipleStatus.before).getTime();
+        const afterDate = new Date(this.cale.multipleStatus.after).getTime();
+        if (beforeDate > afterDate && afterDate) {
+          this.tempRange.before = this.cale.multipleStatus.after;
+          this.tempRange.after = this.cale.multipleStatus.before;
+        } else {
+          this.tempRange.before = this.cale.multipleStatus.before;
+          this.tempRange.after = this.cale.multipleStatus.after;
+        }
+        this.change();
+      },
+      changeMonth(type) {
+        let newDate;
+        if (type === "pre") {
+          newDate = this.cale.getPreMonthObj(this.nowDate.fullDate).fullDate;
+        } else if (type === "next") {
+          newDate = this.cale.getNextMonthObj(this.nowDate.fullDate).fullDate;
+        }
+        this.setDate(newDate);
+        this.monthSwitch();
+      },
+      /**
+       * 设置日期
+       * @param {Object} date
+       */
+      setDate(date) {
+        this.cale.setDate(date);
+        this.weeks = this.cale.weeks;
+        this.nowDate = this.cale.getInfo(date);
+      }
+    }
+  };
+  function _sfc_render$e(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_calendar_item = vue.resolveComponent("calendar-item");
+    const _component_time_picker = vue.resolveComponent("time-picker");
+    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_1$1);
+    return vue.openBlock(), vue.createElementBlock(
+      "view",
+      {
+        class: "uni-calendar",
+        onMouseleave: _cache[9] || (_cache[9] = (...args) => $options.leaveCale && $options.leaveCale(...args))
+      },
+      [
+        !$props.insert && $data.show ? (vue.openBlock(), vue.createElementBlock(
+          "view",
+          {
+            key: 0,
+            class: vue.normalizeClass(["uni-calendar__mask", { "uni-calendar--mask-show": $data.aniMaskShow }]),
+            onClick: _cache[0] || (_cache[0] = (...args) => $options.maskClick && $options.maskClick(...args))
+          },
+          null,
+          2
+          /* CLASS */
+        )) : vue.createCommentVNode("v-if", true),
+        $props.insert || $data.show ? (vue.openBlock(), vue.createElementBlock(
+          "view",
+          {
+            key: 1,
+            class: vue.normalizeClass(["uni-calendar__content", { "uni-calendar--fixed": !$props.insert, "uni-calendar--ani-show": $data.aniMaskShow, "uni-calendar__content-mobile": $data.aniMaskShow }])
+          },
+          [
+            vue.createElementVNode(
+              "view",
+              {
+                class: vue.normalizeClass(["uni-calendar__header", { "uni-calendar__header-mobile": !$props.insert }])
+              },
+              [
+                vue.createElementVNode("view", {
+                  class: "uni-calendar__header-btn-box",
+                  onClick: _cache[1] || (_cache[1] = vue.withModifiers(($event) => $options.changeMonth("pre"), ["stop"]))
+                }, [
+                  vue.createElementVNode("view", { class: "uni-calendar__header-btn uni-calendar--left" })
+                ]),
+                vue.createElementVNode("picker", {
+                  mode: "date",
+                  value: $props.date,
+                  fields: "month",
+                  onChange: _cache[2] || (_cache[2] = (...args) => $options.bindDateChange && $options.bindDateChange(...args))
+                }, [
+                  vue.createElementVNode(
+                    "text",
+                    { class: "uni-calendar__header-text" },
+                    vue.toDisplayString(($data.nowDate.year || "") + $options.yearText + ($data.nowDate.month || "") + $options.monthText),
+                    1
+                    /* TEXT */
+                  )
+                ], 40, ["value"]),
+                vue.createElementVNode("view", {
+                  class: "uni-calendar__header-btn-box",
+                  onClick: _cache[3] || (_cache[3] = vue.withModifiers(($event) => $options.changeMonth("next"), ["stop"]))
+                }, [
+                  vue.createElementVNode("view", { class: "uni-calendar__header-btn uni-calendar--right" })
+                ]),
+                !$props.insert ? (vue.openBlock(), vue.createElementBlock("view", {
+                  key: 0,
+                  class: "dialog-close",
+                  onClick: _cache[4] || (_cache[4] = (...args) => $options.close && $options.close(...args))
+                }, [
+                  vue.createElementVNode("view", {
+                    class: "dialog-close-plus",
+                    "data-id": "close"
+                  }),
+                  vue.createElementVNode("view", {
+                    class: "dialog-close-plus dialog-close-rotate",
+                    "data-id": "close"
+                  })
+                ])) : vue.createCommentVNode("v-if", true)
+              ],
+              2
+              /* CLASS */
+            ),
+            vue.createElementVNode("view", { class: "uni-calendar__box" }, [
+              $props.showMonth ? (vue.openBlock(), vue.createElementBlock("view", {
+                key: 0,
+                class: "uni-calendar__box-bg"
+              }, [
+                vue.createElementVNode(
+                  "text",
+                  { class: "uni-calendar__box-bg-text" },
+                  vue.toDisplayString($data.nowDate.month),
+                  1
+                  /* TEXT */
+                )
+              ])) : vue.createCommentVNode("v-if", true),
+              vue.createElementVNode("view", {
+                class: "uni-calendar__weeks",
+                style: { "padding-bottom": "7px" }
+              }, [
+                vue.createElementVNode("view", { class: "uni-calendar__weeks-day" }, [
+                  vue.createElementVNode(
+                    "text",
+                    { class: "uni-calendar__weeks-day-text" },
+                    vue.toDisplayString($options.SUNText),
+                    1
+                    /* TEXT */
+                  )
+                ]),
+                vue.createElementVNode("view", { class: "uni-calendar__weeks-day" }, [
+                  vue.createElementVNode(
+                    "text",
+                    { class: "uni-calendar__weeks-day-text" },
+                    vue.toDisplayString($options.MONText),
+                    1
+                    /* TEXT */
+                  )
+                ]),
+                vue.createElementVNode("view", { class: "uni-calendar__weeks-day" }, [
+                  vue.createElementVNode(
+                    "text",
+                    { class: "uni-calendar__weeks-day-text" },
+                    vue.toDisplayString($options.TUEText),
+                    1
+                    /* TEXT */
+                  )
+                ]),
+                vue.createElementVNode("view", { class: "uni-calendar__weeks-day" }, [
+                  vue.createElementVNode(
+                    "text",
+                    { class: "uni-calendar__weeks-day-text" },
+                    vue.toDisplayString($options.WEDText),
+                    1
+                    /* TEXT */
+                  )
+                ]),
+                vue.createElementVNode("view", { class: "uni-calendar__weeks-day" }, [
+                  vue.createElementVNode(
+                    "text",
+                    { class: "uni-calendar__weeks-day-text" },
+                    vue.toDisplayString($options.THUText),
+                    1
+                    /* TEXT */
+                  )
+                ]),
+                vue.createElementVNode("view", { class: "uni-calendar__weeks-day" }, [
+                  vue.createElementVNode(
+                    "text",
+                    { class: "uni-calendar__weeks-day-text" },
+                    vue.toDisplayString($options.FRIText),
+                    1
+                    /* TEXT */
+                  )
+                ]),
+                vue.createElementVNode("view", { class: "uni-calendar__weeks-day" }, [
+                  vue.createElementVNode(
+                    "text",
+                    { class: "uni-calendar__weeks-day-text" },
+                    vue.toDisplayString($options.SATText),
+                    1
+                    /* TEXT */
+                  )
+                ])
+              ]),
+              (vue.openBlock(true), vue.createElementBlock(
+                vue.Fragment,
+                null,
+                vue.renderList($data.weeks, (item, weekIndex) => {
+                  return vue.openBlock(), vue.createElementBlock("view", {
+                    class: "uni-calendar__weeks",
+                    key: weekIndex
+                  }, [
+                    (vue.openBlock(true), vue.createElementBlock(
+                      vue.Fragment,
+                      null,
+                      vue.renderList(item, (weeks, weeksIndex) => {
+                        return vue.openBlock(), vue.createElementBlock("view", {
+                          class: "uni-calendar__weeks-item",
+                          key: weeksIndex
+                        }, [
+                          vue.createVNode(_component_calendar_item, {
+                            class: "uni-calendar-item--hook",
+                            weeks,
+                            calendar: $data.calendar,
+                            selected: $props.selected,
+                            checkHover: $props.range,
+                            onChange: $options.choiceDate,
+                            onHandleMouse: $options.handleMouse
+                          }, null, 8, ["weeks", "calendar", "selected", "checkHover", "onChange", "onHandleMouse"])
+                        ]);
+                      }),
+                      128
+                      /* KEYED_FRAGMENT */
+                    ))
+                  ]);
+                }),
+                128
+                /* KEYED_FRAGMENT */
+              ))
+            ]),
+            !$props.insert && !$props.range && $props.hasTime ? (vue.openBlock(), vue.createElementBlock("view", {
+              key: 0,
+              class: "uni-date-changed uni-calendar--fixed-top",
+              style: { "padding": "0 80px" }
+            }, [
+              vue.createElementVNode(
+                "view",
+                { class: "uni-date-changed--time-date" },
+                vue.toDisplayString($data.tempSingleDate ? $data.tempSingleDate : $options.selectDateText),
+                1
+                /* TEXT */
+              ),
+              vue.createVNode(_component_time_picker, {
+                type: "time",
+                start: $options.timepickerStartTime,
+                end: $options.timepickerEndTime,
+                modelValue: $data.time,
+                "onUpdate:modelValue": _cache[5] || (_cache[5] = ($event) => $data.time = $event),
+                disabled: !$data.tempSingleDate,
+                border: false,
+                "hide-second": $props.hideSecond,
+                class: "time-picker-style"
+              }, null, 8, ["start", "end", "modelValue", "disabled", "hide-second"])
+            ])) : vue.createCommentVNode("v-if", true),
+            !$props.insert && $props.range && $props.hasTime ? (vue.openBlock(), vue.createElementBlock("view", {
+              key: 1,
+              class: "uni-date-changed uni-calendar--fixed-top"
+            }, [
+              vue.createElementVNode("view", { class: "uni-date-changed--time-start" }, [
+                vue.createElementVNode(
+                  "view",
+                  { class: "uni-date-changed--time-date" },
+                  vue.toDisplayString($data.tempRange.before ? $data.tempRange.before : $options.startDateText),
+                  1
+                  /* TEXT */
+                ),
+                vue.createVNode(_component_time_picker, {
+                  type: "time",
+                  start: $options.timepickerStartTime,
+                  modelValue: $data.timeRange.startTime,
+                  "onUpdate:modelValue": _cache[6] || (_cache[6] = ($event) => $data.timeRange.startTime = $event),
+                  border: false,
+                  "hide-second": $props.hideSecond,
+                  disabled: !$data.tempRange.before,
+                  class: "time-picker-style"
+                }, null, 8, ["start", "modelValue", "hide-second", "disabled"])
+              ]),
+              vue.createElementVNode("view", { style: { "line-height": "50px" } }, [
+                vue.createVNode(_component_uni_icons, {
+                  type: "arrowthinright",
+                  color: "#999"
+                })
+              ]),
+              vue.createElementVNode("view", { class: "uni-date-changed--time-end" }, [
+                vue.createElementVNode(
+                  "view",
+                  { class: "uni-date-changed--time-date" },
+                  vue.toDisplayString($data.tempRange.after ? $data.tempRange.after : $options.endDateText),
+                  1
+                  /* TEXT */
+                ),
+                vue.createVNode(_component_time_picker, {
+                  type: "time",
+                  end: $options.timepickerEndTime,
+                  modelValue: $data.timeRange.endTime,
+                  "onUpdate:modelValue": _cache[7] || (_cache[7] = ($event) => $data.timeRange.endTime = $event),
+                  border: false,
+                  "hide-second": $props.hideSecond,
+                  disabled: !$data.tempRange.after,
+                  class: "time-picker-style"
+                }, null, 8, ["end", "modelValue", "hide-second", "disabled"])
+              ])
+            ])) : vue.createCommentVNode("v-if", true),
+            !$props.insert ? (vue.openBlock(), vue.createElementBlock("view", {
+              key: 2,
+              class: "uni-date-changed uni-date-btn--ok"
+            }, [
+              vue.createElementVNode(
+                "view",
+                {
+                  class: "uni-datetime-picker--btn",
+                  onClick: _cache[8] || (_cache[8] = (...args) => $options.confirm && $options.confirm(...args))
+                },
+                vue.toDisplayString($options.confirmText),
+                1
+                /* TEXT */
+              )
+            ])) : vue.createCommentVNode("v-if", true)
+          ],
+          2
+          /* CLASS */
+        )) : vue.createCommentVNode("v-if", true)
+      ],
+      32
+      /* HYDRATE_EVENTS */
+    );
+  }
+  const Calendar = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["render", _sfc_render$e], ["__scopeId", "data-v-1d379219"], ["__file", "E:/Senior_2/cinema/vueDemo/uni_modules/uni-datetime-picker/components/uni-datetime-picker/calendar.vue"]]);
+  const _sfc_main$e = {
+    name: "UniDatetimePicker",
+    options: {
+      virtualHost: true
+    },
+    components: {
+      Calendar,
+      TimePicker
+    },
+    data() {
+      return {
+        isRange: false,
+        hasTime: false,
+        displayValue: "",
+        inputDate: "",
+        calendarDate: "",
+        pickerTime: "",
+        calendarRange: {
+          startDate: "",
+          startTime: "",
+          endDate: "",
+          endTime: ""
+        },
+        displayRangeValue: {
+          startDate: "",
+          endDate: ""
+        },
+        tempRange: {
+          startDate: "",
+          startTime: "",
+          endDate: "",
+          endTime: ""
+        },
+        // 左右日历同步数据
+        startMultipleStatus: {
+          before: "",
+          after: "",
+          data: [],
+          fulldate: ""
+        },
+        endMultipleStatus: {
+          before: "",
+          after: "",
+          data: [],
+          fulldate: ""
+        },
+        pickerVisible: false,
+        pickerPositionStyle: null,
+        isEmitValue: false,
+        isPhone: false,
+        isFirstShow: true,
+        i18nT: () => {
+        }
+      };
+    },
+    props: {
+      type: {
+        type: String,
+        default: "datetime"
+      },
+      value: {
+        type: [String, Number, Array, Date],
+        default: ""
+      },
+      modelValue: {
+        type: [String, Number, Array, Date],
+        default: ""
+      },
+      start: {
+        type: [Number, String],
+        default: ""
+      },
+      end: {
+        type: [Number, String],
+        default: ""
+      },
+      returnType: {
+        type: String,
+        default: "string"
+      },
+      placeholder: {
+        type: String,
+        default: ""
+      },
+      startPlaceholder: {
+        type: String,
+        default: ""
+      },
+      endPlaceholder: {
+        type: String,
+        default: ""
+      },
+      rangeSeparator: {
+        type: String,
+        default: "-"
+      },
+      border: {
+        type: [Boolean],
+        default: true
+      },
+      disabled: {
+        type: [Boolean],
+        default: false
+      },
+      clearIcon: {
+        type: [Boolean],
+        default: true
+      },
+      hideSecond: {
+        type: [Boolean],
+        default: false
+      },
+      defaultValue: {
+        type: [String, Object, Array],
+        default: ""
+      }
+    },
+    watch: {
+      type: {
+        immediate: true,
+        handler(newVal) {
+          this.hasTime = newVal.indexOf("time") !== -1;
+          this.isRange = newVal.indexOf("range") !== -1;
+        }
+      },
+      modelValue: {
+        immediate: true,
+        handler(newVal) {
+          if (this.isEmitValue) {
+            this.isEmitValue = false;
+            return;
+          }
+          this.initPicker(newVal);
+        }
+      },
+      start: {
+        immediate: true,
+        handler(newVal) {
+          if (!newVal)
+            return;
+          this.calendarRange.startDate = getDate(newVal);
+          if (this.hasTime) {
+            this.calendarRange.startTime = getTime(newVal);
+          }
+        }
+      },
+      end: {
+        immediate: true,
+        handler(newVal) {
+          if (!newVal)
+            return;
+          this.calendarRange.endDate = getDate(newVal);
+          if (this.hasTime) {
+            this.calendarRange.endTime = getTime(newVal, this.hideSecond);
+          }
+        }
+      }
+    },
+    computed: {
+      timepickerStartTime() {
+        const activeDate = this.isRange ? this.tempRange.startDate : this.inputDate;
+        return activeDate === this.calendarRange.startDate ? this.calendarRange.startTime : "";
+      },
+      timepickerEndTime() {
+        const activeDate = this.isRange ? this.tempRange.endDate : this.inputDate;
+        return activeDate === this.calendarRange.endDate ? this.calendarRange.endTime : "";
+      },
+      mobileCalendarTime() {
+        const timeRange = {
+          start: this.tempRange.startTime,
+          end: this.tempRange.endTime
+        };
+        return this.isRange ? timeRange : this.pickerTime;
+      },
+      mobSelectableTime() {
+        return {
+          start: this.calendarRange.startTime,
+          end: this.calendarRange.endTime
+        };
+      },
+      datePopupWidth() {
+        return this.isRange ? 653 : 301;
+      },
+      /**
+       * for i18n
+       */
+      singlePlaceholderText() {
+        return this.placeholder || (this.type === "date" ? this.selectDateText : this.selectDateTimeText);
+      },
+      startPlaceholderText() {
+        return this.startPlaceholder || this.startDateText;
+      },
+      endPlaceholderText() {
+        return this.endPlaceholder || this.endDateText;
+      },
+      selectDateText() {
+        return this.i18nT("uni-datetime-picker.selectDate");
+      },
+      selectDateTimeText() {
+        return this.i18nT("uni-datetime-picker.selectDateTime");
+      },
+      selectTimeText() {
+        return this.i18nT("uni-datetime-picker.selectTime");
+      },
+      startDateText() {
+        return this.startPlaceholder || this.i18nT("uni-datetime-picker.startDate");
+      },
+      startTimeText() {
+        return this.i18nT("uni-datetime-picker.startTime");
+      },
+      endDateText() {
+        return this.endPlaceholder || this.i18nT("uni-datetime-picker.endDate");
+      },
+      endTimeText() {
+        return this.i18nT("uni-datetime-picker.endTime");
+      },
+      okText() {
+        return this.i18nT("uni-datetime-picker.ok");
+      },
+      clearText() {
+        return this.i18nT("uni-datetime-picker.clear");
+      },
+      showClearIcon() {
+        return this.clearIcon && !this.disabled && (this.displayValue || this.displayRangeValue.startDate && this.displayRangeValue.endDate);
+      }
+    },
+    created() {
+      this.initI18nT();
+      this.platform();
+    },
+    methods: {
+      initI18nT() {
+        const vueI18n = initVueI18n(i18nMessages);
+        this.i18nT = vueI18n.t;
+      },
+      initPicker(newVal) {
+        if (!newVal && !this.defaultValue || Array.isArray(newVal) && !newVal.length) {
+          this.$nextTick(() => {
+            this.clear(false);
+          });
+          return;
+        }
+        if (!Array.isArray(newVal) && !this.isRange) {
+          if (newVal) {
+            this.displayValue = this.inputDate = this.calendarDate = getDate(newVal);
+            if (this.hasTime) {
+              this.pickerTime = getTime(newVal, this.hideSecond);
+              this.displayValue = `${this.displayValue} ${this.pickerTime}`;
+            }
+          } else if (this.defaultValue) {
+            this.inputDate = this.calendarDate = getDate(this.defaultValue);
+            if (this.hasTime) {
+              this.pickerTime = getTime(this.defaultValue, this.hideSecond);
+            }
+          }
+        } else {
+          const [before, after] = newVal;
+          if (!before && !after)
+            return;
+          const beforeDate = getDate(before);
+          const beforeTime = getTime(before, this.hideSecond);
+          const afterDate = getDate(after);
+          const afterTime = getTime(after, this.hideSecond);
+          const startDate = beforeDate;
+          const endDate = afterDate;
+          this.displayRangeValue.startDate = this.tempRange.startDate = startDate;
+          this.displayRangeValue.endDate = this.tempRange.endDate = endDate;
+          if (this.hasTime) {
+            this.displayRangeValue.startDate = `${beforeDate} ${beforeTime}`;
+            this.displayRangeValue.endDate = `${afterDate} ${afterTime}`;
+            this.tempRange.startTime = beforeTime;
+            this.tempRange.endTime = afterTime;
+          }
+          const defaultRange = {
+            before: beforeDate,
+            after: afterDate
+          };
+          this.startMultipleStatus = Object.assign({}, this.startMultipleStatus, defaultRange, {
+            which: "right"
+          });
+          this.endMultipleStatus = Object.assign({}, this.endMultipleStatus, defaultRange, {
+            which: "left"
+          });
+        }
+      },
+      updateLeftCale(e2) {
+        const left = this.$refs.left;
+        left.cale.setHoverMultiple(e2.after);
+        left.setDate(this.$refs.left.nowDate.fullDate);
+      },
+      updateRightCale(e2) {
+        const right = this.$refs.right;
+        right.cale.setHoverMultiple(e2.after);
+        right.setDate(this.$refs.right.nowDate.fullDate);
+      },
+      platform() {
+        const { windowWidth } = uni.getSystemInfoSync();
+        this.isPhone = windowWidth <= 500;
+        this.windowWidth = windowWidth;
+      },
+      show() {
+        if (this.disabled) {
+          return;
+        }
+        this.platform();
+        if (this.isPhone) {
+          this.$refs.mobile.open();
+          return;
+        }
+        this.pickerPositionStyle = {
+          top: "10px"
+        };
+        const dateEditor = uni.createSelectorQuery().in(this).select(".uni-date-editor");
+        dateEditor.boundingClientRect((rect) => {
+          if (this.windowWidth - rect.left < this.datePopupWidth) {
+            this.pickerPositionStyle.right = 0;
+          }
+        }).exec();
+        setTimeout(() => {
+          this.pickerVisible = !this.pickerVisible;
+          if (!this.isPhone && this.isRange && this.isFirstShow) {
+            this.isFirstShow = false;
+            const {
+              startDate,
+              endDate
+            } = this.calendarRange;
+            if (startDate && endDate) {
+              if (this.diffDate(startDate, endDate) < 30) {
+                this.$refs.right.changeMonth("pre");
+              }
+            } else {
+              this.$refs.right.changeMonth("next");
+              this.$refs.right.cale.lastHover = false;
+            }
+          }
+        }, 50);
+      },
+      close() {
+        setTimeout(() => {
+          this.pickerVisible = false;
+          this.$emit("maskClick", this.value);
+          this.$refs.mobile && this.$refs.mobile.close();
+        }, 20);
+      },
+      setEmit(value) {
+        if (this.returnType === "timestamp" || this.returnType === "date") {
+          if (!Array.isArray(value)) {
+            if (!this.hasTime) {
+              value = value + " 00:00:00";
+            }
+            value = this.createTimestamp(value);
+            if (this.returnType === "date") {
+              value = new Date(value);
+            }
+          } else {
+            if (!this.hasTime) {
+              value[0] = value[0] + " 00:00:00";
+              value[1] = value[1] + " 00:00:00";
+            }
+            value[0] = this.createTimestamp(value[0]);
+            value[1] = this.createTimestamp(value[1]);
+            if (this.returnType === "date") {
+              value[0] = new Date(value[0]);
+              value[1] = new Date(value[1]);
+            }
+          }
+        }
+        this.$emit("update:modelValue", value);
+        this.$emit("input", value);
+        this.$emit("change", value);
+        this.isEmitValue = true;
+      },
+      createTimestamp(date) {
+        date = fixIosDateFormat(date);
+        return Date.parse(new Date(date));
+      },
+      singleChange(e2) {
+        this.calendarDate = this.inputDate = e2.fulldate;
+        if (this.hasTime)
+          return;
+        this.confirmSingleChange();
+      },
+      confirmSingleChange() {
+        if (!checkDate(this.inputDate)) {
+          const now = /* @__PURE__ */ new Date();
+          this.calendarDate = this.inputDate = getDate(now);
+          this.pickerTime = getTime(now, this.hideSecond);
+        }
+        let startLaterInputDate = false;
+        let startDate, startTime;
+        if (this.start) {
+          let startString = this.start;
+          if (typeof this.start === "number") {
+            startString = getDateTime(this.start, this.hideSecond);
+          }
+          [startDate, startTime] = startString.split(" ");
+          if (this.start && !dateCompare(startDate, this.inputDate)) {
+            startLaterInputDate = true;
+            this.inputDate = startDate;
+          }
+        }
+        let endEarlierInputDate = false;
+        let endDate, endTime;
+        if (this.end) {
+          let endString = this.end;
+          if (typeof this.end === "number") {
+            endString = getDateTime(this.end, this.hideSecond);
+          }
+          [endDate, endTime] = endString.split(" ");
+          if (this.end && !dateCompare(this.inputDate, endDate)) {
+            endEarlierInputDate = true;
+            this.inputDate = endDate;
+          }
+        }
+        if (this.hasTime) {
+          if (startLaterInputDate) {
+            this.pickerTime = startTime || getDefaultSecond(this.hideSecond);
+          }
+          if (endEarlierInputDate) {
+            this.pickerTime = endTime || getDefaultSecond(this.hideSecond);
+          }
+          if (!this.pickerTime) {
+            this.pickerTime = getTime(Date.now(), this.hideSecond);
+          }
+          this.displayValue = `${this.inputDate} ${this.pickerTime}`;
+        } else {
+          this.displayValue = this.inputDate;
+        }
+        this.setEmit(this.displayValue);
+        this.pickerVisible = false;
+      },
+      leftChange(e2) {
+        const {
+          before,
+          after
+        } = e2.range;
+        this.rangeChange(before, after);
+        const obj = {
+          before: e2.range.before,
+          after: e2.range.after,
+          data: e2.range.data,
+          fulldate: e2.fulldate
+        };
+        this.startMultipleStatus = Object.assign({}, this.startMultipleStatus, obj);
+      },
+      rightChange(e2) {
+        const {
+          before,
+          after
+        } = e2.range;
+        this.rangeChange(before, after);
+        const obj = {
+          before: e2.range.before,
+          after: e2.range.after,
+          data: e2.range.data,
+          fulldate: e2.fulldate
+        };
+        this.endMultipleStatus = Object.assign({}, this.endMultipleStatus, obj);
+      },
+      mobileChange(e2) {
+        if (this.isRange) {
+          const { before, after } = e2.range;
+          if (!before || !after) {
+            return;
+          }
+          this.handleStartAndEnd(before, after, true);
+          if (this.hasTime) {
+            const {
+              startTime,
+              endTime
+            } = e2.timeRange;
+            this.tempRange.startTime = startTime;
+            this.tempRange.endTime = endTime;
+          }
+          this.confirmRangeChange();
+        } else {
+          if (this.hasTime) {
+            this.displayValue = e2.fulldate + " " + e2.time;
+          } else {
+            this.displayValue = e2.fulldate;
+          }
+          this.setEmit(this.displayValue);
+        }
+        this.$refs.mobile.close();
+      },
+      rangeChange(before, after) {
+        if (!(before && after))
+          return;
+        this.handleStartAndEnd(before, after, true);
+        if (this.hasTime)
+          return;
+        this.confirmRangeChange();
+      },
+      confirmRangeChange() {
+        if (!this.tempRange.startDate || !this.tempRange.endDate) {
+          this.pickerVisible = false;
+          return;
+        }
+        if (!checkDate(this.tempRange.startDate)) {
+          this.tempRange.startDate = getDate(Date.now());
+        }
+        if (!checkDate(this.tempRange.endDate)) {
+          this.tempRange.endDate = getDate(Date.now());
+        }
+        let start, end;
+        let startDateLaterRangeStartDate = false;
+        let startDateLaterRangeEndDate = false;
+        let startDate, startTime;
+        if (this.start) {
+          let startString = this.start;
+          if (typeof this.start === "number") {
+            startString = getDateTime(this.start, this.hideSecond);
+          }
+          [startDate, startTime] = startString.split(" ");
+          if (this.start && !dateCompare(this.start, this.tempRange.startDate)) {
+            startDateLaterRangeStartDate = true;
+            this.tempRange.startDate = startDate;
+          }
+          if (this.start && !dateCompare(this.start, this.tempRange.endDate)) {
+            startDateLaterRangeEndDate = true;
+            this.tempRange.endDate = startDate;
+          }
+        }
+        let endDateEarlierRangeStartDate = false;
+        let endDateEarlierRangeEndDate = false;
+        let endDate, endTime;
+        if (this.end) {
+          let endString = this.end;
+          if (typeof this.end === "number") {
+            endString = getDateTime(this.end, this.hideSecond);
+          }
+          [endDate, endTime] = endString.split(" ");
+          if (this.end && !dateCompare(this.tempRange.startDate, this.end)) {
+            endDateEarlierRangeStartDate = true;
+            this.tempRange.startDate = endDate;
+          }
+          if (this.end && !dateCompare(this.tempRange.endDate, this.end)) {
+            endDateEarlierRangeEndDate = true;
+            this.tempRange.endDate = endDate;
+          }
+        }
+        if (!this.hasTime) {
+          start = this.displayRangeValue.startDate = this.tempRange.startDate;
+          end = this.displayRangeValue.endDate = this.tempRange.endDate;
+        } else {
+          if (startDateLaterRangeStartDate) {
+            this.tempRange.startTime = startTime || getDefaultSecond(this.hideSecond);
+          } else if (endDateEarlierRangeStartDate) {
+            this.tempRange.startTime = endTime || getDefaultSecond(this.hideSecond);
+          }
+          if (!this.tempRange.startTime) {
+            this.tempRange.startTime = getTime(Date.now(), this.hideSecond);
+          }
+          if (startDateLaterRangeEndDate) {
+            this.tempRange.endTime = startTime || getDefaultSecond(this.hideSecond);
+          } else if (endDateEarlierRangeEndDate) {
+            this.tempRange.endTime = endTime || getDefaultSecond(this.hideSecond);
+          }
+          if (!this.tempRange.endTime) {
+            this.tempRange.endTime = getTime(Date.now(), this.hideSecond);
+          }
+          start = this.displayRangeValue.startDate = `${this.tempRange.startDate} ${this.tempRange.startTime}`;
+          end = this.displayRangeValue.endDate = `${this.tempRange.endDate} ${this.tempRange.endTime}`;
+        }
+        if (!dateCompare(start, end)) {
+          [start, end] = [end, start];
+        }
+        this.displayRangeValue.startDate = start;
+        this.displayRangeValue.endDate = end;
+        const displayRange = [start, end];
+        this.setEmit(displayRange);
+        this.pickerVisible = false;
+      },
+      handleStartAndEnd(before, after, temp = false) {
+        if (!(before && after))
+          return;
+        const type = temp ? "tempRange" : "range";
+        const isStartEarlierEnd = dateCompare(before, after);
+        this[type].startDate = isStartEarlierEnd ? before : after;
+        this[type].endDate = isStartEarlierEnd ? after : before;
+      },
+      /**
+       * 比较时间大小
+       */
+      dateCompare(startDate, endDate) {
+        startDate = new Date(startDate.replace("-", "/").replace("-", "/"));
+        endDate = new Date(endDate.replace("-", "/").replace("-", "/"));
+        return startDate <= endDate;
+      },
+      /**
+       * 比较时间差
+       */
+      diffDate(startDate, endDate) {
+        startDate = new Date(startDate.replace("-", "/").replace("-", "/"));
+        endDate = new Date(endDate.replace("-", "/").replace("-", "/"));
+        const diff = (endDate - startDate) / (24 * 60 * 60 * 1e3);
+        return Math.abs(diff);
+      },
+      clear(needEmit = true) {
+        if (!this.isRange) {
+          this.displayValue = "";
+          this.inputDate = "";
+          this.pickerTime = "";
+          if (this.isPhone) {
+            this.$refs.mobile && this.$refs.mobile.clearCalender();
+          } else {
+            this.$refs.pcSingle && this.$refs.pcSingle.clearCalender();
+          }
+          if (needEmit) {
+            this.$emit("change", "");
+            this.$emit("input", "");
+            this.$emit("update:modelValue", "");
+          }
+        } else {
+          this.displayRangeValue.startDate = "";
+          this.displayRangeValue.endDate = "";
+          this.tempRange.startDate = "";
+          this.tempRange.startTime = "";
+          this.tempRange.endDate = "";
+          this.tempRange.endTime = "";
+          if (this.isPhone) {
+            this.$refs.mobile && this.$refs.mobile.clearCalender();
+          } else {
+            this.$refs.left && this.$refs.left.clearCalender();
+            this.$refs.right && this.$refs.right.clearCalender();
+            this.$refs.right && this.$refs.right.changeMonth("next");
+          }
+          if (needEmit) {
+            this.$emit("change", []);
+            this.$emit("input", []);
+            this.$emit("update:modelValue", []);
+          }
+        }
+      }
+    }
+  };
+  function _sfc_render$d(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_1$1);
+    const _component_time_picker = vue.resolveComponent("time-picker");
+    const _component_Calendar = vue.resolveComponent("Calendar");
+    return vue.openBlock(), vue.createElementBlock("view", { class: "uni-date" }, [
+      vue.createElementVNode("view", {
+        class: "uni-date-editor",
+        onClick: _cache[1] || (_cache[1] = (...args) => $options.show && $options.show(...args))
+      }, [
+        vue.renderSlot(_ctx.$slots, "default", {}, () => [
+          vue.createElementVNode(
+            "view",
+            {
+              class: vue.normalizeClass(["uni-date-editor--x", { "uni-date-editor--x__disabled": $props.disabled, "uni-date-x--border": $props.border }])
+            },
+            [
+              !$data.isRange ? (vue.openBlock(), vue.createElementBlock("view", {
+                key: 0,
+                class: "uni-date-x uni-date-single"
+              }, [
+                vue.createVNode(_component_uni_icons, {
+                  class: "icon-calendar",
+                  type: "calendar",
+                  color: "#c0c4cc",
+                  size: "22"
+                }),
+                vue.createElementVNode(
+                  "view",
+                  { class: "uni-date__x-input" },
+                  vue.toDisplayString($data.displayValue || $options.singlePlaceholderText),
+                  1
+                  /* TEXT */
+                )
+              ])) : (vue.openBlock(), vue.createElementBlock("view", {
+                key: 1,
+                class: "uni-date-x uni-date-range"
+              }, [
+                vue.createVNode(_component_uni_icons, {
+                  class: "icon-calendar",
+                  type: "calendar",
+                  color: "#c0c4cc",
+                  size: "22"
+                }),
+                vue.createElementVNode(
+                  "view",
+                  { class: "uni-date__x-input text-center" },
+                  vue.toDisplayString($data.displayRangeValue.startDate || $options.startPlaceholderText),
+                  1
+                  /* TEXT */
+                ),
+                vue.createElementVNode(
+                  "view",
+                  { class: "range-separator" },
+                  vue.toDisplayString($props.rangeSeparator),
+                  1
+                  /* TEXT */
+                ),
+                vue.createElementVNode(
+                  "view",
+                  { class: "uni-date__x-input text-center" },
+                  vue.toDisplayString($data.displayRangeValue.endDate || $options.endPlaceholderText),
+                  1
+                  /* TEXT */
+                )
+              ])),
+              $options.showClearIcon ? (vue.openBlock(), vue.createElementBlock("view", {
+                key: 2,
+                class: "uni-date__icon-clear",
+                onClick: _cache[0] || (_cache[0] = vue.withModifiers((...args) => $options.clear && $options.clear(...args), ["stop"]))
+              }, [
+                vue.createVNode(_component_uni_icons, {
+                  type: "clear",
+                  color: "#c0c4cc",
+                  size: "22"
+                })
+              ])) : vue.createCommentVNode("v-if", true)
+            ],
+            2
+            /* CLASS */
+          )
+        ], true)
+      ]),
+      vue.withDirectives(vue.createElementVNode(
+        "view",
+        {
+          class: "uni-date-mask--pc",
+          onClick: _cache[2] || (_cache[2] = (...args) => $options.close && $options.close(...args))
+        },
+        null,
+        512
+        /* NEED_PATCH */
+      ), [
+        [vue.vShow, $data.pickerVisible]
+      ]),
+      !$data.isPhone ? vue.withDirectives((vue.openBlock(), vue.createElementBlock(
+        "view",
+        {
+          key: 0,
+          ref: "datePicker",
+          class: "uni-date-picker__container"
+        },
+        [
+          !$data.isRange ? (vue.openBlock(), vue.createElementBlock(
+            "view",
+            {
+              key: 0,
+              class: "uni-date-single--x",
+              style: vue.normalizeStyle($data.pickerPositionStyle)
+            },
+            [
+              vue.createElementVNode("view", { class: "uni-popper__arrow" }),
+              $data.hasTime ? (vue.openBlock(), vue.createElementBlock("view", {
+                key: 0,
+                class: "uni-date-changed popup-x-header"
+              }, [
+                vue.withDirectives(vue.createElementVNode("input", {
+                  class: "uni-date__input text-center",
+                  type: "text",
+                  "onUpdate:modelValue": _cache[3] || (_cache[3] = ($event) => $data.inputDate = $event),
+                  placeholder: $options.selectDateText
+                }, null, 8, ["placeholder"]), [
+                  [vue.vModelText, $data.inputDate]
+                ]),
+                vue.createVNode(_component_time_picker, {
+                  type: "time",
+                  modelValue: $data.pickerTime,
+                  "onUpdate:modelValue": _cache[5] || (_cache[5] = ($event) => $data.pickerTime = $event),
+                  border: false,
+                  disabled: !$data.inputDate,
+                  start: $options.timepickerStartTime,
+                  end: $options.timepickerEndTime,
+                  hideSecond: $props.hideSecond,
+                  style: { "width": "100%" }
+                }, {
+                  default: vue.withCtx(() => [
+                    vue.withDirectives(vue.createElementVNode("input", {
+                      class: "uni-date__input text-center",
+                      type: "text",
+                      "onUpdate:modelValue": _cache[4] || (_cache[4] = ($event) => $data.pickerTime = $event),
+                      placeholder: $options.selectTimeText,
+                      disabled: !$data.inputDate
+                    }, null, 8, ["placeholder", "disabled"]), [
+                      [vue.vModelText, $data.pickerTime]
+                    ])
+                  ]),
+                  _: 1
+                  /* STABLE */
+                }, 8, ["modelValue", "disabled", "start", "end", "hideSecond"])
+              ])) : vue.createCommentVNode("v-if", true),
+              vue.createVNode(_component_Calendar, {
+                ref: "pcSingle",
+                showMonth: false,
+                "start-date": $data.calendarRange.startDate,
+                "end-date": $data.calendarRange.endDate,
+                date: $data.calendarDate,
+                onChange: $options.singleChange,
+                "default-value": $props.defaultValue,
+                style: { "padding": "0 8px" }
+              }, null, 8, ["start-date", "end-date", "date", "onChange", "default-value"]),
+              $data.hasTime ? (vue.openBlock(), vue.createElementBlock("view", {
+                key: 1,
+                class: "popup-x-footer"
+              }, [
+                vue.createElementVNode(
+                  "text",
+                  {
+                    class: "confirm-text",
+                    onClick: _cache[6] || (_cache[6] = (...args) => $options.confirmSingleChange && $options.confirmSingleChange(...args))
+                  },
+                  vue.toDisplayString($options.okText),
+                  1
+                  /* TEXT */
+                )
+              ])) : vue.createCommentVNode("v-if", true)
+            ],
+            4
+            /* STYLE */
+          )) : (vue.openBlock(), vue.createElementBlock(
+            "view",
+            {
+              key: 1,
+              class: "uni-date-range--x",
+              style: vue.normalizeStyle($data.pickerPositionStyle)
+            },
+            [
+              vue.createElementVNode("view", { class: "uni-popper__arrow" }),
+              $data.hasTime ? (vue.openBlock(), vue.createElementBlock("view", {
+                key: 0,
+                class: "popup-x-header uni-date-changed"
+              }, [
+                vue.createElementVNode("view", { class: "popup-x-header--datetime" }, [
+                  vue.withDirectives(vue.createElementVNode("input", {
+                    class: "uni-date__input uni-date-range__input",
+                    type: "text",
+                    "onUpdate:modelValue": _cache[7] || (_cache[7] = ($event) => $data.tempRange.startDate = $event),
+                    placeholder: $options.startDateText
+                  }, null, 8, ["placeholder"]), [
+                    [vue.vModelText, $data.tempRange.startDate]
+                  ]),
+                  vue.createVNode(_component_time_picker, {
+                    type: "time",
+                    modelValue: $data.tempRange.startTime,
+                    "onUpdate:modelValue": _cache[9] || (_cache[9] = ($event) => $data.tempRange.startTime = $event),
+                    start: $options.timepickerStartTime,
+                    border: false,
+                    disabled: !$data.tempRange.startDate,
+                    hideSecond: $props.hideSecond
+                  }, {
+                    default: vue.withCtx(() => [
+                      vue.withDirectives(vue.createElementVNode("input", {
+                        class: "uni-date__input uni-date-range__input",
+                        type: "text",
+                        "onUpdate:modelValue": _cache[8] || (_cache[8] = ($event) => $data.tempRange.startTime = $event),
+                        placeholder: $options.startTimeText,
+                        disabled: !$data.tempRange.startDate
+                      }, null, 8, ["placeholder", "disabled"]), [
+                        [vue.vModelText, $data.tempRange.startTime]
+                      ])
+                    ]),
+                    _: 1
+                    /* STABLE */
+                  }, 8, ["modelValue", "start", "disabled", "hideSecond"])
+                ]),
+                vue.createVNode(_component_uni_icons, {
+                  type: "arrowthinright",
+                  color: "#999",
+                  style: { "line-height": "40px" }
+                }),
+                vue.createElementVNode("view", { class: "popup-x-header--datetime" }, [
+                  vue.withDirectives(vue.createElementVNode("input", {
+                    class: "uni-date__input uni-date-range__input",
+                    type: "text",
+                    "onUpdate:modelValue": _cache[10] || (_cache[10] = ($event) => $data.tempRange.endDate = $event),
+                    placeholder: $options.endDateText
+                  }, null, 8, ["placeholder"]), [
+                    [vue.vModelText, $data.tempRange.endDate]
+                  ]),
+                  vue.createVNode(_component_time_picker, {
+                    type: "time",
+                    modelValue: $data.tempRange.endTime,
+                    "onUpdate:modelValue": _cache[12] || (_cache[12] = ($event) => $data.tempRange.endTime = $event),
+                    end: $options.timepickerEndTime,
+                    border: false,
+                    disabled: !$data.tempRange.endDate,
+                    hideSecond: $props.hideSecond
+                  }, {
+                    default: vue.withCtx(() => [
+                      vue.withDirectives(vue.createElementVNode("input", {
+                        class: "uni-date__input uni-date-range__input",
+                        type: "text",
+                        "onUpdate:modelValue": _cache[11] || (_cache[11] = ($event) => $data.tempRange.endTime = $event),
+                        placeholder: $options.endTimeText,
+                        disabled: !$data.tempRange.endDate
+                      }, null, 8, ["placeholder", "disabled"]), [
+                        [vue.vModelText, $data.tempRange.endTime]
+                      ])
+                    ]),
+                    _: 1
+                    /* STABLE */
+                  }, 8, ["modelValue", "end", "disabled", "hideSecond"])
+                ])
+              ])) : vue.createCommentVNode("v-if", true),
+              vue.createElementVNode("view", { class: "popup-x-body" }, [
+                vue.createVNode(_component_Calendar, {
+                  ref: "left",
+                  showMonth: false,
+                  "start-date": $data.calendarRange.startDate,
+                  "end-date": $data.calendarRange.endDate,
+                  range: true,
+                  pleStatus: $data.endMultipleStatus,
+                  onChange: $options.leftChange,
+                  onFirstEnterCale: $options.updateRightCale,
+                  style: { "padding": "0 8px" }
+                }, null, 8, ["start-date", "end-date", "pleStatus", "onChange", "onFirstEnterCale"]),
+                vue.createVNode(_component_Calendar, {
+                  ref: "right",
+                  showMonth: false,
+                  "start-date": $data.calendarRange.startDate,
+                  "end-date": $data.calendarRange.endDate,
+                  range: true,
+                  onChange: $options.rightChange,
+                  pleStatus: $data.startMultipleStatus,
+                  onFirstEnterCale: $options.updateLeftCale,
+                  style: { "padding": "0 8px", "border-left": "1px solid #F1F1F1" }
+                }, null, 8, ["start-date", "end-date", "onChange", "pleStatus", "onFirstEnterCale"])
+              ]),
+              $data.hasTime ? (vue.openBlock(), vue.createElementBlock("view", {
+                key: 1,
+                class: "popup-x-footer"
+              }, [
+                vue.createElementVNode(
+                  "text",
+                  {
+                    onClick: _cache[13] || (_cache[13] = (...args) => $options.clear && $options.clear(...args))
+                  },
+                  vue.toDisplayString($options.clearText),
+                  1
+                  /* TEXT */
+                ),
+                vue.createElementVNode(
+                  "text",
+                  {
+                    class: "confirm-text",
+                    onClick: _cache[14] || (_cache[14] = (...args) => $options.confirmRangeChange && $options.confirmRangeChange(...args))
+                  },
+                  vue.toDisplayString($options.okText),
+                  1
+                  /* TEXT */
+                )
+              ])) : vue.createCommentVNode("v-if", true)
+            ],
+            4
+            /* STYLE */
+          ))
+        ],
+        512
+        /* NEED_PATCH */
+      )), [
+        [vue.vShow, $data.pickerVisible]
+      ]) : vue.createCommentVNode("v-if", true),
+      $data.isPhone ? (vue.openBlock(), vue.createBlock(_component_Calendar, {
+        key: 1,
+        ref: "mobile",
+        clearDate: false,
+        date: $data.calendarDate,
+        defTime: $options.mobileCalendarTime,
+        "start-date": $data.calendarRange.startDate,
+        "end-date": $data.calendarRange.endDate,
+        selectableTimes: $options.mobSelectableTime,
+        startPlaceholder: $props.startPlaceholder,
+        endPlaceholder: $props.endPlaceholder,
+        "default-value": $props.defaultValue,
+        pleStatus: $data.endMultipleStatus,
+        showMonth: false,
+        range: $data.isRange,
+        hasTime: $data.hasTime,
+        insert: false,
+        hideSecond: $props.hideSecond,
+        onConfirm: $options.mobileChange,
+        onMaskClose: $options.close
+      }, null, 8, ["date", "defTime", "start-date", "end-date", "selectableTimes", "startPlaceholder", "endPlaceholder", "default-value", "pleStatus", "range", "hasTime", "hideSecond", "onConfirm", "onMaskClose"])) : vue.createCommentVNode("v-if", true)
+    ]);
+  }
+  const __easycom_4 = /* @__PURE__ */ _export_sfc(_sfc_main$e, [["render", _sfc_render$d], ["__scopeId", "data-v-9802168a"], ["__file", "E:/Senior_2/cinema/vueDemo/uni_modules/uni-datetime-picker/components/uni-datetime-picker/uni-datetime-picker.vue"]]);
+  const en = {
+    "uni-load-more.contentdown": "Pull up to show more",
+    "uni-load-more.contentrefresh": "loading...",
+    "uni-load-more.contentnomore": "No more data"
+  };
+  const zhHans = {
+    "uni-load-more.contentdown": "上拉显示更多",
+    "uni-load-more.contentrefresh": "正在加载...",
+    "uni-load-more.contentnomore": "没有更多数据了"
+  };
+  const zhHant = {
+    "uni-load-more.contentdown": "上拉顯示更多",
+    "uni-load-more.contentrefresh": "正在加載...",
+    "uni-load-more.contentnomore": "沒有更多數據了"
+  };
+  const messages = {
+    en,
+    "zh-Hans": zhHans,
+    "zh-Hant": zhHant
+  };
+  let platform;
+  setTimeout(() => {
+    platform = uni.getSystemInfoSync().platform;
+  }, 16);
+  const {
+    t
+  } = initVueI18n(messages);
+  const _sfc_main$d = {
+    name: "UniLoadMore",
+    emits: ["clickLoadMore"],
+    props: {
+      status: {
+        // 上拉的状态：more-loading前；loading-loading中；noMore-没有更多了
+        type: String,
+        default: "more"
+      },
+      showIcon: {
+        type: Boolean,
+        default: true
+      },
+      iconType: {
+        type: String,
+        default: "auto"
+      },
+      iconSize: {
+        type: Number,
+        default: 24
+      },
+      color: {
+        type: String,
+        default: "#777777"
+      },
+      contentText: {
+        type: Object,
+        default() {
+          return {
+            contentdown: "",
+            contentrefresh: "",
+            contentnomore: ""
+          };
+        }
+      },
+      showText: {
+        type: Boolean,
+        default: true
+      }
+    },
+    data() {
+      return {
+        webviewHide: false,
+        platform,
+        imgBase64: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6QzlBMzU3OTlEOUM0MTFFOUI0NTZDNERBQURBQzI4RkUiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6QzlBMzU3OUFEOUM0MTFFOUI0NTZDNERBQURBQzI4RkUiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpDOUEzNTc5N0Q5QzQxMUU5QjQ1NkM0REFBREFDMjhGRSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpDOUEzNTc5OEQ5QzQxMUU5QjQ1NkM0REFBREFDMjhGRSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pt+ALSwAAA6CSURBVHja1FsLkFZVHb98LM+F5bHL8khA1iSeiyQBCRM+YGqKUnnJTDLGI0BGZlKDIU2MMglUiDApEZvSsZnQtBRJtKwQNKQMFYeRDR10WOLd8ljYXdh+v8v5fR3Od+797t1dnOnO/Ofce77z+J//+b/P+ZqtXbs2sJ9MJhNUV1cHJ06cCJo3bx7EPc2aNcvpy7pWrVoF+/fvDyoqKoI2bdoE9fX1F7TjN8a+EXBn/fkfvw942Tf+wYMHg9mzZwfjxo0LDhw4EPa1x2MbFw/fOGfPng1qa2tzcCkILsLDydq2bRsunpOTMM7TD/W/tZDZhPdeKD+yGxHhdu3aBV27dg3OnDlzMVANMheLAO3btw8KCwuDmpoaX5OxbgUIMEq7K8IcPnw4KCsrC/r37x8cP378/4cAXAB3vqSkJMuiDhTkw+XcuXNhOWbMmKBly5YhUT8xArhyFvP0BfwRsAuwxJZJsm/nzp2DTp06he/OU+cZ64K6o0ePBkOHDg2GDx8e6gEbJ5Q/NHNuAJQ1hgBeHUDlR7nVTkY8rQAvAi4z34vR/mPs1FoRsaCgIJThI0eOBC1atEiFGGV+5MiRoS45efJkqFjJFXV1dQuA012m2WcwTw98fy6CqBdsaiIO4CScrGPHjvk4odhavPquRtFWXEC25VgkREKOCh/qDSq+vn37htzD/mZTOmOc5U7zKzBPEedygWshcDyWvs30igAbU+6oyMgJBCFhwQE0fccxN60Ay9iebbjoDh06hMowjQxT4fXq1SskArmHZpkArvixp/kWzHdMeArExSJEaiXIjjRjRJ4DaAGWpibLzXN3Fm1vA5teBgh3j1Rv3bp1YgKwPdmf2p9zcyNYYgPKMfY0T5f5nNYdw158nJ8QawW4CLKwiOBSEgO/hok2eBydR+3dYH+PLxA5J8Vv0KBBwenTp0P2JWAx6+yFEBfs8lMY+y0SWMBNI9E4ThKi58VKTg3FQZS1RQF1cz27eC0QHMu+3E0SkUowjhVt5VdaWhp07949ZHv2Qd1EjDXM2cla1M0nl3GxAs3J9yREzyTdFVKVFOaE9qRA8GM0WebRuo9JGZKA7Mv2SeS/Z8+eoQ9BArMfFrLGo6jvxbhHbJZnKX2Rzz1O7QhJJ9Cs2ZMaWIyq/zhdeqPNfIoHd58clIQD+JSXl4dKlyIAuBdVXZwFVWKspSSoxE++h8x4k3uCnEhE4I5KwRiFWGOU0QWKiCYLbdoRMRKAu2kQ9vkfLU6dOhX06NEjlH+yMRZSinnuyWnYosVcji8CEA/6Cg2JF+IIUBqnGKUTCNwtwBN4f89RiK1R96DEgO2o0NDmtEdvVFdVVYV+P3UAPUEs6GFwV3PHmXkD4vh74iDFJysVI/MlaQhwKeBNTLYX5VuA8T4/gZxA4MRGFxDB6R7OmYPfyykGRJbyie+XnGYnQIC/coH9+vULiYrxrkL9ZA9+0ykaHIfEpM7ge8TiJ2CsHYwyMfafAF1yCGBHYIbCVDjDjKt7BeB51D+LgQa6OkG7IDYEEtvQ7lnXLKLtLdLuJBpE4gPUXcW2+PkZwOex+4cGDhwYDBkyRL7/HFcEwUGPo/8uWRUpYnfxGHco8HkewLHLyYmAawAPuIFZxhOpDfJQ8gbUv41yORAptMWBNr6oqMhWird5+u+iHmBb2nhjDV7HWBNQTgK8y11l5NetWzc5ULscAtSj7nbNI0skhWeUZCc0W4nyH/jO4Vz0u1IeYhbk4AiwM6tjxIWByHsoZ9qcIBPJd/y+DwPfBESOmCa/QF3WiZHucLlEDpNxcNhmheEOPgdQNx6/VZFQzFZ5TN08AHXQt2Ii3EdyFuUsPtTcGPhW5iMiCNELvz+Gdn9huG4HUJaW/w3g0wxV0XaG7arG2WeKiUWYM4Y7GO5ezshTARbbWGw/DvXkpp/ivVvE0JVoMxN4rpGzJMhE5Pl+xlATsDIqikP9F9D2z3h9nOksEUFhK+qO4rcPkoalMQ/HqJLIyb3F3JdjrCcw1yZ8joyJLR5gCo54etlag7qIoeNh1N1BRYj3DTFJ0elotxPlVzkGuYAmL0VSJVGAJA41c4Z6A3BzTLfn0HYwYKEI6CUAMzZEWvLsIcQOo1AmmyyM72nHJCfYsogflGV6jEk9vyQZXSuq6w4c16NsGcGZbwOPr+H1RkOk2LEzjNepxQkihHSCQ4ynAYNRx2zMKV92CQMWqj8J0BRE8EShxRFN6YrfCRhC0x3r/Zm4IbQCcmJoV0kMamllccR6FjHqUC5F2R/wS2dcymOlfAKOS4KmzQb5cpNC2MC7JhVn5wjXoJ44rYhLh8n0eXOCorJxa7POjbSlCGVczr34/RsAmrcvo9s+wGp3tzVhntxiXiJ4nvEYb4FJkf0O8HocAePmLvCxnL0AORraVekJk6TYjDabRVXfRE2lCN1h6ZQRN1+InUbsCpKwoBZHh0dODN9JBCUffItXxEavTQkUtnfTVAplCWL3JISz29h4NjotnuSsQKJCk8dF+kJR6RARjrqFVmfPnj3ZbK8cIJ0msd6jgHPGtfVTQ8VLmlvh4mct9sobRmPic0DyDQQnx/NlfYUgyz59+oScsH379pAwXABD32nTpoUHIToESeI5mnbE/UqDdyLcafEBf2MCqgC7NwxIbMREJQ0g4D4sfJwnD+AmRrII05cfMWJE+L1169bQr+fip06dGp4oJ83lmYd5wj/EmMa4TaHivo4EeCguYZBnkB5g2aWA69OIEnUHOaGysjIYMGBAMGnSpODYsWPZwCpFmm4lNq+4gSLQA7jcX8DwtjEyRC8wjabnXEx9kfWnTJkSJkAo90xpJVV+FmcVNeYAF5zWngS4C4O91MBxmAv8blLEpbjI5sz9MTdAhcgkCT1RO8mZkAjfiYpTEvStAS53Uw1vAiUGgZ3GpuQEYvoiBqlIan7kSDHnTwJQFNiPu0+5VxCVYhcZIjNrdXUDdp+Eq5AZ3Gkg8QAyVZRZIk4Tl4QAbF9cXJxNYZMAtAokgs4BrNxEpCtteXg7DDTMDKYNSuQdKsnJBek7HxewvxaosWxLYXtw+cJp18217wql4aKCfBNoEu0O5VU+PhctJ0YeXD4C6JQpyrlpSLTojpGGGN5YwNziChdIZLk4lvLcFJ9jMX3QdiImY9bmGQU+TRUL5CHITTRlgF8D9ouD1MfmLoEPl5xokIumZ2cfgMpHt47IW9N64Hsh7wQYYjyIugWuF5fCqYncXRd5vPMWyizzvhi/32+nvG0dZc9vR6fZOu0md5e+uC408FvKSIOZwXlGvxPv95izA2Vtvg1xKFWARI+vMX66HUhpQQb643uW1bSjuTWyw2SBvDrBvjFic1eGGlz5esq3ko9uSIlBRqPuFcCv8F4WIcN12nVaBd0SaYwI6PDDImR11JkqgHcPmQssjxIn6bUshygDFJUTxPMpHk+jfjPgupgdnYV2R/g7xSjtpah8RJBewhwf0gGK6XI92u4wXFEU40afJ4DN4h5LcAd+40HI3JgJecuT0c062W0i2hQJUTcxan3/CMW1PF2K6bbA+Daz4xRs1D3Br1Cm0OihKCqizW78/nXAF/G5TXrEcVzaNMH6CyMswqsAHqDyDLEyou8lwOXnKF8DjI6KjV3KzMBiXkDH8ij/H214J5A596ekrZ3F0zXlWeL7+P5eUrNo3/QwC15uxthuzidy7DzKRwEDaAViiDgKbTbz7CJnzo0bN7pIfIiid8SuPwn25o3QCmpnyjlZkyxPP8EomCJzrGb7GJMx7tNsq4MT2xMUYaiErZOluTzKsnz3gwCeCZyVRZJfYplNEokEjwrPtxlxjeYAk+F1F74VAzPxQRNYYdtpOUvWs8J1sGhBJMNsb7igN8plJs1eSmLIhLKE4rvaCX27gOhLpLOsIzJ7qn/i+wZzcvSOZ23/du8TZjwV8zHIXoP4R3ifBxiFz1dcVpa3aPntPE+c6TmIWE9EtcMmAcPdWAhYhAXxcLOQi9L1WhD1Sc8p1d2oL7XGiRKp8F4A2i8K/nfI+y/gsTDJ/YC/8+AD5Uh04KHiGl+cIFPnBDDrPMjwRGkLXyxO4VGbfQWnDH2v0bVWE3C9QOXlepbgjEfIJQI6XDG3z5ahD9cw2pS78ipB85wyScNTvsVzlzzhL8/jRrnmVjfFJK/m3m4nj9vbgQTguT8XZTjsm672R5uJKEaQmBI/c58gyus8ZDagLpEVSJBIyHp4jn++xqPV71OgQgJYEWOtZ/haxRtKmWOBu8xdBLftWltsY84zE6WIEy/eIOWL+BaayMx+KHtL7EAkqdNDLiEXmEMUHniedtJqg9HmZtfvt26vNi0BdG3Ft3g8ZOf7PAu59TxtzivLNIekyi+wD1i8CuUiD9FXAa8C+/xS3JPmZnomyc7H+fb4/Se0bk41Fel621r4cgVxbq91V4jVqwB7HTe2M7jgB+QWHavZkDRPmZcASoZEmBx6i75bGjPcMdL4/VKGFAGWZkGzPG0XAbdL9A81G5LOmUnC9hHKJeO7dcUMjblSl12867ElFTtaGl20xvvLGPdVz/8TVuU7y0x1PG7vtNg24oz9Uo/Z412++VFWI7Fcog9tu9Lm6gvRmIPv9x1xmQAu6RDkXtbOtlGEmpgD5Nvnyc0dcv0EE6cfdi1HmhMf9wDF3k3gtRvEedhxjpgfqPb9PU9iEJHnyOUA7bQUXh6kq/D7l2iTjWv7XOD530BDr8jIrus+srXjt4MzumJMHuTsBa63YKE1+RR5lBjEikCCnWKWiHdzOgKO+nRIBAF88za/IFmJ3eMZov4CYxGBabcpGL8EYx+SeMXJeRwHNsV/h+vdxeuhEpN3ZyNY78Gm2fknJxVGhyjixPiQvVkNzT1elD9Py/aTAL64Hb9vcYmC9zfdXdT/C1LeGbg4rnBaAihDFJH12W5ulfNCNe/xTsP3bp8ikzJs5BF+5PNfAQYAPaseTdsEcaYAAAAASUVORK5CYII="
+      };
+    },
+    computed: {
+      iconSnowWidth() {
+        return (Math.floor(this.iconSize / 24) || 1) * 2;
+      },
+      contentdownText() {
+        return this.contentText.contentdown || t("uni-load-more.contentdown");
+      },
+      contentrefreshText() {
+        return this.contentText.contentrefresh || t("uni-load-more.contentrefresh");
+      },
+      contentnomoreText() {
+        return this.contentText.contentnomore || t("uni-load-more.contentnomore");
+      }
+    },
+    mounted() {
+      var pages2 = getCurrentPages();
+      var page = pages2[pages2.length - 1];
+      var currentWebview = page.$getAppWebview();
+      currentWebview.addEventListener("hide", () => {
+        this.webviewHide = true;
+      });
+      currentWebview.addEventListener("show", () => {
+        this.webviewHide = false;
+      });
+    },
+    methods: {
+      onClick() {
+        this.$emit("clickLoadMore", {
+          detail: {
+            status: this.status
+          }
+        });
+      }
+    }
+  };
+  function _sfc_render$c(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock("view", {
+      class: "uni-load-more",
+      onClick: _cache[0] || (_cache[0] = (...args) => $options.onClick && $options.onClick(...args))
+    }, [
+      !$data.webviewHide && ($props.iconType === "circle" || $props.iconType === "auto" && $data.platform === "android") && $props.status === "loading" && $props.showIcon ? (vue.openBlock(), vue.createElementBlock(
+        "view",
+        {
+          key: 0,
+          style: vue.normalizeStyle({ width: $props.iconSize + "px", height: $props.iconSize + "px" }),
+          class: "uni-load-more__img uni-load-more__img--android-MP"
+        },
+        [
+          vue.createElementVNode(
+            "view",
+            {
+              class: "uni-load-more__img-icon",
+              style: vue.normalizeStyle({ borderTopColor: $props.color, borderTopWidth: $props.iconSize / 12 })
+            },
+            null,
+            4
+            /* STYLE */
+          ),
+          vue.createElementVNode(
+            "view",
+            {
+              class: "uni-load-more__img-icon",
+              style: vue.normalizeStyle({ borderTopColor: $props.color, borderTopWidth: $props.iconSize / 12 })
+            },
+            null,
+            4
+            /* STYLE */
+          ),
+          vue.createElementVNode(
+            "view",
+            {
+              class: "uni-load-more__img-icon",
+              style: vue.normalizeStyle({ borderTopColor: $props.color, borderTopWidth: $props.iconSize / 12 })
+            },
+            null,
+            4
+            /* STYLE */
+          )
+        ],
+        4
+        /* STYLE */
+      )) : !$data.webviewHide && $props.status === "loading" && $props.showIcon ? (vue.openBlock(), vue.createElementBlock(
+        "view",
+        {
+          key: 1,
+          style: vue.normalizeStyle({ width: $props.iconSize + "px", height: $props.iconSize + "px" }),
+          class: "uni-load-more__img uni-load-more__img--ios-H5"
+        },
+        [
+          vue.createElementVNode("image", {
+            src: $data.imgBase64,
+            mode: "widthFix"
+          }, null, 8, ["src"])
+        ],
+        4
+        /* STYLE */
+      )) : vue.createCommentVNode("v-if", true),
+      $props.showText ? (vue.openBlock(), vue.createElementBlock(
+        "text",
+        {
+          key: 2,
+          class: "uni-load-more__text",
+          style: vue.normalizeStyle({ color: $props.color })
+        },
+        vue.toDisplayString($props.status === "more" ? $options.contentdownText : $props.status === "loading" ? $options.contentrefreshText : $options.contentnomoreText),
+        5
+        /* TEXT, STYLE */
+      )) : vue.createCommentVNode("v-if", true)
+    ]);
+  }
+  const __easycom_0 = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["render", _sfc_render$c], ["__scopeId", "data-v-9245e42c"], ["__file", "E:/Senior_2/cinema/vueDemo/uni_modules/uni-load-more/components/uni-load-more/uni-load-more.vue"]]);
+  const _sfc_main$c = {
+    name: "uniDataChecklist",
+    mixins: [Ws.mixinDatacom || {}],
+    emits: ["input", "update:modelValue", "change"],
+    props: {
+      mode: {
+        type: String,
+        default: "default"
+      },
+      multiple: {
+        type: Boolean,
+        default: false
+      },
+      value: {
+        type: [Array, String, Number],
+        default() {
+          return "";
+        }
+      },
+      // TODO vue3
+      modelValue: {
+        type: [Array, String, Number],
+        default() {
+          return "";
+        }
+      },
+      localdata: {
+        type: Array,
+        default() {
+          return [];
+        }
+      },
+      min: {
+        type: [Number, String],
+        default: ""
+      },
+      max: {
+        type: [Number, String],
+        default: ""
+      },
+      wrap: {
+        type: Boolean,
+        default: false
+      },
+      icon: {
+        type: String,
+        default: "left"
+      },
+      selectedColor: {
+        type: String,
+        default: ""
+      },
+      selectedTextColor: {
+        type: String,
+        default: ""
+      },
+      emptyText: {
+        type: String,
+        default: "暂无数据"
+      },
+      disabled: {
+        type: Boolean,
+        default: false
+      },
+      map: {
+        type: Object,
+        default() {
+          return {
+            text: "text",
+            value: "value"
+          };
+        }
+      }
+    },
+    watch: {
+      localdata: {
+        handler(newVal) {
+          this.range = newVal;
+          this.dataList = this.getDataList(this.getSelectedValue(newVal));
+        },
+        deep: true
+      },
+      mixinDatacomResData(newVal) {
+        this.range = newVal;
+        this.dataList = this.getDataList(this.getSelectedValue(newVal));
+      },
+      value(newVal) {
+        this.dataList = this.getDataList(newVal);
+      },
+      modelValue(newVal) {
+        this.dataList = this.getDataList(newVal);
+      }
+    },
+    data() {
+      return {
+        dataList: [],
+        range: [],
+        contentText: {
+          contentdown: "查看更多",
+          contentrefresh: "加载中",
+          contentnomore: "没有更多"
+        },
+        isLocal: true,
+        styles: {
+          selectedColor: "#2979ff",
+          selectedTextColor: "#666"
+        },
+        isTop: 0
+      };
+    },
+    computed: {
+      dataValue() {
+        if (this.value === "")
+          return this.modelValue;
+        if (this.modelValue === "")
+          return this.value;
+        return this.value;
+      }
+    },
+    created() {
+      if (this.localdata && this.localdata.length !== 0) {
+        this.isLocal = true;
+        this.range = this.localdata;
+        this.dataList = this.getDataList(this.getSelectedValue(this.range));
+      } else {
+        if (this.collection) {
+          this.isLocal = false;
+          this.loadData();
+        }
+      }
+    },
+    methods: {
+      loadData() {
+        this.mixinDatacomGet().then((res) => {
+          this.mixinDatacomResData = res.result.data;
+          if (this.mixinDatacomResData.length === 0) {
+            this.isLocal = false;
+            this.mixinDatacomErrorMessage = this.emptyText;
+          } else {
+            this.isLocal = true;
+          }
+        }).catch((err) => {
+          this.mixinDatacomErrorMessage = err.message;
+        });
+      },
+      /**
+       * 获取父元素实例
+       */
+      getForm(name = "uniForms") {
+        let parent = this.$parent;
+        let parentName = parent.$options.name;
+        while (parentName !== name) {
+          parent = parent.$parent;
+          if (!parent)
+            return false;
+          parentName = parent.$options.name;
+        }
+        return parent;
+      },
+      chagne(e2) {
+        const values = e2.detail.value;
+        let detail = {
+          value: [],
+          data: []
+        };
+        if (this.multiple) {
+          this.range.forEach((item) => {
+            if (values.includes(item[this.map.value] + "")) {
+              detail.value.push(item[this.map.value]);
+              detail.data.push(item);
+            }
+          });
+        } else {
+          const range = this.range.find((item) => item[this.map.value] + "" === values);
+          if (range) {
+            detail = {
+              value: range[this.map.value],
+              data: range
+            };
+          }
+        }
+        this.$emit("input", detail.value);
+        this.$emit("update:modelValue", detail.value);
+        this.$emit("change", {
+          detail
+        });
+        if (this.multiple) {
+          this.dataList = this.getDataList(detail.value, true);
+        } else {
+          this.dataList = this.getDataList(detail.value);
+        }
+      },
+      /**
+       * 获取渲染的新数组
+       * @param {Object} value 选中内容
+       */
+      getDataList(value) {
+        let dataList = JSON.parse(JSON.stringify(this.range));
+        let list = [];
+        if (this.multiple) {
+          if (!Array.isArray(value)) {
+            value = [];
+          }
+        }
+        dataList.forEach((item, index) => {
+          item.disabled = item.disable || item.disabled || false;
+          if (this.multiple) {
+            if (value.length > 0) {
+              let have = value.find((val) => val === item[this.map.value]);
+              item.selected = have !== void 0;
+            } else {
+              item.selected = false;
+            }
+          } else {
+            item.selected = value === item[this.map.value];
+          }
+          list.push(item);
+        });
+        return this.setRange(list);
+      },
+      /**
+       * 处理最大最小值
+       * @param {Object} list
+       */
+      setRange(list) {
+        let selectList = list.filter((item) => item.selected);
+        let min = Number(this.min) || 0;
+        let max = Number(this.max) || "";
+        list.forEach((item, index) => {
+          if (this.multiple) {
+            if (selectList.length <= min) {
+              let have = selectList.find((val) => val[this.map.value] === item[this.map.value]);
+              if (have !== void 0) {
+                item.disabled = true;
+              }
+            }
+            if (selectList.length >= max && max !== "") {
+              let have = selectList.find((val) => val[this.map.value] === item[this.map.value]);
+              if (have === void 0) {
+                item.disabled = true;
+              }
+            }
+          }
+          this.setStyles(item, index);
+          list[index] = item;
+        });
+        return list;
+      },
+      /**
+       * 设置 class
+       * @param {Object} item
+       * @param {Object} index
+       */
+      setStyles(item, index) {
+        item.styleBackgroud = this.setStyleBackgroud(item);
+        item.styleIcon = this.setStyleIcon(item);
+        item.styleIconText = this.setStyleIconText(item);
+        item.styleRightIcon = this.setStyleRightIcon(item);
+      },
+      /**
+       * 获取选中值
+       * @param {Object} range
+       */
+      getSelectedValue(range) {
+        if (!this.multiple)
+          return this.dataValue;
+        let selectedArr = [];
+        range.forEach((item) => {
+          if (item.selected) {
+            selectedArr.push(item[this.map.value]);
+          }
+        });
+        return this.dataValue.length > 0 ? this.dataValue : selectedArr;
+      },
+      /**
+       * 设置背景样式
+       */
+      setStyleBackgroud(item) {
+        let styles = {};
+        let selectedColor = this.selectedColor ? this.selectedColor : "#2979ff";
+        if (this.selectedColor) {
+          if (this.mode !== "list") {
+            styles["border-color"] = item.selected ? selectedColor : "#DCDFE6";
+          }
+          if (this.mode === "tag") {
+            styles["background-color"] = item.selected ? selectedColor : "#f5f5f5";
+          }
+        }
+        let classles = "";
+        for (let i2 in styles) {
+          classles += `${i2}:${styles[i2]};`;
+        }
+        return classles;
+      },
+      setStyleIcon(item) {
+        let styles = {};
+        let classles = "";
+        if (this.selectedColor) {
+          let selectedColor = this.selectedColor ? this.selectedColor : "#2979ff";
+          styles["background-color"] = item.selected ? selectedColor : "#fff";
+          styles["border-color"] = item.selected ? selectedColor : "#DCDFE6";
+          if (!item.selected && item.disabled) {
+            styles["background-color"] = "#F2F6FC";
+            styles["border-color"] = item.selected ? selectedColor : "#DCDFE6";
+          }
+        }
+        for (let i2 in styles) {
+          classles += `${i2}:${styles[i2]};`;
+        }
+        return classles;
+      },
+      setStyleIconText(item) {
+        let styles = {};
+        let classles = "";
+        if (this.selectedColor) {
+          let selectedColor = this.selectedColor ? this.selectedColor : "#2979ff";
+          if (this.mode === "tag") {
+            styles.color = item.selected ? this.selectedTextColor ? this.selectedTextColor : "#fff" : "#666";
+          } else {
+            styles.color = item.selected ? this.selectedTextColor ? this.selectedTextColor : selectedColor : "#666";
+          }
+          if (!item.selected && item.disabled) {
+            styles.color = "#999";
+          }
+        }
+        for (let i2 in styles) {
+          classles += `${i2}:${styles[i2]};`;
+        }
+        return classles;
+      },
+      setStyleRightIcon(item) {
+        let styles = {};
+        let classles = "";
+        if (this.mode === "list") {
+          styles["border-color"] = item.selected ? this.styles.selectedColor : "#DCDFE6";
+        }
+        for (let i2 in styles) {
+          classles += `${i2}:${styles[i2]};`;
+        }
+        return classles;
+      }
+    }
+  };
+  function _sfc_render$b(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_load_more = resolveEasycom(vue.resolveDynamicComponent("uni-load-more"), __easycom_0);
+    return vue.openBlock(), vue.createElementBlock(
+      "view",
+      {
+        class: "uni-data-checklist",
+        style: vue.normalizeStyle({ "margin-top": $data.isTop + "px" })
+      },
+      [
+        !$data.isLocal ? (vue.openBlock(), vue.createElementBlock("view", {
+          key: 0,
+          class: "uni-data-loading"
+        }, [
+          !_ctx.mixinDatacomErrorMessage ? (vue.openBlock(), vue.createBlock(_component_uni_load_more, {
+            key: 0,
+            status: "loading",
+            iconType: "snow",
+            iconSize: 18,
+            "content-text": $data.contentText
+          }, null, 8, ["content-text"])) : (vue.openBlock(), vue.createElementBlock(
+            "text",
+            { key: 1 },
+            vue.toDisplayString(_ctx.mixinDatacomErrorMessage),
+            1
+            /* TEXT */
+          ))
+        ])) : (vue.openBlock(), vue.createElementBlock(
+          vue.Fragment,
+          { key: 1 },
+          [
+            $props.multiple ? (vue.openBlock(), vue.createElementBlock(
+              "checkbox-group",
+              {
+                key: 0,
+                class: vue.normalizeClass(["checklist-group", { "is-list": $props.mode === "list" || $props.wrap }]),
+                onChange: _cache[0] || (_cache[0] = (...args) => $options.chagne && $options.chagne(...args))
+              },
+              [
+                (vue.openBlock(true), vue.createElementBlock(
+                  vue.Fragment,
+                  null,
+                  vue.renderList($data.dataList, (item, index) => {
+                    return vue.openBlock(), vue.createElementBlock(
+                      "label",
+                      {
+                        class: vue.normalizeClass(["checklist-box", ["is--" + $props.mode, item.selected ? "is-checked" : "", $props.disabled || !!item.disabled ? "is-disable" : "", index !== 0 && $props.mode === "list" ? "is-list-border" : ""]]),
+                        style: vue.normalizeStyle(item.styleBackgroud),
+                        key: index
+                      },
+                      [
+                        vue.createElementVNode("checkbox", {
+                          class: "hidden",
+                          hidden: "",
+                          disabled: $props.disabled || !!item.disabled,
+                          value: item[$props.map.value] + "",
+                          checked: item.selected
+                        }, null, 8, ["disabled", "value", "checked"]),
+                        $props.mode !== "tag" && $props.mode !== "list" || $props.mode === "list" && $props.icon === "left" ? (vue.openBlock(), vue.createElementBlock(
+                          "view",
+                          {
+                            key: 0,
+                            class: "checkbox__inner",
+                            style: vue.normalizeStyle(item.styleIcon)
+                          },
+                          [
+                            vue.createElementVNode("view", { class: "checkbox__inner-icon" })
+                          ],
+                          4
+                          /* STYLE */
+                        )) : vue.createCommentVNode("v-if", true),
+                        vue.createElementVNode(
+                          "view",
+                          {
+                            class: vue.normalizeClass(["checklist-content", { "list-content": $props.mode === "list" && $props.icon === "left" }])
+                          },
+                          [
+                            vue.createElementVNode(
+                              "text",
+                              {
+                                class: "checklist-text",
+                                style: vue.normalizeStyle(item.styleIconText)
+                              },
+                              vue.toDisplayString(item[$props.map.text]),
+                              5
+                              /* TEXT, STYLE */
+                            ),
+                            $props.mode === "list" && $props.icon === "right" ? (vue.openBlock(), vue.createElementBlock(
+                              "view",
+                              {
+                                key: 0,
+                                class: "checkobx__list",
+                                style: vue.normalizeStyle(item.styleBackgroud)
+                              },
+                              null,
+                              4
+                              /* STYLE */
+                            )) : vue.createCommentVNode("v-if", true)
+                          ],
+                          2
+                          /* CLASS */
+                        )
+                      ],
+                      6
+                      /* CLASS, STYLE */
+                    );
+                  }),
+                  128
+                  /* KEYED_FRAGMENT */
+                ))
+              ],
+              34
+              /* CLASS, HYDRATE_EVENTS */
+            )) : (vue.openBlock(), vue.createElementBlock(
+              "radio-group",
+              {
+                key: 1,
+                class: vue.normalizeClass(["checklist-group", { "is-list": $props.mode === "list", "is-wrap": $props.wrap }]),
+                onChange: _cache[1] || (_cache[1] = (...args) => $options.chagne && $options.chagne(...args))
+              },
+              [
+                vue.createCommentVNode(" "),
+                (vue.openBlock(true), vue.createElementBlock(
+                  vue.Fragment,
+                  null,
+                  vue.renderList($data.dataList, (item, index) => {
+                    return vue.openBlock(), vue.createElementBlock(
+                      "label",
+                      {
+                        class: vue.normalizeClass(["checklist-box", ["is--" + $props.mode, item.selected ? "is-checked" : "", $props.disabled || !!item.disabled ? "is-disable" : "", index !== 0 && $props.mode === "list" ? "is-list-border" : ""]]),
+                        style: vue.normalizeStyle(item.styleBackgroud),
+                        key: index
+                      },
+                      [
+                        vue.createElementVNode("radio", {
+                          class: "hidden",
+                          hidden: "",
+                          disabled: $props.disabled || item.disabled,
+                          value: item[$props.map.value] + "",
+                          checked: item.selected
+                        }, null, 8, ["disabled", "value", "checked"]),
+                        $props.mode !== "tag" && $props.mode !== "list" || $props.mode === "list" && $props.icon === "left" ? (vue.openBlock(), vue.createElementBlock(
+                          "view",
+                          {
+                            key: 0,
+                            class: "radio__inner",
+                            style: vue.normalizeStyle(item.styleBackgroud)
+                          },
+                          [
+                            vue.createElementVNode(
+                              "view",
+                              {
+                                class: "radio__inner-icon",
+                                style: vue.normalizeStyle(item.styleIcon)
+                              },
+                              null,
+                              4
+                              /* STYLE */
+                            )
+                          ],
+                          4
+                          /* STYLE */
+                        )) : vue.createCommentVNode("v-if", true),
+                        vue.createElementVNode(
+                          "view",
+                          {
+                            class: vue.normalizeClass(["checklist-content", { "list-content": $props.mode === "list" && $props.icon === "left" }])
+                          },
+                          [
+                            vue.createElementVNode(
+                              "text",
+                              {
+                                class: "checklist-text",
+                                style: vue.normalizeStyle(item.styleIconText)
+                              },
+                              vue.toDisplayString(item[$props.map.text]),
+                              5
+                              /* TEXT, STYLE */
+                            ),
+                            $props.mode === "list" && $props.icon === "right" ? (vue.openBlock(), vue.createElementBlock(
+                              "view",
+                              {
+                                key: 0,
+                                style: vue.normalizeStyle(item.styleRightIcon),
+                                class: "checkobx__list"
+                              },
+                              null,
+                              4
+                              /* STYLE */
+                            )) : vue.createCommentVNode("v-if", true)
+                          ],
+                          2
+                          /* CLASS */
+                        )
+                      ],
+                      6
+                      /* CLASS, STYLE */
+                    );
+                  }),
+                  128
+                  /* KEYED_FRAGMENT */
+                ))
+              ],
+              34
+              /* CLASS, HYDRATE_EVENTS */
+            ))
+          ],
+          64
+          /* STABLE_FRAGMENT */
+        ))
+      ],
+      4
+      /* STYLE */
+    );
+  }
+  const __easycom_5 = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["render", _sfc_render$b], ["__scopeId", "data-v-2f788efd"], ["__file", "E:/Senior_2/cinema/vueDemo/uni_modules/uni-data-checkbox/components/uni-data-checkbox/uni-data-checkbox.vue"]]);
+  const _sfc_main$b = {
+    data() {
+      return {
+        imageStyles: {
+          width: 420,
+          height: 600,
+          border: {
+            color: "#000000;",
+            style: "solid"
+          }
+        },
+        movieData: {
+          movieNameCn: "",
+          movieNameEn: "",
+          movieDirector: "",
+          movieDescription: "",
+          movieReleaseDate: "",
+          movieDuration: "",
+          movieCountry: "",
+          movieUrl: "",
+          movieState: "",
+          movieType: ""
+        },
+        rules_create: {
+          movieNameCn: {
+            rules: [{
+              required: true
+            }]
+          },
+          movieNameEn: {
+            rules: [{
+              required: true
+            }]
+          },
+          movieDirector: {
+            rules: [{
+              required: true
+            }]
+          },
+          movieDescription: {
+            rules: [{
+              required: true
+            }]
+          },
+          movieReleaseDate: {
+            rules: [{
+              required: true
+            }]
+          },
+          movieDuration: {
+            rules: [{
+              required: true
+            }]
+          },
+          movieCountry: {
+            rules: [{
+              required: true
+            }]
+          },
+          movieUrl: {
+            rules: [{
+              required: true
+            }]
+          },
+          movieState: {
+            rules: [{
+              required: true
+            }]
+          }
+        },
+        state: [{
+          text: "待映",
+          value: 0
+        }, {
+          text: "正在上映",
+          value: 1
+        }],
+        type: [{
+          text: "剧情",
+          value: 1
+        }, {
+          text: "动作",
+          value: 2
+        }, {
+          text: "冒险",
+          value: 3
+        }, {
+          text: "喜剧",
+          value: 4
+        }, {
+          text: "爱情",
+          value: 5
+        }, {
+          text: "奇幻",
+          value: 6
+        }, {
+          text: "科幻",
+          value: 7
+        }, {
+          text: "惊悚",
+          value: 8
+        }, {
+          text: "悬疑",
+          value: 9
+        }, {
+          text: "战争",
+          value: 10
+        }, {
+          text: "历史",
+          value: 11
+        }, {
+          text: "传记",
+          value: 12
+        }, {
+          text: "音乐",
+          value: 13
+        }, {
+          text: "动画",
+          value: 14
+        }, {
+          text: "运动",
+          value: 15
+        }, {
+          text: "犯罪",
+          value: 16
+        }]
+      };
+    },
+    methods: {
+      changeState(e2) {
+        formatAppLog("log", "at pages/web/movie/movieCreate.vue:232", "e:", e2);
+        formatAppLog("log", "at pages/web/movie/movieCreate.vue:233", "movieState", this.movieData.movieState);
+      },
+      movie_create() {
+        formatAppLog("log", "at pages/web/movie/movieCreate.vue:236", "movieData", this.movieData.movieReleaseDate);
+        this.$refs.movieCreateDialog.open();
+      },
+      movieCreateConfirm() {
+        let movie = {
+          "movieNameCn": this.movieData.movieNameCn,
+          "movieNameEn": this.movieData.movieNameEn,
+          "movieDirector": this.movieData.movieDirector,
+          "movieDescription": this.movieData.movieDescription,
+          "movieDuration": this.movieData.movieDuration,
+          "movieCountry": this.movieData.movieCountry,
+          "movieUrl": this.movieData.movieUrl,
+          "movieState": this.movieData.movieState
+        };
+        uni.request({
+          url: "/api/movie/create?movieReleaseDate=" + this.movieData.movieReleaseDate + "&movieType=" + this.movieData.movieType,
+          method: "POST",
+          dataType: "json",
+          data: movie,
+          success: (res) => {
+            uni.showToast({
+              title: "新增成功",
+              icon: "true",
+              mask: "true"
+            });
+            uni.reLaunch({
+              url: "/pages/web/login"
+            });
+          }
+        });
+      },
+      update_url(res) {
+        formatAppLog("log", "at pages/web/movie/movieCreate.vue:272", "上传成功");
+        uni.uploadFile({
+          url: "/api/upload",
+          method: "POST",
+          filePath: res.tempFilePaths[0],
+          name: "file",
+          dataType: "json",
+          header: {
+            "Authorization": this.token
+          },
+          success: (res2) => {
+            formatAppLog("log", "at pages/web/movie/movieCreate.vue:283", "url", res2.data);
+            let responseData = JSON.parse(res2.data);
+            this.movieData.movieUrl = responseData.data;
+          }
+        });
+      }
+    }
+  };
+  function _sfc_render$a(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_file_picker = resolveEasycom(vue.resolveDynamicComponent("uni-file-picker"), __easycom_0$2);
+    const _component_uni_datetime_picker = resolveEasycom(vue.resolveDynamicComponent("uni-datetime-picker"), __easycom_4);
+    const _component_uni_forms_item = resolveEasycom(vue.resolveDynamicComponent("uni-forms-item"), __easycom_5$1);
+    const _component_uni_easyinput = resolveEasycom(vue.resolveDynamicComponent("uni-easyinput"), __easycom_7$1);
+    const _component_uni_forms = resolveEasycom(vue.resolveDynamicComponent("uni-forms"), __easycom_4$2);
+    const _component_uni_data_checkbox = resolveEasycom(vue.resolveDynamicComponent("uni-data-checkbox"), __easycom_5);
+    const _component_uni_popup_dialog = resolveEasycom(vue.resolveDynamicComponent("uni-popup-dialog"), __easycom_8$1);
+    const _component_uni_popup = resolveEasycom(vue.resolveDynamicComponent("uni-popup"), __easycom_9$1);
+    return vue.openBlock(), vue.createElementBlock("view", { class: "movieCreate" }, [
+      vue.createElementVNode("view", { class: "movieURL" }, [
+        vue.createVNode(_component_uni_file_picker, {
+          class: "movieURLCREATE",
+          limit: "1",
+          "del-icon": false,
+          "disable-preview": "",
+          imageStyles: $data.imageStyles,
+          "file-mediatype": "image",
+          onSelect: $options.update_url
+        }, {
+          default: vue.withCtx(() => [
+            vue.createElementVNode("text", null, "请上传电影封面")
+          ]),
+          _: 1
+          /* STABLE */
+        }, 8, ["imageStyles", "onSelect"])
+      ]),
+      vue.createElementVNode("view", { class: "movieINPUT" }, [
+        vue.createVNode(_component_uni_forms, {
+          ref: "createForm",
+          rules: $data.rules_create,
+          modelValue: $data.movieData
+        }, {
+          default: vue.withCtx(() => [
+            vue.createVNode(_component_uni_forms_item, { name: "movieReleaseDate" }, {
+              default: vue.withCtx(() => [
+                vue.createElementVNode("text", null, "上映日期："),
+                vue.createVNode(_component_uni_datetime_picker, {
+                  type: "date",
+                  "clear-icon": false,
+                  modelValue: $data.movieData.movieReleaseDate,
+                  "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => $data.movieData.movieReleaseDate = $event),
+                  onMaskClick: _ctx.maskClick
+                }, null, 8, ["modelValue", "onMaskClick"])
+              ]),
+              _: 1
+              /* STABLE */
+            }),
+            vue.createVNode(_component_uni_forms_item, { name: "movieNameCn" }, {
+              default: vue.withCtx(() => [
+                vue.createElementVNode("text", null, "电影中文名："),
+                vue.createVNode(_component_uni_easyinput, {
+                  modelValue: $data.movieData.movieNameCn,
+                  "onUpdate:modelValue": _cache[1] || (_cache[1] = ($event) => $data.movieData.movieNameCn = $event),
+                  placeholder: "请输入电影中文名"
+                }, null, 8, ["modelValue"])
+              ]),
+              _: 1
+              /* STABLE */
+            }),
+            vue.createVNode(_component_uni_forms_item, { name: "movieNameEn" }, {
+              default: vue.withCtx(() => [
+                vue.createElementVNode("text", null, "电影外文名："),
+                vue.createVNode(_component_uni_easyinput, {
+                  modelValue: $data.movieData.movieNameEn,
+                  "onUpdate:modelValue": _cache[2] || (_cache[2] = ($event) => $data.movieData.movieNameEn = $event),
+                  placeholder: "请输入外文名"
+                }, null, 8, ["modelValue"])
+              ]),
+              _: 1
+              /* STABLE */
+            }),
+            vue.createVNode(_component_uni_forms_item, { name: "movieDirector" }, {
+              default: vue.withCtx(() => [
+                vue.createElementVNode("text", null, "导演名："),
+                vue.createVNode(_component_uni_easyinput, {
+                  modelValue: $data.movieData.movieDirector,
+                  "onUpdate:modelValue": _cache[3] || (_cache[3] = ($event) => $data.movieData.movieDirector = $event),
+                  placeholder: "请输入导演名"
+                }, null, 8, ["modelValue"])
+              ]),
+              _: 1
+              /* STABLE */
+            }),
+            vue.createVNode(_component_uni_forms_item, { name: "movieDescription" }, {
+              default: vue.withCtx(() => [
+                vue.createElementVNode("text", null, "简介："),
+                vue.createVNode(_component_uni_easyinput, {
+                  type: "textarea",
+                  modelValue: $data.movieData.movieDescription,
+                  "onUpdate:modelValue": _cache[4] || (_cache[4] = ($event) => $data.movieData.movieDescription = $event),
+                  placeholder: "请输入简介信息"
+                }, null, 8, ["modelValue"])
+              ]),
+              _: 1
+              /* STABLE */
+            }),
+            vue.createVNode(_component_uni_forms_item, { name: "movieDuration" }, {
+              default: vue.withCtx(() => [
+                vue.createElementVNode("text", null, "电影时长（min）："),
+                vue.createVNode(_component_uni_easyinput, {
+                  modelValue: $data.movieData.movieDuration,
+                  "onUpdate:modelValue": _cache[5] || (_cache[5] = ($event) => $data.movieData.movieDuration = $event),
+                  placeholder: "请输入电影时长（min）"
+                }, null, 8, ["modelValue"])
+              ]),
+              _: 1
+              /* STABLE */
+            }),
+            vue.createVNode(_component_uni_forms_item, { name: "movieCountry" }, {
+              default: vue.withCtx(() => [
+                vue.createElementVNode("text", null, "片源地："),
+                vue.createVNode(_component_uni_easyinput, {
+                  modelValue: $data.movieData.movieCountry,
+                  "onUpdate:modelValue": _cache[6] || (_cache[6] = ($event) => $data.movieData.movieCountry = $event),
+                  placeholder: "请输入片源地"
+                }, null, 8, ["modelValue"])
+              ]),
+              _: 1
+              /* STABLE */
+            })
+          ]),
+          _: 1
+          /* STABLE */
+        }, 8, ["rules", "modelValue"])
+      ]),
+      vue.createElementVNode("view", { class: "movieInputRight" }, [
+        vue.createVNode(_component_uni_forms_item, {
+          name: "movieState",
+          class: "movieState"
+        }, {
+          default: vue.withCtx(() => [
+            vue.createElementVNode("text", null, "电影状态："),
+            vue.createVNode(_component_uni_data_checkbox, {
+              selectedColor: "#f9da49",
+              mode: "button",
+              selectedTextColor: "#f9da49",
+              modelValue: $data.movieData.movieState,
+              "onUpdate:modelValue": _cache[7] || (_cache[7] = ($event) => $data.movieData.movieState = $event),
+              localdata: $data.state,
+              onChange: $options.changeState
+            }, null, 8, ["modelValue", "localdata", "onChange"])
+          ]),
+          _: 1
+          /* STABLE */
+        }),
+        vue.createVNode(_component_uni_forms_item, {
+          name: "movieType",
+          class: "movieType"
+        }, {
+          default: vue.withCtx(() => [
+            vue.createElementVNode("text", null, "电影类型："),
+            vue.createVNode(_component_uni_data_checkbox, {
+              selectedColor: "#f9da49",
+              mode: "button",
+              selectedTextColor: "#f9da49",
+              multiple: "",
+              modelValue: $data.movieData.movieType,
+              "onUpdate:modelValue": _cache[8] || (_cache[8] = ($event) => $data.movieData.movieType = $event),
+              localdata: $data.type
+            }, null, 8, ["modelValue", "localdata"])
+          ]),
+          _: 1
+          /* STABLE */
+        }),
+        this.movieData.movieNameCn != "" && this.movieData.movieNameEn != "" && this.movieData.movieDirector != "" && this.movieData.movieDescription != "" && this.movieData.movieReleaseDate != "" && this.movieData.movieDuration != "" && this.movieData.movieCountry != "" && this.movieData.movieUrl != "" && this.movieData.movieType != "" ? (vue.openBlock(), vue.createElementBlock("button", {
+          key: 0,
+          class: "create_movie",
+          size: "mini",
+          onClick: _cache[9] || (_cache[9] = ($event) => $options.movie_create())
+        }, "新增电影")) : vue.createCommentVNode("v-if", true),
+        this.movieData.movieNameCn == "" || this.movieData.movieNameEn == "" || this.movieData.movieDirector == "" || this.movieData.movieDescription == "" || this.movieData.movieReleaseDate == "" || this.movieData.movieDuration == "" || this.movieData.movieCountry == "" || this.movieData.movieUrl == "" || this.movieData.movieType == "" ? (vue.openBlock(), vue.createElementBlock("button", {
+          key: 1,
+          class: "create_movie_false",
+          size: "mini"
+        }, "新增电影")) : vue.createCommentVNode("v-if", true)
+      ]),
+      vue.createElementVNode("view", null, [
+        vue.createVNode(
+          _component_uni_popup,
+          {
+            ref: "movieCreateDialog",
+            type: "dialog"
+          },
+          {
+            default: vue.withCtx(() => [
+              vue.createVNode(_component_uni_popup_dialog, {
+                type: _ctx.error,
+                cancelText: "关闭",
+                confirmText: "确定",
+                content: "是否新增该电影信息",
+                onConfirm: $options.movieCreateConfirm,
+                onClose: _ctx.dialogClose
+              }, null, 8, ["type", "onConfirm", "onClose"])
+            ]),
+            _: 1
+            /* STABLE */
+          },
+          512
+          /* NEED_PATCH */
+        )
+      ])
+    ]);
+  }
+  const PagesWebMovieMovieCreate = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["render", _sfc_render$a], ["__scopeId", "data-v-ddf9331a"], ["__file", "E:/Senior_2/cinema/vueDemo/pages/web/movie/movieCreate.vue"]]);
+  const _sfc_main$a = {
+    data() {
+      return {
+        requestFlag: 0,
+        cinemaData: [],
+        covers: [{
+          latitude: "",
+          longitude: "",
+          iconPath: "/static/Location.png"
+        }]
+      };
+    },
+    onLoad: function(option) {
+      uni.request({
+        url: "/api/cinema/infoById",
+        method: "GET",
+        dataType: "json",
+        data: option,
+        success: (res) => {
+          this.cinemaData = res.data.data;
+          this.covers[0].longitude = this.cinemaData.cinemaX;
+          this.covers[0].latitude = this.cinemaData.cinemaY;
+          formatAppLog("log", "at pages/web/cinema/cinemaUpdate.vue:45", "cinema", this.cinemaData);
+          this.requestFlag = 1;
+        }
+      });
+    },
+    methods: {}
+  };
+  function _sfc_render$9(_ctx, _cache, $props, $setup, $data, $options) {
+    return this.requestFlag == 1 ? (vue.openBlock(), vue.createElementBlock("view", {
+      key: 0,
+      class: "cinemaUpdate"
+    }, [
+      vue.createElementVNode("view", { class: "cinemaMap" }, [
+        vue.createElementVNode("map", {
+          class: "cinema_map",
+          style: { "width": "100%" },
+          latitude: this.cinemaData.cinemaY,
+          longitude: this.cinemaData.cinemaX,
+          markers: $data.covers
+        }, null, 8, ["latitude", "longitude", "markers"])
+      ]),
+      vue.createElementVNode("view", { class: "cinemaINFO" }, [
+        vue.createElementVNode(
+          "text",
+          { class: "cinemaName" },
+          vue.toDisplayString(this.cinemaData.cinemaName),
+          1
+          /* TEXT */
+        ),
+        vue.createElementVNode(
+          "text",
+          { class: "cinemaAddress" },
+          "地址：" + vue.toDisplayString(this.cinemaData.cinemaAddress),
+          1
+          /* TEXT */
+        ),
+        vue.createElementVNode(
+          "text",
+          { class: "cinemaPhone" },
+          "电话：" + vue.toDisplayString(this.cinemaData.cinemaPhone),
+          1
+          /* TEXT */
+        ),
+        vue.createElementVNode(
+          "text",
+          { class: "cinemaX" },
+          "位置经度：" + vue.toDisplayString(this.cinemaData.cinemaX),
+          1
+          /* TEXT */
+        ),
+        vue.createElementVNode(
+          "text",
+          { class: "cinemaY" },
+          "位置纬度：" + vue.toDisplayString(this.cinemaData.cinemaY),
+          1
+          /* TEXT */
+        )
+      ])
+    ])) : vue.createCommentVNode("v-if", true);
+  }
+  const PagesWebCinemaCinemaUpdate = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["render", _sfc_render$9], ["__scopeId", "data-v-899157ad"], ["__file", "E:/Senior_2/cinema/vueDemo/pages/web/cinema/cinemaUpdate.vue"]]);
+  const _sfc_main$9 = {
+    data() {
+      return {
+        cinemaData: {
+          cinemaName: "",
+          cinemaPhone: "",
+          cinemaPassword: "",
+          cinemaAddress: "",
+          cinemaX: "",
+          cinemaY: ""
+        }
+      };
+    },
+    methods: {
+      cinema_create() {
+        this.$refs.cinemaCreateDialog.open();
+        formatAppLog("log", "at pages/web/cinema/cinemaCreate.vue:76", "cinemaData", this.cinemaData);
+      },
+      cinemaCreateConfirm() {
+        let cinema = {
+          "cinemaName": this.cinemaData.cinemaName,
+          "cinemaPhone": this.cinemaData.cinemaPhone,
+          "cinemaPassword": this.cinemaData.cinemaPassword,
+          "cinemaAddress": this.cinemaData.cinemaAddress,
+          "cinemaX": this.cinemaData.cinemaX,
+          "cinemaY": this.cinemaData.cinemaY
+        };
+        uni.request({
+          url: "/api/cinema/register",
+          method: "POST",
+          dataType: "json",
+          data: cinema,
+          success: (res) => {
+            if (res.data.code == 0) {
+              uni.showToast({
+                title: "新增成功",
+                icon: "true",
+                mask: "true"
+              });
+              uni.reLaunch({
+                url: "/pages/web/login"
+              });
+            }
+            if (res.data.code == 1) {
+              uni.showToast({
+                title: res.data.message,
+                icon: "error",
+                mask: "true"
+              });
+            }
+          }
+        });
+      }
+    }
+  };
+  function _sfc_render$8(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_easyinput = resolveEasycom(vue.resolveDynamicComponent("uni-easyinput"), __easycom_7$1);
+    const _component_uni_forms_item = resolveEasycom(vue.resolveDynamicComponent("uni-forms-item"), __easycom_5$1);
+    const _component_uni_popup_dialog = resolveEasycom(vue.resolveDynamicComponent("uni-popup-dialog"), __easycom_8$1);
+    const _component_uni_popup = resolveEasycom(vue.resolveDynamicComponent("uni-popup"), __easycom_9$1);
+    return vue.openBlock(), vue.createElementBlock("view", { class: "cinemaCreate" }, [
+      vue.createElementVNode("view", { class: "cinemaINFO" }, [
+        vue.createVNode(_component_uni_forms_item, null, {
+          default: vue.withCtx(() => [
+            vue.createElementVNode("text", null, "影院名称："),
+            vue.createVNode(_component_uni_easyinput, {
+              modelValue: $data.cinemaData.cinemaName,
+              "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => $data.cinemaData.cinemaName = $event),
+              placeholder: "请输入影院名称"
+            }, null, 8, ["modelValue"])
+          ]),
+          _: 1
+          /* STABLE */
+        }),
+        vue.createVNode(_component_uni_forms_item, null, {
+          default: vue.withCtx(() => [
+            vue.createElementVNode("text", null, "影院电话："),
+            vue.createVNode(_component_uni_easyinput, {
+              modelValue: $data.cinemaData.cinemaPhone,
+              "onUpdate:modelValue": _cache[1] || (_cache[1] = ($event) => $data.cinemaData.cinemaPhone = $event),
+              placeholder: "请输入影院电话"
+            }, null, 8, ["modelValue"])
+          ]),
+          _: 1
+          /* STABLE */
+        }),
+        vue.createVNode(_component_uni_forms_item, null, {
+          default: vue.withCtx(() => [
+            vue.createElementVNode("text", null, "密码："),
+            vue.createVNode(_component_uni_easyinput, {
+              modelValue: $data.cinemaData.cinemaPassword,
+              "onUpdate:modelValue": _cache[2] || (_cache[2] = ($event) => $data.cinemaData.cinemaPassword = $event),
+              placeholder: "请输入密码"
+            }, null, 8, ["modelValue"])
+          ]),
+          _: 1
+          /* STABLE */
+        }),
+        vue.createVNode(_component_uni_forms_item, null, {
+          default: vue.withCtx(() => [
+            vue.createElementVNode("text", null, "影院地址："),
+            vue.createVNode(_component_uni_easyinput, {
+              modelValue: $data.cinemaData.cinemaAddress,
+              "onUpdate:modelValue": _cache[3] || (_cache[3] = ($event) => $data.cinemaData.cinemaAddress = $event),
+              placeholder: "请输入影院地址"
+            }, null, 8, ["modelValue"])
+          ]),
+          _: 1
+          /* STABLE */
+        }),
+        vue.createVNode(_component_uni_forms_item, null, {
+          default: vue.withCtx(() => [
+            vue.createElementVNode("text", null, "影院位置经度："),
+            vue.createVNode(_component_uni_easyinput, {
+              modelValue: $data.cinemaData.cinemaX,
+              "onUpdate:modelValue": _cache[4] || (_cache[4] = ($event) => $data.cinemaData.cinemaX = $event),
+              placeholder: "请输入影院位置经度"
+            }, null, 8, ["modelValue"])
+          ]),
+          _: 1
+          /* STABLE */
+        }),
+        vue.createVNode(_component_uni_forms_item, null, {
+          default: vue.withCtx(() => [
+            vue.createElementVNode("text", null, "影院位置纬度："),
+            vue.createVNode(_component_uni_easyinput, {
+              modelValue: $data.cinemaData.cinemaY,
+              "onUpdate:modelValue": _cache[5] || (_cache[5] = ($event) => $data.cinemaData.cinemaY = $event),
+              placeholder: "请输入影院位置纬度"
+            }, null, 8, ["modelValue"])
+          ]),
+          _: 1
+          /* STABLE */
+        }),
+        this.cinemaData.cinemaName != "" && this.cinemaData.cinemaPhone != "" && this.cinemaData.cinemaPassword != "" && this.cinemaData.cinemaAddress != "" && this.cinemaData.cinemaX != "" && this.cinemaData.cinemaY != "" ? (vue.openBlock(), vue.createElementBlock("button", {
+          key: 0,
+          class: "create_cinema",
+          size: "mini",
+          onClick: _cache[6] || (_cache[6] = ($event) => $options.cinema_create())
+        }, "新增影院")) : vue.createCommentVNode("v-if", true),
+        this.cinemaData.cinemaName == "" || this.cinemaData.cinemaPhone == "" || this.cinemaData.cinemaPassword == "" || this.cinemaData.cinemaAddress == "" || this.cinemaData.cinemaX == "" || this.cinemaData.cinemaY == "" ? (vue.openBlock(), vue.createElementBlock("button", {
+          key: 1,
+          class: "create_cinema_false",
+          size: "mini"
+        }, "新增影院")) : vue.createCommentVNode("v-if", true)
+      ]),
+      vue.createElementVNode("view", null, [
+        vue.createVNode(
+          _component_uni_popup,
+          {
+            ref: "cinemaCreateDialog",
+            type: "dialog"
+          },
+          {
+            default: vue.withCtx(() => [
+              vue.createVNode(_component_uni_popup_dialog, {
+                type: _ctx.error,
+                cancelText: "关闭",
+                confirmText: "确定",
+                content: "是否新增该影院信息",
+                onConfirm: $options.cinemaCreateConfirm,
+                onClose: _ctx.dialogClose
+              }, null, 8, ["type", "onConfirm", "onClose"])
+            ]),
+            _: 1
+            /* STABLE */
+          },
+          512
+          /* NEED_PATCH */
+        )
+      ])
+    ]);
+  }
+  const PagesWebCinemaCinemaCreate = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["render", _sfc_render$8], ["__scopeId", "data-v-390f0a6c"], ["__file", "E:/Senior_2/cinema/vueDemo/pages/web/cinema/cinemaCreate.vue"]]);
+  const _sfc_main$8 = {
+    data() {
+      return {
+        houseData: [],
+        requestFlag: 0
+      };
+    },
+    onLoad: function(option) {
+      this.token = uni.getStorageSync("token");
+      uni.request({
+        url: "/api/house/infoById",
+        method: "GET",
+        dataType: "json",
+        data: option,
+        success: (res) => {
+          this.houseData = res.data.data;
+          formatAppLog("log", "at pages/web/house/houseUpdate.vue:57", "this.houseData", this.houseData);
+          this.requestFlag = 1;
+        }
+      });
+    },
+    methods: {
+      house_update() {
+        this.$refs.houseUpdateDialog.open();
+      },
+      houseUpdateConfirm() {
+        let house = {
+          "houseId": this.houseData.houseId,
+          "houseName": this.houseData.houseName,
+          "houseX": this.houseData.houseX,
+          "houseY": this.houseData.houseY
+        };
+        uni.request({
+          url: "/api/house/update",
+          method: "PUT",
+          dataType: "json",
+          data: house,
+          header: {
+            "Authorization": this.token
+          },
+          success: (res) => {
+            uni.showToast({
+              title: "修改成功",
+              icon: "true",
+              mask: "true"
+            });
+            uni.reLaunch({
+              url: "/pages/web/login"
+            });
+          }
+        });
+      }
+    }
+  };
+  function _sfc_render$7(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_easyinput = resolveEasycom(vue.resolveDynamicComponent("uni-easyinput"), __easycom_7$1);
+    const _component_uni_forms_item = resolveEasycom(vue.resolveDynamicComponent("uni-forms-item"), __easycom_5$1);
+    const _component_uni_popup_dialog = resolveEasycom(vue.resolveDynamicComponent("uni-popup-dialog"), __easycom_8$1);
+    const _component_uni_popup = resolveEasycom(vue.resolveDynamicComponent("uni-popup"), __easycom_9$1);
+    return this.requestFlag == 1 ? (vue.openBlock(), vue.createElementBlock("view", {
+      key: 0,
+      class: "houseUpdate"
+    }, [
+      vue.createElementVNode("view", { class: "houseINFO" }, [
+        vue.createVNode(_component_uni_forms_item, null, {
+          default: vue.withCtx(() => [
+            vue.createElementVNode("text", null, "放映厅名称："),
+            vue.createVNode(_component_uni_easyinput, {
+              modelValue: $data.houseData.houseName,
+              "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => $data.houseData.houseName = $event),
+              placeholder: "请输入放映厅名称"
+            }, null, 8, ["modelValue"])
+          ]),
+          _: 1
+          /* STABLE */
+        }),
+        vue.createVNode(_component_uni_forms_item, null, {
+          default: vue.withCtx(() => [
+            vue.createElementVNode("text", null, "行数："),
+            vue.createVNode(_component_uni_easyinput, {
+              modelValue: $data.houseData.houseX,
+              "onUpdate:modelValue": _cache[1] || (_cache[1] = ($event) => $data.houseData.houseX = $event),
+              placeholder: "请输入行数"
+            }, null, 8, ["modelValue"])
+          ]),
+          _: 1
+          /* STABLE */
+        }),
+        vue.createVNode(_component_uni_forms_item, null, {
+          default: vue.withCtx(() => [
+            vue.createElementVNode("text", null, "列数："),
+            vue.createVNode(_component_uni_easyinput, {
+              modelValue: $data.houseData.houseY,
+              "onUpdate:modelValue": _cache[2] || (_cache[2] = ($event) => $data.houseData.houseY = $event),
+              placeholder: "请输入列数"
+            }, null, 8, ["modelValue"])
+          ]),
+          _: 1
+          /* STABLE */
+        }),
+        this.houseData.houseName != "" && this.houseData.houseX != "" && this.houseData.houseY != "" ? (vue.openBlock(), vue.createElementBlock("button", {
+          key: 0,
+          class: "create_house",
+          size: "mini",
+          onClick: _cache[3] || (_cache[3] = ($event) => $options.house_update())
+        }, "修改放映厅信息")) : vue.createCommentVNode("v-if", true),
+        this.houseData.houseName == "" || this.houseData.houseX == "" || this.houseData.houseY == "" ? (vue.openBlock(), vue.createElementBlock("button", {
+          key: 1,
+          class: "create_house_false",
+          size: "mini"
+        }, "修改放映厅信息")) : vue.createCommentVNode("v-if", true)
+      ]),
+      vue.createElementVNode("view", null, [
+        vue.createVNode(
+          _component_uni_popup,
+          {
+            ref: "houseUpdateDialog",
+            type: "dialog"
+          },
+          {
+            default: vue.withCtx(() => [
+              vue.createVNode(_component_uni_popup_dialog, {
+                type: _ctx.error,
+                cancelText: "关闭",
+                confirmText: "确定",
+                content: "是否修改该放映厅信息",
+                onConfirm: $options.houseUpdateConfirm,
+                onClose: _ctx.dialogClose
+              }, null, 8, ["type", "onConfirm", "onClose"])
+            ]),
+            _: 1
+            /* STABLE */
+          },
+          512
+          /* NEED_PATCH */
+        )
+      ])
+    ])) : vue.createCommentVNode("v-if", true);
+  }
+  const PagesWebHouseHouseUpdate = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["render", _sfc_render$7], ["__scopeId", "data-v-6bbab341"], ["__file", "E:/Senior_2/cinema/vueDemo/pages/web/house/houseUpdate.vue"]]);
+  const _sfc_main$7 = {
+    data() {
+      return {
+        houseData: {
+          houseName: "",
+          houseX: "",
+          houseY: ""
+        }
+      };
+    },
+    onLoad: function(option) {
+      this.token = uni.getStorageSync("token");
+    },
+    methods: {
+      house_create() {
+        this.$refs.houseCreateDialog.open();
+      },
+      houseCreateConfirm() {
+        let house = {
+          "houseName": this.houseData.houseName,
+          "houseX": this.houseData.houseX,
+          "houseY": this.houseData.houseY
+        };
+        uni.request({
+          url: "/api/house/create",
+          method: "POST",
+          dataType: "json",
+          data: house,
+          header: {
+            "Authorization": this.token
+          },
+          success: (res) => {
+            uni.showToast({
+              title: "新增成功",
+              icon: "true",
+              mask: "true"
+            });
+            uni.reLaunch({
+              url: "/pages/web/login"
+            });
+          }
+        });
+      }
+    }
+  };
+  function _sfc_render$6(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_easyinput = resolveEasycom(vue.resolveDynamicComponent("uni-easyinput"), __easycom_7$1);
+    const _component_uni_forms_item = resolveEasycom(vue.resolveDynamicComponent("uni-forms-item"), __easycom_5$1);
+    const _component_uni_popup_dialog = resolveEasycom(vue.resolveDynamicComponent("uni-popup-dialog"), __easycom_8$1);
+    const _component_uni_popup = resolveEasycom(vue.resolveDynamicComponent("uni-popup"), __easycom_9$1);
+    return vue.openBlock(), vue.createElementBlock("view", { class: "houseCreate" }, [
+      vue.createElementVNode("view", { class: "houseINFO" }, [
+        vue.createVNode(_component_uni_forms_item, null, {
+          default: vue.withCtx(() => [
+            vue.createElementVNode("text", null, "放映厅名称："),
+            vue.createVNode(_component_uni_easyinput, {
+              modelValue: $data.houseData.houseName,
+              "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => $data.houseData.houseName = $event),
+              placeholder: "请输入放映厅名称"
+            }, null, 8, ["modelValue"])
+          ]),
+          _: 1
+          /* STABLE */
+        }),
+        vue.createVNode(_component_uni_forms_item, null, {
+          default: vue.withCtx(() => [
+            vue.createElementVNode("text", null, "行数："),
+            vue.createVNode(_component_uni_easyinput, {
+              modelValue: $data.houseData.houseX,
+              "onUpdate:modelValue": _cache[1] || (_cache[1] = ($event) => $data.houseData.houseX = $event),
+              placeholder: "请输入行数"
+            }, null, 8, ["modelValue"])
+          ]),
+          _: 1
+          /* STABLE */
+        }),
+        vue.createVNode(_component_uni_forms_item, null, {
+          default: vue.withCtx(() => [
+            vue.createElementVNode("text", null, "列数："),
+            vue.createVNode(_component_uni_easyinput, {
+              modelValue: $data.houseData.houseY,
+              "onUpdate:modelValue": _cache[2] || (_cache[2] = ($event) => $data.houseData.houseY = $event),
+              placeholder: "请输入列数"
+            }, null, 8, ["modelValue"])
+          ]),
+          _: 1
+          /* STABLE */
+        }),
+        this.houseData.houseName != "" && this.houseData.houseX != "" && this.houseData.houseY != "" ? (vue.openBlock(), vue.createElementBlock("button", {
+          key: 0,
+          class: "create_house",
+          size: "mini",
+          onClick: _cache[3] || (_cache[3] = ($event) => $options.house_create())
+        }, "新增放映厅信息")) : vue.createCommentVNode("v-if", true),
+        this.houseData.houseName == "" || this.houseData.houseX == "" || this.houseData.houseY == "" ? (vue.openBlock(), vue.createElementBlock("button", {
+          key: 1,
+          class: "create_house_false",
+          size: "mini"
+        }, "新增放映厅信息")) : vue.createCommentVNode("v-if", true)
+      ]),
+      vue.createElementVNode("view", null, [
+        vue.createVNode(
+          _component_uni_popup,
+          {
+            ref: "houseCreateDialog",
+            type: "dialog"
+          },
+          {
+            default: vue.withCtx(() => [
+              vue.createVNode(_component_uni_popup_dialog, {
+                type: _ctx.error,
+                cancelText: "关闭",
+                confirmText: "确定",
+                content: "是否新增该放映厅信息",
+                onConfirm: $options.houseCreateConfirm,
+                onClose: _ctx.dialogClose
+              }, null, 8, ["type", "onConfirm", "onClose"])
+            ]),
+            _: 1
+            /* STABLE */
+          },
+          512
+          /* NEED_PATCH */
+        )
+      ])
+    ]);
+  }
+  const PagesWebHouseHouseCreate = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["render", _sfc_render$6], ["__scopeId", "data-v-54a9fa9f"], ["__file", "E:/Senior_2/cinema/vueDemo/pages/web/house/houseCreate.vue"]]);
+  const _sfc_main$6 = {
+    data() {
+      return {
+        requestFlag: 0,
+        scheduleData: [],
+        seatData: [],
+        ordersData: [],
+        houseRow: "",
+        houseColumn: ""
+      };
+    },
+    onLoad: function(option) {
+      this.token = uni.getStorageSync("token");
+      uni.request({
+        url: "/api/schedule/infoById",
+        method: "GET",
+        dataType: "json",
+        data: option,
+        header: {
+          "Authorization": this.token
+        },
+        success: (res) => {
+          this.scheduleData = res.data.data;
+          let schedule = {
+            "scheduleId": this.scheduleData.scheduleId,
+            "movieId": this.scheduleData.movieId,
+            "houseId": this.scheduleData.houseId
+          };
+          uni.request({
+            url: "/api/movie/infoMovieById",
+            method: "GET",
+            dataType: "json",
+            data: schedule,
+            header: {
+              "Authorization": this.token
+            },
+            success: (res2) => {
+              this.scheduleData.movieNameCn = res2.data.data.movie.movieNameCn;
+              this.scheduleData.movieUrl = res2.data.data.movie.movieUrl;
+              uni.request({
+                url: "/api/house/infoById",
+                method: "GET",
+                dataType: "json",
+                data: schedule,
+                header: {
+                  "Authorization": this.token
+                },
+                success: (res3) => {
+                  this.scheduleData.houseName = res3.data.data.houseName;
+                  this.scheduleData.houseSeats = res3.data.data.houseSeats;
+                  formatAppLog("log", "at pages/web/schedule/scheduleUpdate.vue:92", "场次信息", this.scheduleData);
+                  this.houseRow = parseInt(res3.data.data.houseX);
+                  this.houseColumn = parseInt(res3.data.data.houseY);
+                  for (let i2 = 1; i2 < this.houseRow + 1; i2++) {
+                    let row = [{
+                      seatState: "",
+                      seatX: "",
+                      seatY: ""
+                    }];
+                    for (let j2 = 1; j2 < this.houseColumn + 1; j2++) {
+                      let temp_row = {
+                        seatState: "",
+                        seatX: "",
+                        seatY: ""
+                      };
+                      temp_row.seatState = 0;
+                      temp_row.seatX = j2;
+                      temp_row.seatY = i2;
+                      row.push(temp_row);
+                    }
+                    this.seatData.push(
+                      row
+                    );
+                  }
+                  for (let i2 = 0; i2 < this.seatData.length; i2++) {
+                    for (let j2 = 0; j2 < this.seatData[i2].length; j2++) {
+                      if (this.seatData[i2][j2].seatState == "" && this.seatData[i2][j2].seatX == "" && this.seatData[i2][j2].seatY == "") {
+                        this.seatData[i2].splice(
+                          j2,
+                          1
+                        );
+                      }
+                    }
+                  }
+                  uni.request({
+                    url: "/api/orders/infoByScheduleId",
+                    method: "GET",
+                    dataType: "json",
+                    data: schedule,
+                    success: (res4) => {
+                      this.ordersData = res4.data.data;
+                      formatAppLog("log", "at pages/web/schedule/scheduleUpdate.vue:157", "this.ordersData", this.ordersData);
+                      for (let i2 = 0; i2 < this.ordersData.length; i2++) {
+                        let boughtCnt = this.ordersData[i2].ordersSeat.split(" ").length;
+                        for (let j2 = 0; j2 < boughtCnt; j2++) {
+                          let temp_seat = this.ordersData[i2].ordersSeat.split(" ")[j2];
+                          let temp_x = temp_seat.split("/")[1] - 1;
+                          let temp_y = temp_seat.split("/")[0] - 1;
+                          this.seatData[temp_y][temp_x].seatState = 2;
+                        }
+                      }
+                      this.requestFlag = 1;
+                    }
+                  });
+                  this.requestFlag = 1;
+                  formatAppLog(
+                    "log",
+                    "at pages/web/schedule/scheduleUpdate.vue:172",
+                    "this.houseRow",
+                    this.houseRow
+                  );
+                  formatAppLog(
+                    "log",
+                    "at pages/web/schedule/scheduleUpdate.vue:175",
+                    "this.houseColumn",
+                    this.houseColumn
+                  );
+                  formatAppLog("log", "at pages/web/schedule/scheduleUpdate.vue:178", "info", this.scheduleData);
+                  formatAppLog(
+                    "log",
+                    "at pages/web/schedule/scheduleUpdate.vue:180",
+                    "seatData",
+                    this.seatData
+                  );
+                }
+              });
+            }
+          });
+        }
+      });
+    },
+    methods: {}
+  };
+  function _sfc_render$5(_ctx, _cache, $props, $setup, $data, $options) {
+    return this.requestFlag == 1 ? (vue.openBlock(), vue.createElementBlock("view", {
+      key: 0,
+      class: "scheduleUpdate"
+    }, [
+      vue.createElementVNode("view", {
+        class: "selectSeat",
+        style: "height:100%;"
+      }, [
+        vue.createElementVNode(
+          "movable-area",
+          {
+            class: "house_area",
+            style: vue.normalizeStyle("height:" + (this.houseRow * 130 + 60 + 130 + 200) + "rpx;width:100%;")
+          },
+          [
+            vue.createElementVNode("movable-view", {
+              class: "seat_area",
+              style: vue.normalizeStyle("height:" + (this.houseRow * 110 + 60 + 130) + "rpx;width:100%;"),
+              direction: "all",
+              inertia: true,
+              scale: true,
+              "scale-min": 0.95,
+              "scale-max": 2
+            }, [
+              vue.createElementVNode(
+                "view",
+                { class: "screen" },
+                vue.toDisplayString(this.scheduleData.houseName),
+                1
+                /* TEXT */
+              ),
+              vue.createElementVNode("view", {
+                style: { "width": "100%", "height": "30rpx" },
+                class: "screen_mid"
+              }, "银幕中央"),
+              (vue.openBlock(true), vue.createElementBlock(
+                vue.Fragment,
+                null,
+                vue.renderList(this.seatData, (item, index) => {
+                  return vue.openBlock(), vue.createElementBlock("view", {
+                    class: "seats",
+                    key: index
+                  }, [
+                    (vue.openBlock(true), vue.createElementBlock(
+                      vue.Fragment,
+                      null,
+                      vue.renderList(this.seatData[index], (item2, indexColumn) => {
+                        return vue.openBlock(), vue.createElementBlock("view", {
+                          class: "seats_for",
+                          key: indexColumn
+                        }, [
+                          this.seatData[index][indexColumn].seatState == 0 && index * this.houseColumn + (indexColumn + 1) <= this.scheduleData.houseSeats ? (vue.openBlock(), vue.createElementBlock("image", {
+                            key: 0,
+                            class: "unselectSeat",
+                            src: "/static/unselected.png",
+                            mode: "aspectFit"
+                          })) : vue.createCommentVNode("v-if", true),
+                          this.seatData[index][indexColumn].seatState == 1 && index * this.houseColumn + (indexColumn + 1) <= this.scheduleData.houseSeats ? (vue.openBlock(), vue.createElementBlock("image", {
+                            key: 1,
+                            class: "unselectSeat",
+                            src: "/static/selected.png",
+                            mode: "aspectFit"
+                          })) : vue.createCommentVNode("v-if", true),
+                          this.seatData[index][indexColumn].seatState == 2 && index * this.houseColumn + (indexColumn + 1) <= this.scheduleData.houseSeats ? (vue.openBlock(), vue.createElementBlock("image", {
+                            key: 2,
+                            class: "unselectSeat",
+                            src: "/static/bought.png",
+                            mode: "aspectFit"
+                          })) : vue.createCommentVNode("v-if", true)
+                        ]);
+                      }),
+                      128
+                      /* KEYED_FRAGMENT */
+                    ))
+                  ]);
+                }),
+                128
+                /* KEYED_FRAGMENT */
+              ))
+            ], 12, ["scale-min"])
+          ],
+          4
+          /* STYLE */
+        )
+      ]),
+      vue.createElementVNode("view", { class: "scheduleINFO" }, [
+        vue.createElementVNode("image", {
+          src: this.scheduleData.movieUrl,
+          class: "movieImage_url"
+        }, null, 8, ["src"]),
+        vue.createElementVNode(
+          "text",
+          { class: "movieNameCn" },
+          vue.toDisplayString(this.scheduleData.movieNameCn),
+          1
+          /* TEXT */
+        ),
+        vue.createElementVNode(
+          "text",
+          { class: "text_size" },
+          "时间：" + vue.toDisplayString(this.scheduleData.scheduleTime),
+          1
+          /* TEXT */
+        ),
+        vue.createElementVNode(
+          "text",
+          { class: "text_size" },
+          "价格：" + vue.toDisplayString(this.scheduleData.schedulePrice) + " ¥",
+          1
+          /* TEXT */
+        ),
+        vue.createElementVNode(
+          "text",
+          { class: "text_size" },
+          "描述：" + vue.toDisplayString(this.scheduleData.scheduleDescription),
+          1
+          /* TEXT */
+        ),
+        vue.createElementVNode(
+          "text",
+          { class: "text_size" },
+          "放映厅总座位量：" + vue.toDisplayString(this.scheduleData.houseSeats),
+          1
+          /* TEXT */
+        )
+      ])
+    ])) : vue.createCommentVNode("v-if", true);
+  }
+  const PagesWebScheduleScheduleUpdate = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["render", _sfc_render$5], ["__scopeId", "data-v-1880a0ed"], ["__file", "E:/Senior_2/cinema/vueDemo/pages/web/schedule/scheduleUpdate.vue"]]);
+  const _sfc_main$5 = {
+    name: "uni-data-select",
+    mixins: [Ws.mixinDatacom || {}],
+    props: {
+      localdata: {
+        type: Array,
+        default() {
+          return [];
+        }
+      },
+      value: {
+        type: [String, Number],
+        default: ""
+      },
+      modelValue: {
+        type: [String, Number],
+        default: ""
+      },
+      label: {
+        type: String,
+        default: ""
+      },
+      placeholder: {
+        type: String,
+        default: "请选择放映厅"
+      },
+      emptyTips: {
+        type: String,
+        default: "无选项"
+      },
+      clear: {
+        type: Boolean,
+        default: true
+      },
+      defItem: {
+        type: Number,
+        default: 0
+      },
+      disabled: {
+        type: Boolean,
+        default: false
+      },
+      // 格式化输出 用法 field="_id as value, version as text, uni_platform as label" format="{label} - {text}"
+      format: {
+        type: String,
+        default: ""
+      }
+    },
+    data() {
+      return {
+        showSelector: false,
+        current: "",
+        mixinDatacomResData: [],
+        apps: [],
+        channels: [],
+        cacheKey: "uni-data-select-lastSelectedValue"
+      };
+    },
+    created() {
+      this.debounceGet = this.debounce(() => {
+        this.query();
+      }, 300);
+      if (this.collection && !this.localdata.length) {
+        this.debounceGet();
+      }
+    },
+    computed: {
+      typePlaceholder() {
+        const text = {
+          "opendb-stat-app-versions": "版本",
+          "opendb-app-channels": "渠道",
+          "opendb-app-list": "应用"
+        };
+        const common = this.placeholder;
+        const placeholder = text[this.collection];
+        return placeholder ? common + placeholder : common;
+      },
+      valueCom() {
+        return this.modelValue;
+      }
+    },
+    watch: {
+      localdata: {
+        immediate: true,
+        handler(val, old) {
+          if (Array.isArray(val) && old !== val) {
+            this.mixinDatacomResData = val;
+          }
+        }
+      },
+      valueCom(val, old) {
+        this.initDefVal();
+      },
+      mixinDatacomResData: {
+        immediate: true,
+        handler(val) {
+          if (val.length) {
+            this.initDefVal();
+          }
+        }
+      }
+    },
+    methods: {
+      debounce(fn, time = 100) {
+        let timer = null;
+        return function(...args) {
+          if (timer)
+            clearTimeout(timer);
+          timer = setTimeout(() => {
+            fn.apply(this, args);
+          }, time);
+        };
+      },
+      // 执行数据库查询
+      query() {
+        this.mixinDatacomEasyGet();
+      },
+      // 监听查询条件变更事件
+      onMixinDatacomPropsChange() {
+        if (this.collection) {
+          this.debounceGet();
+        }
+      },
+      initDefVal() {
+        let defValue = "";
+        if ((this.valueCom || this.valueCom === 0) && !this.isDisabled(this.valueCom)) {
+          defValue = this.valueCom;
+        } else {
+          let strogeValue;
+          if (this.collection) {
+            strogeValue = this.getCache();
+          }
+          if (strogeValue || strogeValue === 0) {
+            defValue = strogeValue;
+          } else {
+            let defItem = "";
+            if (this.defItem > 0 && this.defItem <= this.mixinDatacomResData.length) {
+              defItem = this.mixinDatacomResData[this.defItem - 1].value;
+            }
+            defValue = defItem;
+          }
+          if (defValue || defValue === 0) {
+            this.emit(defValue);
+          }
+        }
+        const def = this.mixinDatacomResData.find((item) => item.value === defValue);
+        this.current = def ? this.formatItemName(def) : "";
+      },
+      /**
+       * @param {[String, Number]} value
+       * 判断用户给的 value 是否同时为禁用状态
+       */
+      isDisabled(value) {
+        let isDisabled = false;
+        this.mixinDatacomResData.forEach((item) => {
+          if (item.value === value) {
+            isDisabled = item.disable;
+          }
+        });
+        return isDisabled;
+      },
+      clearVal() {
+        this.emit("");
+        if (this.collection) {
+          this.removeCache();
+        }
+      },
+      change(item) {
+        if (!item.disable) {
+          this.showSelector = false;
+          this.current = this.formatItemName(item);
+          this.emit(item.value);
+        }
+      },
+      emit(val) {
+        this.$emit("input", val);
+        this.$emit("update:modelValue", val);
+        this.$emit("change", val);
+        if (this.collection) {
+          this.setCache(val);
+        }
+      },
+      toggleSelector() {
+        if (this.disabled) {
+          return;
+        }
+        this.showSelector = !this.showSelector;
+      },
+      formatItemName(item) {
+        let {
+          text,
+          value,
+          channel_code
+        } = item;
+        channel_code = channel_code ? `(${channel_code})` : "";
+        if (this.format) {
+          let str = "";
+          str = this.format;
+          for (let key in item) {
+            str = str.replace(new RegExp(`{${key}}`, "g"), item[key]);
+          }
+          return str;
+        } else {
+          return this.collection.indexOf("app-list") > 0 ? `${text}(${value})` : text ? text : `未命名${channel_code}`;
+        }
+      },
+      // 获取当前加载的数据
+      getLoadData() {
+        return this.mixinDatacomResData;
+      },
+      // 获取当前缓存key
+      getCurrentCacheKey() {
+        return this.collection;
+      },
+      // 获取缓存
+      getCache(name = this.getCurrentCacheKey()) {
+        let cacheData = uni.getStorageSync(this.cacheKey) || {};
+        return cacheData[name];
+      },
+      // 设置缓存
+      setCache(value, name = this.getCurrentCacheKey()) {
+        let cacheData = uni.getStorageSync(this.cacheKey) || {};
+        cacheData[name] = value;
+        uni.setStorageSync(this.cacheKey, cacheData);
+      },
+      // 删除缓存
+      removeCache(name = this.getCurrentCacheKey()) {
+        let cacheData = uni.getStorageSync(this.cacheKey) || {};
+        delete cacheData[name];
+        uni.setStorageSync(this.cacheKey, cacheData);
+      }
+    }
+  };
+  function _sfc_render$4(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_1$1);
+    return vue.openBlock(), vue.createElementBlock("view", { class: "uni-stat__select" }, [
+      $props.label ? (vue.openBlock(), vue.createElementBlock(
+        "span",
+        {
+          key: 0,
+          class: "uni-label-text hide-on-phone"
+        },
+        vue.toDisplayString($props.label + "："),
+        1
+        /* TEXT */
+      )) : vue.createCommentVNode("v-if", true),
+      vue.createElementVNode(
+        "view",
+        {
+          class: vue.normalizeClass(["uni-stat-box", { "uni-stat__actived": $data.current }])
+        },
+        [
+          vue.createElementVNode(
+            "view",
+            {
+              class: vue.normalizeClass(["uni-select", { "uni-select--disabled": $props.disabled }])
+            },
+            [
+              vue.createElementVNode("view", {
+                class: "uni-select__input-box",
+                onClick: _cache[1] || (_cache[1] = (...args) => $options.toggleSelector && $options.toggleSelector(...args))
+              }, [
+                $data.current ? (vue.openBlock(), vue.createElementBlock(
+                  "view",
+                  {
+                    key: 0,
+                    class: "uni-select__input-text"
+                  },
+                  vue.toDisplayString($data.current),
+                  1
+                  /* TEXT */
+                )) : (vue.openBlock(), vue.createElementBlock(
+                  "view",
+                  {
+                    key: 1,
+                    class: "uni-select__input-text uni-select__input-placeholder"
+                  },
+                  vue.toDisplayString($options.typePlaceholder),
+                  1
+                  /* TEXT */
+                )),
+                $data.current && $props.clear && !$props.disabled ? (vue.openBlock(), vue.createElementBlock("view", {
+                  key: 2,
+                  onClick: _cache[0] || (_cache[0] = vue.withModifiers((...args) => $options.clearVal && $options.clearVal(...args), ["stop"]))
+                }, [
+                  vue.createVNode(_component_uni_icons, {
+                    type: "clear",
+                    color: "#c0c4cc",
+                    size: "24"
+                  })
+                ])) : (vue.openBlock(), vue.createElementBlock("view", { key: 3 }, [
+                  vue.createVNode(_component_uni_icons, {
+                    type: $data.showSelector ? "top" : "bottom",
+                    size: "14",
+                    color: "#999"
+                  }, null, 8, ["type"])
+                ]))
+              ]),
+              $data.showSelector ? (vue.openBlock(), vue.createElementBlock("view", {
+                key: 0,
+                class: "uni-select--mask",
+                onClick: _cache[2] || (_cache[2] = (...args) => $options.toggleSelector && $options.toggleSelector(...args))
+              })) : vue.createCommentVNode("v-if", true),
+              $data.showSelector ? (vue.openBlock(), vue.createElementBlock("view", {
+                key: 1,
+                class: "uni-select__selector"
+              }, [
+                vue.createElementVNode("view", { class: "uni-popper__arrow" }),
+                vue.createElementVNode("scroll-view", {
+                  "scroll-y": "true",
+                  class: "uni-select__selector-scroll"
+                }, [
+                  $data.mixinDatacomResData.length === 0 ? (vue.openBlock(), vue.createElementBlock("view", {
+                    key: 0,
+                    class: "uni-select__selector-empty"
+                  }, [
+                    vue.createElementVNode(
+                      "text",
+                      null,
+                      vue.toDisplayString($props.emptyTips),
+                      1
+                      /* TEXT */
+                    )
+                  ])) : (vue.openBlock(true), vue.createElementBlock(
+                    vue.Fragment,
+                    { key: 1 },
+                    vue.renderList($data.mixinDatacomResData, (item, index) => {
+                      return vue.openBlock(), vue.createElementBlock("view", {
+                        class: "uni-select__selector-item",
+                        key: index,
+                        onClick: ($event) => $options.change(item)
+                      }, [
+                        vue.createElementVNode(
+                          "text",
+                          {
+                            class: vue.normalizeClass({ "uni-select__selector__disabled": item.disable })
+                          },
+                          vue.toDisplayString($options.formatItemName(item)),
+                          3
+                          /* TEXT, CLASS */
+                        )
+                      ], 8, ["onClick"]);
+                    }),
+                    128
+                    /* KEYED_FRAGMENT */
+                  ))
+                ])
+              ])) : vue.createCommentVNode("v-if", true)
+            ],
+            2
+            /* CLASS */
+          )
+        ],
+        2
+        /* CLASS */
+      )
+    ]);
+  }
+  const __easycom_6 = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["render", _sfc_render$4], ["__scopeId", "data-v-ddf9e0a2"], ["__file", "E:/Senior_2/cinema/vueDemo/uni_modules/uni-data-select/components/uni-data-select/uni-data-select.vue"]]);
+  const _sfc_main$4 = {
+    data() {
+      return {
+        movieData: [],
+        movieData_not: [],
+        houseData: [],
+        current: 0,
+        items: ["正在上映", "待映"],
+        range: [],
+        value: 0,
+        flag1: 0,
+        flag2: 0,
+        flag3: 0,
+        scheduleData: {
+          movieId: "",
+          houseId: "",
+          scheduleTime: "",
+          schedulePrice: "",
+          scheduleState: "",
+          scheduleDescription: ""
+        }
+      };
+    },
+    onLoad: function(option) {
+      this.token = uni.getStorageSync("token");
+      this.cinemaId = uni.getStorageSync("cinemaId");
+      uni.request({
+        url: "/api/movie/infoMovieByState?movieState=1",
+        method: "GET",
+        dataType: "json",
+        success: (res) => {
+          this.movieData = res.data.data;
+          this.movieData.reverse();
+          formatAppLog("log", "at pages/web/schedule/scheduleCreate.vue:134", "正在上映", this.movieData);
+          this.flag1 = 1;
+        }
+      });
+      uni.request({
+        url: "/api/movie/infoMovieByState?movieState=0",
+        method: "GET",
+        dataType: "json",
+        success: (res) => {
+          this.movieData_not = res.data.data;
+          formatAppLog("log", "at pages/web/schedule/scheduleCreate.vue:146", "待映", this.movieData_not);
+          this.flag2 = 1;
+        }
+      });
+      let cinema = {
+        "cinemaId": this.cinemaId
+      };
+      uni.request({
+        url: "/api/house/infoByCinemaId",
+        method: "GET",
+        dataType: "json",
+        data: cinema,
+        header: {
+          "Authorization": this.token
+        },
+        success: (res) => {
+          this.houseData = res.data.data;
+          for (let i2 = 0; i2 < this.houseData.length; i2++) {
+            let temp = {};
+            temp.value = this.houseData[i2].houseId;
+            temp.text = i2 + 1 + "  ：" + this.houseData[i2].houseName;
+            this.range.push(temp);
+          }
+          formatAppLog("log", "at pages/web/schedule/scheduleCreate.vue:171", "放映厅", this.houseData);
+          formatAppLog("log", "at pages/web/schedule/scheduleCreate.vue:172", "选项", this.range);
+          this.flag3 = 1;
+        }
+      });
+    },
+    methods: {
+      onClickItem(e2) {
+        if (this.current != e2.currentIndex) {
+          this.current = e2.currentIndex;
+        }
+      },
+      to_movie_info(movieID) {
+        formatAppLog("log", "at pages/web/schedule/scheduleCreate.vue:187", "所选电影", movieID);
+        this.scheduleData.movieId = movieID;
+      },
+      change(e2) {
+        this.scheduleData.houseId = e2;
+        formatAppLog("log", "at pages/web/schedule/scheduleCreate.vue:192", "e:", e2);
+      },
+      schedule_create() {
+        this.$refs.scheduleCreateDialog.open();
+      },
+      scheduleCreateConfirm() {
+        let schedule = {
+          "movieId": this.scheduleData.movieId,
+          "houseId": this.scheduleData.houseId,
+          "schedulePrice": this.scheduleData.schedulePrice,
+          "scheduleRemain": 1,
+          "scheduleState": 1,
+          "scheduleDescription": this.scheduleData.scheduleDescription
+        };
+        uni.request({
+          url: "/api/schedule/create?scheduleTime=" + this.scheduleData.scheduleTime,
+          method: "POST",
+          dataType: "json",
+          data: schedule,
+          header: {
+            "Authorization": this.token
+          },
+          success: (res) => {
+            uni.showToast({
+              title: "新增成功",
+              icon: "true",
+              mask: "true"
+            });
+            uni.reLaunch({
+              url: "/pages/web/login"
+            });
+          }
+        });
+      }
+    }
+  };
+  function _sfc_render$3(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_segmented_control = resolveEasycom(vue.resolveDynamicComponent("uni-segmented-control"), __easycom_0$4);
+    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_1$1);
+    const _component_uni_list_item = resolveEasycom(vue.resolveDynamicComponent("uni-list-item"), __easycom_2);
+    const _component_uni_list = resolveEasycom(vue.resolveDynamicComponent("uni-list"), __easycom_3);
+    const _component_uni_datetime_picker = resolveEasycom(vue.resolveDynamicComponent("uni-datetime-picker"), __easycom_4);
+    const _component_uni_forms_item = resolveEasycom(vue.resolveDynamicComponent("uni-forms-item"), __easycom_5$1);
+    const _component_uni_data_select = resolveEasycom(vue.resolveDynamicComponent("uni-data-select"), __easycom_6);
+    const _component_uni_easyinput = resolveEasycom(vue.resolveDynamicComponent("uni-easyinput"), __easycom_7$1);
+    const _component_uni_popup_dialog = resolveEasycom(vue.resolveDynamicComponent("uni-popup-dialog"), __easycom_8$1);
+    const _component_uni_popup = resolveEasycom(vue.resolveDynamicComponent("uni-popup"), __easycom_9$1);
+    return this.flag1 == 1 && this.flag2 == 1 && this.flag3 == 1 ? (vue.openBlock(), vue.createElementBlock("view", {
+      key: 0,
+      class: "scheduleCreate"
+    }, [
+      vue.createElementVNode("scroll-view", {
+        class: "scroll_MOVIE",
+        "scroll-y": "true",
+        "show-scrollbar": "false"
+      }, [
+        vue.createElementVNode("view", { class: "movieList" }, [
+          vue.createElementVNode("view", { class: "release_or_not" }, [
+            vue.createVNode(_component_uni_segmented_control, {
+              current: $data.current,
+              values: $data.items,
+              "style-type": "text",
+              "active-color": "#f9da49",
+              onClickItem: $options.onClickItem
+            }, null, 8, ["current", "values", "onClickItem"])
+          ]),
+          (vue.openBlock(true), vue.createElementBlock(
+            vue.Fragment,
+            null,
+            vue.renderList(this.movieData, (item, index) => {
+              return vue.withDirectives((vue.openBlock(), vue.createElementBlock("view", {
+                class: "movieINFO",
+                key: index
+              }, [
+                vue.createVNode(
+                  _component_uni_list,
+                  null,
+                  {
+                    default: vue.withCtx(() => [
+                      vue.createVNode(_component_uni_list_item, {
+                        title: this.movieData[index].movieNameCn,
+                        ellipsis: "1",
+                        note: this.movieData[index].movieNameEn + "\n导演：" + this.movieData[index].movieDirector + "\n上映日期：" + this.movieData[index].movieReleaseDate + "\n时长：" + this.movieData[index].movieDuration + " min",
+                        thumb: this.movieData[index].movieUrl,
+                        "thumb-size": "lg",
+                        clickable: "",
+                        onClick: ($event) => $options.to_movie_info(this.movieData[index].movieId)
+                      }, {
+                        footer: vue.withCtx(() => [
+                          this.scheduleData.movieId == this.movieData[index].movieId ? (vue.openBlock(), vue.createBlock(_component_uni_icons, {
+                            key: 0,
+                            class: "chose_movie",
+                            type: "checkbox-filled",
+                            size: "30",
+                            style: { "color": "#f9da49" }
+                          })) : vue.createCommentVNode("v-if", true),
+                          this.scheduleData.movieId != this.movieData[index].movieId ? (vue.openBlock(), vue.createBlock(_component_uni_icons, {
+                            key: 1,
+                            class: "chose_movie",
+                            type: "checkbox-filled",
+                            size: "30"
+                          })) : vue.createCommentVNode("v-if", true)
+                        ]),
+                        _: 2
+                        /* DYNAMIC */
+                      }, 1032, ["title", "note", "thumb", "onClick"])
+                    ]),
+                    _: 2
+                    /* DYNAMIC */
+                  },
+                  1024
+                  /* DYNAMIC_SLOTS */
+                )
+              ])), [
+                [vue.vShow, $data.current === 0]
+              ]);
+            }),
+            128
+            /* KEYED_FRAGMENT */
+          )),
+          (vue.openBlock(true), vue.createElementBlock(
+            vue.Fragment,
+            null,
+            vue.renderList(this.movieData_not, (item, index) => {
+              return vue.withDirectives((vue.openBlock(), vue.createElementBlock("view", {
+                class: "movieINFO",
+                key: index
+              }, [
+                vue.createVNode(
+                  _component_uni_list,
+                  null,
+                  {
+                    default: vue.withCtx(() => [
+                      vue.createVNode(_component_uni_list_item, {
+                        title: this.movieData_not[index].movieNameCn,
+                        ellipsis: "1",
+                        note: this.movieData_not[index].movieNameEn + "\n导演：" + this.movieData_not[index].movieDirector + "\n上映日期：" + this.movieData_not[index].movieReleaseDate + "\n时长：" + this.movieData_not[index].movieDuration + " min",
+                        thumb: this.movieData_not[index].movieUrl,
+                        "thumb-size": "lg",
+                        clickable: "",
+                        onClick: ($event) => $options.to_movie_info(this.movieData_not[index].movieId)
+                      }, {
+                        footer: vue.withCtx(() => [
+                          this.scheduleData.movieId == this.movieData_not[index].movieId ? (vue.openBlock(), vue.createBlock(_component_uni_icons, {
+                            key: 0,
+                            class: "chose_movie",
+                            type: "checkbox-filled",
+                            size: "30",
+                            style: { "color": "#f9da49" }
+                          })) : vue.createCommentVNode("v-if", true),
+                          this.scheduleData.movieId != this.movieData_not[index].movieId ? (vue.openBlock(), vue.createBlock(_component_uni_icons, {
+                            key: 1,
+                            class: "chose_movie",
+                            type: "checkbox-filled",
+                            size: "30"
+                          })) : vue.createCommentVNode("v-if", true)
+                        ]),
+                        _: 2
+                        /* DYNAMIC */
+                      }, 1032, ["title", "note", "thumb", "onClick"])
+                    ]),
+                    _: 2
+                    /* DYNAMIC */
+                  },
+                  1024
+                  /* DYNAMIC_SLOTS */
+                )
+              ])), [
+                [vue.vShow, $data.current === 1]
+              ]);
+            }),
+            128
+            /* KEYED_FRAGMENT */
+          ))
+        ])
+      ]),
+      vue.createElementVNode("view", { class: "scheduleINFO" }, [
+        vue.createElementVNode("view", { class: "box" }, [
+          vue.createVNode(_component_uni_forms_item, { name: "scheduleTime" }, {
+            default: vue.withCtx(() => [
+              vue.createElementVNode("text", null, "场次时间："),
+              vue.createVNode(_component_uni_datetime_picker, {
+                type: "datetime",
+                "clear-icon": false,
+                modelValue: $data.scheduleData.scheduleTime,
+                "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => $data.scheduleData.scheduleTime = $event),
+                onMaskClick: _ctx.maskClick
+              }, null, 8, ["modelValue", "onMaskClick"])
+            ]),
+            _: 1
+            /* STABLE */
+          }),
+          vue.createVNode(_component_uni_forms_item, null, {
+            default: vue.withCtx(() => [
+              vue.createElementVNode("text", null, "放映厅："),
+              vue.createVNode(_component_uni_data_select, {
+                modelValue: $data.value,
+                "onUpdate:modelValue": _cache[1] || (_cache[1] = ($event) => $data.value = $event),
+                localdata: $data.range,
+                onChange: $options.change
+              }, null, 8, ["modelValue", "localdata", "onChange"])
+            ]),
+            _: 1
+            /* STABLE */
+          }),
+          vue.createVNode(_component_uni_forms_item, null, {
+            default: vue.withCtx(() => [
+              vue.createElementVNode("text", null, "场次价格："),
+              vue.createVNode(_component_uni_easyinput, {
+                modelValue: $data.scheduleData.schedulePrice,
+                "onUpdate:modelValue": _cache[2] || (_cache[2] = ($event) => $data.scheduleData.schedulePrice = $event),
+                placeholder: "请输入场次价格"
+              }, null, 8, ["modelValue"])
+            ]),
+            _: 1
+            /* STABLE */
+          }),
+          vue.createVNode(_component_uni_forms_item, null, {
+            default: vue.withCtx(() => [
+              vue.createElementVNode("text", null, "场次描述："),
+              vue.createVNode(_component_uni_easyinput, {
+                modelValue: $data.scheduleData.scheduleDescription,
+                "onUpdate:modelValue": _cache[3] || (_cache[3] = ($event) => $data.scheduleData.scheduleDescription = $event),
+                placeholder: "请输入场次描述"
+              }, null, 8, ["modelValue"])
+            ]),
+            _: 1
+            /* STABLE */
+          }),
+          this.scheduleData.movieId != "" && this.scheduleData.scheduleTime != "" && this.scheduleData.houseId != "" && this.scheduleData.schedulePrice != "" && this.scheduleData.scheduleDescription != "" ? (vue.openBlock(), vue.createElementBlock("button", {
+            key: 0,
+            class: "create_schedule",
+            size: "mini",
+            onClick: _cache[4] || (_cache[4] = ($event) => $options.schedule_create())
+          }, "新增场次信息")) : vue.createCommentVNode("v-if", true),
+          this.scheduleData.movieId == "" || this.scheduleData.scheduleTime == "" || this.scheduleData.houseId == "" || this.scheduleData.schedulePrice == "" || this.scheduleData.scheduleDescription == "" ? (vue.openBlock(), vue.createElementBlock("button", {
+            key: 1,
+            class: "create_schedule_false",
+            size: "mini"
+          }, "新增场次信息")) : vue.createCommentVNode("v-if", true)
+        ])
+      ]),
+      vue.createElementVNode("view", null, [
+        vue.createVNode(
+          _component_uni_popup,
+          {
+            ref: "scheduleCreateDialog",
+            type: "dialog"
+          },
+          {
+            default: vue.withCtx(() => [
+              vue.createVNode(_component_uni_popup_dialog, {
+                type: _ctx.error,
+                cancelText: "关闭",
+                confirmText: "确定",
+                content: "是否新增该场次信息",
+                onConfirm: $options.scheduleCreateConfirm,
+                onClose: _ctx.dialogClose
+              }, null, 8, ["type", "onConfirm", "onClose"])
+            ]),
+            _: 1
+            /* STABLE */
+          },
+          512
+          /* NEED_PATCH */
+        )
+      ])
+    ])) : vue.createCommentVNode("v-if", true);
+  }
+  const PagesWebScheduleScheduleCreate = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["render", _sfc_render$3], ["__scopeId", "data-v-1153b84a"], ["__file", "E:/Senior_2/cinema/vueDemo/pages/web/schedule/scheduleCreate.vue"]]);
+  const _sfc_main$3 = {
+    data() {
+      return {
+        img: {
+          url: ""
+        },
+        movieData: [],
+        movieType: [],
+        State: -1,
+        typeData: "",
+        requestFlag: 0,
+        imageStyles: {
+          width: 420,
+          height: 600,
+          border: {
+            color: "#000000;",
+            style: "solid"
+          }
+        },
+        rules_create: {
+          movieNameCn: {
+            rules: [{
+              required: true
+            }]
+          },
+          movieNameEn: {
+            rules: [{
+              required: true
+            }]
+          },
+          movieDirector: {
+            rules: [{
+              required: true
+            }]
+          },
+          movieDescription: {
+            rules: [{
+              required: true
+            }]
+          },
+          movieReleaseDate: {
+            rules: [{
+              required: true
+            }]
+          },
+          movieDuration: {
+            rules: [{
+              required: true
+            }]
+          },
+          movieCountry: {
+            rules: [{
+              required: true
+            }]
+          },
+          movieUrl: {
+            rules: [{
+              required: true
+            }]
+          },
+          movieState: {
+            rules: [{
+              required: true
+            }]
+          }
+        },
+        state: [{
+          text: "待映",
+          value: 0
+        }, {
+          text: "正在上映",
+          value: 1
+        }],
+        type: [{
+          text: "剧情",
+          value: 1
+        }, {
+          text: "动作",
+          value: 2
+        }, {
+          text: "冒险",
+          value: 3
+        }, {
+          text: "喜剧",
+          value: 4
+        }, {
+          text: "爱情",
+          value: 5
+        }, {
+          text: "奇幻",
+          value: 6
+        }, {
+          text: "科幻",
+          value: 7
+        }, {
+          text: "惊悚",
+          value: 8
+        }, {
+          text: "悬疑",
+          value: 9
+        }, {
+          text: "战争",
+          value: 10
+        }, {
+          text: "历史",
+          value: 11
+        }, {
+          text: "传记",
+          value: 12
+        }, {
+          text: "音乐",
+          value: 13
+        }, {
+          text: "动画",
+          value: 14
+        }, {
+          text: "运动",
+          value: 15
+        }, {
+          text: "犯罪",
+          value: 16
+        }]
+      };
+    },
+    onLoad: function(option) {
+      this.token = uni.getStorageSync("token");
+      formatAppLog("log", "at pages/web/movie/movieUUpdate.vue:227", option);
+      uni.request({
+        url: "/api/movie/infoMovieById",
+        method: "GET",
+        dataType: "json",
+        data: option,
+        success: (res) => {
+          this.movieData = res.data.data.movie;
+          formatAppLog("log", "at pages/web/movie/movieUUpdate.vue:235", "movieINFO", this.movieData);
+          this.requestFlag = 1;
+          this.img.url = this.movieData.movieUrl;
+          this.State = parseInt(this.movieData.movieState);
+        }
+      });
+    },
+    methods: {
+      changeState(e2) {
+        formatAppLog("log", "at pages/web/movie/movieUUpdate.vue:246", "e:", e2);
+        this.movieData.movieState = this.State;
+      },
+      movie_create() {
+        formatAppLog("log", "at pages/web/movie/movieUUpdate.vue:250", "movieData", this.movieData.movieReleaseDate);
+        this.$refs.movieCreateDialog.open();
+      },
+      movieCreateConfirm() {
+        let movie = {
+          "movieId": this.movieData.movieId,
+          "movieNameCn": this.movieData.movieNameCn,
+          "movieNameEn": this.movieData.movieNameEn,
+          "movieDirector": this.movieData.movieDirector,
+          "movieDescription": this.movieData.movieDescription,
+          "movieDuration": this.movieData.movieDuration,
+          "movieCountry": this.movieData.movieCountry,
+          "movieUrl": this.movieData.movieUrl,
+          "movieState": this.movieData.movieState
+        };
+        uni.request({
+          url: "/api/movie/update?movieReleaseDate=" + this.movieData.movieReleaseDate + "&movieType=" + this.movieType,
+          method: "PUT",
+          dataType: "json",
+          data: movie,
+          header: {
+            "Authorization": this.token
+          },
+          success: (res) => {
+            uni.showToast({
+              title: "修改成功",
+              icon: "true",
+              mask: "true"
+            });
+            uni.reLaunch({
+              url: "/pages/web/login"
+            });
+          }
+        });
+      }
+    }
+  };
+  function _sfc_render$2(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_file_picker = resolveEasycom(vue.resolveDynamicComponent("uni-file-picker"), __easycom_0$2);
+    const _component_uni_datetime_picker = resolveEasycom(vue.resolveDynamicComponent("uni-datetime-picker"), __easycom_4);
+    const _component_uni_forms_item = resolveEasycom(vue.resolveDynamicComponent("uni-forms-item"), __easycom_5$1);
+    const _component_uni_easyinput = resolveEasycom(vue.resolveDynamicComponent("uni-easyinput"), __easycom_7$1);
+    const _component_uni_forms = resolveEasycom(vue.resolveDynamicComponent("uni-forms"), __easycom_4$2);
+    const _component_uni_data_checkbox = resolveEasycom(vue.resolveDynamicComponent("uni-data-checkbox"), __easycom_5);
+    const _component_uni_popup_dialog = resolveEasycom(vue.resolveDynamicComponent("uni-popup-dialog"), __easycom_8$1);
+    const _component_uni_popup = resolveEasycom(vue.resolveDynamicComponent("uni-popup"), __easycom_9$1);
+    return vue.openBlock(), vue.createElementBlock("view", { class: "movieCreate" }, [
+      vue.createElementVNode("view", { class: "movieURL" }, [
+        vue.createVNode(_component_uni_file_picker, {
+          class: "movieURLCREATE",
+          modelValue: $data.img,
+          "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => $data.img = $event),
+          limit: "1",
+          "del-icon": false,
+          "disable-preview": "",
+          imageStyles: $data.imageStyles,
+          "file-mediatype": "image",
+          onSelect: _ctx.update_url
+        }, null, 8, ["modelValue", "imageStyles", "onSelect"])
+      ]),
+      vue.createElementVNode("view", { class: "movieINPUT" }, [
+        vue.createVNode(_component_uni_forms, {
+          ref: "createForm",
+          rules: $data.rules_create,
+          modelValue: $data.movieData
+        }, {
+          default: vue.withCtx(() => [
+            vue.createVNode(_component_uni_forms_item, { name: "movieReleaseDate" }, {
+              default: vue.withCtx(() => [
+                vue.createElementVNode("text", null, "上映日期："),
+                vue.createVNode(_component_uni_datetime_picker, {
+                  type: "date",
+                  "clear-icon": false,
+                  modelValue: $data.movieData.movieReleaseDate,
+                  "onUpdate:modelValue": _cache[1] || (_cache[1] = ($event) => $data.movieData.movieReleaseDate = $event),
+                  onMaskClick: _ctx.maskClick
+                }, null, 8, ["modelValue", "onMaskClick"])
+              ]),
+              _: 1
+              /* STABLE */
+            }),
+            vue.createVNode(_component_uni_forms_item, { name: "movieNameCn" }, {
+              default: vue.withCtx(() => [
+                vue.createElementVNode("text", null, "电影中文名："),
+                vue.createVNode(_component_uni_easyinput, {
+                  modelValue: $data.movieData.movieNameCn,
+                  "onUpdate:modelValue": _cache[2] || (_cache[2] = ($event) => $data.movieData.movieNameCn = $event),
+                  placeholder: "请输入电影中文名"
+                }, null, 8, ["modelValue"])
+              ]),
+              _: 1
+              /* STABLE */
+            }),
+            vue.createVNode(_component_uni_forms_item, { name: "movieNameEn" }, {
+              default: vue.withCtx(() => [
+                vue.createElementVNode("text", null, "电影外文名："),
+                vue.createVNode(_component_uni_easyinput, {
+                  modelValue: $data.movieData.movieNameEn,
+                  "onUpdate:modelValue": _cache[3] || (_cache[3] = ($event) => $data.movieData.movieNameEn = $event),
+                  placeholder: "请输入外文名"
+                }, null, 8, ["modelValue"])
+              ]),
+              _: 1
+              /* STABLE */
+            }),
+            vue.createVNode(_component_uni_forms_item, { name: "movieDirector" }, {
+              default: vue.withCtx(() => [
+                vue.createElementVNode("text", null, "导演名："),
+                vue.createVNode(_component_uni_easyinput, {
+                  modelValue: $data.movieData.movieDirector,
+                  "onUpdate:modelValue": _cache[4] || (_cache[4] = ($event) => $data.movieData.movieDirector = $event),
+                  placeholder: "请输入导演名"
+                }, null, 8, ["modelValue"])
+              ]),
+              _: 1
+              /* STABLE */
+            }),
+            vue.createVNode(_component_uni_forms_item, { name: "movieDescription" }, {
+              default: vue.withCtx(() => [
+                vue.createElementVNode("text", null, "简介："),
+                vue.createVNode(_component_uni_easyinput, {
+                  type: "textarea",
+                  modelValue: $data.movieData.movieDescription,
+                  "onUpdate:modelValue": _cache[5] || (_cache[5] = ($event) => $data.movieData.movieDescription = $event),
+                  placeholder: "请输入简介信息"
+                }, null, 8, ["modelValue"])
+              ]),
+              _: 1
+              /* STABLE */
+            }),
+            vue.createVNode(_component_uni_forms_item, { name: "movieDuration" }, {
+              default: vue.withCtx(() => [
+                vue.createElementVNode("text", null, "电影时长（min）："),
+                vue.createVNode(_component_uni_easyinput, {
+                  modelValue: $data.movieData.movieDuration,
+                  "onUpdate:modelValue": _cache[6] || (_cache[6] = ($event) => $data.movieData.movieDuration = $event),
+                  placeholder: "请输入电影时长（min）"
+                }, null, 8, ["modelValue"])
+              ]),
+              _: 1
+              /* STABLE */
+            }),
+            vue.createVNode(_component_uni_forms_item, { name: "movieCountry" }, {
+              default: vue.withCtx(() => [
+                vue.createElementVNode("text", null, "片源地："),
+                vue.createVNode(_component_uni_easyinput, {
+                  modelValue: $data.movieData.movieCountry,
+                  "onUpdate:modelValue": _cache[7] || (_cache[7] = ($event) => $data.movieData.movieCountry = $event),
+                  placeholder: "请输入片源地"
+                }, null, 8, ["modelValue"])
+              ]),
+              _: 1
+              /* STABLE */
+            })
+          ]),
+          _: 1
+          /* STABLE */
+        }, 8, ["rules", "modelValue"])
+      ]),
+      vue.createElementVNode("view", { class: "movieInputRight" }, [
+        vue.createVNode(_component_uni_forms_item, {
+          name: "movieState",
+          class: "movieState"
+        }, {
+          default: vue.withCtx(() => [
+            vue.createElementVNode("text", null, "电影状态："),
+            vue.createVNode(_component_uni_data_checkbox, {
+              selectedColor: "#f9da49",
+              mode: "button",
+              selectedTextColor: "#f9da49",
+              modelValue: $data.State,
+              "onUpdate:modelValue": _cache[8] || (_cache[8] = ($event) => $data.State = $event),
+              localdata: $data.state,
+              onChange: $options.changeState
+            }, null, 8, ["modelValue", "localdata", "onChange"])
+          ]),
+          _: 1
+          /* STABLE */
+        }),
+        vue.createVNode(_component_uni_forms_item, {
+          name: "movieType",
+          class: "movieType"
+        }, {
+          default: vue.withCtx(() => [
+            vue.createElementVNode("text", null, "电影类型："),
+            vue.createVNode(_component_uni_data_checkbox, {
+              selectedColor: "#f9da49",
+              mode: "button",
+              selectedTextColor: "#f9da49",
+              multiple: "",
+              modelValue: $data.movieType,
+              "onUpdate:modelValue": _cache[9] || (_cache[9] = ($event) => $data.movieType = $event),
+              localdata: $data.type
+            }, null, 8, ["modelValue", "localdata"])
+          ]),
+          _: 1
+          /* STABLE */
+        }),
+        this.movieData.movieNameCn != "" && this.movieData.movieNameEn != "" && this.movieData.movieDirector != "" && this.movieData.movieDescription != "" && this.movieData.movieReleaseDate != "" && this.movieData.movieDuration != "" && this.movieData.movieCountry != "" && this.movieData.movieUrl != "" && this.movieType != "" ? (vue.openBlock(), vue.createElementBlock("button", {
+          key: 0,
+          class: "create_movie",
+          size: "mini",
+          onClick: _cache[10] || (_cache[10] = ($event) => $options.movie_create())
+        }, "修改电影")) : vue.createCommentVNode("v-if", true),
+        this.movieData.movieNameCn == "" || this.movieData.movieNameEn == "" || this.movieData.movieDirector == "" || this.movieData.movieDescription == "" || this.movieData.movieReleaseDate == "" || this.movieData.movieDuration == "" || this.movieData.movieCountry == "" || this.movieData.movieUrl == "" || this.movieType == "" ? (vue.openBlock(), vue.createElementBlock("button", {
+          key: 1,
+          class: "create_movie_false",
+          size: "mini"
+        }, "修改电影")) : vue.createCommentVNode("v-if", true)
+      ]),
+      vue.createElementVNode("view", null, [
+        vue.createVNode(
+          _component_uni_popup,
+          {
+            ref: "movieCreateDialog",
+            type: "dialog"
+          },
+          {
+            default: vue.withCtx(() => [
+              vue.createVNode(_component_uni_popup_dialog, {
+                type: _ctx.error,
+                cancelText: "关闭",
+                confirmText: "确定",
+                content: "是否修改该电影信息",
+                onConfirm: $options.movieCreateConfirm,
+                onClose: _ctx.dialogClose
+              }, null, 8, ["type", "onConfirm", "onClose"])
+            ]),
+            _: 1
+            /* STABLE */
+          },
+          512
+          /* NEED_PATCH */
+        )
+      ])
+    ]);
+  }
+  const PagesWebMovieMovieUUpdate = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$2], ["__scopeId", "data-v-96592418"], ["__file", "E:/Senior_2/cinema/vueDemo/pages/web/movie/movieUUpdate.vue"]]);
+  const _sfc_main$2 = {
+    data() {
+      return {
+        requestFlag: 0,
+        cinemaData: [],
+        covers: [{
+          latitude: "",
+          longitude: "",
+          iconPath: "/static/Location.png"
+        }]
+      };
+    },
+    onLoad: function(option) {
+      this.token = uni.getStorageSync("token");
+      uni.request({
+        url: "/api/cinema/infoById",
+        method: "GET",
+        dataType: "json",
+        data: option,
+        success: (res) => {
+          this.cinemaData = res.data.data;
+          this.cinemaData.cinemaPassword = "";
+          this.covers[0].longitude = this.cinemaData.cinemaX;
+          this.covers[0].latitude = this.cinemaData.cinemaY;
+          formatAppLog("log", "at pages/web/cinema/cinemaUUpdate.vue:84", "cinema", this.cinemaData);
+          this.requestFlag = 1;
+        }
+      });
+    },
+    methods: {
+      cinema_create() {
+        this.$refs.cinemaCreateDialog.open();
+        formatAppLog("log", "at pages/web/cinema/cinemaUUpdate.vue:93", "cinemaData", this.cinemaData);
+      },
+      cinemaCreateConfirm() {
+        let cinema = {
+          "cinemaId": this.cinemaData.cinemaId,
+          "cinemaName": this.cinemaData.cinemaName,
+          "cinemaPhone": this.cinemaData.cinemaPhone,
+          "cinemaPassword": this.cinemaData.cinemaPassword,
+          "cinemaAddress": this.cinemaData.cinemaAddress,
+          "cinemaX": this.cinemaData.cinemaX,
+          "cinemaY": this.cinemaData.cinemaY
+        };
+        uni.request({
+          url: "/api/cinema/update",
+          method: "PUT",
+          dataType: "json",
+          data: cinema,
+          header: {
+            "Authorization": this.token
+          },
+          success: (res) => {
+            if (res.data.code == 0) {
+              uni.showToast({
+                title: "修改成功",
+                icon: "true",
+                mask: "true"
+              });
+              uni.reLaunch({
+                url: "/pages/web/login"
+              });
+            }
+            if (res.data.code == 1) {
+              uni.showToast({
+                title: res.data.message,
+                icon: "error",
+                mask: "true"
+              });
+            }
+          }
+        });
+      }
+    }
+  };
+  function _sfc_render$1(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_easyinput = resolveEasycom(vue.resolveDynamicComponent("uni-easyinput"), __easycom_7$1);
+    const _component_uni_forms_item = resolveEasycom(vue.resolveDynamicComponent("uni-forms-item"), __easycom_5$1);
+    const _component_uni_popup_dialog = resolveEasycom(vue.resolveDynamicComponent("uni-popup-dialog"), __easycom_8$1);
+    const _component_uni_popup = resolveEasycom(vue.resolveDynamicComponent("uni-popup"), __easycom_9$1);
+    return vue.openBlock(), vue.createElementBlock("view", { class: "cinemaCreate" }, [
+      vue.createElementVNode("view", { class: "cinemaINFO" }, [
+        vue.createVNode(_component_uni_forms_item, null, {
+          default: vue.withCtx(() => [
+            vue.createElementVNode("text", null, "影院名称："),
+            vue.createVNode(_component_uni_easyinput, {
+              modelValue: $data.cinemaData.cinemaName,
+              "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => $data.cinemaData.cinemaName = $event),
+              placeholder: "请输入影院名称"
+            }, null, 8, ["modelValue"])
+          ]),
+          _: 1
+          /* STABLE */
+        }),
+        vue.createVNode(_component_uni_forms_item, null, {
+          default: vue.withCtx(() => [
+            vue.createElementVNode("text", null, "影院电话："),
+            vue.createVNode(_component_uni_easyinput, {
+              modelValue: $data.cinemaData.cinemaPhone,
+              "onUpdate:modelValue": _cache[1] || (_cache[1] = ($event) => $data.cinemaData.cinemaPhone = $event),
+              placeholder: "请输入影院电话"
+            }, null, 8, ["modelValue"])
+          ]),
+          _: 1
+          /* STABLE */
+        }),
+        vue.createVNode(_component_uni_forms_item, null, {
+          default: vue.withCtx(() => [
+            vue.createElementVNode("text", null, "密码："),
+            vue.createVNode(_component_uni_easyinput, {
+              modelValue: $data.cinemaData.cinemaPassword,
+              "onUpdate:modelValue": _cache[2] || (_cache[2] = ($event) => $data.cinemaData.cinemaPassword = $event),
+              placeholder: "请输入密码"
+            }, null, 8, ["modelValue"])
+          ]),
+          _: 1
+          /* STABLE */
+        }),
+        vue.createVNode(_component_uni_forms_item, null, {
+          default: vue.withCtx(() => [
+            vue.createElementVNode("text", null, "影院地址："),
+            vue.createVNode(_component_uni_easyinput, {
+              modelValue: $data.cinemaData.cinemaAddress,
+              "onUpdate:modelValue": _cache[3] || (_cache[3] = ($event) => $data.cinemaData.cinemaAddress = $event),
+              placeholder: "请输入影院地址"
+            }, null, 8, ["modelValue"])
+          ]),
+          _: 1
+          /* STABLE */
+        }),
+        vue.createVNode(_component_uni_forms_item, null, {
+          default: vue.withCtx(() => [
+            vue.createElementVNode("text", null, "影院位置经度："),
+            vue.createVNode(_component_uni_easyinput, {
+              modelValue: $data.cinemaData.cinemaX,
+              "onUpdate:modelValue": _cache[4] || (_cache[4] = ($event) => $data.cinemaData.cinemaX = $event),
+              placeholder: "请输入影院位置经度"
+            }, null, 8, ["modelValue"])
+          ]),
+          _: 1
+          /* STABLE */
+        }),
+        vue.createVNode(_component_uni_forms_item, null, {
+          default: vue.withCtx(() => [
+            vue.createElementVNode("text", null, "影院位置纬度："),
+            vue.createVNode(_component_uni_easyinput, {
+              modelValue: $data.cinemaData.cinemaY,
+              "onUpdate:modelValue": _cache[5] || (_cache[5] = ($event) => $data.cinemaData.cinemaY = $event),
+              placeholder: "请输入影院位置纬度"
+            }, null, 8, ["modelValue"])
+          ]),
+          _: 1
+          /* STABLE */
+        }),
+        this.cinemaData.cinemaName != "" && this.cinemaData.cinemaPhone != "" && this.cinemaData.cinemaPassword != "" && this.cinemaData.cinemaAddress != "" && this.cinemaData.cinemaX != "" && this.cinemaData.cinemaY != "" ? (vue.openBlock(), vue.createElementBlock("button", {
+          key: 0,
+          class: "create_cinema",
+          size: "mini",
+          onClick: _cache[6] || (_cache[6] = ($event) => $options.cinema_create())
+        }, "修改影院")) : vue.createCommentVNode("v-if", true),
+        this.cinemaData.cinemaName == "" || this.cinemaData.cinemaPhone == "" || this.cinemaData.cinemaPassword == "" || this.cinemaData.cinemaAddress == "" || this.cinemaData.cinemaX == "" || this.cinemaData.cinemaY == "" ? (vue.openBlock(), vue.createElementBlock("button", {
+          key: 1,
+          class: "create_cinema_false",
+          size: "mini"
+        }, "修改影院")) : vue.createCommentVNode("v-if", true)
+      ]),
+      vue.createElementVNode("view", null, [
+        vue.createVNode(
+          _component_uni_popup,
+          {
+            ref: "cinemaCreateDialog",
+            type: "dialog"
+          },
+          {
+            default: vue.withCtx(() => [
+              vue.createVNode(_component_uni_popup_dialog, {
+                type: _ctx.error,
+                cancelText: "关闭",
+                confirmText: "确定",
+                content: "是否修改该影院信息",
+                onConfirm: $options.cinemaCreateConfirm,
+                onClose: _ctx.dialogClose
+              }, null, 8, ["type", "onConfirm", "onClose"])
+            ]),
+            _: 1
+            /* STABLE */
+          },
+          512
+          /* NEED_PATCH */
+        )
+      ])
+    ]);
+  }
+  const PagesWebCinemaCinemaUUpdate = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1], ["__scopeId", "data-v-27088b28"], ["__file", "E:/Senior_2/cinema/vueDemo/pages/web/cinema/cinemaUUpdate.vue"]]);
+  const _sfc_main$1 = {
+    data() {
+      return {
+        movieData: [],
+        movieData_not: [],
+        houseData: [],
+        current: 0,
+        items: ["正在上映", "待映"],
+        range: [],
+        value: 0,
+        flag1: 0,
+        flag2: 0,
+        flag3: 0,
+        flag4: 0,
+        scheduleData: []
+      };
+    },
+    onLoad: function(option) {
+      this.token = uni.getStorageSync("token");
+      this.cinemaId = uni.getStorageSync("cinemaId");
+      uni.request({
+        url: "/api/movie/infoMovieByState?movieState=1",
+        method: "GET",
+        dataType: "json",
+        success: (res) => {
+          this.movieData = res.data.data;
+          this.movieData.reverse();
+          formatAppLog("log", "at pages/web/schedule/scheduleUUpdate.vue:127", "正在上映", this.movieData);
+          this.flag1 = 1;
+        }
+      });
+      uni.request({
+        url: "/api/movie/infoMovieByState?movieState=0",
+        method: "GET",
+        dataType: "json",
+        success: (res) => {
+          this.movieData_not = res.data.data;
+          formatAppLog("log", "at pages/web/schedule/scheduleUUpdate.vue:139", "待映", this.movieData_not);
+          this.flag2 = 1;
+        }
+      });
+      let cinema = {
+        "cinemaId": this.cinemaId
+      };
+      uni.request({
+        url: "/api/house/infoByCinemaId",
+        method: "GET",
+        dataType: "json",
+        data: cinema,
+        header: {
+          "Authorization": this.token
+        },
+        success: (res) => {
+          this.houseData = res.data.data;
+          for (let i2 = 0; i2 < this.houseData.length; i2++) {
+            let temp = {};
+            temp.value = this.houseData[i2].houseId;
+            temp.text = i2 + 1 + "  ：" + this.houseData[i2].houseName;
+            this.range.push(temp);
+          }
+          formatAppLog("log", "at pages/web/schedule/scheduleUUpdate.vue:164", "放映厅", this.houseData);
+          formatAppLog("log", "at pages/web/schedule/scheduleUUpdate.vue:165", "选项", this.range);
+          this.flag3 = 1;
+        }
+      });
+      uni.request({
+        url: "/api/schedule/infoById",
+        method: "GET",
+        dataType: "json",
+        data: option,
+        header: {
+          "Authorization": this.token
+        },
+        success: (res) => {
+          this.scheduleData = res.data.data;
+          formatAppLog("log", "at pages/web/schedule/scheduleUUpdate.vue:180", "scheduleData", this.scheduleData);
+          this.flag4 = 1;
+        }
+      });
+    },
+    methods: {
+      onClickItem(e2) {
+        if (this.current != e2.currentIndex) {
+          this.current = e2.currentIndex;
+        }
+      },
+      to_movie_info(movieID) {
+        formatAppLog("log", "at pages/web/schedule/scheduleUUpdate.vue:193", "所选电影", movieID);
+        this.scheduleData.movieId = movieID;
+      },
+      change(e2) {
+        this.scheduleData.houseId = e2;
+        formatAppLog("log", "at pages/web/schedule/scheduleUUpdate.vue:198", "e:", e2);
+      },
+      schedule_create() {
+        this.$refs.scheduleCreateDialog.open();
+      },
+      scheduleCreateConfirm() {
+        let schedule = {
+          "scheduleId": this.scheduleData.scheduleId,
+          "movieId": this.scheduleData.movieId,
+          "houseId": this.scheduleData.houseId,
+          "schedulePrice": this.scheduleData.schedulePrice,
+          "scheduleRemain": 1,
+          "scheduleState": 1,
+          "scheduleDescription": this.scheduleData.scheduleDescription
+        };
+        formatAppLog("log", "at pages/web/schedule/scheduleUUpdate.vue:213", "schedule", schedule);
+        uni.request({
+          url: "/api/schedule/update?scheduleTime=" + this.scheduleData.scheduleTime,
+          method: "PUT",
+          dataType: "json",
+          data: schedule,
+          header: {
+            "Authorization": this.token
+          },
+          success: (res) => {
+            uni.showToast({
+              title: "修改成功",
+              icon: "true",
+              mask: "true"
+            });
+            uni.reLaunch({
+              url: "/pages/web/login"
+            });
+          }
+        });
+      }
+    }
+  };
+  function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_segmented_control = resolveEasycom(vue.resolveDynamicComponent("uni-segmented-control"), __easycom_0$4);
+    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_1$1);
+    const _component_uni_list_item = resolveEasycom(vue.resolveDynamicComponent("uni-list-item"), __easycom_2);
+    const _component_uni_list = resolveEasycom(vue.resolveDynamicComponent("uni-list"), __easycom_3);
+    const _component_uni_datetime_picker = resolveEasycom(vue.resolveDynamicComponent("uni-datetime-picker"), __easycom_4);
+    const _component_uni_forms_item = resolveEasycom(vue.resolveDynamicComponent("uni-forms-item"), __easycom_5$1);
+    const _component_uni_data_select = resolveEasycom(vue.resolveDynamicComponent("uni-data-select"), __easycom_6);
+    const _component_uni_easyinput = resolveEasycom(vue.resolveDynamicComponent("uni-easyinput"), __easycom_7$1);
+    const _component_uni_popup_dialog = resolveEasycom(vue.resolveDynamicComponent("uni-popup-dialog"), __easycom_8$1);
+    const _component_uni_popup = resolveEasycom(vue.resolveDynamicComponent("uni-popup"), __easycom_9$1);
+    return this.flag1 == 1 && this.flag2 == 1 && this.flag3 == 1 && this.flag4 == 1 ? (vue.openBlock(), vue.createElementBlock("view", {
+      key: 0,
+      class: "scheduleCreate"
+    }, [
+      vue.createElementVNode("scroll-view", {
+        class: "scroll_MOVIE",
+        "scroll-y": "true",
+        "show-scrollbar": "false"
+      }, [
+        vue.createElementVNode("view", { class: "movieList" }, [
+          vue.createElementVNode("view", { class: "release_or_not" }, [
+            vue.createVNode(_component_uni_segmented_control, {
+              current: $data.current,
+              values: $data.items,
+              "style-type": "text",
+              "active-color": "#f9da49",
+              onClickItem: $options.onClickItem
+            }, null, 8, ["current", "values", "onClickItem"])
+          ]),
+          (vue.openBlock(true), vue.createElementBlock(
+            vue.Fragment,
+            null,
+            vue.renderList(this.movieData, (item, index) => {
+              return vue.withDirectives((vue.openBlock(), vue.createElementBlock("view", {
+                class: "movieINFO",
+                key: index
+              }, [
+                vue.createVNode(
+                  _component_uni_list,
+                  null,
+                  {
+                    default: vue.withCtx(() => [
+                      vue.createVNode(_component_uni_list_item, {
+                        title: this.movieData[index].movieNameCn,
+                        ellipsis: "1",
+                        note: this.movieData[index].movieNameEn + "\n导演：" + this.movieData[index].movieDirector + "\n上映日期：" + this.movieData[index].movieReleaseDate + "\n时长：" + this.movieData[index].movieDuration + " min",
+                        thumb: this.movieData[index].movieUrl,
+                        "thumb-size": "lg",
+                        clickable: "",
+                        onClick: ($event) => $options.to_movie_info(this.movieData[index].movieId)
+                      }, {
+                        footer: vue.withCtx(() => [
+                          this.scheduleData.movieId == this.movieData[index].movieId ? (vue.openBlock(), vue.createBlock(_component_uni_icons, {
+                            key: 0,
+                            class: "chose_movie",
+                            type: "checkbox-filled",
+                            size: "30",
+                            style: { "color": "#f9da49" }
+                          })) : vue.createCommentVNode("v-if", true),
+                          this.scheduleData.movieId != this.movieData[index].movieId ? (vue.openBlock(), vue.createBlock(_component_uni_icons, {
+                            key: 1,
+                            class: "chose_movie",
+                            type: "checkbox-filled",
+                            size: "30"
+                          })) : vue.createCommentVNode("v-if", true)
+                        ]),
+                        _: 2
+                        /* DYNAMIC */
+                      }, 1032, ["title", "note", "thumb", "onClick"])
+                    ]),
+                    _: 2
+                    /* DYNAMIC */
+                  },
+                  1024
+                  /* DYNAMIC_SLOTS */
+                )
+              ])), [
+                [vue.vShow, $data.current === 0]
+              ]);
+            }),
+            128
+            /* KEYED_FRAGMENT */
+          )),
+          (vue.openBlock(true), vue.createElementBlock(
+            vue.Fragment,
+            null,
+            vue.renderList(this.movieData_not, (item, index) => {
+              return vue.withDirectives((vue.openBlock(), vue.createElementBlock("view", {
+                class: "movieINFO",
+                key: index
+              }, [
+                vue.createVNode(
+                  _component_uni_list,
+                  null,
+                  {
+                    default: vue.withCtx(() => [
+                      vue.createVNode(_component_uni_list_item, {
+                        title: this.movieData_not[index].movieNameCn,
+                        ellipsis: "1",
+                        note: this.movieData_not[index].movieNameEn + "\n导演：" + this.movieData_not[index].movieDirector + "\n上映日期：" + this.movieData_not[index].movieReleaseDate + "\n时长：" + this.movieData_not[index].movieDuration + " min",
+                        thumb: this.movieData_not[index].movieUrl,
+                        "thumb-size": "lg",
+                        clickable: "",
+                        onClick: ($event) => $options.to_movie_info(this.movieData_not[index].movieId)
+                      }, {
+                        footer: vue.withCtx(() => [
+                          this.scheduleData.movieId == this.movieData_not[index].movieId ? (vue.openBlock(), vue.createBlock(_component_uni_icons, {
+                            key: 0,
+                            class: "chose_movie",
+                            type: "checkbox-filled",
+                            size: "30",
+                            style: { "color": "#f9da49" }
+                          })) : vue.createCommentVNode("v-if", true),
+                          this.scheduleData.movieId != this.movieData_not[index].movieId ? (vue.openBlock(), vue.createBlock(_component_uni_icons, {
+                            key: 1,
+                            class: "chose_movie",
+                            type: "checkbox-filled",
+                            size: "30"
+                          })) : vue.createCommentVNode("v-if", true)
+                        ]),
+                        _: 2
+                        /* DYNAMIC */
+                      }, 1032, ["title", "note", "thumb", "onClick"])
+                    ]),
+                    _: 2
+                    /* DYNAMIC */
+                  },
+                  1024
+                  /* DYNAMIC_SLOTS */
+                )
+              ])), [
+                [vue.vShow, $data.current === 1]
+              ]);
+            }),
+            128
+            /* KEYED_FRAGMENT */
+          ))
+        ])
+      ]),
+      vue.createElementVNode("view", { class: "scheduleINFO" }, [
+        vue.createElementVNode("view", { class: "box" }, [
+          vue.createVNode(_component_uni_forms_item, { name: "scheduleTime" }, {
+            default: vue.withCtx(() => [
+              vue.createElementVNode("text", null, "场次时间："),
+              vue.createVNode(_component_uni_datetime_picker, {
+                type: "datetime",
+                "clear-icon": false,
+                modelValue: $data.scheduleData.scheduleTime,
+                "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => $data.scheduleData.scheduleTime = $event),
+                onMaskClick: _ctx.maskClick
+              }, null, 8, ["modelValue", "onMaskClick"])
+            ]),
+            _: 1
+            /* STABLE */
+          }),
+          vue.createVNode(_component_uni_forms_item, null, {
+            default: vue.withCtx(() => [
+              vue.createElementVNode("text", null, "放映厅："),
+              vue.createVNode(_component_uni_data_select, {
+                modelValue: $data.scheduleData.houseId,
+                "onUpdate:modelValue": _cache[1] || (_cache[1] = ($event) => $data.scheduleData.houseId = $event),
+                localdata: $data.range,
+                onChange: $options.change
+              }, null, 8, ["modelValue", "localdata", "onChange"])
+            ]),
+            _: 1
+            /* STABLE */
+          }),
+          vue.createVNode(_component_uni_forms_item, null, {
+            default: vue.withCtx(() => [
+              vue.createElementVNode("text", null, "场次价格："),
+              vue.createVNode(_component_uni_easyinput, {
+                modelValue: $data.scheduleData.schedulePrice,
+                "onUpdate:modelValue": _cache[2] || (_cache[2] = ($event) => $data.scheduleData.schedulePrice = $event),
+                placeholder: "请输入场次价格"
+              }, null, 8, ["modelValue"])
+            ]),
+            _: 1
+            /* STABLE */
+          }),
+          vue.createVNode(_component_uni_forms_item, null, {
+            default: vue.withCtx(() => [
+              vue.createElementVNode("text", null, "场次描述："),
+              vue.createVNode(_component_uni_easyinput, {
+                modelValue: $data.scheduleData.scheduleDescription,
+                "onUpdate:modelValue": _cache[3] || (_cache[3] = ($event) => $data.scheduleData.scheduleDescription = $event),
+                placeholder: "请输入场次描述"
+              }, null, 8, ["modelValue"])
+            ]),
+            _: 1
+            /* STABLE */
+          }),
+          this.scheduleData.movieId != "" && this.scheduleData.scheduleTime != "" && this.scheduleData.houseId != "" && this.scheduleData.schedulePrice != "" && this.scheduleData.scheduleDescription != "" ? (vue.openBlock(), vue.createElementBlock("button", {
+            key: 0,
+            class: "create_schedule",
+            size: "mini",
+            onClick: _cache[4] || (_cache[4] = ($event) => $options.schedule_create())
+          }, "修改场次信息")) : vue.createCommentVNode("v-if", true),
+          this.scheduleData.movieId == "" || this.scheduleData.scheduleTime == "" || this.scheduleData.houseId == "" || this.scheduleData.schedulePrice == "" || this.scheduleData.scheduleDescription == "" ? (vue.openBlock(), vue.createElementBlock("button", {
+            key: 1,
+            class: "create_schedule_false",
+            size: "mini"
+          }, "修改场次信息")) : vue.createCommentVNode("v-if", true)
+        ])
+      ]),
+      vue.createElementVNode("view", null, [
+        vue.createVNode(
+          _component_uni_popup,
+          {
+            ref: "scheduleCreateDialog",
+            type: "dialog"
+          },
+          {
+            default: vue.withCtx(() => [
+              vue.createVNode(_component_uni_popup_dialog, {
+                type: _ctx.error,
+                cancelText: "关闭",
+                confirmText: "确定",
+                content: "是否修改该场次信息",
+                onConfirm: $options.scheduleCreateConfirm,
+                onClose: _ctx.dialogClose
+              }, null, 8, ["type", "onConfirm", "onClose"])
+            ]),
+            _: 1
+            /* STABLE */
+          },
+          512
+          /* NEED_PATCH */
+        )
+      ])
+    ])) : vue.createCommentVNode("v-if", true);
+  }
+  const PagesWebScheduleScheduleUUpdate = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__scopeId", "data-v-26331029"], ["__file", "E:/Senior_2/cinema/vueDemo/pages/web/schedule/scheduleUUpdate.vue"]]);
+  __definePage("pages/movieCinema/cinema", PagesMovieCinemaCinema);
   __definePage("pages/user/login", PagesUserLogin);
   __definePage("pages/user/info", PagesUserInfo);
-  __definePage("pages/movieCinema/cinema", PagesMovieCinemaCinema);
   __definePage("pages/user/updateName", PagesUserUpdateName);
   __definePage("pages/user/updatePhone", PagesUserUpdatePhone);
   __definePage("pages/user/updateProfile", PagesUserUpdateProfile);
   __definePage("pages/movieCinema/movieInfo", PagesMovieCinemaMovieInfo);
-  __definePage("pages/test", PagesTest);
   __definePage("pages/movieCinema/detailInfo", PagesMovieCinemaDetailInfo);
+  __definePage("pages/schedule/byMovie", PagesScheduleByMovie);
+  __definePage("pages/schedule/byMovieAndCinema", PagesScheduleByMovieAndCinema);
+  __definePage("pages/map/map", PagesMapMap);
+  __definePage("pages/schedule/selectSeat", PagesScheduleSelectSeat);
+  __definePage("pages/orders/showOrders", PagesOrdersShowOrders);
+  __definePage("pages/schedule/byCinema", PagesScheduleByCinema);
+  __definePage("pages/schedule/byCinemaAndMovie", PagesScheduleByCinemaAndMovie);
+  __definePage("pages/web/login", PagesWebLogin);
+  __definePage("pages/web/movie/movieUpdate", PagesWebMovieMovieUpdate);
+  __definePage("pages/web/movie/movieCreate", PagesWebMovieMovieCreate);
+  __definePage("pages/web/cinema/cinemaUpdate", PagesWebCinemaCinemaUpdate);
+  __definePage("pages/web/cinema/cinemaCreate", PagesWebCinemaCinemaCreate);
+  __definePage("pages/web/house/houseUpdate", PagesWebHouseHouseUpdate);
+  __definePage("pages/web/house/houseCreate", PagesWebHouseHouseCreate);
+  __definePage("pages/web/schedule/scheduleUpdate", PagesWebScheduleScheduleUpdate);
+  __definePage("pages/web/schedule/scheduleCreate", PagesWebScheduleScheduleCreate);
+  __definePage("pages/web/movie/movieUUpdate", PagesWebMovieMovieUUpdate);
+  __definePage("pages/web/cinema/cinemaUUpdate", PagesWebCinemaCinemaUUpdate);
+  __definePage("pages/web/schedule/scheduleUUpdate", PagesWebScheduleScheduleUUpdate);
   const _sfc_main = {
     onLaunch: function() {
       formatAppLog("warn", "at App.vue:4", "当前组件仅支持 uni_modules 目录结构 ，请升级 HBuilderX 到 3.1.0 版本以上！");

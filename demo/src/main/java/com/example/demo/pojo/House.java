@@ -13,4 +13,8 @@ public class House {
 
     private long cinemaId;
 
+    private String houseX;
+
+    private String houseY;
+
 }

@@ -7,15 +7,21 @@
 			</uni-forms-item>
 			
 			<uni-forms-item>
-			<text>座位量：</text><uni-easyinput v-model="houseData.houseSeats" placeholder="请输入座位量" />
+			<text>行数：</text><uni-easyinput v-model="houseData.houseX" placeholder="请输入行数" />
+			</uni-forms-item>
+			
+			<uni-forms-item>
+			<text>列数：</text><uni-easyinput v-model="houseData.houseY" placeholder="请输入列数" />
 			</uni-forms-item>
 			
 			<button v-if="this.houseData.houseName!=''
-			&& this.houseData.houseSeats!=''
+			&& this.houseData.houseX!=''
+			&& this.houseData.houseY!=''
 			" class="create_house" size="mini" @click="house_update()">修改放映厅信息</button>
 			
 			<button v-if="this.houseData.houseName==''
-			|| this.houseData.houseSeats==''
+			|| this.houseData.houseX==''
+			|| this.houseData.houseY==''
 			" class="create_house_false" size="mini">修改放映厅信息</button>
 			
 		</view>
@@ -62,7 +68,8 @@
 				let house = {
 					"houseId": this.houseData.houseId,
 					"houseName":this.houseData.houseName,
-					"houseSeats":this.houseData.houseSeats,
+					"houseX":this.houseData.houseX,
+					"houseY":this.houseData.houseY,
 				};
 				
 				uni.request({

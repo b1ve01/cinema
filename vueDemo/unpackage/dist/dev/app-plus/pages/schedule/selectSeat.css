@@ -1,0 +1,209 @@
+/* 水平间距 */
+/* 水平间距 */
+.uni-popup-dialog[data-v-d78c88b7] {
+  width: 300px;
+  border-radius: 11px;
+  background-color: #262626;
+}
+.uni-dialog-title[data-v-d78c88b7] {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding-top: 25px;
+}
+.uni-dialog-title-text[data-v-d78c88b7] {
+  font-size: 16px;
+  font-weight: 500;
+}
+.uni-dialog-content[data-v-d78c88b7] {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+.uni-dialog-content-text[data-v-d78c88b7] {
+  font-size: 14px;
+  color: #ffffff;
+}
+.uni-dialog-button-group[data-v-d78c88b7] {
+  display: flex;
+  flex-direction: row;
+  border-top-color: #f9da49;
+  border-top-style: solid;
+  border-top-width: 1px;
+}
+.uni-dialog-button[data-v-d78c88b7] {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 45px;
+}
+.uni-border-left[data-v-d78c88b7] {
+  border-left-color: #f9da49;
+  border-left-style: solid;
+  border-left-width: 1px;
+}
+.uni-dialog-button-text[data-v-d78c88b7] {
+  font-size: 16px;
+  color: #ffffff;
+}
+.uni-button-color[data-v-d78c88b7] {
+  color: #f9da49;
+}
+.uni-dialog-input[data-v-d78c88b7] {
+  flex: 1;
+  font-size: 14px;
+  border: 1px #eee solid;
+  height: 40px;
+  padding: 0 10px;
+  border-radius: 5px;
+  color: #555;
+}
+.uni-popup__success[data-v-d78c88b7] {
+  color: #4cd964;
+}
+.uni-popup__warn[data-v-d78c88b7] {
+  color: #f0ad4e;
+}
+.uni-popup__error[data-v-d78c88b7] {
+  color: #f9da49;
+}
+.uni-popup__info[data-v-d78c88b7] {
+  color: #909399;
+}
+/* 水平间距 */
+/* 水平间距 */
+.uni-popup[data-v-4dd3c44b] {
+  position: fixed;
+  z-index: 99;
+}
+.uni-popup.top[data-v-4dd3c44b], .uni-popup.left[data-v-4dd3c44b], .uni-popup.right[data-v-4dd3c44b] {
+  top: 0;
+}
+.uni-popup .uni-popup__wrapper[data-v-4dd3c44b] {
+  display: block;
+  position: relative;
+  /* iphonex 等安全区设置，底部安全区适配 */
+}
+.uni-popup .uni-popup__wrapper.left[data-v-4dd3c44b], .uni-popup .uni-popup__wrapper.right[data-v-4dd3c44b] {
+  padding-top: 0;
+  flex: 1;
+}
+.fixforpc-z-index[data-v-4dd3c44b] {
+  z-index: 999;
+}
+.fixforpc-top[data-v-4dd3c44b] {
+  top: 0;
+}
+/* 水平间距 */
+/* 水平间距 */
+uni-text[data-v-c342b6fe] {
+  color: #00aaff;
+}
+.selectSeat[data-v-c342b6fe] {
+  width: 100%;
+}
+.screen[data-v-c342b6fe] {
+  background-color: #999999;
+  width: 11.875rem;
+  height: 1.875rem;
+  transform: perspective(1.0625rem) rotateX(-10deg);
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.09375rem;
+  color: #ffffff;
+}
+.screen_mid[data-v-c342b6fe] {
+  margin: 0 auto;
+  margin-top: 1.5625rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.9375rem;
+  margin-bottom: 1.5625rem;
+  color: #ffffff;
+}
+.seats[data-v-c342b6fe] {
+  padding-left: 5%;
+  width: 90%;
+  height: 3.4375rem;
+  display: flex;
+  justify-content: center;
+}
+.seats_for[data-v-c342b6fe] {
+  width: 3.125rem;
+  height: 3.125rem;
+  display: flex;
+  justify-content: space-around;
+}
+.unselectSeat[data-v-c342b6fe] {
+  width: 80%;
+  height: 100%;
+}
+.buy_info[data-v-c342b6fe] {
+  position: fixed;
+  height: 30%;
+  width: 100%;
+  border-top-left-radius: 5%;
+  border-top-right-radius: 5%;
+  display: flex;
+  flex-direction: column;
+  background-color: #000000;
+  justify-content: space-around;
+  border-top: 0.3125rem solid #f9da49;
+}
+.description_seat[data-v-c342b6fe] {
+  height: auto;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 0 2.5rem;
+}
+.description_seat_unselected[data-v-c342b6fe] {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.buy_button[data-v-c342b6fe] {
+  bottom: 0;
+}
+.show_select[data-v-c342b6fe] {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 90%;
+  padding-left: 5%;
+}
+.true_button[data-v-c342b6fe] {
+  bottom: 5%;
+  width: 90%;
+  color: #010101;
+  border-color: #010101;
+  background-color: #f9da49;
+  bottom: 0;
+}
+.show_select_button[data-v-c342b6fe] {
+  color: #f9da49;
+  background-color: #3f3f3f;
+  size: 0.9375rem;
+  font-size: 0.9375rem;
+}
+.false_button[data-v-c342b6fe] {
+  width: 90%;
+  left: 5%;
+  color: #999999;
+  border-color: #999999;
+  background-color: #d8bc3f;
+  position: fixed;
+  bottom: 5%;
+}
+.is_hover[data-v-c342b6fe] {
+  color: #010101;
+  border-color: #010101;
+  background-color: #d8bc3f;
+}

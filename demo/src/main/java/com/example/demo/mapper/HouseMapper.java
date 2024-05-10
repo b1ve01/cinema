@@ -14,7 +14,7 @@ public interface HouseMapper {
     @Select("SELECT IFNULL(MAX(house_id), 0) FROM house")
     long getMaxHouseId();
 
-    @Insert("INSERT INTO house(house_id,house_name,house_seats,cinema_id)" + " VALUES (#{houseId},#{houseName},#{houseSeats},#{cinemaId})")
+    @Insert("INSERT INTO house(house_id,house_name,cinema_id,house_x,house_y)" + " VALUES (#{houseId},#{houseName},#{cinemaId},#{houseX},#{houseY})")
     void create(House house);
 
     @Select("select * from house where house_id = #{houseId}")
@@ -26,7 +26,7 @@ public interface HouseMapper {
     @Delete("delete from house where house_id = #{houseId} ")
     void deleteByHouseId(long houseId);
 
-    @Update("update house set house_name=#{houseName},house_seats=#{houseSeats} where house_id = #{houseId}")
+    @Update("update house set house_name=#{houseName},house_x=#{houseX},house_y=#{houseY} where house_id = #{houseId}")
     void update(House house);
 
 }

@@ -617,6 +617,11 @@
   color: #d5d5d5;
   font-size: 12px;
 }
+
+/*去除ie edge的密码框默认出现的小眼睛*/
+.uni-easyinput__content-input[data-v-09fd5285] ::-ms-reveal {
+  display: none;
+}
 /* 水平间距 */
 /* 水平间距 */
 .uni-forms-item[data-v-462874dd] {

@@ -50,14 +50,6 @@
 		}
 	},
 	{
-		"path" : "pages/test",
-		"style" : 
-		{
-			"navigationBarTitleText" : "测试",
-			"navigationStyle":"custom"
-		}
-	},
-	{
 		"path" : "pages/movieCinema/detailInfo",
 		"style" : 
 		{
@@ -83,13 +75,6 @@
 		"style" : 
 		{
 			"navigationBarTitleText" : "地图"
-		}
-	},
-	{
-		"path" : "pages/seat",
-		"style" : 
-		{
-			"navigationBarTitleText" : ""
 		}
 	},
 	{
