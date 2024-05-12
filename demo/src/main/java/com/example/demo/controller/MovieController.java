@@ -90,7 +90,7 @@ public class MovieController {
     @PutMapping("/update")
     public Result<Movie> update(@RequestBody Movie movie,String movieReleaseDate,long[] movieType){
         System.out.println(movieReleaseDate);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate date = LocalDate.parse(movieReleaseDate, formatter);
         LocalDateTime dateTime = date.atStartOfDay();
         movie.setMovieReleaseDate(dateTime);

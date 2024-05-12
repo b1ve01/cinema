@@ -79,7 +79,7 @@ public class ScheduleController {
         long cinemaId=temp_cinemaId.longValue();
         schedule.setCinemaId(cinemaId);
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime dateTime = LocalDateTime.parse(scheduleTime, formatter);
 
         schedule.setScheduleTime(dateTime);

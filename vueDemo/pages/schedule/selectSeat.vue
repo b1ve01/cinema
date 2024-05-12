@@ -11,11 +11,11 @@
 				<view class="seats" v-for="(item,index) in this.seatData" :key="index">
 					<view class="seats_for" v-for="(item,indexColumn) in this.seatData[index]" :key="indexColumn"
 						@click="selectSeat(index,indexColumn)">
-						<image v-if="this.seatData[index][indexColumn].seatState==0 && ((index*this.houseColumn)+(indexColumn+1))<=this.scheduleData.houseSeats" class="unselectSeat"
+						<image v-if="this.seatData[index][indexColumn].seatState==0 " class="unselectSeat"
 							src="/static/unselected.png" mode="aspectFit"></image>
-						<image v-if="this.seatData[index][indexColumn].seatState==1 && ((index*this.houseColumn)+(indexColumn+1))<=this.scheduleData.houseSeats" class="unselectSeat"
+						<image v-if="this.seatData[index][indexColumn].seatState==1 " class="unselectSeat"
 							src="/static/selected.png" mode="aspectFit"></image>
-						<image v-if="this.seatData[index][indexColumn].seatState==2 && ((index*this.houseColumn)+(indexColumn+1))<=this.scheduleData.houseSeats" class="unselectSeat"
+						<image v-if="this.seatData[index][indexColumn].seatState==2 " class="unselectSeat"
 							src="/static/bought.png" mode="aspectFit"></image>
 					</view>
 				</view>

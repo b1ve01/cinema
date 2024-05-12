@@ -120,7 +120,7 @@
 														this.ordersData[i].houseName=res.data.data.houseName
 														this.ordersData[i].seatString="";
 														for(let j=0;j<this.ordersData[i].ordersSeat.split(" ").length;j++){
-															this.ordersData[i].seatString=this.ordersData[i].seatString+this.ordersData[i].ordersSeat.split(" ")[j][0]+'排'+this.ordersData[i].ordersSeat.split(" ")[j][2]+'座  ';
+															this.ordersData[i].seatString=this.ordersData[i].seatString+this.ordersData[i].ordersSeat.split(" ")[j].split("/")[0]+'排'+this.ordersData[i].ordersSeat.split(" ")[j].split("/")[1]+'座  ';
 														}
 														if(i==this.ordersData.length-1){
 															this.requestFlag=1;

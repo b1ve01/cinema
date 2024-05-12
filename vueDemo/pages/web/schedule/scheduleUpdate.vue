@@ -10,11 +10,11 @@
 					<view style="width: 100%;height:30rpx;" class="screen_mid">银幕中央</view>
 					<view class="seats" v-for="(item,index) in this.seatData" :key="index">
 						<view class="seats_for" v-for="(item,indexColumn) in this.seatData[index]" :key="indexColumn">
-							<image v-if="this.seatData[index][indexColumn].seatState==0 && ((index*this.houseColumn)+(indexColumn+1))<=this.scheduleData.houseSeats" class="unselectSeat"
+							<image v-if="this.seatData[index][indexColumn].seatState==0" class="unselectSeat"
 								src="/static/unselected.png" mode="aspectFit"></image>
-							<image v-if="this.seatData[index][indexColumn].seatState==1 && ((index*this.houseColumn)+(indexColumn+1))<=this.scheduleData.houseSeats" class="unselectSeat"
+							<image v-if="this.seatData[index][indexColumn].seatState==1" class="unselectSeat"
 								src="/static/selected.png" mode="aspectFit"></image>
-							<image v-if="this.seatData[index][indexColumn].seatState==2 && ((index*this.houseColumn)+(indexColumn+1))<=this.scheduleData.houseSeats" class="unselectSeat"
+							<image v-if="this.seatData[index][indexColumn].seatState==2" class="unselectSeat"
 								src="/static/bought.png" mode="aspectFit"></image>
 						</view>
 					</view>
@@ -28,7 +28,7 @@
 			<text class="text_size">时间：{{this.scheduleData.scheduleTime}}</text>
 			<text class="text_size">价格：{{this.scheduleData.schedulePrice}} ¥</text>
 			<text class="text_size">描述：{{this.scheduleData.scheduleDescription}}</text>
-			<text class="text_size">放映厅总座位量：{{this.scheduleData.houseSeats}}</text>
+			<text class="text_size">放映厅总座位量：{{this.houseRow*this.houseColumn}}</text>
 		
 		</view>
 		
