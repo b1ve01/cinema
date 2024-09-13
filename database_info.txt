@@ -1,5 +1,0 @@
-数据库名称	cinema
-数据库用户	cinema1895
-数据库密码	4DAH3AsbUFFcihud
-数据库地址	mysql.sqlpub.com:3306
-注册邮箱		1203610735@qq.com
