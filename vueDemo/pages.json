@@ -1,0 +1,216 @@
+{
+	"pages": [
+	{
+		"path" : "pages/movieCinema/cinema",
+		"style" : 
+		{
+			"navigationBarTitleText" : ""
+		}
+	},
+	{
+		"path" : "pages/user/login",
+		"style" : 
+		{
+			"navigationBarTitleText" : ""
+		}
+	},
+	{
+		"path" : "pages/user/info",
+		"style" : 
+		{
+			"navigationBarTitleText" : "个人信息"
+		}
+	},
+	{
+		"path" : "pages/user/updateName",
+		"style" : 
+		{
+			"navigationBarTitleText" : "修改名字"
+		}
+	},
+	{
+		"path" : "pages/user/updatePhone",
+		"style" : 
+		{
+			"navigationBarTitleText" : "修改电话"
+		}
+	},
+	{
+		"path" : "pages/user/updateProfile",
+		"style" : 
+		{
+			"navigationBarTitleText" : "修改简介"
+		}
+	},
+	{
+		"path" : "pages/movieCinema/movieInfo",
+		"style" : 
+		{
+			"navigationBarTitleText" : "电影"
+		}
+	},
+	{
+		"path" : "pages/movieCinema/detailInfo",
+		"style" : 
+		{
+			"navigationBarTitleText" : "详细信息"
+		}
+	},
+	{
+		"path" : "pages/schedule/byMovie",
+		"style" : 
+		{
+			"navigationBarTitleText" : ""
+		}
+	},
+	{
+		"path" : "pages/schedule/byMovieAndCinema",
+		"style" : 
+		{
+			"navigationBarTitleText" : ""
+		}
+	},
+	{
+		"path" : "pages/map/map",
+		"style" : 
+		{
+			"navigationBarTitleText" : "地图"
+		}
+	},
+	{
+		"path" : "pages/schedule/selectSeat",
+		"style" : 
+		{
+			"navigationBarTitleText" : "选择座位"
+		}
+	},
+	{
+		"path" : "pages/orders/showOrders",
+		"style" : 
+		{
+			"navigationBarTitleText" : "购票记录"
+		}
+	},
+	{
+		"path" : "pages/schedule/byCinema",
+		"style" : 
+		{
+			"navigationBarTitleText" : ""
+		}
+	},
+	{
+		"path" : "pages/schedule/byCinemaAndMovie",
+		"style" : 
+		{
+			"navigationBarTitleText" : ""
+		}
+	},
+	{
+		"path" : "pages/web/login",
+		"style" : 
+		{
+			"navigationBarTitleText" : "",
+			"navigationStyle":"custom"
+		}
+	},
+	{
+		"path" : "pages/web/movie/movieUpdate",
+		"style" : 
+		{
+			"navigationBarTitleText" : "查看电影信息"
+		}
+	},
+	{
+		"path" : "pages/web/movie/movieCreate",
+		"style" : 
+		{
+			"navigationBarTitleText" : "新增电影信息"
+		}
+	},
+	{
+		"path" : "pages/web/cinema/cinemaUpdate",
+		"style" : 
+		{
+			"navigationBarTitleText" : "查看影院信息"
+		}
+	},
+	{
+		"path" : "pages/web/cinema/cinemaCreate",
+		"style" : 
+		{
+			"navigationBarTitleText" : "新增影院信息"
+		}
+	},
+	{
+		"path" : "pages/web/house/houseUpdate",
+		"style" : 
+		{
+			"navigationBarTitleText" : "修改放映厅信息"
+		}
+	},
+	{
+		"path" : "pages/web/house/houseCreate",
+		"style" : 
+		{
+			"navigationBarTitleText" : "新增放映厅信息"
+		}
+	},
+	{
+		"path" : "pages/web/schedule/scheduleUpdate",
+		"style" : 
+		{
+			"navigationBarTitleText" : "查看场次信息"
+		}
+	},
+	{
+		"path" : "pages/web/schedule/scheduleCreate",
+		"style" : 
+		{
+			"navigationBarTitleText" : "新增场次信息"
+		}
+	},
+	{
+		"path" : "pages/web/movie/movieUUpdate",
+		"style" : 
+		{
+			"navigationBarTitleText" : "修改电影信息"
+		}
+	},
+	{
+		"path" : "pages/web/cinema/cinemaUUpdate",
+		"style" : 
+		{
+			"navigationBarTitleText" : "修改影院信息"
+		}
+	},
+	{
+		"path" : "pages/web/schedule/scheduleUUpdate",
+		"style" : 
+		{
+			"navigationBarTitleText" : "修改场次信息"
+		}
+	}],
+	"globalStyle": {
+		"navigationBarTextStyle": "white",
+		"navigationBarBackgroundColor": "#010101"
+	},
+	"tabBar": {
+		"backgroundColor": "#010101",
+		"color": "#999999",
+		"selectedColor": "#ffffff",
+		"list": [
+			{
+				"pagePath": "pages/movieCinema/cinema",
+				"text": "电影",
+				"iconPath": "static/PhFilmStrip.png",
+				"selectedIconPath": "static/PhFilmStripFill.png"
+			},
+			{
+				"pagePath": "pages/user/login",
+				"text": "我的",
+				"iconPath": "static/OcticonPerson16.png",
+				"selectedIconPath": "static/OcticonPersonFill16.png"
+			}
+		]
+	}
+}

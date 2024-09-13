@@ -1,0 +1,78 @@
+/* 水平间距 */
+/* 水平间距 */
+uni-text[data-v-4631af8a] {
+  color: #fff;
+}
+.movieUpdate[data-v-4631af8a] {
+  display: flex;
+  flex-direction: row;
+  align-items: space-around;
+  position: absolute;
+  top: 5%;
+  left: 10%;
+  height: 90%;
+  width: 80%;
+  border: 3px solid #f9da49;
+  border-top-left-radius: 0.625rem;
+  border-top-right-radius: 0.625rem;
+  border-bottom-left-radius: 0.625rem;
+  border-bottom-right-radius: 0.625rem;
+  overflow: hidden;
+}
+.movieImage[data-v-4631af8a] {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 35%;
+  border-right: 3px solid #f9da49;
+}
+.movieImage_url[data-v-4631af8a] {
+  width: 100%;
+  height: 100%;
+}
+.movieDATA[data-v-4631af8a] {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 60%;
+  padding-left: 5%;
+  padding-top: 2%;
+  height: 90%;
+}
+.movieNameCn[data-v-4631af8a] {
+  color: #f9da49;
+  font-size: 3.125rem;
+}
+.movieNameEn[data-v-4631af8a] {
+  font-size: 1.5625rem;
+}
+.movieDirector[data-v-4631af8a] {
+  font-size: 1.5625rem;
+}
+.description[data-v-4631af8a] {
+  font-size: 1.5625rem;
+}
+.movieDescription[data-v-4631af8a] {
+  font-size: 0.9375rem;
+}
+.scroll-Y[data-v-4631af8a] {
+  height: 9.375rem;
+}
+[data-v-4631af8a] .uni-scroll-view::-webkit-scrollbar {
+  display: none;
+}
+.movieReleaseDate[data-v-4631af8a] {
+  font-size: 1.5625rem;
+}
+.movieType[data-v-4631af8a] {
+  font-size: 1.5625rem;
+}
+.movieDuration[data-v-4631af8a] {
+  font-size: 1.5625rem;
+}
+.movieCountry[data-v-4631af8a] {
+  font-size: 1.5625rem;
+}
+.movieState[data-v-4631af8a] {
+  font-size: 1.5625rem;
+}

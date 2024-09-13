@@ -1,0 +1,38 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/user/login",
+    "pages/user/info",
+    "pages/cinema"
+  ],
+  "window": {
+    "navigationBarTextStyle": "white",
+    "navigationBarBackgroundColor": "#010101"
+  },
+  "tabBar": {
+    "backgroundColor": "#010101",
+    "color": "#999999",
+    "selectedColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "static/ClarityHomeLine.png",
+        "selectedIconPath": "static/ClarityHomeSolid.png"
+      },
+      {
+        "pagePath": "pages/cinema",
+        "text": "电影",
+        "iconPath": "static/PhFilmStrip.png",
+        "selectedIconPath": "static/PhFilmStripFill.png"
+      },
+      {
+        "pagePath": "pages/user/login",
+        "text": "我的",
+        "iconPath": "static/OcticonPerson16.png",
+        "selectedIconPath": "static/OcticonPersonFill16.png"
+      }
+    ]
+  },
+  "usingComponents": {}
+}
